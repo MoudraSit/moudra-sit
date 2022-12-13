@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Mobilní telefon",
+    "description": "Mám potíže s telefonem nebo s aplikacemi v něm"
+  },
+  {
+    "id": 2,
+    "title": "Počítač",
+    "description": "Mám potíže s počítačem"
+  },
+  {
+    "id": 3,
+    "title": "Tiskárna",
+    "description": "Mám potíže s tiskárnou"
+  },
+  {
+    "id": 4,
+    "title": "Jiné",
+    "description": "Mám potíže s jiným zařízením"
+  }
+]
