@@ -1,12 +1,13 @@
 import ContactLine from "../components/layout/contact-line";
 import Layout from "../components/layout/layout";
-import Album from "../components/main-page/main-page";
+import MainPage from "../components/main-page/main-page";
 
 function HomePage() {
   return (
     <>
+      <ContactLine />
       <Layout />
-      <Album />
+      <MainPage />
       <ContactLine />
     </>
   );
