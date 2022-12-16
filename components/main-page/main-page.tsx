@@ -9,13 +9,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
-import { appTheme } from "../theme/theme";
+import { appTheme } from "components/theme/theme";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-import newsDummy from "../../data/news-dummy.json";
-import helpSectionJson from "../../data/help-section.json";
-import bg1 from "../../public/images/home-page/bg1.png";
-import Footer from "../layout/footer";
+import newsDummy from "data/news-dummy.json";
+import helpSectionJson from "data/help-section.json";
+import bg1 from "public/images/home-page/bg1.png";
+import Footer from "components/layout/footer";
 
 interface INewsSection {
   id: number;
