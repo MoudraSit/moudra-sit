@@ -10,7 +10,7 @@ import {
 export type NewsItem = decodeType<typeof decodeNewsItem>;
 
 export const decodeNewsItem = record({
-  id: number,
+  id: string,
   title: string,
   date: string,
   description: string,
