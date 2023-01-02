@@ -14,12 +14,16 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.17",
+    "@mui/x-date-pickers": "^5.0.12",
     "@next/font": "^13.0.6",
+    "dayjs": "^1.11.7",
+    "formik": "^2.2.9",
     "next": "13.0.6",
     "react": "18.2.0",
-    "react-bootstrap": "^2.7.0",
+    "react-audio-voice-recorder": "^1.0.4",
     "react-dom": "18.2.0",
-    "typescript-json-decoder": "^1.0.11"
+    "react-images-uploading": "^3.1.7",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/jest": "^29.2.4",

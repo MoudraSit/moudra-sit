@@ -1,0 +1,40 @@
+.bg-image {
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: "images/home-page/img2.png";
+}
+
+/* next size - tablet */
+@media (min-width: 768px) {
+  .bg-image {
+    background-image: "images/home-page/img2.png";
+  }
+}
+
+/* next size - tablet landscape and it covers desktop */
+@media (min-width: 1024px) {
+  .bg-image {
+    background-image: "images/home-page/img1.png";
+  }
+}
+
+/* next size - larger desktops */
+@media (min-width: 1280px) {
+  .bg-image {
+    background-image: "images/home-page/img1.png";
+  }
+}
+
+.images {
+  max-width: 100%;
+  width: 500px;
+}
+
+/* next size - tablet */
+@media (max-width: 768px) {
+  .images {
+    display: none;
+  }
+}

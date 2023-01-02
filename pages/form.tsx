@@ -1,16 +1,16 @@
+import VerticalLinearStepper from "components/form/vertical-stepper";
 import ContactLine from "components/layout/contact-line";
 import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
-import MainPage from "components/main-page/main-page";
 
-function HomePage() {
+function FormPage() {
   return (
     <>
       <Layout />
-      <MainPage />
+      <VerticalLinearStepper />
       <Footer />
     </>
   );
 }
 
-export default HomePage;
+export default FormPage;

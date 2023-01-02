@@ -11,6 +11,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Stack } from "@mui/material";
+import ContactLine from "./contact-line";
+import Link from "next/link";
 
 const pages = [
   "Jsem Senior 60+",
@@ -22,35 +24,50 @@ const pages = [
 ];
 
 function ResponsiveAppBar() {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
   return (
     <AppBar position="sticky" color="primary">
+      <ContactLine />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box
-            component="img"
-            sx={{
-              height: 50,
-              p: 1,
-            }}
-            src="../../images/logo/logo.png"
-          />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            fontWeight="fontWeightMedium"
-            sx={{
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Moudrá Síť
-          </Typography>
+          <Link href="/">
+            <Box
+              component="img"
+              sx={{
+                height: 50,
+                p: 1,
+              }}
+              src="../../images/logo/logo.png"
+            />
+          </Link>
+          <Link href="/">
+            <Typography
+              variant="h5"
+              noWrap
+              fontWeight="fontWeightMedium"
+              sx={{
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Moudrá Síť
+            </Typography>
+          </Link>
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex" },
+              display: { xs: "none", md: "none", lg: "flex" },
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -68,26 +85,23 @@ function ResponsiveAppBar() {
             <Button
               variant="contained"
               color="warning"
-              sx={{ display: { xs: "none", md: "flex" } }}
+              sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
             >
               REGISTROVAT SE
             </Button>
             <Button
               variant="outlined"
               color="secondary"
-              sx={{ display: { xs: "none", md: "flex" } }}
+              sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
             >
               PŘIHLÁSIT SE
             </Button>
-            <IconButton sx={{ p: 0, display: { xs: "none", md: "flex" } }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-            </IconButton>
           </Stack>
           <Box
             justifyContent="flex-end"
             sx={{
               flexGrow: 1,
-              display: { xs: "flex", md: "none" },
+              display: { xs: "flex", md: "flex", lg: "none" },
             }}
           >
             <IconButton
@@ -96,6 +110,7 @@ function ResponsiveAppBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               color="inherit"
+              onClick={handleOpenNavMenu}
             >
               <MenuIcon />
             </IconButton>
@@ -103,7 +118,7 @@ function ResponsiveAppBar() {
               className="navbar-menu"
               id="menu-appbar"
               anchorOrigin={{
-                vertical: "bottom",
+                vertical: "top",
                 horizontal: "right",
               }}
               keepMounted
@@ -111,10 +126,11 @@ function ResponsiveAppBar() {
                 vertical: "top",
                 horizontal: "right",
               }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
               }}
-              open={false}
             >
               {pages.map((page) => (
                 <MenuItem key={page}>

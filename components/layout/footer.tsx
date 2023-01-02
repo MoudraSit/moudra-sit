@@ -1,10 +1,9 @@
 import { Box, Container, Typography } from "@mui/material";
+import ContactLine from "./contact-line";
 
 function Footer() {
   return (
     <>
-      <Container sx={{ py: 8 }} maxWidth="md" />
-
       <Box sx={{ bgcolor: "black", p: 6 }} component="footer">
         <Typography
           variant="h6"
@@ -23,6 +22,7 @@ function Footer() {
           {"."}
         </Typography>
       </Box>
+      <ContactLine />
     </>
   );
 }

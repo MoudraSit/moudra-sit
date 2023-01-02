@@ -1,8 +1,8 @@
+import styles from "./main-page.module.css";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -14,8 +14,8 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import newsDummy from "data/news-dummy.json";
 import helpSectionJson from "data/help-section.json";
-import bg1 from "public/images/home-page/bg1.png";
-import Footer from "components/layout/footer";
+import bg from "public/images/home-page/bg2.png";
+import Link from "next/link";
 
 interface INewsSection {
   id: number;
@@ -37,7 +37,6 @@ function MainPage() {
   return (
     <>
       <ThemeProvider theme={appTheme}>
-        <CssBaseline />
         <Box
           sx={{
             bgcolor: "primary.main",
@@ -156,14 +155,16 @@ function MainPage() {
                           pt: 2,
                         }}
                       >
-                        <Button
-                          color="info"
-                          size="large"
-                          variant="contained"
-                          fullWidth
-                        >
-                          Vybrat
-                        </Button>
+                        <Link href="/form">
+                          <Button
+                            color="info"
+                            size="large"
+                            variant="contained"
+                            fullWidth
+                          >
+                            Vybrat
+                          </Button>
+                        </Link>
                       </Box>
                     </CardContent>
                   </Card>
@@ -236,7 +237,7 @@ function MainPage() {
         </Box>
         <Box
           sx={{
-            backgroundImage: `url(${bg1.src})`,
+            backgroundImage: `url(${bg.src})`,
             backgroundSize: "",
             pt: 10,
             pb: 6,
@@ -256,7 +257,10 @@ function MainPage() {
               alignItems="center"
             >
               <Grid item xs={12} md={12} lg={6}>
-                <img src="images/home-page/img1.png" width={500} />
+                <img
+                  src="images/home-page/img1.png"
+                  className={styles.images}
+                />
               </Grid>
               <Grid item xs={12} md={12} lg={6}>
                 <Typography
@@ -393,12 +397,15 @@ function MainPage() {
                 </Stack>
               </Grid>
               <Grid item xs={12} md={12} lg={6}>
-                <img src="images/home-page/img2.png" width={500} />
+                <img
+                  src="images/home-page/img2.png"
+                  className={styles.images}
+                />
               </Grid>
             </Grid>
           </Container>
         </Box>
-        <Footer />
+        <Container sx={{ py: 8 }} maxWidth="md" />
       </ThemeProvider>
     </>
   );
