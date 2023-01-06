@@ -61,8 +61,11 @@ export default function VerticalLinearStepper() {
   };
 
   const handleSend = () => {
+    console.log(basicForm);
+    //if (basicForm.isValid) {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     lastStep = true;
+    //}
   };
 
   const handleReset = () => {
@@ -87,8 +90,8 @@ export default function VerticalLinearStepper() {
                 {steps.map((step, index) => (
                   <Step
                     sx={{
-                      "& .MuiStepLabel .Mui-disabled": {
-                        fill: "white", // circle's number
+                      "& .MuiStepLabel-labelContainer": {
+                        color: "white", // circle's number
                       },
                       "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-root": {
                         fill: "white", // circle's color
@@ -189,7 +192,7 @@ export default function VerticalLinearStepper() {
                   >
                     <Container maxWidth="md">
                       <Typography
-                        sx={{ fontWeight: "bold", fontSize: "45px" }}
+                        sx={{ fontWeight: "bold" }}
                         variant="h2"
                         align="center"
                         color="primary.contrastText"

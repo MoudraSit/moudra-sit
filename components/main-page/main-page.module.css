@@ -27,9 +27,20 @@
   }
 }
 
+.my_button {
+  display: flex;
+  align-items: bottom;
+  justify-content: center;
+}
+
 .images {
   max-width: 100%;
   width: 500px;
+}
+
+.logo {
+  max-width: 100%;
+  width: 150px;
 }
 
 /* next size - tablet */

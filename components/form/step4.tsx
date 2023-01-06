@@ -7,8 +7,8 @@ function Step4Form() {
   return (
     <>
       <Typography
-        sx={{ fontWeight: "bold", fontSize: "45px" }}
-        variant="h2"
+        sx={{ fontWeight: "bold" }}
+        variant="h4"
         align="center"
         color="primary.contrastText"
         gutterBottom

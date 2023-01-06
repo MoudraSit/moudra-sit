@@ -15,8 +15,8 @@ function Step1Form() {
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Typography
-          sx={{ fontWeight: "bold", fontSize: "45px" }}
-          variant="h2"
+          sx={{ fontWeight: "bold" }}
+          variant="h4"
           align="center"
           color="primary.contrastText"
           gutterBottom

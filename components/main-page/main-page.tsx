@@ -48,7 +48,6 @@ function MainPage() {
             <Typography
               sx={{
                 fontWeight: "fontWeightMedium",
-                fontSize: "45px",
                 fontFamily: "Fira Code",
               }}
               variant="h2"
@@ -60,7 +59,6 @@ function MainPage() {
             <Typography
               sx={{
                 fontWeight: "fontWeightMedium",
-                fontSize: "45px",
                 fontFamily: "Fira Code",
               }}
               variant="h2"
@@ -103,7 +101,7 @@ function MainPage() {
         >
           <Container maxWidth="lg">
             <Typography
-              sx={{ fontWeight: "bold", fontSize: "45px" }}
+              sx={{ fontWeight: "bold" }}
               variant="h2"
               align="center"
               color="secondary.contrastText"
@@ -133,11 +131,16 @@ function MainPage() {
                   <Card
                     sx={{
                       height: "100%",
-                      display: "flex",
+                      display: "grid",
                       flexDirection: "column",
                     }}
                   >
-                    <CardContent sx={{ flexGrow: 1 }}>
+                    <CardContent
+                      sx={{
+                        flexGrow: 1,
+                        alignSelf: "end",
+                      }}
+                    >
                       <Typography
                         gutterBottom
                         variant="h5"
@@ -146,16 +149,24 @@ function MainPage() {
                       >
                         {helpItem.title}
                       </Typography>
-                      <Typography align="center">
-                        {helpItem.description}
-                      </Typography>
                       <Box
                         textAlign="center"
                         sx={{
                           pt: 2,
                         }}
                       >
-                        <Link href="/form">
+                        <Typography align="center">
+                          {helpItem.description}
+                        </Typography>
+                      </Box>
+                      <Box
+                        textAlign="center"
+                        sx={{
+                          pt: 2,
+                          display: "flexend",
+                        }}
+                      >
+                        <Link href={"/form/" + helpItem.id}>
                           <Button
                             color="info"
                             size="large"
@@ -177,6 +188,7 @@ function MainPage() {
           sx={{
             pt: 10,
             pb: 6,
+            bgcolor: "primary.main",
           }}
         >
           <Container
@@ -204,32 +216,50 @@ function MainPage() {
             >
               <Grid item xs={4} md={4} lg={2}>
                 <a href="https://tabidoo.cloud/">
-                  <img src="images/partners/tabidoo-logo.png" width={150} />
+                  <img
+                    src="images/partners/tabidoo-logo.png"
+                    className={styles.logo}
+                  />
                 </a>
               </Grid>
               <Grid item xs={4} md={4} lg={2}>
                 <a href="https://www.nadacevodafone.cz/">
-                  <img src="images/partners/vodafone-logo.png" width={150} />
+                  <img
+                    src="images/partners/vodafone-logo.png"
+                    className={styles.logo}
+                  />
                 </a>
               </Grid>
               <Grid item xs={4} md={4} lg={2}>
                 <a href="https://www.moudrasovicka.cz/">
-                  <img src="images/partners/ms-logo.png" width={150} />
+                  <img
+                    src="images/partners/ms-logo.png"
+                    className={styles.logo}
+                  />
                 </a>
               </Grid>
               <Grid item xs={4} md={4} lg={2}>
                 <a href="https://cesko.digital/">
-                  <img src="images/partners/cd-logo.png" width={150} />
+                  <img
+                    src="images/partners/cd-logo.png"
+                    className={styles.logo}
+                  />
                 </a>
               </Grid>
               <Grid item xs={4} md={4} lg={2}>
                 <a href="https://www.hellichovka.cz/">
-                  <img src="images/partners/graficka-logo.png" width={150} />
+                  <img
+                    src="images/partners/graficka-logo.png"
+                    className={styles.logo}
+                  />
                 </a>
               </Grid>
               <Grid item xs={4} md={4} lg={2}>
                 <a href="https://www.ssps.cz/">
-                  <img src="images/partners/smich-logo.png" width={150} />
+                  <img
+                    src="images/partners/smich-logo.png"
+                    className={styles.logo}
+                  />
                 </a>
               </Grid>
             </Grid>
@@ -237,7 +267,7 @@ function MainPage() {
         </Box>
         <Box
           sx={{
-            backgroundImage: `url(${bg.src})`,
+            bgcolor: "#2F68C4",
             backgroundSize: "",
             pt: 10,
             pb: 6,
@@ -264,8 +294,7 @@ function MainPage() {
               </Grid>
               <Grid item xs={12} md={12} lg={6}>
                 <Typography
-                  sx={{ fontWeight: "bold", fontSize: "45px" }}
-                  component="h1"
+                  sx={{ fontWeight: "bold" }}
                   variant="h2"
                   align="left"
                   color="secondary.contrastText"
@@ -308,7 +337,7 @@ function MainPage() {
             <Typography
               sx={{
                 fontWeight: "fontWeightMedium",
-                fontSize: "45px",
+
                 fontFamily: "Fira Code",
                 pb: 10,
               }}
@@ -320,7 +349,7 @@ function MainPage() {
             </Typography>
             <Grid container spacing={2}>
               {news.map((myItem) => (
-                <Grid item key={myItem.id} xs={6} md={4}>
+                <Grid item key={myItem.id} xs={12} md={4}>
                   <Card
                     sx={{
                       height: "100%",
@@ -341,7 +370,9 @@ function MainPage() {
                       >
                         {myItem.title.toString()}
                       </Typography>
-                      <Typography>{myItem.date.toString()}</Typography>
+                      <Typography sx={{ color: "warning" }}>
+                        {myItem.date.toString()}
+                      </Typography>
                       <Typography align="left">
                         {myItem.description.toString()}
                       </Typography>
@@ -356,6 +387,7 @@ function MainPage() {
           sx={{
             pt: 8,
             pb: 6,
+            bgcolor: "primary.main",
           }}
         >
           <Container maxWidth="lg">
@@ -367,7 +399,7 @@ function MainPage() {
             >
               <Grid item xs={12} md={12} lg={6}>
                 <Typography
-                  sx={{ fontWeight: "bold", fontSize: "45px" }}
+                  sx={{ fontWeight: "bold" }}
                   component="h1"
                   variant="h2"
                   align="left"

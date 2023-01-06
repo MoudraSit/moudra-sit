@@ -9,8 +9,8 @@ function Step2Form() {
   return (
     <>
       <Typography
-        sx={{ fontWeight: "bold", fontSize: "45px", pb: 6 }}
-        variant="h2"
+        sx={{ fontWeight: "bold", pb: 6 }}
+        variant="h4"
         align="center"
         color="primary.contrastText"
         gutterBottom

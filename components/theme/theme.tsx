@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-export const appTheme = createTheme({
+export let appTheme = createTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
@@ -24,5 +24,34 @@ export const appTheme = createTheme({
   },
   typography: {
     fontFamily: "Fira Sans",
+  },
+});
+
+appTheme = createTheme(appTheme, {
+  typography: {
+    h2: {
+      fontSize: "45px",
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "35px",
+      },
+    },
+    h4: {
+      fontSize: "32px",
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "26px",
+      },
+    },
+    h5: {
+      fontSize: "24px",
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "18px",
+      },
+    },
+    h6: {
+      fontSize: "20px",
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "16px",
+      },
+    },
   },
 });
