@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import BasicForm from "./hook";
+import BasicForm from "../hook";
 
 function Step4Form() {
   const basicForm = BasicForm();

@@ -9,11 +9,11 @@ import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import { Container, Grid, TextField } from "@mui/material";
-import Step1Form from "./step1";
-import Step2Form from "./step2";
-import Step3Form from "./step3";
+import Step1Form from "./steps/step1";
+import Step2Form from "./steps/step2";
+import Step3Form from "./steps/step3";
 import BasicForm from "./hook";
-import Step4Form from "./step4";
+import Step4Form from "./steps/step4";
 import Link from "next/link";
 
 let lastStep = false;
@@ -70,6 +70,7 @@ export default function VerticalLinearStepper() {
 
   const handleReset = () => {
     setActiveStep(0);
+    lastStep = false;
   };
 
   const basicForm = BasicForm();

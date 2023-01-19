@@ -191,7 +191,11 @@ function Step3Form() {
             }}
           />
         }
-        label="Souhlasím se zpracováním osobních údajů"
+        label={
+          <Typography style={{ color: "black" }}>
+            Souhlasím se zpracováním osobních údajů
+          </Typography>
+        }
       />
     </>
   );
