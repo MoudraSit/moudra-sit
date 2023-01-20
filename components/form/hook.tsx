@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { defaultSchema } from "schemas";
+import defaultSchema from "./schemas/defaultSchema";
 
 const BasicForm = () => {
   const formik = useFormik({

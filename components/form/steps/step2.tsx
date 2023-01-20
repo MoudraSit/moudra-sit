@@ -1,7 +1,9 @@
 import { Grid, TextField, Typography } from "@mui/material";
-import BasicForm from "./hook";
-import UploadPicture from "./upload-picture";
-import UploadRecord from "./upload-record";
+import React from "react";
+import BasicForm from "../hook";
+import TextFieldForm from "../model/inputForm";
+import UploadPicture from "../upload-picture";
+import UploadRecord from "../upload-record";
 
 function Step2Form() {
   const basicForm = BasicForm();
@@ -32,23 +34,11 @@ function Step2Form() {
           <UploadRecord />
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <TextFieldForm
             id="description"
-            type="description"
-            onChange={basicForm.handleChange}
-            onBlur={basicForm.handleBlur}
-            value={basicForm.values.description}
             label="Zde popište problém s Vaším zařízením"
-            error={
-              basicForm.touched.description && basicForm.errors.description
-                ? true
-                : false
-            }
-            helperText={
-              basicForm.errors.description && basicForm.touched.description
-                ? basicForm.errors.description
-                : ""
-            }
+            name="description"
+            inputhelper=""
             variant="outlined"
             color="secondary"
             multiline

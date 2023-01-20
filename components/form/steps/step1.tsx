@@ -3,7 +3,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import * as React from "react";
 import dayjs, { Dayjs } from "dayjs";
-import BasicForm from "./hook";
+import BasicForm from "../hook";
+import TextFieldForm from "../model/inputForm";
 
 function Step1Form() {
   const currentYear: number = new Date().getFullYear();
@@ -38,35 +39,14 @@ function Step1Form() {
             textAlign: "center",
           }}
         >
-          <DatePicker
-            views={["year"]}
+          <TextFieldForm
+            id="year"
             label="Rok narození"
-            value={value}
-            maxDate={dayjs(currentYear.toString())}
-            onChange={(newValue) => {
-              setValue(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={
-                  basicForm.touched.year && basicForm.errors.year ? true : false
-                }
-                helperText={
-                  basicForm.errors.year && basicForm.touched.year
-                    ? basicForm.errors.year
-                    : "Napište rok Vašeho narození"
-                }
-                variant="outlined"
-                color="secondary"
-                id="year"
-                type="year"
-                onChange={basicForm.handleChange}
-                onBlur={basicForm.handleBlur}
-                value={basicForm.values.year}
-                required
-              />
-            )}
+            name="year"
+            color="secondary"
+            variant="outlined"
+            inputhelper="Napište rok Vašeho narození"
+            required
           />
         </Box>
       </LocalizationProvider>
