@@ -15,7 +15,7 @@ import Step3Form from "./steps/step3";
 import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 
 interface Values {
   year: string;
@@ -79,7 +79,11 @@ export default function VerticalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const currentValidationSchema = defaultSchema[activeStep];
 
-  function handleSend(index: number, values, actions) {
+  function handleSend(
+    index: number,
+    values: Values,
+    actions: FormikHelpers<Values>
+  ) {
     divRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
