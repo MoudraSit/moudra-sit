@@ -14,7 +14,6 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import newsDummy from "data/news-dummy.json";
 import helpSectionJson from "data/help-section.json";
-import bg from "public/images/home-page/bg2.png";
 import Link from "next/link";
 
 interface INewsSection {
