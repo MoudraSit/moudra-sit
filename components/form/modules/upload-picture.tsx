@@ -26,13 +26,7 @@ function UploadPicture() {
         dataURLKey="data_url"
         acceptType={["jpg", "png"]}
       >
-        {({
-          imageList,
-          onImageUpload,
-          onImageRemove,
-          isDragging,
-          dragProps,
-        }) => (
+        {({ imageList, onImageUpload, onImageRemove, dragProps }) => (
           <>
             <Button
               variant="contained"

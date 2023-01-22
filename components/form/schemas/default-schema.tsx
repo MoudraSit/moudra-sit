@@ -18,12 +18,12 @@ export const defaultSchema = [
     description: yup.string().required("Prosím popište textem Váš problém"),
   }),
   yup.object().shape({
-    surname: yup
+    name: yup
       .string()
       .matches(/^[A-Ža-ž ]*$/, "Prosím vložte jméno ve správném tvaru")
       .max(40)
       .required("Napište Vaše jméno"),
-    givenname: yup
+    surname: yup
       .string()
       .matches(/^[A-Ža-ž ]*$/, "Prosím vložte příjmení ve správném tvaru")
       .max(40)
@@ -45,6 +45,8 @@ export const defaultSchema = [
       )
       .required("Napište Váš kontaktní telefon (např. +420123456789)"),
     email: yup.string().email().required("Napište Váš kontaktní email"),
-    agreement: yup.boolean().oneOf([true], "Souhlas"),
+    agreement: yup
+      .boolean()
+      .oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),
   }),
 ];

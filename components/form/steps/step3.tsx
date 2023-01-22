@@ -1,18 +1,9 @@
-import {
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { FormControlLabel, Grid, Typography } from "@mui/material";
 import React from "react";
-import BasicForm from "../hook";
-import CheckboxForm from "../model/checkboxForm";
-import TextFieldForm from "../model/inputForm";
+import CheckboxForm from "../model/checkbox-form";
+import TextFieldForm from "../model/input-form";
 
 function Step3Form() {
-  const basicForm = BasicForm();
-
   return (
     <>
       <Typography
@@ -36,9 +27,9 @@ function Step3Form() {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextFieldForm
-            id="surname"
+            id="name"
             label="Jméno"
-            name="surname"
+            name="name"
             inputhelper=""
             variant="outlined"
             color="secondary"
@@ -48,9 +39,9 @@ function Step3Form() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextFieldForm
-            id="givenname"
+            id="surname"
             label="Příjmení"
-            name="givenname"
+            name="surname"
             inputhelper=""
             variant="outlined"
             color="secondary"
@@ -113,7 +104,6 @@ function Step3Form() {
           <CheckboxForm
             id="agreement"
             name="agreement"
-            onChange={basicForm.handleChange}
             required
             sx={{
               color: "secondary.main",

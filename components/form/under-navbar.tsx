@@ -1,8 +1,9 @@
 import { PhoneIphone } from "@mui/icons-material";
 import ComputerIcon from "@mui/icons-material/Computer";
 import PrintIcon from "@mui/icons-material/Print";
-import { Grid, Typography } from "@mui/material";
-import { Box, Container } from "@mui/system";
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import React from "react";
 
 type Props = {
   id: string | string[] | undefined;

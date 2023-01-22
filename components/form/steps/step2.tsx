@@ -1,13 +1,10 @@
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
-import BasicForm from "../hook";
-import TextFieldForm from "../model/inputForm";
-import UploadPicture from "../upload-picture";
-import UploadRecord from "../upload-record";
+import TextFieldForm from "../model/input-form";
+import UploadPicture from "../modules/upload-picture";
+import UploadRecord from "../modules/upload-record";
 
 function Step2Form() {
-  const basicForm = BasicForm();
-
   return (
     <>
       <Typography

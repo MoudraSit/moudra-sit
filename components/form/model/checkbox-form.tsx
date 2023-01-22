@@ -4,8 +4,6 @@ import React from "react";
 
 const CheckboxForm = ({ ...props }: { [x: string]: any; name: string }) => {
   const [field, meta] = useField(props);
-  console.log("field", field);
-  console.log("meta", meta);
 
   return (
     <>

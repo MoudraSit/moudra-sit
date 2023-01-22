@@ -5,7 +5,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 // TODO: fix any, generate multiple records
 // Sources: https://www.npmjs.com/package/react-audio-voice-recorder
 
-export default function UploadRecord() {
+function UploadRecord() {
   const [records, setRecords] = React.useState([]);
   const recorderControls = useAudioRecorder();
   const addAudioElement = (blob: any) => {
@@ -18,7 +18,7 @@ export default function UploadRecord() {
     <>
       <AudioRecorder
         onRecordingComplete={(blob) => addAudioElement(blob)}
-        recorderControls={recorderControls}
+        //recorderControls={recorderControls}
       />
       {({}) => (
         <Button
@@ -37,3 +37,5 @@ export default function UploadRecord() {
     </>
   );
 }
+
+export default UploadRecord;
