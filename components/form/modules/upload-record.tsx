@@ -20,20 +20,22 @@ function UploadRecord() {
         onRecordingComplete={(blob) => addAudioElement(blob)}
         //recorderControls={recorderControls}
       />
-      {({}) => (
-        <Button
-          variant="contained"
-          onClick={recorderControls.stopRecording}
-          sx={{
-            mt: 1,
-            mr: 1,
-            bgcolor: "info.main",
-            color: "white",
-          }}
-        >
-          Zastavit nahrávání
-        </Button>
-      )}
+      {/* {({}) => (
+        <>
+          <Button
+            variant="contained"
+            onClick={recorderControls.stopRecording}
+            sx={{
+              mt: 1,
+              mr: 1,
+              bgcolor: "info.main",
+              color: "white",
+            }}
+          >
+            Zastavit nahrávání
+          </Button>
+        </>
+      )} */}
     </>
   );
 }

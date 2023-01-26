@@ -16,9 +16,10 @@ import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
 import { Form, Formik, FormikHelpers } from "formik";
+import ApiRequest from "./api-request";
 
-interface Values {
-  year: string;
+export interface Values {
+  year: number;
   description: string;
   name: string;
   surname: string;
@@ -47,7 +48,7 @@ const steps = [
 ];
 
 const intial = {
-  year: "",
+  year: 0,
   description: "",
   name: "",
   surname: "",
@@ -79,7 +80,7 @@ export default function VerticalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const currentValidationSchema = defaultSchema[activeStep];
 
-  function handleSend(
+  async function handleSend(
     index: number,
     values: Values,
     actions: FormikHelpers<Values>
@@ -93,10 +94,10 @@ export default function VerticalLinearStepper() {
     if (index === steps.length - 1) {
       lastStep = true;
       alert(JSON.stringify(values, null, 2));
+      await ApiRequest(values);
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      console.log("tu");
       console.log(values);
       actions.setTouched({});
       actions.setSubmitting(false);

@@ -33,6 +33,7 @@ function Step1Form() {
           id="year"
           label="Rok narození"
           name="year"
+          type="number"
           color="secondary"
           variant="outlined"
           inputhelper="Napište rok Vašeho narození"
