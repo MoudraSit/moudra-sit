@@ -1,4 +1,5 @@
 import * as React from "react";
+import styles from "./vertical-stepper.module.css";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -16,15 +17,17 @@ import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
 import { Form, Formik, FormikHelpers } from "formik";
-import ApiRequest from "./api-request";
+import ApiRequest from "./api-request-senior";
+import ApiRequestSenior from "./api-request-senior";
+import ApiRequestRequirment from "./api-request-requirment";
 
-export interface Values {
+export interface IValues {
   year: number;
   description: string;
   name: string;
   surname: string;
   zipCode: string;
-  countryCode: string;
+  plusCode: string;
   phoneNumber: string;
   email: string;
   agreement: boolean;
@@ -48,12 +51,12 @@ const steps = [
 ];
 
 const intial = {
-  year: 0,
+  year: "",
   description: "",
   name: "",
   surname: "",
+  plusCode: "+420",
   zipCode: "",
-  countryCode: "+420",
   phoneNumber: "",
   email: "",
   agreement: false,
@@ -82,8 +85,8 @@ export default function VerticalLinearStepper() {
 
   async function handleSend(
     index: number,
-    values: Values,
-    actions: FormikHelpers<Values>
+    values: IValues,
+    actions: FormikHelpers<IValues>
   ) {
     divRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -94,7 +97,12 @@ export default function VerticalLinearStepper() {
     if (index === steps.length - 1) {
       lastStep = true;
       alert(JSON.stringify(values, null, 2));
-      await ApiRequest(values);
+
+      const idSenior = await ApiRequestSenior(values);
+
+      if (idSenior != null) {
+        await ApiRequestRequirment(values, idSenior);
+      }
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -105,7 +113,7 @@ export default function VerticalLinearStepper() {
   }
 
   const handleReset = () => {
-    setActiveStep(0);
+    //setActiveStep(0);
     lastStep = false;
   };
 
@@ -122,12 +130,12 @@ export default function VerticalLinearStepper() {
           <Formik
             initialValues={intial}
             validationSchema={currentValidationSchema}
-            onSubmit={(values: Values, actions) => {
+            onSubmit={(values: IValues, actions) => {
               handleSend(activeStep, values, actions);
             }}
           >
             {({ isSubmitting }) => (
-              <Form>
+              <Form autoComplete="on">
                 <Container maxWidth="xl">
                   <Stepper activeStep={activeStep} orientation="vertical">
                     {steps.map((step, index) => (
@@ -263,6 +271,7 @@ export default function VerticalLinearStepper() {
                           </Typography>
                           <Link href="/">
                             <Button
+                              onClick={handleReset}
                               type="submit"
                               variant="contained"
                               sx={{

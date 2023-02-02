@@ -15,9 +15,28 @@ export const defaultSchema = [
       .typeError("Napište rok Vašeho narození"),
   }),
   yup.object().shape({
+    year: yup
+      .number()
+      .min(1900, "Napište správný rok Vašeho narození")
+      .max(
+        new Date().getFullYear() - 60,
+        "Služba je určena pouze pro seniory s věkem 60 let a více"
+      )
+      .required("Napište rok Vašeho narození")
+      .typeError("Napište rok Vašeho narození"),
     description: yup.string().required("Prosím popište textem Váš problém"),
   }),
   yup.object().shape({
+    year: yup
+      .number()
+      .min(1900, "Napište správný rok Vašeho narození")
+      .max(
+        new Date().getFullYear() - 60,
+        "Služba je určena pouze pro seniory s věkem 60 let a více"
+      )
+      .required("Napište rok Vašeho narození")
+      .typeError("Napište rok Vašeho narození"),
+    description: yup.string().required("Prosím popište textem Váš problém"),
     name: yup
       .string()
       .matches(/^[A-Ža-ž ]*$/, "Prosím vložte jméno ve správném tvaru")
@@ -33,7 +52,7 @@ export const defaultSchema = [
       .length(5, "PSČ musí mít délku 5")
       .matches(/^[0-9]{5}/, "Špatný tvar PSČ")
       .required("Napište Vaše PSČ"),
-    countryCode: yup
+    plusCode: yup
       .string()
       .matches(/^(\+420|\+421)$/, "Špatné číslo předvolby")
       .required("Napište správný tvar předvolby (např. +420)"),
@@ -41,9 +60,51 @@ export const defaultSchema = [
       .string()
       .matches(
         phoneRegExp,
-        "Napište správný tvar telefonního čísla (např. +420123456789)"
+        "Napište správný tvar telefonního čísla (např. 123456789)"
       )
-      .required("Napište Váš kontaktní telefon (např. +420123456789)"),
+      .required("Napište Váš kontaktní telefon (např. 123456789)"),
+    email: yup.string().email().required("Napište Váš kontaktní email"),
+    agreement: yup
+      .boolean()
+      .oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),
+  }),
+  yup.object().shape({
+    year: yup
+      .number()
+      .min(1900, "Napište správný rok Vašeho narození")
+      .max(
+        new Date().getFullYear() - 60,
+        "Služba je určena pouze pro seniory s věkem 60 let a více"
+      )
+      .required("Napište rok Vašeho narození")
+      .typeError("Napište rok Vašeho narození"),
+    description: yup.string().required("Prosím popište textem Váš problém"),
+    name: yup
+      .string()
+      .matches(/^[A-Ža-ž ]*$/, "Prosím vložte jméno ve správném tvaru")
+      .max(40)
+      .required("Napište Vaše jméno"),
+    surname: yup
+      .string()
+      .matches(/^[A-Ža-ž ]*$/, "Prosím vložte příjmení ve správném tvaru")
+      .max(40)
+      .required("Napište Vaše příjmení"),
+    zipCode: yup
+      .string()
+      .length(5, "PSČ musí mít délku 5")
+      .matches(/^[0-9]{5}/, "Špatný tvar PSČ")
+      .required("Napište Vaše PSČ"),
+    plusCode: yup
+      .string()
+      .matches(/^(\+420|\+421)$/, "Špatné číslo předvolby")
+      .required("Napište správný tvar předvolby (např. +420)"),
+    phoneNumber: yup
+      .string()
+      .matches(
+        phoneRegExp,
+        "Napište správný tvar telefonního čísla (např. 123456789)"
+      )
+      .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email().required("Napište Váš kontaktní email"),
     agreement: yup
       .boolean()

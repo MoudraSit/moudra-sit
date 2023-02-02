@@ -2,6 +2,7 @@ import { FormControlLabel, Grid, Typography } from "@mui/material";
 import React from "react";
 import CheckboxForm from "../model/checkbox-form";
 import TextFieldForm from "../model/input-form";
+import PhoneCodeFieldForm from "../model/phone-code-form ";
 
 function Step3Form() {
   return (
@@ -62,10 +63,10 @@ function Step3Form() {
           />
         </Grid>
         <Grid item xs={12} sm={2}>
-          <TextFieldForm
-            id="countryCode"
+          <PhoneCodeFieldForm
+            id="plusCode"
             label="Předvolba"
-            name="countryCode"
+            name="plusCode"
             inputhelper=""
             variant="outlined"
             color="secondary"
