@@ -1,5 +1,4 @@
-import ApiAuthorization from "./api-authorization";
-import { IValues } from "./vertical-stepper";
+import { IValues } from "../vertical-stepper";
 
 async function ApiRequestRequirment(values: IValues, idSenior: string) {
   try {
@@ -17,7 +16,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
         }),
         headers: {
           "Content-Type": "application/json",
-          Authorization: ApiAuthorization(),
+          Authorization: process.env.NEXT_PUBLIC_TABIDOO_API_KEY as string,
         },
       }
     );

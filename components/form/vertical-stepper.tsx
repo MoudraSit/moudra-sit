@@ -17,9 +17,9 @@ import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
 import { Form, Formik, FormikHelpers } from "formik";
-import ApiRequest from "./api-request-senior";
-import ApiRequestSenior from "./api-request-senior";
-import ApiRequestRequirment from "./api-request-requirment";
+import ApiRequest from "./api/api-request-senior";
+import ApiRequestSenior from "./api/api-request-senior";
+import ApiRequestRequirment from "./api/api-request-requirment";
 
 export interface IValues {
   year: number;
@@ -100,7 +100,7 @@ export default function VerticalLinearStepper() {
 
       const idSenior = await ApiRequestSenior(values);
 
-      if (idSenior != null) {
+      if (idSenior) {
         await ApiRequestRequirment(values, idSenior);
       }
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
