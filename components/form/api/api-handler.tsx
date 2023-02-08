@@ -12,16 +12,16 @@ export async function SeniorTabidooRequest(
         method: "POST",
         //TODO: error handling pro spatny vstup pri volani na API Tabidoo, na frontend vypsat, ze maji operaci opakovat a ne ze byl pozadavek zaslan
 
-        body: JSON.stringify({
-          fields: {
-            jmeno: "Jan",
-            prijmeni: "Klan",
-            PSC: "60200",
-            telefon: "777888999",
-            rokNarozeni: 1912,
-          },
-        }),
-        // body: JSON.stringify(body),
+        // body: JSON.stringify({
+        //   fields: {
+        //     jmeno: "Jan",
+        //     prijmeni: "Klan",
+        //     PSC: "60200",
+        //     telefon: "777888999",
+        //     rokNarozeni: "1912",
+        //   },
+        // }),
+        body: body,
         headers: {
           "Content-Type": "application/json",
           Authorization: apiToken,
