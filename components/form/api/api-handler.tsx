@@ -56,7 +56,7 @@ export async function RequirmentTabidooRequest(
       "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/dotaz/data",
       {
         method: "POST",
-        body: body,
+        body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
           Authorization: apiToken,

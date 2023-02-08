@@ -17,7 +17,6 @@ import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
 import { Form, Formik, FormikHelpers } from "formik";
-import ApiRequest from "./api/proxy-request-senior";
 import ApiRequestSenior from "./api/proxy-request-senior";
 import ApiRequestRequirment from "./api/proxy-request-requirment";
 
@@ -51,7 +50,7 @@ const steps = [
 ];
 
 const intial = {
-  year: "",
+  year: 1900,
   description: "",
   name: "",
   surname: "",
@@ -62,14 +61,21 @@ const intial = {
   agreement: false,
 };
 
-function renderStepContent(step: number) {
+function renderStepContent(
+  step: number,
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => void
+) {
   switch (step) {
     case 0:
       return <Step1Form />;
     case 1:
       return <Step2Form />;
     case 2:
-      return <Step3Form />;
+      return <Step3Form setFieldValue={setFieldValue} />;
     case 3:
       return <Step4Form />;
     default:
@@ -96,7 +102,7 @@ export default function VerticalLinearStepper() {
 
     if (index === steps.length - 1) {
       lastStep = true;
-      alert(JSON.stringify(values, null, 2));
+      //alert(JSON.stringify(values, null, 2));
 
       const idSenior = await ApiRequestSenior(values);
 
@@ -134,7 +140,7 @@ export default function VerticalLinearStepper() {
               handleSend(activeStep, values, actions);
             }}
           >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, setFieldValue }) => (
               <Form autoComplete="on">
                 <Container maxWidth="xl">
                   <Stepper activeStep={activeStep} orientation="vertical">
@@ -186,7 +192,7 @@ export default function VerticalLinearStepper() {
                                 }}
                               >
                                 <Container maxWidth="md">
-                                  <>{renderStepContent(index)}</>
+                                  <>{renderStepContent(index, setFieldValue)}</>
                                   <Box
                                     sx={{
                                       bgcolor: "primary.main",

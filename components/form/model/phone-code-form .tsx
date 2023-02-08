@@ -11,6 +11,7 @@ import { useField } from "formik";
 import React from "react";
 
 const PhoneCodeFieldForm = ({
+  setFieldValue,
   inputhelper,
   ...props
 }: {
@@ -22,25 +23,27 @@ const PhoneCodeFieldForm = ({
   // console.log("field", field);
   // console.log("meta", meta);
 
-  const [countryCode, setCountryCode] = React.useState("");
+  const [countryCode, setCountryCode] = React.useState("+420");
 
   const handleChange = (event: SelectChangeEvent) => {
-    setCountryCode(event.target.value);
+    console.log(event.target.value);
+    setCountryCode(event.target.value as string);
+    setFieldValue("plusCode", event.target.value);
   };
 
   return (
     <>
-      <FormControl {...props} {...field} sx={{ minWidth: 120 }}>
-        <InputLabel id="demo-select-small">Předvolba</InputLabel>
+      <FormControl {...props}>
+        <InputLabel id="phone-code-select">Předvolba</InputLabel>
         <Select
-          labelId="demo-select-small"
-          id="plusCode"
+          {...field}
+          labelId="phone-code-select"
           value={countryCode}
           label="Předvolba"
           onChange={handleChange}
         >
-          <MenuItem value={"+420"}>+420</MenuItem>
-          <MenuItem value={"+421"}>+421</MenuItem>
+          <MenuItem value={"+420"}>+420 (Česko)</MenuItem>
+          <MenuItem value={"+421"}>+421 (Slovensko)</MenuItem>
         </Select>
       </FormControl>
     </>

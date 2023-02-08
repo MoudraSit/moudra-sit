@@ -54,7 +54,6 @@ export const defaultSchema = [
       .required("Napište Vaše PSČ"),
     plusCode: yup
       .string()
-      .matches(/^(\+420|\+421)$/, "Špatné číslo předvolby")
       .required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
@@ -96,7 +95,6 @@ export const defaultSchema = [
       .required("Napište Vaše PSČ"),
     plusCode: yup
       .string()
-      .matches(/^(\+420|\+421)$/, "Špatné číslo předvolby")
       .required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()

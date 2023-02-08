@@ -4,7 +4,7 @@ import CheckboxForm from "../model/checkbox-form";
 import TextFieldForm from "../model/input-form";
 import PhoneCodeFieldForm from "../model/phone-code-form ";
 
-function Step3Form() {
+function Step3Form(props: any) {
   return (
     <>
       <Typography
@@ -29,25 +29,27 @@ function Step3Form() {
         <Grid item xs={12} sm={6}>
           <TextFieldForm
             id="name"
-            label="Jméno"
+            label="Jméno (včetně háčků a čárek)"
             name="name"
             inputhelper=""
             variant="outlined"
             color="secondary"
             fullWidth
             required
+            inputProps={{ style: { textTransform: "capitalize" } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextFieldForm
             id="surname"
-            label="Příjmení"
+            label="Příjmení (včetně háčků a čárek)"
             name="surname"
             inputhelper=""
             variant="outlined"
             color="secondary"
             fullWidth
             required
+            inputProps={{ style: { textTransform: "capitalize" } }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -62,7 +64,7 @@ function Step3Form() {
             required
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={4}>
           <PhoneCodeFieldForm
             id="plusCode"
             label="Předvolba"
@@ -72,9 +74,10 @@ function Step3Form() {
             color="secondary"
             fullWidth
             required
+            setFieldValue={props.setFieldValue}
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={8}>
           <TextFieldForm
             id="phoneNumber"
             label="Kontaktní telefon"
@@ -86,7 +89,7 @@ function Step3Form() {
             required
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <TextFieldForm
             id="email"
             label="Kontaktní email"

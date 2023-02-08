@@ -38,8 +38,9 @@ async function ApiRequestSenior(props: IValues) {
     const jsonObject: IResponse = await response.json(); //extract JSON from the http response
 
     console.log(jsonObject);
-    //console.log(myJson.data.id);
+    console.log(jsonObject.data.id);
 
+    // return id of senior object
     return jsonObject.data.id;
   } catch (error) {
     console.log("There was an error", error);
