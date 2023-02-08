@@ -21,7 +21,7 @@ export async function SeniorTabidooRequest(
         //     rokNarozeni: "1912",
         //   },
         // }),
-        body: body,
+        body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
           Authorization: apiToken,
