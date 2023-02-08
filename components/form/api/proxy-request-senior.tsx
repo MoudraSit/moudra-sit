@@ -20,7 +20,7 @@ export interface IResponse {
 // call proxy API
 async function ApiRequestSenior(props: IValues) {
   try {
-    const response = await fetch("/api/tabidoo", {
+    const response = await fetch("/api/tabidoo-senior", {
       method: "POST",
       body: JSON.stringify({
         fields: {

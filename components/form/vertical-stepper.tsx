@@ -17,9 +17,9 @@ import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
 import { Form, Formik, FormikHelpers } from "formik";
-import ApiRequest from "./api/api-request-senior";
-import ApiRequestSenior from "./api/api-request-senior";
-import ApiRequestRequirment from "./api/api-request-requirment";
+import ApiRequest from "./api/proxy-request-senior";
+import ApiRequestSenior from "./api/proxy-request-senior";
+import ApiRequestRequirment from "./api/proxy-request-requirment";
 
 export interface IValues {
   year: number;

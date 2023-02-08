@@ -1,5 +1,5 @@
+import { RequirmentTabidooRequest } from "components/form/api/api-handler";
 import { NextApiRequest, NextApiResponse } from "next";
-import SendTabidooRequest from "components/form/api/api-request";
 
 async function handler(
   request: NextApiRequest,
@@ -20,7 +20,7 @@ async function handler(
   }
 
   try {
-    const responseAPI = await SendTabidooRequest(
+    const responseAPI = await RequirmentTabidooRequest(
       process.env.TABIDOO_API_KEY as string,
       body
     );
