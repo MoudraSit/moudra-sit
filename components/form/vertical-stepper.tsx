@@ -127,7 +127,7 @@ export default function VerticalLinearStepper() {
 
     if (index === steps.length - 1) {
       lastStep = true;
-      alert(JSON.stringify(values, null, 2));
+      //alert(JSON.stringify(values, null, 2));
 
       let idRequirment = null;
 

@@ -29,28 +29,12 @@ function Step2Form(props: any) {
   const checkboxValidation = () => {
     if (checkedPhone || checkedPc || checkedPrinter || checkedOther) {
       props.setFieldValue("checkbox_selection", true);
-      console.log("yes");
+      //console.log("yes");
     } else {
       props.setFieldValue("checkbox_selection", false);
-      console.log("no");
+      //console.log("no");
     }
   };
-
-  // const handleChangePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCheckedPhone(event.target.checked);
-  // };
-
-  // const handleChangePc = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCheckedPc(event.target.checked);
-  // };
-
-  // const handleChangePrinter = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCheckedPrinter(event.target.checked);
-  // };
-
-  // const handleChangeOther = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCheckedOther(event.target.checked);
-  // };
 
   return (
     <>

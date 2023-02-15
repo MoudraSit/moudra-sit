@@ -22,13 +22,13 @@ function Step5Form() {
         Prosím, ještě jednou si projděte vyplněné údaje a dobře je zkontrolujte
       </Typography>
       <Typography
-        sx={{ pb: 6 }}
+        sx={{ pb: 6, fontWeight: "bold" }}
         variant="h5"
         align="center"
         color="primary.contrastText"
         paragraph
       >
-        (např. jestli jsou jméno a příjmení napsané včetně háčků a čárek, ...)
+        (např. jestli je Vaše jméno a příjmení napsáno s háčky a čárkami)
       </Typography>
       <Typography
         sx={{ pb: 6 }}

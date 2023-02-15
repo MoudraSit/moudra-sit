@@ -65,7 +65,7 @@ function Step3Form() {
             required
           />
         </Grid>
-        <Grid item xs={12} md={8}>
+        {/* <Grid item xs={12} md={8}>
           <Typography
             variant="h6"
             align="left"
@@ -90,7 +90,7 @@ function Step3Form() {
         </Grid>
         <Grid item xs={12} md={4}>
           <UploadPicture />
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
