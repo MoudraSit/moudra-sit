@@ -7,7 +7,7 @@ async function handler(
 ): Promise<void> {
   const { body } = request;
 
-  console.log("Executing /api/tabidoo handler.");
+  console.log("Executing /api/tabidoo-requirment handler.");
 
   if (request.method !== "POST") {
     response.status(400).send("Use POST method");

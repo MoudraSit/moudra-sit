@@ -1,6 +1,6 @@
 import { IValues } from "../vertical-stepper";
 
-export interface IResponse {
+export interface ISeniorResponse {
   data: {
     created: string;
     fields: {
@@ -35,7 +35,7 @@ async function ApiRequestSenior(props: IValues) {
         "Content-Type": "application/json",
       },
     });
-    const jsonObject: IResponse = await response.json(); //extract JSON from the http response
+    const jsonObject: ISeniorResponse = await response.json(); //extract JSON from the http response
 
     console.log(jsonObject);
     console.log(jsonObject.data.id);

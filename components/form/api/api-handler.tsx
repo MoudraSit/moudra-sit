@@ -1,10 +1,60 @@
-import { IResponse } from "./proxy-request-senior";
+import { ISeniorResponse } from "./proxy-request-senior";
+
+export interface IFilterSenior {
+  filter: {
+    telefon: string;
+    prijmeni: string;
+  };
+}
+
+export async function GetSeniorTabidooRequest(
+  apiToken: string,
+  body: IFilterSenior
+): Promise<ISeniorResponse | null> {
+  try {
+    console.log(
+      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=telefon(eq)" +
+        body.filter.telefon +
+        "%2Cprijmeni(eq)" +
+        body.filter.prijmeni
+    );
+
+    const response = await fetch(
+      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=telefon(eq)" +
+        body.filter.telefon +
+        "%2Cprijmeni(eq)" +
+        body.filter.prijmeni,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: apiToken,
+        },
+      }
+    );
+
+    // parse response body to json
+    const jsonObject: ISeniorResponse = await response.json();
+
+    // check if response contains error send from Tabidoo API
+    if (JSON.stringify(jsonObject).includes("errors")) {
+      throw new Error(JSON.stringify(jsonObject));
+    }
+
+    return jsonObject;
+
+    // error handling
+  } catch (error) {
+    console.log("There was an error on Tabidoo API call", error);
+    return null;
+  }
+}
 
 // Tabidoo API request for senior table
 export async function SeniorTabidooRequest(
   apiToken: string,
   body: any
-): Promise<IResponse | null> {
+): Promise<ISeniorResponse | null> {
   try {
     const response = await fetch(
       "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data",
@@ -30,7 +80,7 @@ export async function SeniorTabidooRequest(
     );
 
     // parse response body to json
-    const jsonObject: IResponse = await response.json();
+    const jsonObject: ISeniorResponse = await response.json();
 
     // check if response contains error send from Tabidoo API
     if (JSON.stringify(jsonObject).includes("errors")) {
@@ -50,7 +100,7 @@ export async function SeniorTabidooRequest(
 export async function RequirmentTabidooRequest(
   apiToken: string,
   body: any
-): Promise<IResponse | null> {
+): Promise<ISeniorResponse | null> {
   try {
     const response = await fetch(
       "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/dotaz/data",
@@ -63,7 +113,38 @@ export async function RequirmentTabidooRequest(
         },
       }
     );
-    const jsonObject: IResponse = await response.json();
+    const jsonObject: ISeniorResponse = await response.json();
+
+    // check if response contains error send from Tabidoo API
+    if (JSON.stringify(jsonObject).includes("errors")) {
+      throw new Error(JSON.stringify(jsonObject));
+    }
+
+    return jsonObject;
+  } catch (error) {
+    console.log("There was an error on Tabidoo API call", error);
+    return null;
+  }
+}
+
+// Tabidoo API request for requirment table
+export async function CategoryTabidooRequest(
+  apiToken: string,
+  body: any
+): Promise<ISeniorResponse | null> {
+  try {
+    const response = await fetch(
+      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/kategorie/data",
+      {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: apiToken,
+        },
+      }
+    );
+    const jsonObject: ISeniorResponse = await response.json();
 
     // check if response contains error send from Tabidoo API
     if (JSON.stringify(jsonObject).includes("errors")) {

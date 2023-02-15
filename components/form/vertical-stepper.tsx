@@ -17,10 +17,19 @@ import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
 import { Form, Formik, FormikHelpers } from "formik";
+import Step5Form from "./steps/step5";
 import ApiRequestSenior from "./api/proxy-request-senior";
 import ApiRequestRequirment from "./api/proxy-request-requirment";
+import ApiRequestCategory from "./api/proxy-request-category";
+import ApiGetRequestSenior from "./api/proxy-request-get-senior";
 
 export interface IValues {
+  requirmentName: string;
+  phoneCheckbox: boolean;
+  pcCheckbox: boolean;
+  printerCheckbox: boolean;
+  otherCheckbox: boolean;
+  checkbox_selection: boolean;
   year: number;
   description: string;
   name: string;
@@ -34,9 +43,17 @@ export interface IValues {
 
 let lastStep = false;
 
+const pcCategory = "Počítač";
+const phoneCategory = "Mobil";
+const printerCategory = "Tiskárna";
+const otherCategory = "Jiné IT zařízení";
+
 const steps = [
   {
     label: "Váš rok narození",
+  },
+  {
+    label: "S čím potřebujete pomoct",
   },
   {
     label: "Popis Vašeho problému",
@@ -50,6 +67,12 @@ const steps = [
 ];
 
 const intial = {
+  requirmentName: "",
+  phoneCheckbox: false,
+  pcCheckbox: false,
+  printerCheckbox: false,
+  otherCheckbox: false,
+  checkbox_selection: false,
   year: 1900,
   description: "",
   name: "",
@@ -73,11 +96,13 @@ function renderStepContent(
     case 0:
       return <Step1Form />;
     case 1:
-      return <Step2Form />;
+      return <Step2Form setFieldValue={setFieldValue} />;
     case 2:
-      return <Step3Form setFieldValue={setFieldValue} />;
+      return <Step3Form />;
     case 3:
-      return <Step4Form />;
+      return <Step4Form setFieldValue={setFieldValue} />;
+    case 4:
+      return <Step5Form />;
     default:
       return <div>Not Found</div>;
   }
@@ -102,13 +127,42 @@ export default function VerticalLinearStepper() {
 
     if (index === steps.length - 1) {
       lastStep = true;
-      //alert(JSON.stringify(values, null, 2));
+      alert(JSON.stringify(values, null, 2));
 
-      const idSenior = await ApiRequestSenior(values);
+      let idRequirment = null;
 
-      if (idSenior) {
-        await ApiRequestRequirment(values, idSenior);
+      // GET method to check if the record is already in the table
+      let idSenior = await ApiGetRequestSenior(values);
+
+      // POST method to create new senior record
+      if (!idSenior) {
+        idSenior = await ApiRequestSenior(values);
       }
+
+      // POST method to create new requirment record
+      if (idSenior) {
+        idRequirment = await ApiRequestRequirment(values, idSenior);
+      }
+
+      // POST method to connect requirment to multiple categories
+      if (idRequirment) {
+        if (values.phoneCheckbox) {
+          await ApiRequestCategory(values, idRequirment, phoneCategory);
+        }
+
+        if (values.pcCheckbox) {
+          await ApiRequestCategory(values, idRequirment, pcCategory);
+        }
+
+        if (values.printerCheckbox) {
+          await ApiRequestCategory(values, idRequirment, printerCategory);
+        }
+
+        if (values.otherCheckbox) {
+          await ApiRequestCategory(values, idRequirment, otherCategory);
+        }
+      }
+
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -173,7 +227,8 @@ export default function VerticalLinearStepper() {
                         active={
                           lastStep
                             ? index === activeStep
-                            : index === activeStep - 3 ||
+                            : index === activeStep - 4 ||
+                              index === activeStep - 3 ||
                               index === activeStep - 2 ||
                               index === activeStep - 1 ||
                               index === activeStep

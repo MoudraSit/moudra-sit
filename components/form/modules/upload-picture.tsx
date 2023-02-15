@@ -44,7 +44,12 @@ function UploadPicture() {
             {imageList.map((image, index) => (
               <>
                 <div key={index} className="image-item">
-                  <img src={image.data_url} alt="" width="100" />
+                  <img
+                    src={image.data_url}
+                    alt=""
+                    max-width="300px"
+                    height="auto"
+                  />
                   <div className="image-item__btn-wrapper">
                     <Button
                       variant="contained"

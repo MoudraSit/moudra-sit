@@ -24,6 +24,34 @@ export const defaultSchema = [
       )
       .required("Napište rok Vašeho narození")
       .typeError("Napište rok Vašeho narození"),
+    phoneCheckbox: yup.boolean(),
+    pcCheckbox: yup.boolean(),
+    printerCheckbox: yup.boolean(),
+    otherCheckbox: yup.boolean(),
+    checkbox_selection: yup
+      .boolean()
+      .required()
+      .oneOf([true], "At least one checkbox is to be selected"),
+  }),
+  yup.object().shape({
+    year: yup
+      .number()
+      .min(1900, "Napište správný rok Vašeho narození")
+      .max(
+        new Date().getFullYear() - 60,
+        "Služba je určena pouze pro seniory s věkem 60 let a více"
+      )
+      .required("Napište rok Vašeho narození")
+      .typeError("Napište rok Vašeho narození"),
+    phoneCheckbox: yup.boolean(),
+    pcCheckbox: yup.boolean(),
+    printerCheckbox: yup.boolean(),
+    otherCheckbox: yup.boolean(),
+    checkbox_selection: yup
+      .boolean()
+      .required()
+      .oneOf([true], "At least one checkbox is to be selected"),
+    requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
   }),
   yup.object().shape({
@@ -36,6 +64,14 @@ export const defaultSchema = [
       )
       .required("Napište rok Vašeho narození")
       .typeError("Napište rok Vašeho narození"),
+    phoneCheckbox: yup.boolean(),
+    pcCheckbox: yup.boolean(),
+    printerCheckbox: yup.boolean(),
+    otherCheckbox: yup.boolean(),
+    checkbox_selection: yup
+      .boolean()
+      .required("At least one checkbox is to be selected"),
+    requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
     name: yup
       .string()
@@ -77,6 +113,14 @@ export const defaultSchema = [
       )
       .required("Napište rok Vašeho narození")
       .typeError("Napište rok Vašeho narození"),
+    phoneCheckbox: yup.boolean(),
+    pcCheckbox: yup.boolean(),
+    printerCheckbox: yup.boolean(),
+    otherCheckbox: yup.boolean(),
+    checkbox_selection: yup
+      .boolean()
+      .required("At least one checkbox is to be selected"),
+    requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
     name: yup
       .string()

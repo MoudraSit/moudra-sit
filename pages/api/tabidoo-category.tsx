@@ -1,4 +1,4 @@
-import { SeniorTabidooRequest } from "components/form/api/api-handler";
+import { CategoryTabidooRequest } from "components/form/api/api-handler";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(
@@ -7,7 +7,7 @@ async function handler(
 ): Promise<void> {
   const { body } = request;
 
-  console.log("Executing /api/tabidoo-senior handler.");
+  console.log("Executing /api/tabidoo-category handler.");
 
   if (request.method !== "POST") {
     response.status(400).send("Use POST method");
@@ -20,7 +20,7 @@ async function handler(
   }
 
   try {
-    const responseAPI = await SeniorTabidooRequest(
+    const responseAPI = await CategoryTabidooRequest(
       process.env.TABIDOO_API_KEY as string,
       body
     );
