@@ -32,10 +32,10 @@ function Step5Form(props: { values: IValues }) {
     ),
     createData(
       "S čím je problém",
-      (props.values.phoneCheckbox ? "Mobilní telefon" : "") +
-        (props.values.pcCheckbox ? "Počítač" : "") +
-        (props.values.printerCheckbox ? "Tiskárna" : "") +
-        (props.values.otherCheckbox ? "Jiné IT zařízení" : ""),
+      (props.values.phoneCheckbox ? " Mobilní telefon" : "") +
+        (props.values.pcCheckbox ? " Počítač" : "") +
+        (props.values.printerCheckbox ? " Tiskárna" : "") +
+        (props.values.otherCheckbox ? " Jiné IT zařízení" : ""),
       "Upravit",
       "section2"
     ),

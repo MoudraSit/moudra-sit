@@ -30,7 +30,7 @@ export interface IValues {
   printerCheckbox: boolean;
   otherCheckbox: boolean;
   checkbox_selection: boolean;
-  year: number;
+  year: string;
   description: string;
   name: string;
   surname: string;
@@ -73,7 +73,7 @@ const intial = {
   printerCheckbox: false,
   otherCheckbox: false,
   checkbox_selection: false,
-  year: undefined,
+  year: "",
   description: "",
   name: "",
   surname: "",
