@@ -154,7 +154,7 @@ function Step4Form(props: any) {
             }
             label={
               <Link
-                color="black"
+                color="#000000"
                 href="http://test.moudrasit.cz/wp-content/uploads/2023/02/Zasady-ochrany-osobnich-udaju_Moudra-Sit.pdf"
                 rel="noopener noreferrer"
                 target="_blank"
