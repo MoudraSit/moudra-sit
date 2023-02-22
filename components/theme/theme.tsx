@@ -10,12 +10,11 @@ export let appTheme = createTheme({
     },
     secondary: {
       light: "#5884b9",
-      main: "#092349",
+      main: "#028790",
       contrastText: "#ffffff",
     },
-
     warning: { main: "#D20000" },
-    info: { main: "#FF5031" },
+    info: { main: "#000000" },
     contrastThreshold: 3,
     // Used by the functions below to shift a color's luminance by approximately
     // two indexes within its tonal palette.
@@ -23,7 +22,7 @@ export let appTheme = createTheme({
     tonalOffset: 0.2,
   },
   typography: {
-    fontFamily: "Fira Sans",
+    fontFamily: "Roboto",
   },
 });
 

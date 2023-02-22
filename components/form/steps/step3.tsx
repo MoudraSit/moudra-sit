@@ -1,3 +1,4 @@
+import { WorkHistoryTwoTone } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 import TextFieldForm from "../model/input-form";
@@ -7,6 +8,7 @@ import UploadRecord from "../modules/upload-record";
 function Step3Form() {
   return (
     <>
+      <div id="section3" />
       <Typography
         sx={{ fontWeight: "bold", pb: 6 }}
         variant="h4"
@@ -23,7 +25,8 @@ function Step3Form() {
           color="primary.contrastText"
           paragraph
         >
-          Nazvěte Váš problém několika slovy
+          Popište Váš problém několika slovy (např. nefunguje wifi, nejede
+          tiskárna)
         </Typography>
       </Grid>
 
@@ -34,9 +37,14 @@ function Step3Form() {
           name="requirmentName"
           inputhelper=""
           variant="outlined"
-          color="secondary"
+          color="info"
           fullWidth
           required
+          inputProps={{
+            style: {
+              WebkitBoxShadow: "0 0 0 1000px white inset",
+            },
+          }}
         />
       </Grid>
       <Grid item xs={12}>
@@ -58,11 +66,22 @@ function Step3Form() {
             name="description"
             inputhelper=""
             variant="outlined"
-            color="secondary"
+            color="info"
             multiline
             rows={5}
             fullWidth
             required
+            sx={{
+              ".MuiInputBase-root": {
+                backgroundColor: "white",
+              },
+            }}
+            inputProps={{
+              style: {
+                WebkitBoxShadow: "0 0 0 1000px white inset",
+                padding: 0,
+              },
+            }}
           />
         </Grid>
         {/* <Grid item xs={12} md={8}>

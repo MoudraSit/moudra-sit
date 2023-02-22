@@ -16,7 +16,7 @@ import Step3Form from "./steps/step3";
 import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
 import Step5Form from "./steps/step5";
 import ApiRequestSenior from "./api/proxy-request-senior";
 import ApiRequestRequirment from "./api/proxy-request-requirment";
@@ -73,7 +73,7 @@ const intial = {
   printerCheckbox: false,
   otherCheckbox: false,
   checkbox_selection: false,
-  year: 1900,
+  year: undefined,
   description: "",
   name: "",
   surname: "",
@@ -86,6 +86,7 @@ const intial = {
 
 function renderStepContent(
   step: number,
+  values: IValues,
   setFieldValue: (
     field: string,
     value: any,
@@ -102,7 +103,7 @@ function renderStepContent(
     case 3:
       return <Step4Form setFieldValue={setFieldValue} />;
     case 4:
-      return <Step5Form />;
+      return <Step5Form values={values} />;
     default:
       return <div>Not Found</div>;
   }
@@ -119,12 +120,6 @@ export default function VerticalLinearStepper() {
     values: IValues,
     actions: FormikHelpers<IValues>
   ) {
-    divRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-      inline: "center",
-    });
-
     if (index === steps.length - 1) {
       lastStep = true;
       //alert(JSON.stringify(values, null, 2));
@@ -173,7 +168,6 @@ export default function VerticalLinearStepper() {
   }
 
   const handleReset = () => {
-    //setActiveStep(0);
     lastStep = false;
   };
 
@@ -182,7 +176,7 @@ export default function VerticalLinearStepper() {
       <ThemeProvider theme={appTheme}>
         <Box
           sx={{
-            bgcolor: "secondary.main",
+            bgcolor: "#028790",
             pt: 8,
             pb: 6,
           }}
@@ -192,9 +186,19 @@ export default function VerticalLinearStepper() {
             validationSchema={currentValidationSchema}
             onSubmit={(values: IValues, actions) => {
               handleSend(activeStep, values, actions);
+              // window.scrollTo({
+              //   top: document.body.scrollHeight,
+              //   left: 0,
+              //   behavior: "smooth",
+              // });
+              divRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+                inline: "center",
+              });
             }}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting, setFieldValue, values }) => (
               <Form autoComplete="on">
                 <Container maxWidth="xl">
                   <Stepper activeStep={activeStep} orientation="vertical">
@@ -202,7 +206,7 @@ export default function VerticalLinearStepper() {
                       <Step
                         sx={{
                           "& .MuiStepLabel-labelContainer": {
-                            color: "white", // circle's number (DISABLED)
+                            color: "white", // circle's text (DISABLED)
                           },
                           "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-root":
                             {
@@ -210,17 +214,17 @@ export default function VerticalLinearStepper() {
                             },
                           "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text":
                             {
-                              fill: "black", // circle's text (DISABLED)
+                              fill: "black", // circle's number (DISABLED)
                             },
                           "& .MuiStepLabel-root .Mui-active": {
-                            color: "info.main", // circle color (ACTIVE)
+                            color: "white", // circle color (ACTIVE)
                           },
                           "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text":
                             {
                               fill: "black", // circle's text (ACTIVE)
                             },
                           "& .MuiStepLabel-root .Mui-completed": {
-                            color: "green", // circle color (COMPLETED)
+                            color: "#e25b5b", // circle color (COMPLETED)
                           },
                         }}
                         key={step.label}
@@ -234,104 +238,109 @@ export default function VerticalLinearStepper() {
                               index === activeStep
                         }
                       >
-                        <div ref={divRef}>
-                          <StepLabel>{step.label}</StepLabel>
-                          <StepContent>
-                            <Container maxWidth="lg">
-                              <Box
-                                sx={{
-                                  bgcolor: "primary.main",
-                                  pt: 8,
-                                  pb: 6,
-                                  borderRadius: 5,
-                                }}
-                              >
-                                <Container maxWidth="md">
-                                  <>{renderStepContent(index, setFieldValue)}</>
-                                  <Box
-                                    sx={{
-                                      bgcolor: "primary.main",
-                                      pt: 8,
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    {index === activeStep &&
-                                      index < steps.length - 1 && (
-                                        <Button
-                                          variant="contained"
-                                          type="submit"
-                                          disabled={isSubmitting}
-                                          sx={{
-                                            mt: 1,
-                                            mr: 1,
-                                            bgcolor: "green",
-                                            color: "white",
-                                          }}
-                                        >
-                                          Pokračovat
-                                        </Button>
-                                      )}
-                                    {index === steps.length - 1 && (
+                        <StepLabel>{step.label}</StepLabel>
+                        <StepContent>
+                          <Container maxWidth="lg">
+                            <Box
+                              sx={{
+                                bgcolor: "#f5f3ee",
+                                pt: 8,
+                                pb: 6,
+                                borderRadius: 5,
+                              }}
+                            >
+                              <Container maxWidth="md">
+                                <>
+                                  {renderStepContent(
+                                    index,
+                                    values,
+                                    setFieldValue
+                                  )}
+                                </>
+                                <Box
+                                  sx={{
+                                    bgcolor: "#f5f3ee",
+                                    pt: 8,
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {index === activeStep &&
+                                    index < steps.length - 1 && (
                                       <Button
-                                        type="submit"
                                         variant="contained"
+                                        type="submit"
                                         disabled={isSubmitting}
                                         sx={{
                                           mt: 1,
                                           mr: 1,
-                                          bgcolor: "green",
+                                          bgcolor: "#028790",
                                           color: "white",
                                         }}
                                       >
-                                        Odeslat
+                                        Pokračovat
                                       </Button>
                                     )}
-                                  </Box>
-                                </Container>
-                              </Box>
-                            </Container>
-                          </StepContent>
-                        </div>
+                                  {index === steps.length - 1 && (
+                                    <Button
+                                      type="submit"
+                                      variant="contained"
+                                      disabled={isSubmitting}
+                                      sx={{
+                                        mt: 1,
+                                        mr: 1,
+                                        bgcolor: "#028790",
+                                        color: "white",
+                                      }}
+                                    >
+                                      Odeslat
+                                    </Button>
+                                  )}
+                                </Box>
+                              </Container>
+                            </Box>
+                          </Container>
+                        </StepContent>
                       </Step>
                     ))}
                   </Stepper>
-                  {activeStep === steps.length && (
-                    <Container maxWidth="md">
-                      <Box
-                        sx={{
-                          bgcolor: "primary.main",
-                          pt: 8,
-                          pb: 6,
-                          borderRadius: 5,
-                          textAlign: "center",
-                        }}
-                      >
-                        <Container maxWidth="md">
-                          <Typography
-                            sx={{ fontWeight: "bold" }}
-                            variant="h2"
-                            align="center"
-                            color="primary.contrastText"
-                            gutterBottom
-                          >
-                            Děkujeme
-                          </Typography>
-                          <Typography
-                            variant="h6"
-                            align="center"
-                            color="primary.contrastText"
-                            paragraph
-                          >
-                            Váš dotaz jsme přijali ke zpracování. Do 2 dnů Vás
-                            bude telefonicky kontaktovat digitální asistent,
-                            který Vám pomůže situaci vyřešit. Společně se
-                            domluvíte, zda bude potřeba osobní návštěva, nebo to
-                            zvládnete po telefonu. Do e-mailu Vám přišel souhrn
-                            Vašeho dotazu. Pokud ho tam nevidíte, zkontrolujte
-                            si prosím složku Spam.
-                          </Typography>
-                          <Link href="/">
+                  <div ref={divRef}>
+                    {activeStep === steps.length && (
+                      <Container maxWidth="md">
+                        <Box
+                          sx={{
+                            bgcolor: "primary.main",
+                            pt: 8,
+                            pb: 6,
+                            borderRadius: 5,
+                            textAlign: "center",
+                          }}
+                        >
+                          <Container maxWidth="md">
+                            <Typography
+                              sx={{ fontWeight: "bold" }}
+                              variant="h2"
+                              align="center"
+                              color="primary.contrastText"
+                              gutterBottom
+                            >
+                              Děkujeme
+                            </Typography>
+                            <Typography
+                              variant="h6"
+                              align="center"
+                              color="primary.contrastText"
+                              paragraph
+                            >
+                              Váš dotaz jsme přijali ke zpracování. Do 2 dnů Vás
+                              bude telefonicky kontaktovat digitální asistent,
+                              který Vám pomůže situaci vyřešit. Společně se
+                              domluvíte, zda bude potřeba osobní návštěva, nebo
+                              to zvládnete po telefonu. Do e-mailu Vám přišel
+                              souhrn Vašeho dotazu. Pokud ho tam nevidíte,
+                              zkontrolujte si prosím složku Spam.
+                            </Typography>
                             <Button
+                              href="http://test.moudrasit.cz/"
                               onClick={handleReset}
                               type="submit"
                               variant="contained"
@@ -344,8 +353,7 @@ export default function VerticalLinearStepper() {
                             >
                               Zavřít a zpět na hlavní stránku
                             </Button>
-                          </Link>
-                          {/* <Button
+                            {/* <Button
                             type="submit"
                             variant="contained"
                             onClick={handleReset}
@@ -358,10 +366,11 @@ export default function VerticalLinearStepper() {
                           >
                             Zadat nový dotaz
                           </Button> */}
-                        </Container>
-                      </Box>
-                    </Container>
-                  )}
+                          </Container>
+                        </Box>
+                      </Container>
+                    )}
+                  </div>
                 </Container>
               </Form>
             )}

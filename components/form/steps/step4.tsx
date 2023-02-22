@@ -1,4 +1,4 @@
-import { FormControlLabel, Grid, Typography } from "@mui/material";
+import { FormControlLabel, Grid, Link, Typography } from "@mui/material";
 import React from "react";
 import CheckboxForm from "../model/checkbox-form";
 import TextFieldForm from "../model/input-form";
@@ -7,6 +7,7 @@ import PhoneCodeFieldForm from "../model/phone-code-form ";
 function Step4Form(props: any) {
   return (
     <>
+      <div id="section4" />
       <Typography
         sx={{ fontWeight: "bold" }}
         variant="h4"
@@ -33,10 +34,15 @@ function Step4Form(props: any) {
             name="name"
             inputhelper=""
             variant="outlined"
-            color="secondary"
+            color="info"
             fullWidth
             required
-            inputProps={{ style: { textTransform: "capitalize" } }}
+            inputProps={{
+              style: {
+                textTransform: "capitalize",
+                WebkitBoxShadow: "0 0 0 1000px white inset",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -46,10 +52,15 @@ function Step4Form(props: any) {
             name="surname"
             inputhelper=""
             variant="outlined"
-            color="secondary"
+            color="info"
             fullWidth
             required
-            inputProps={{ style: { textTransform: "capitalize" } }}
+            inputProps={{
+              style: {
+                textTransform: "capitalize",
+                WebkitBoxShadow: "0 0 0 1000px white inset",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -59,9 +70,15 @@ function Step4Form(props: any) {
             name="zipCode"
             inputhelper="Pro nalezení nejbližšího dobrovolníka"
             variant="outlined"
-            color="secondary"
+            color="info"
             fullWidth
             required
+            inputProps={{
+              maxLength: 5,
+              style: {
+                WebkitBoxShadow: "0 0 0 1000px white inset",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -71,10 +88,14 @@ function Step4Form(props: any) {
             name="plusCode"
             inputhelper=""
             variant="outlined"
-            color="secondary"
+            color="info"
             fullWidth
             required
             setFieldValue={props.setFieldValue}
+            sx={{
+              ".css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
+                { backgroundColor: "white" },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={8}>
@@ -84,45 +105,62 @@ function Step4Form(props: any) {
             name="phoneNumber"
             inputhelper=""
             variant="outlined"
-            color="secondary"
+            color="info"
             fullWidth
             required
+            inputProps={{
+              maxLength: 9,
+              style: {
+                WebkitBoxShadow: "0 0 0 1000px white inset",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
           <TextFieldForm
             id="email"
-            label="Kontaktní email"
+            label="Kontaktní email (nepovinné)"
             name="email"
             inputhelper=""
             variant="outlined"
-            color="secondary"
+            color="info"
             fullWidth
-            required
-          />
-        </Grid>
-      </Grid>
-      <FormControlLabel
-        sx={{ pt: 6 }}
-        control={
-          <CheckboxForm
-            id="agreement"
-            name="agreement"
-            required
-            sx={{
-              color: "secondary.main",
-              "&.Mui-checked": {
-                color: "secondary.main",
+            inputProps={{
+              style: {
+                WebkitBoxShadow: "0 0 0 1000px white inset",
               },
             }}
           />
-        }
-        label={
-          <Typography style={{ color: "black" }}>
-            Souhlasím se zpracováním osobních údajů
-          </Typography>
-        }
-      />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            sx={{ pt: 6 }}
+            control={
+              <CheckboxForm
+                id="agreement"
+                name="agreement"
+                required
+                sx={{
+                  color: "info.main",
+                  "&.Mui-checked": {
+                    color: "black",
+                  },
+                }}
+              />
+            }
+            label={
+              <Link
+                color="inherit"
+                href="http://test.moudrasit.cz/wp-content/uploads/2023/02/Zasady-ochrany-osobnich-udaju_Moudra-Sit.pdf"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Souhlasím se zpracováním osobních údajů
+              </Link>
+            }
+          />
+        </Grid>
+      </Grid>
     </>
   );
 }

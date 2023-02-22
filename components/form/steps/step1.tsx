@@ -5,6 +5,7 @@ import TextFieldForm from "../model/input-form";
 function Step1Form() {
   return (
     <>
+      <div id="section1" />
       <Typography
         sx={{ fontWeight: "bold" }}
         variant="h4"
@@ -24,7 +25,7 @@ function Step1Form() {
       </Typography>
       <Box
         sx={{
-          bgcolor: "primary.main",
+          bgcolor: "#f5f3ee",
           pt: 4,
           textAlign: "center",
         }}
@@ -34,10 +35,16 @@ function Step1Form() {
           label="Rok narození"
           name="year"
           type="number"
-          color="secondary"
+          color="info"
           variant="outlined"
           inputhelper="Napište rok Vašeho narození"
-          inputProps={{ maxLength: 4 }}
+          inputProps={{
+            maxLength: 4,
+            style: {
+              WebkitBoxShadow: "0 0 0 1000px white inset",
+            },
+          }}
+          sx={{ width: 300 }}
           required
         />
       </Box>

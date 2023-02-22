@@ -15,6 +15,11 @@ import Printer from "public/images/form/printer.svg";
 import Other from "public/images/form/other.svg";
 import CheckboxForm from "../model/checkbox-form";
 
+import PhoneDef from "public/images/form/phone-black.svg";
+import PcDef from "public/images/form/pc-black.svg";
+import PrinterDef from "public/images/form/printer-black.svg";
+import OtherDef from "public/images/form/other-black.svg";
+
 function Step2Form(props: any) {
   const [checkedPhone, setCheckedPhone] = React.useState(false);
   const [checkedPc, setCheckedPc] = React.useState(false);
@@ -38,6 +43,7 @@ function Step2Form(props: any) {
 
   return (
     <>
+      <div id="section2" />
       <Typography
         sx={{ fontWeight: "bold" }}
         variant="h4"
@@ -45,7 +51,7 @@ function Step2Form(props: any) {
         color="primary.contrastText"
         gutterBottom
       >
-        Vyberte s čím potřebujete pomoct
+        Vyberte, s čím potřebujete pomoct
       </Typography>
       <Typography
         sx={{ pb: 6 }}
@@ -65,7 +71,7 @@ function Step2Form(props: any) {
               flexDirection: "column",
               justifyContent: "space-between",
               border: 2,
-              backgroundColor: checkedPhone ? "#babbc2" : "white",
+              backgroundColor: checkedPhone ? "#e25b5b" : "white",
             }}
           >
             <ButtonBase
@@ -81,6 +87,7 @@ function Step2Form(props: any) {
                   variant="h5"
                   component="h2"
                   align="center"
+                  sx={{ color: checkedPhone ? "white" : "black" }}
                 >
                   Mobilní telefon
                 </Typography>
@@ -91,7 +98,7 @@ function Step2Form(props: any) {
                   }}
                 >
                   <Image
-                    src={Phone}
+                    src={checkedPhone ? Phone : PhoneDef}
                     alt={""}
                     max-width="100px"
                     max-height="100px"
@@ -120,7 +127,7 @@ function Step2Form(props: any) {
               flexDirection: "column",
               justifyContent: "space-between",
               border: 2,
-              backgroundColor: checkedPc ? "#babbc2" : "white",
+              backgroundColor: checkedPc ? "#e25b5b" : "white",
             }}
           >
             <ButtonBase
@@ -136,6 +143,7 @@ function Step2Form(props: any) {
                   variant="h5"
                   component="h2"
                   align="center"
+                  sx={{ color: checkedPc ? "white" : "black" }}
                 >
                   Počítač
                 </Typography>
@@ -146,7 +154,7 @@ function Step2Form(props: any) {
                   }}
                 >
                   <Image
-                    src={Pc}
+                    src={checkedPc ? Pc : PcDef}
                     alt={""}
                     max-width="100px"
                     max-height="100px"
@@ -174,7 +182,7 @@ function Step2Form(props: any) {
               flexDirection: "column",
               justifyContent: "space-between",
               border: 2,
-              backgroundColor: checkedPrinter ? "#babbc2" : "white",
+              backgroundColor: checkedPrinter ? "#e25b5b" : "white",
             }}
           >
             <ButtonBase
@@ -190,6 +198,7 @@ function Step2Form(props: any) {
                   variant="h5"
                   component="h2"
                   align="center"
+                  sx={{ color: checkedPrinter ? "white" : "black" }}
                 >
                   Tiskárna
                 </Typography>
@@ -200,7 +209,7 @@ function Step2Form(props: any) {
                   }}
                 >
                   <Image
-                    src={Printer}
+                    src={checkedPrinter ? Printer : PrinterDef}
                     alt={""}
                     max-width="100px"
                     max-height="100px"
@@ -228,7 +237,7 @@ function Step2Form(props: any) {
               flexDirection: "column",
               justifyContent: "space-between",
               border: 2,
-              backgroundColor: checkedOther ? "#babbc2" : "white",
+              backgroundColor: checkedOther ? "#e25b5b" : "white",
             }}
           >
             <ButtonBase
@@ -244,6 +253,7 @@ function Step2Form(props: any) {
                   variant="h5"
                   component="h2"
                   align="center"
+                  sx={{ color: checkedOther ? "white" : "black" }}
                 >
                   Jiné IT zařízení
                 </Typography>
@@ -254,7 +264,7 @@ function Step2Form(props: any) {
                   }}
                 >
                   <Image
-                    src={Other}
+                    src={checkedOther ? Other : OtherDef}
                     alt={""}
                     max-width="100px"
                     max-height="100px"

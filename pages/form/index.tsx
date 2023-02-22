@@ -6,7 +6,7 @@ import Layout from "components/layout/layout";
 function FormPage() {
   return (
     <>
-      <Layout />
+      {/* <Layout /> */}
       <VerticalLinearStepper />
       <Footer />
     </>
