@@ -37,6 +37,7 @@ function Step1Form() {
             maxLength: 4,
             style: {
               WebkitBoxShadow: "0 0 0 1000px white inset",
+              WebkitTextFillColor: "black",
             },
           }}
           sx={{ maxWidth: 230 }}
