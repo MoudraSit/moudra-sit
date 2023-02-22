@@ -38,6 +38,7 @@ function Step3Form() {
           inputProps={{
             style: {
               WebkitBoxShadow: "0 0 0 1000px white inset",
+              WebkitTextFillColor: "black",
             },
           }}
         />
@@ -74,6 +75,7 @@ function Step3Form() {
             inputProps={{
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
+                WebkitTextFillColor: "black",
                 padding: 0,
               },
             }}

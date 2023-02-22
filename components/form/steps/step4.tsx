@@ -41,6 +41,7 @@ function Step4Form(props: any) {
               style: {
                 textTransform: "capitalize",
                 WebkitBoxShadow: "0 0 0 1000px white inset",
+                WebkitTextFillColor: "black",
               },
             }}
           />
@@ -59,6 +60,7 @@ function Step4Form(props: any) {
               style: {
                 textTransform: "capitalize",
                 WebkitBoxShadow: "0 0 0 1000px white inset",
+                WebkitTextFillColor: "black",
               },
             }}
           />
@@ -77,6 +79,7 @@ function Step4Form(props: any) {
               maxLength: 5,
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
+                WebkitTextFillColor: "black",
               },
             }}
           />
@@ -111,6 +114,7 @@ function Step4Form(props: any) {
               maxLength: 9,
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
+                WebkitTextFillColor: "black",
               },
             }}
           />
@@ -127,6 +131,7 @@ function Step4Form(props: any) {
             inputProps={{
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
+                WebkitTextFillColor: "black",
               },
             }}
           />
@@ -149,7 +154,7 @@ function Step4Form(props: any) {
             }
             label={
               <Link
-                color="inherit"
+                color="black"
                 href="http://test.moudrasit.cz/wp-content/uploads/2023/02/Zasady-ochrany-osobnich-udaju_Moudra-Sit.pdf"
                 rel="noopener noreferrer"
                 target="_blank"
