@@ -12,7 +12,7 @@ function Step4Form(props: any) {
         sx={{ fontWeight: "bold" }}
         variant="h4"
         align="center"
-        color="primary.contrastText"
+        color="primary.main"
         gutterBottom
       >
         Vyplňte Vaše kontaktní údaje
@@ -21,7 +21,7 @@ function Step4Form(props: any) {
         sx={{ pb: 6 }}
         variant="h5"
         align="center"
-        color="primary.contrastText"
+        color="primary.main"
         paragraph
       >
         Koordinátor Vás následně propojí s digitálním asistentem
@@ -93,8 +93,7 @@ function Step4Form(props: any) {
             required
             setFieldValue={props.setFieldValue}
             sx={{
-              ".css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
-                { backgroundColor: "white" },
+              ".MuiInputBase-root": { backgroundColor: "white" },
             }}
           />
         </Grid>

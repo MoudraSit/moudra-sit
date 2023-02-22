@@ -13,18 +13,13 @@ function Step3Form() {
         sx={{ fontWeight: "bold", pb: 6 }}
         variant="h4"
         align="center"
-        color="primary.contrastText"
+        color="primary.main"
         gutterBottom
       >
         Popište Váš problém
       </Typography>
       <Grid item xs={12}>
-        <Typography
-          variant="h6"
-          align="left"
-          color="primary.contrastText"
-          paragraph
-        >
+        <Typography variant="h6" align="left" color="primary.main" paragraph>
           Popište Váš problém několika slovy (např. nefunguje wifi, nejede
           tiskárna)
         </Typography>
@@ -52,7 +47,7 @@ function Step3Form() {
           sx={{ pt: 6 }}
           variant="h6"
           align="left"
-          color="primary.contrastText"
+          color="primary.main"
           paragraph
         >
           Popište detaily
@@ -88,7 +83,7 @@ function Step3Form() {
           <Typography
             variant="h6"
             align="left"
-            color="primary.contrastText"
+            color="primary.main"
             paragraph
           >
             Váš vzkaz můžete napsat nebo nahrát hlasem (nepovinné)
@@ -101,7 +96,7 @@ function Step3Form() {
           <Typography
             variant="h6"
             align="left"
-            color="primary.contrastText"
+            color="primary.main"
             paragraph
           >
             Máte fotografie, které nám k tomu můžete poslat? (nepovinné)

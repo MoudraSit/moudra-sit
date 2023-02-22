@@ -10,17 +10,12 @@ function Step1Form() {
         sx={{ fontWeight: "bold" }}
         variant="h4"
         align="center"
-        color="primary.contrastText"
+        color="primary.main"
         gutterBottom
       >
         Službu poskytujeme seniorům 60+ let zdarma
       </Typography>
-      <Typography
-        variant="h5"
-        align="center"
-        color="primary.contrastText"
-        paragraph
-      >
+      <Typography variant="h5" align="center" color="primary.main" paragraph>
         Pro zadání dotazu prosím vyplňte Váš ročník narození
       </Typography>
       <Box
@@ -44,7 +39,7 @@ function Step1Form() {
               WebkitBoxShadow: "0 0 0 1000px white inset",
             },
           }}
-          sx={{ width: 300 }}
+          sx={{ maxWidth: 230 }}
           required
         />
       </Box>

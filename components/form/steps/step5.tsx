@@ -74,7 +74,7 @@ function Step5Form(props: { values: IValues }) {
         sx={{ fontWeight: "bold" }}
         variant="h4"
         align="center"
-        color="primary.contrastText"
+        color="primary.main"
         gutterBottom
       >
         Zkontrolujte uvedené údaje
@@ -82,7 +82,7 @@ function Step5Form(props: { values: IValues }) {
       <Typography
         variant="h5"
         align="center"
-        color="primary.contrastText"
+        color="primary.main"
         sx={{ pb: 2 }}
         paragraph
       >
@@ -132,7 +132,7 @@ function Step5Form(props: { values: IValues }) {
         sx={{ pt: 5 }}
         variant="h5"
         align="center"
-        color="primary.contrastText"
+        color="primary.main"
         paragraph
       >
         Pokud je vše správně, klikněte na Odeslat

@@ -224,7 +224,7 @@ export default function VerticalLinearStepper() {
                               fill: "black", // circle's text (ACTIVE)
                             },
                           "& .MuiStepLabel-root .Mui-completed": {
-                            color: "#e25b5b", // circle color (COMPLETED)
+                            color: "#f5f3ee", // circle color (COMPLETED)
                           },
                         }}
                         key={step.label}
@@ -273,7 +273,7 @@ export default function VerticalLinearStepper() {
                                         sx={{
                                           mt: 1,
                                           mr: 1,
-                                          bgcolor: "#028790",
+                                          bgcolor: "#e25b5b",
                                           color: "white",
                                         }}
                                       >
@@ -288,7 +288,7 @@ export default function VerticalLinearStepper() {
                                       sx={{
                                         mt: 1,
                                         mr: 1,
-                                        bgcolor: "#028790",
+                                        bgcolor: "#e25b5b",
                                         color: "white",
                                       }}
                                     >
@@ -320,7 +320,7 @@ export default function VerticalLinearStepper() {
                               sx={{ fontWeight: "bold" }}
                               variant="h2"
                               align="center"
-                              color="primary.contrastText"
+                              color="primary.main"
                               gutterBottom
                             >
                               Děkujeme
@@ -328,7 +328,7 @@ export default function VerticalLinearStepper() {
                             <Typography
                               variant="h6"
                               align="center"
-                              color="primary.contrastText"
+                              color="primary.main"
                               paragraph
                             >
                               Váš dotaz jsme přijali ke zpracování. Do 2 dnů Vás

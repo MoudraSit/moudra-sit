@@ -402,12 +402,12 @@ function MainPage() {
                   component="h1"
                   variant="h2"
                   align="left"
-                  color="primary.contrastText"
+                  color="primary.main"
                   gutterBottom
                 >
                   O Moudré Síti
                 </Typography>
-                <Typography align="left" color="primary.contrastText">
+                <Typography align="left" color="primary.main">
                   Moudrá Síť je platforma, která propojuje seniory s digitálními
                   asistenty. Jde o webovou službu, na kterou se mohou senioři
                   obracet, kdykoli potřebují pomoci s novými technologiemi.
