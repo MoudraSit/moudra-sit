@@ -226,6 +226,9 @@ export default function VerticalLinearStepper() {
                           "& .MuiStepLabel-root .Mui-completed": {
                             color: "#f5f3ee", // circle color (COMPLETED)
                           },
+                          "& .MuiStepContent-root": {
+                            paddingLeft: 0, // circle color (COMPLETED)
+                          },
                         }}
                         key={step.label}
                         active={
@@ -308,7 +311,7 @@ export default function VerticalLinearStepper() {
                       <Container maxWidth="md">
                         <Box
                           sx={{
-                            bgcolor: "primary.main",
+                            bgcolor: "#f5f3ee",
                             pt: 8,
                             pb: 6,
                             borderRadius: 5,
@@ -347,7 +350,7 @@ export default function VerticalLinearStepper() {
                               sx={{
                                 mt: 1,
                                 mr: 1,
-                                bgcolor: "green",
+                                bgcolor: "#e25b5b",
                                 color: "secondary.contrastText",
                               }}
                             >

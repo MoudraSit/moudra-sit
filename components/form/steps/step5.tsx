@@ -97,7 +97,7 @@ function Step5Form(props: { values: IValues }) {
         }}
       >
         <TableContainer>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableBody>
               {rows.map((row) => (
                 <TableRow
@@ -111,9 +111,7 @@ function Step5Form(props: { values: IValues }) {
                   >
                     {row.name}
                   </TableCell>
-                  <TableCell sx={{ fontSize: "18px" }} align="right">
-                    {row.calories}
-                  </TableCell>
+                  <TableCell align="left">{row.calories}</TableCell>
                   <TableCell
                     align="right"
                     onClick={() => {
