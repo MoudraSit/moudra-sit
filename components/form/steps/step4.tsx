@@ -158,6 +158,7 @@ function Step4Form(props: any) {
                 href="http://test.moudrasit.cz/wp-content/uploads/2023/02/Zasady-ochrany-osobnich-udaju_Moudra-Sit.pdf"
                 rel="noopener noreferrer"
                 target="_blank"
+                fontSize={24}
               >
                 Souhlasím se zpracováním osobních údajů
               </Link>

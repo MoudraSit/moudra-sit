@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "../theme/theme";
-import { Container } from "@mui/material";
+import { CircularProgress, Container } from "@mui/material";
 import Step1Form from "./steps/step1";
 import Step2Form from "./steps/step2";
 import Step3Form from "./steps/step3";
@@ -22,6 +22,10 @@ import ApiRequestSenior from "./api/proxy-request-senior";
 import ApiRequestRequirment from "./api/proxy-request-requirment";
 import ApiRequestCategory from "./api/proxy-request-category";
 import ApiGetRequestSenior from "./api/proxy-request-get-senior";
+import StepSuccess from "./steps/step-success";
+import ErrorMessageStep from "./steps/error-message";
+import ErrorMessageComponent from "./steps/error-message";
+import ProgressBarComponent from "./steps/progress-bar";
 
 export interface IValues {
   requirmentName: string;
@@ -109,10 +113,20 @@ function renderStepContent(
   }
 }
 
+function scrollIntoSection(elemId: string) {
+  const element = document.getElementById(elemId);
+  if (element) {
+    // Will scroll smoothly to the top of the next section
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 export default function VerticalLinearStepper() {
   const divRef = React.useRef<HTMLDivElement | null>(null);
 
   const [activeStep, setActiveStep] = React.useState(0);
+  const [progressBar, setProgressbBar] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(false);
   const currentValidationSchema = defaultSchema[activeStep];
 
   async function handleSend(
@@ -121,44 +135,59 @@ export default function VerticalLinearStepper() {
     actions: FormikHelpers<IValues>
   ) {
     if (index === steps.length - 1) {
-      lastStep = true;
-      //alert(JSON.stringify(values, null, 2));
+      try {
+        lastStep = true;
+        //alert(JSON.stringify(values, null, 2));
 
-      let idRequirment = null;
+        setProgressbBar(true);
+        console.log("PROgress bar");
 
-      // GET method to check if the record is already in the table
-      let idSenior = await ApiGetRequestSenior(values);
+        //await new Promise((resolve) => setTimeout(resolve, 3000));
 
-      // POST method to create new senior record
-      if (!idSenior) {
-        idSenior = await ApiRequestSenior(values);
+        let idRequirment = null;
+
+        // GET method to check if the record is already in the table
+        let idSenior = await ApiGetRequestSenior(values);
+
+        // POST method to create new senior record
+        if (!idSenior) {
+          idSenior = await ApiRequestSenior(values);
+        }
+
+        // POST method to create new requirment record
+        if (idSenior) {
+          idRequirment = await ApiRequestRequirment(values, idSenior);
+        }
+
+        // POST method to connect requirment to multiple categories
+        if (idRequirment) {
+          if (values.phoneCheckbox) {
+            await ApiRequestCategory(values, idRequirment, phoneCategory);
+          }
+
+          if (values.pcCheckbox) {
+            await ApiRequestCategory(values, idRequirment, pcCategory);
+          }
+
+          if (values.printerCheckbox) {
+            await ApiRequestCategory(values, idRequirment, printerCategory);
+          }
+
+          if (values.otherCheckbox) {
+            await ApiRequestCategory(values, idRequirment, otherCategory);
+          }
+        }
+
+        setProgressbBar(false);
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      } catch (error) {
+        setProgressbBar(false);
+        setErrorMessage(true);
+        actions.setTouched({});
+        actions.setSubmitting(false);
+        console.log("error");
       }
-
-      // POST method to create new requirment record
-      if (idSenior) {
-        idRequirment = await ApiRequestRequirment(values, idSenior);
-      }
-
-      // POST method to connect requirment to multiple categories
-      if (idRequirment) {
-        if (values.phoneCheckbox) {
-          await ApiRequestCategory(values, idRequirment, phoneCategory);
-        }
-
-        if (values.pcCheckbox) {
-          await ApiRequestCategory(values, idRequirment, pcCategory);
-        }
-
-        if (values.printerCheckbox) {
-          await ApiRequestCategory(values, idRequirment, printerCategory);
-        }
-
-        if (values.otherCheckbox) {
-          await ApiRequestCategory(values, idRequirment, otherCategory);
-        }
-      }
-
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       console.log(values);
@@ -166,10 +195,6 @@ export default function VerticalLinearStepper() {
       actions.setSubmitting(false);
     }
   }
-
-  const handleReset = () => {
-    lastStep = false;
-  };
 
   return (
     <>
@@ -191,6 +216,7 @@ export default function VerticalLinearStepper() {
               //   left: 0,
               //   behavior: "smooth",
               // });
+              scrollIntoSection("section2");
               divRef.current?.scrollIntoView({
                 behavior: "smooth",
                 block: "start",
@@ -226,6 +252,9 @@ export default function VerticalLinearStepper() {
                           "& .MuiStepLabel-root .Mui-completed": {
                             color: "#f5f3ee", // circle color (COMPLETED)
                           },
+                          "& .MuiStepLabel-label": {
+                            fontSize: 20,
+                          },
                           "& .MuiStepContent-root": {
                             paddingLeft: 0, // circle color (COMPLETED)
                           },
@@ -249,7 +278,7 @@ export default function VerticalLinearStepper() {
                                 bgcolor: "#f5f3ee",
                                 pt: 8,
                                 pb: 6,
-                                borderRadius: 5,
+                                borderRadius: 2,
                               }}
                             >
                               <Container maxWidth="md">
@@ -260,6 +289,10 @@ export default function VerticalLinearStepper() {
                                     setFieldValue
                                   )}
                                 </>
+                                {progressBar ? <ProgressBarComponent /> : null}
+                                {errorMessage ? (
+                                  <ErrorMessageComponent />
+                                ) : null}
                                 <Box
                                   sx={{
                                     bgcolor: "#f5f3ee",
@@ -308,70 +341,7 @@ export default function VerticalLinearStepper() {
                   </Stepper>
                   <div ref={divRef}>
                     {activeStep === steps.length && (
-                      <Container maxWidth="md">
-                        <Box
-                          sx={{
-                            bgcolor: "#f5f3ee",
-                            pt: 8,
-                            pb: 6,
-                            borderRadius: 5,
-                            textAlign: "center",
-                          }}
-                        >
-                          <Container maxWidth="md">
-                            <Typography
-                              sx={{ fontWeight: "bold" }}
-                              variant="h2"
-                              align="center"
-                              color="primary.main"
-                              gutterBottom
-                            >
-                              Děkujeme
-                            </Typography>
-                            <Typography
-                              variant="h6"
-                              align="center"
-                              color="primary.main"
-                              paragraph
-                            >
-                              Váš dotaz jsme přijali ke zpracování. Do 2 dnů Vás
-                              bude telefonicky kontaktovat digitální asistent,
-                              který Vám pomůže situaci vyřešit. Společně se
-                              domluvíte, zda bude potřeba osobní návštěva, nebo
-                              to zvládnete po telefonu. Do e-mailu Vám přišel
-                              souhrn Vašeho dotazu. Pokud ho tam nevidíte,
-                              zkontrolujte si prosím složku Spam.
-                            </Typography>
-                            <Button
-                              href="http://test.moudrasit.cz/"
-                              onClick={handleReset}
-                              type="submit"
-                              variant="contained"
-                              sx={{
-                                mt: 1,
-                                mr: 1,
-                                bgcolor: "#e25b5b",
-                                color: "secondary.contrastText",
-                              }}
-                            >
-                              Zavřít a zpět na hlavní stránku
-                            </Button>
-                            {/* <Button
-                            type="submit"
-                            variant="contained"
-                            onClick={handleReset}
-                            sx={{
-                              mt: 1,
-                              mr: 1,
-                              bgcolor: "secondary.main",
-                              color: "secondary.contrastText",
-                            }}
-                          >
-                            Zadat nový dotaz
-                          </Button> */}
-                          </Container>
-                        </Box>
-                      </Container>
+                      <StepSuccess lastStep={lastStep} />
                     )}
                   </div>
                 </Container>

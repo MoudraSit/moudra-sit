@@ -19,7 +19,7 @@ function Step3Form() {
         Popište Váš problém
       </Typography>
       <Grid item xs={12}>
-        <Typography variant="h6" align="left" color="primary.main" paragraph>
+        <Typography variant="h5" align="left" color="primary.main" paragraph>
           Popište Váš problém několika slovy (např. nefunguje wifi, nejede
           tiskárna)
         </Typography>
@@ -46,7 +46,7 @@ function Step3Form() {
       <Grid item xs={12}>
         <Typography
           sx={{ pt: 6 }}
-          variant="h6"
+          variant="h5"
           align="left"
           color="primary.main"
           paragraph

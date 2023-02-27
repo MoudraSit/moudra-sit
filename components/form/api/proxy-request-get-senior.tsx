@@ -60,7 +60,7 @@ async function ApiGetRequestSenior(values: IValues) {
   } catch (error) {
     console.log("There was an error", error);
     //TODO: FIX ME
-    return null;
+    return Promise.reject(error);
   }
 }
 

@@ -58,10 +58,9 @@ function Step5Form(props: { values: IValues }) {
       "section4"
     ),
     createData("PSČ", props.values.zipCode, "Upravit", "section4"),
-    createData("Předvolba", props.values.plusCode, "Upravit", "section4"),
     createData(
       "Telefonní číslo",
-      props.values.phoneNumber,
+      props.values.plusCode + props.values.phoneNumber,
       "Upravit",
       "section4"
     ),
@@ -90,7 +89,7 @@ function Step5Form(props: { values: IValues }) {
       </Typography>
       <Box
         sx={{
-          borderRadius: 8,
+          borderRadius: 2,
           bgcolor: "white",
           pt: 1,
           pb: 1,
@@ -108,12 +107,22 @@ function Step5Form(props: { values: IValues }) {
                     sx={{ fontSize: "18px", fontWeight: "bold" }}
                     component="th"
                     scope="row"
+                    onClick={() => {
+                      scrollIntoSection(row.id);
+                    }}
                   >
                     {row.name}
                   </TableCell>
-                  <TableCell align="left">{row.calories}</TableCell>
                   <TableCell
-                    align="right"
+                    align="left"
+                    onClick={() => {
+                      scrollIntoSection(row.id);
+                    }}
+                  >
+                    {row.calories}
+                  </TableCell>
+                  <TableCell
+                    align="left"
                     onClick={() => {
                       scrollIntoSection(row.id);
                     }}
