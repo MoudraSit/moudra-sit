@@ -42,8 +42,11 @@ function Step4Form(props: any) {
                 textTransform: "capitalize",
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
+                fontSize: 20,
               },
             }}
+            InputProps={{ style: { fontSize: 20 } }}
+            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -61,8 +64,11 @@ function Step4Form(props: any) {
                 textTransform: "capitalize",
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
+                fontSize: 20,
               },
             }}
+            InputProps={{ style: { fontSize: 20 } }}
+            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -80,8 +86,11 @@ function Step4Form(props: any) {
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
+                fontSize: 20,
               },
             }}
+            InputProps={{ style: { fontSize: 20 } }}
+            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -115,8 +124,11 @@ function Step4Form(props: any) {
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
+                fontSize: 20,
               },
             }}
+            InputProps={{ style: { fontSize: 20 } }}
+            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -132,8 +144,11 @@ function Step4Form(props: any) {
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
+                fontSize: 20,
               },
             }}
+            InputProps={{ style: { fontSize: 20 } }}
+            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12}>

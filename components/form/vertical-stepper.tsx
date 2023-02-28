@@ -262,6 +262,16 @@ export default function VerticalLinearStepper() {
                           "& .MuiFormHelperText-root": {
                             fontSize: 14, // circle color (COMPLETED)
                           },
+                          // plusCode styles
+                          "& .MuiFormLabel-root": {
+                            fontSize: 20, // circle color (COMPLETED)
+                          },
+                          "& .MuiSelect-select": {
+                            fontSize: 20, // circle color (COMPLETED)
+                          },
+                          "& .MuiInputBase-root": {
+                            fontSize: 20, // circle color (COMPLETED)
+                          },
                         }}
                         key={step.label}
                         active={
