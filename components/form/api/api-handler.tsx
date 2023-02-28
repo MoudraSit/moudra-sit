@@ -14,16 +14,12 @@ export async function GetSeniorTabidooRequest(
   try {
     console.log(
       "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=telefon(eq)" +
-        body.filter.telefon +
-        "%2Cprijmeni(eq)" +
-        body.filter.prijmeni
+        body.filter.telefon
     );
 
     const response = await fetch(
       "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=telefon(eq)" +
-        body.filter.telefon +
-        "%2Cprijmeni(eq)" +
-        body.filter.prijmeni,
+        body.filter.telefon,
       {
         method: "GET",
         headers: {
@@ -46,7 +42,7 @@ export async function GetSeniorTabidooRequest(
     // error handling
   } catch (error) {
     console.log("There was an error on Tabidoo API call", error);
-    return null;
+    return Promise.reject(error);
   }
 }
 
@@ -92,7 +88,7 @@ export async function SeniorTabidooRequest(
     // error handling
   } catch (error) {
     console.log("There was an error on Tabidoo API call", error);
-    return null;
+    return Promise.reject(error);
   }
 }
 
@@ -123,7 +119,7 @@ export async function RequirmentTabidooRequest(
     return jsonObject;
   } catch (error) {
     console.log("There was an error on Tabidoo API call", error);
-    return null;
+    return Promise.reject(error);
   }
 }
 
@@ -154,6 +150,6 @@ export async function CategoryTabidooRequest(
     return jsonObject;
   } catch (error) {
     console.log("There was an error on Tabidoo API call", error);
-    return null;
+    return Promise.reject(error);
   }
 }

@@ -1,4 +1,7 @@
 import {
+  Button,
+  Grid,
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -9,6 +12,8 @@ import {
 import { Box } from "@mui/system";
 import React from "react";
 import { IValues } from "../vertical-stepper";
+import EditIcon from "@mui/icons-material/Edit";
+import styles from "./step5.module.css";
 
 function scrollIntoSection(elemId: string) {
   const element = document.getElementById(elemId);
@@ -96,43 +101,70 @@ function Step5Form(props: { values: IValues }) {
         }}
       >
         <TableContainer>
-          <Table aria-label="simple table">
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell
-                    sx={{ fontSize: "18px", fontWeight: "bold" }}
-                    component="th"
-                    scope="row"
-                    onClick={() => {
-                      scrollIntoSection(row.id);
-                    }}
+          <Grid container>
+            <Table aria-label="simple table">
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    {row.name}
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    onClick={() => {
-                      scrollIntoSection(row.id);
-                    }}
-                  >
-                    {row.calories}
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    onClick={() => {
-                      scrollIntoSection(row.id);
-                    }}
-                  >
-                    {row.edit}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                    <TableCell
+                      style={{ borderBottom: "none" }}
+                      sx={{
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        display: { xs: "flex", sm: "table-cell" },
+                      }}
+                      component="th"
+                      scope="row"
+                      onClick={() => {
+                        scrollIntoSection(row.id);
+                      }}
+                    >
+                      {row.name}
+                    </TableCell>
+
+                    <TableCell
+                      style={{ borderBottom: "none" }}
+                      sx={{
+                        display: { xs: "flex", sm: "table-cell" },
+                      }}
+                      align="left"
+                      onClick={() => {
+                        scrollIntoSection(row.id);
+                      }}
+                    >
+                      {row.calories}
+                    </TableCell>
+
+                    <TableCell
+                      style={{ borderBottom: "none" }}
+                      sx={{
+                        display: { xs: "flex", sm: "table-cell" },
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          scrollIntoSection(row.id);
+                        }}
+                        sx={{
+                          mt: 1,
+                          mr: 1,
+                          bgcolor: "#e25b5b",
+                          color: "white",
+                        }}
+                        startIcon={<EditIcon />}
+                      >
+                        Upravit
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Grid>
         </TableContainer>
       </Box>
       <Typography

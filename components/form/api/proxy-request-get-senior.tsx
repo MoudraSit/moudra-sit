@@ -31,7 +31,6 @@ async function ApiGetRequestSenior(values: IValues) {
       body: JSON.stringify({
         filter: {
           telefon: values.plusCode.replace("+", "%2B") + values.phoneNumber,
-          prijmeni: values.surname,
         },
       }),
       headers: {

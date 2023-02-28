@@ -27,7 +27,7 @@ function Step2Form(props: any) {
   const [checkedOther, setCheckedOther] = React.useState(false);
 
   useEffect(() => {
-    console.log(checkedPhone);
+    //console.log(checkedPhone);
     checkboxValidation();
   }, [checkedPhone, checkedPc, checkedPrinter, checkedOther]);
 

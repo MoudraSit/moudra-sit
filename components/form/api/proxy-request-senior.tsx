@@ -27,6 +27,7 @@ async function ApiRequestSenior(props: IValues) {
           jmeno: props.name,
           prijmeni: props.surname,
           PSC: props.zipCode,
+          email: props.email,
           telefon: props.plusCode.concat(props.phoneNumber),
           rokNarozeni: props.year,
         },
@@ -45,7 +46,7 @@ async function ApiRequestSenior(props: IValues) {
   } catch (error) {
     console.log("There was an error", error);
     //TODO: FIX ME
-    return null;
+    return Promise.reject(error);
   }
 }
 

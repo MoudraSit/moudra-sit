@@ -36,7 +36,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
     return jsonObject.data.id;
   } catch (error) {
     console.log("There was an error ", error);
-    throw new Error("Failed with " + error);
+    return Promise.reject(error);
   }
 }
 

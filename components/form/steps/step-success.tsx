@@ -1,11 +1,7 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import * as React from "react";
 
-function StepSuccess(props: any) {
-  const handleReset = () => {
-    props.lastStep = false;
-  };
-
+function StepSuccess() {
   return (
     <>
       <Container maxWidth="md">
@@ -43,7 +39,6 @@ function StepSuccess(props: any) {
             </Typography>
             <Button
               href="http://test.moudrasit.cz/"
-              onClick={handleReset}
               type="submit"
               variant="contained"
               sx={{

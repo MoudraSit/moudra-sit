@@ -88,6 +88,14 @@ const intial = {
   agreement: false,
 };
 
+function scrollIntoView() {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    left: 0,
+    behavior: "smooth",
+  });
+}
+
 function renderStepContent(
   step: number,
   values: IValues,
@@ -113,14 +121,6 @@ function renderStepContent(
   }
 }
 
-function scrollIntoSection(elemId: string) {
-  const element = document.getElementById(elemId);
-  if (element) {
-    // Will scroll smoothly to the top of the next section
-    element.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
-
 export default function VerticalLinearStepper() {
   const divRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -136,11 +136,10 @@ export default function VerticalLinearStepper() {
   ) {
     if (index === steps.length - 1) {
       try {
-        lastStep = true;
         //alert(JSON.stringify(values, null, 2));
 
         setProgressbBar(true);
-        console.log("PROgress bar");
+        //console.log("PROgress bar");
 
         //await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -179,9 +178,11 @@ export default function VerticalLinearStepper() {
         }
 
         setProgressbBar(false);
+        lastStep = true;
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } catch (error) {
+        lastStep = false;
         setProgressbBar(false);
         setErrorMessage(true);
         actions.setTouched({});
@@ -189,8 +190,11 @@ export default function VerticalLinearStepper() {
         console.log("error");
       }
     } else {
+      // go to next step
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      console.log(values);
+      //console.log(values);
+
+      // set submit button to default position
       actions.setTouched({});
       actions.setSubmitting(false);
     }
@@ -211,17 +215,7 @@ export default function VerticalLinearStepper() {
             validationSchema={currentValidationSchema}
             onSubmit={(values: IValues, actions) => {
               handleSend(activeStep, values, actions);
-              // window.scrollTo({
-              //   top: document.body.scrollHeight,
-              //   left: 0,
-              //   behavior: "smooth",
-              // });
-              scrollIntoSection("section2");
-              divRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-                inline: "center",
-              });
+              scrollIntoView();
             }}
           >
             {({ isSubmitting, setFieldValue, values }) => (
@@ -340,9 +334,7 @@ export default function VerticalLinearStepper() {
                     ))}
                   </Stepper>
                   <div ref={divRef}>
-                    {activeStep === steps.length && (
-                      <StepSuccess lastStep={lastStep} />
-                    )}
+                    {activeStep === steps.length && <StepSuccess />}
                   </div>
                 </Container>
               </Form>
