@@ -70,7 +70,8 @@ export const defaultSchema = [
     otherCheckbox: yup.boolean(),
     checkbox_selection: yup
       .boolean()
-      .required("At least one checkbox is to be selected"),
+      .required()
+      .oneOf([true], "At least one checkbox is to be selected"),
     requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
     name: yup
@@ -101,6 +102,7 @@ export const defaultSchema = [
     email: yup.string().email("Napište správně Váš kontaktní email"),
     agreement: yup
       .boolean()
+      .required()
       .oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),
   }),
   yup.object().shape({
@@ -119,7 +121,7 @@ export const defaultSchema = [
     otherCheckbox: yup.boolean(),
     checkbox_selection: yup
       .boolean()
-      .required("At least one checkbox is to be selected"),
+      .oneOf([true], "At least one checkbox is to be selected"),
     requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
     name: yup

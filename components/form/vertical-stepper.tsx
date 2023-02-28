@@ -16,7 +16,13 @@ import Step3Form from "./steps/step3";
 import Step4Form from "./steps/step4";
 import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
-import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
+import {
+  Form,
+  Formik,
+  FormikErrors,
+  FormikHelpers,
+  useFormikContext,
+} from "formik";
 import Step5Form from "./steps/step5";
 import ApiRequestSenior from "./api/proxy-request-senior";
 import ApiRequestRequirment from "./api/proxy-request-requirment";
@@ -99,6 +105,7 @@ function scrollIntoView() {
 function renderStepContent(
   step: number,
   values: IValues,
+  errors: FormikErrors<IValues>,
   setFieldValue: (
     field: string,
     value: any,
@@ -109,7 +116,7 @@ function renderStepContent(
     case 0:
       return <Step1Form />;
     case 1:
-      return <Step2Form setFieldValue={setFieldValue} />;
+      return <Step2Form setFieldValue={setFieldValue} errors={errors} />;
     case 2:
       return <Step3Form />;
     case 3:
@@ -218,7 +225,7 @@ export default function VerticalLinearStepper() {
               scrollIntoView();
             }}
           >
-            {({ isSubmitting, setFieldValue, values }) => (
+            {({ isSubmitting, setFieldValue, values, errors }) => (
               <Form autoComplete="on">
                 <Container maxWidth="xl">
                   <Stepper activeStep={activeStep} orientation="vertical">
@@ -252,6 +259,9 @@ export default function VerticalLinearStepper() {
                           "& .MuiStepContent-root": {
                             paddingLeft: 0, // circle color (COMPLETED)
                           },
+                          "& .MuiFormHelperText-root": {
+                            fontSize: 14, // circle color (COMPLETED)
+                          },
                         }}
                         key={step.label}
                         active={
@@ -280,6 +290,7 @@ export default function VerticalLinearStepper() {
                                   {renderStepContent(
                                     index,
                                     values,
+                                    errors,
                                     setFieldValue
                                   )}
                                 </>

@@ -128,6 +128,7 @@ function Step5Form(props: { values: IValues }) {
                     <TableCell
                       style={{ borderBottom: "none" }}
                       sx={{
+                        fontSize: "18px",
                         display: { xs: "flex", sm: "table-cell" },
                       }}
                       align="left"

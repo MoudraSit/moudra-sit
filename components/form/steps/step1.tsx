@@ -38,8 +38,11 @@ function Step1Form() {
             style: {
               WebkitBoxShadow: "0 0 0 1000px white inset",
               WebkitTextFillColor: "black",
+              fontSize: 20,
             },
           }}
+          InputProps={{ style: { fontSize: 20 } }}
+          InputLabelProps={{ style: { fontSize: 20 } }}
           sx={{ maxWidth: 230 }}
           required
         />
