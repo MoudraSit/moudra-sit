@@ -36,7 +36,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
     // data for submit
     let blob = dataURItoBlob(imageList[0].data_url);
     let urlimage = URL.createObjectURL(blob);
-    urlimage = urlimage.substring(12);
+    urlimage = urlimage.substring(5);
 
     console.log(urlimage, addUpdateIndex);
     uploadedImage(urlimage);

@@ -101,7 +101,7 @@ function Step3Form({ uploadedImage }: ImageType) {
         <Grid item xs={12} md={4}>
           <UploadRecord />
         </Grid> */}
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Typography
             sx={{ pt: 6 }}
             variant="h5"
@@ -114,7 +114,7 @@ function Step3Form({ uploadedImage }: ImageType) {
         </Grid>
         <Grid item xs={12}>
           <UploadPicture uploadedImage={uploadedImage} />
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
