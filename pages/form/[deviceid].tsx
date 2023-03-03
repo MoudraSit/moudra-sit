@@ -10,7 +10,7 @@ function FormPageWithId() {
 
   return (
     <>
-      {/* <Layout /> */}
+      <Layout />
       {/* TODO odstranit <UnderNavbar id={router.query.deviceid} /> */}
       <VerticalLinearStepper />
       <Footer />

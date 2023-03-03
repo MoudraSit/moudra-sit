@@ -48,7 +48,7 @@ function Step2Form(props: any) {
         sx={{ fontWeight: "bold" }}
         variant="h4"
         align="center"
-        color="primary.main"
+        color="#3e3e3e"
         gutterBottom
       >
         Vyberte, s čím potřebujete pomoct
@@ -57,7 +57,7 @@ function Step2Form(props: any) {
         sx={{ pb: 6 }}
         variant="h5"
         align="center"
-        color="primary.main"
+        color="#3e3e3e"
         paragraph
       >
         V případě potřeby klikněte na více možností

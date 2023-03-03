@@ -4,9 +4,9 @@ export let appTheme = createTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: "#000000",
+      main: "#ffffff",
       // dark: will be calculated from palette.primary.main,
-      contrastText: "#ffffff",
+      contrastText: "#000000",
     },
     secondary: {
       light: "#5884b9",

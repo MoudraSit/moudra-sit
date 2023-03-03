@@ -32,6 +32,7 @@ import StepSuccess from "./steps/step-success";
 import ErrorMessageStep from "./steps/error-message";
 import ErrorMessageComponent from "./steps/error-message";
 import ProgressBarComponent from "./steps/progress-bar";
+import { ImageType } from "react-images-uploading";
 
 export interface IValues {
   requirmentName: string;
@@ -49,6 +50,7 @@ export interface IValues {
   phoneNumber: string;
   email: string;
   agreement: boolean;
+  image: URL;
 }
 
 let lastStep = false;
@@ -92,6 +94,7 @@ const intial = {
   phoneNumber: "",
   email: "",
   agreement: false,
+  image: null,
 };
 
 function scrollIntoView() {
@@ -112,13 +115,17 @@ function renderStepContent(
     shouldValidate?: boolean | undefined
   ) => void
 ) {
+  const uploadedImage = (image: ImageType) => {
+    setFieldValue("image", image);
+  };
+
   switch (step) {
     case 0:
       return <Step1Form />;
     case 1:
       return <Step2Form setFieldValue={setFieldValue} errors={errors} />;
     case 2:
-      return <Step3Form />;
+      return <Step3Form uploadedImage={uploadedImage} />;
     case 3:
       return <Step4Form setFieldValue={setFieldValue} />;
     case 4:
@@ -199,7 +206,7 @@ export default function VerticalLinearStepper() {
     } else {
       // go to next step
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      //console.log(values);
+      console.log(values);
 
       // set submit button to default position
       actions.setTouched({});

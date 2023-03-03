@@ -12,7 +12,7 @@ function Step4Form(props: any) {
         sx={{ fontWeight: "bold" }}
         variant="h4"
         align="center"
-        color="primary.main"
+        color="#3e3e3e"
         gutterBottom
       >
         Vyplňte Vaše kontaktní údaje
@@ -21,7 +21,7 @@ function Step4Form(props: any) {
         sx={{ pb: 6 }}
         variant="h5"
         align="center"
-        color="primary.main"
+        color="#3e3e3e"
         paragraph
       >
         Koordinátor Vás následně propojí s digitálním asistentem
@@ -171,7 +171,7 @@ function Step4Form(props: any) {
               <Link
                 color="#000000"
                 href="http://test.moudrasit.cz/wp-content/uploads/2023/02/Zasady-ochrany-osobnich-udaju_Moudra-Sit.pdf"
-                rel="noopener noreferrer"
+                rel="noopener"
                 target="_blank"
                 fontSize={24}
               >

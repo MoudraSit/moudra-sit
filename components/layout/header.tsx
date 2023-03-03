@@ -13,14 +13,8 @@ import { Stack } from "@mui/material";
 import ContactLine from "./contact-line";
 import Link from "next/link";
 
-const pages = [
-  "Jsem Senior 60+",
-  "Chci Pomáhat",
-  "O Moudré Síti",
-  "Partneři",
-  "Kontakty",
-  "Gdpr",
-];
+import logo from "public/images/logo/logo.svg";
+import Image from "next/image";
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -37,31 +31,10 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="sticky" color="primary">
-      <ContactLine />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link href="/">
-            <Box
-              component="img"
-              sx={{
-                height: 50,
-                p: 1,
-              }}
-              src="../../images/logo/logo.png"
-            />
-          </Link>
-          <Link href="/">
-            <Typography
-              variant="h5"
-              noWrap
-              fontWeight="fontWeightMedium"
-              sx={{
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Moudrá Síť
-            </Typography>
+          <Link href="http://test.moudrasit.cz/">
+            <Image src={logo} alt={""} height="30" />
           </Link>
           <Box
             sx={{
@@ -70,17 +43,8 @@ function ResponsiveAppBar() {
               alignItems: "center",
               justifyContent: "center",
             }}
-          >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                sx={{ my: 3, color: "black", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          <Stack direction="row" spacing={2}>
+          ></Box>
+          {/* <Stack direction="row" spacing={2}>
             <Button
               variant="contained"
               color="warning"
@@ -137,7 +101,7 @@ function ResponsiveAppBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>

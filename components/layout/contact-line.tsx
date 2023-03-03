@@ -4,7 +4,8 @@ function ContactLine() {
   return (
     <Box sx={{ bgcolor: "#000000" }}>
       <Typography variant="subtitle2" align="center" color="white">
-        Nevíte si rady? Volejte Helplinku +420 657 897 546 (9:00 - 17:00)
+        Nevíte si rady? Volejte bezplatnou linku +420 800 220 044 (pondělí až
+        pátek 8:00-16:00)
       </Typography>
     </Box>
   );

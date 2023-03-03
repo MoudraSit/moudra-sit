@@ -1,11 +1,12 @@
 import { WorkHistoryTwoTone } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import React from "react";
+import { ImageType } from "react-images-uploading";
 import TextFieldForm from "../model/input-form";
 import UploadPicture from "../modules/upload-picture";
 import UploadRecord from "../modules/upload-record";
 
-function Step3Form() {
+function Step3Form({ uploadedImage }: ImageType) {
   return (
     <>
       <div id="section3" />
@@ -13,13 +14,13 @@ function Step3Form() {
         sx={{ fontWeight: "bold", pb: 6 }}
         variant="h4"
         align="center"
-        color="primary.main"
+        color="#3e3e3e"
         gutterBottom
       >
         Popište Váš problém
       </Typography>
       <Grid item xs={12}>
-        <Typography variant="h5" align="left" color="primary.main" paragraph>
+        <Typography variant="h5" align="left" color="#3e3e3e" paragraph>
           Popište Váš problém několika slovy (např. nefunguje wifi, nejede
           tiskárna)
         </Typography>
@@ -51,13 +52,13 @@ function Step3Form() {
           sx={{ pt: 6 }}
           variant="h5"
           align="left"
-          color="primary.main"
+          color="#3e3e3e"
           paragraph
         >
           Popište detaily
         </Typography>
       </Grid>
-      <Grid container spacing={6}>
+      <Grid container spacing={1}>
         <Grid item xs={12}>
           <TextFieldForm
             id="description"
@@ -99,20 +100,21 @@ function Step3Form() {
         </Grid>
         <Grid item xs={12} md={4}>
           <UploadRecord />
-        </Grid>
-        <Grid item xs={12} md={8}>
+        </Grid> */}
+        <Grid item xs={12}>
           <Typography
-            variant="h6"
+            sx={{ pt: 6 }}
+            variant="h5"
             align="left"
-            color="primary.main"
+            color="#3e3e3e"
             paragraph
           >
-            Máte fotografie, které nám k tomu můžete poslat? (nepovinné)
+            Máte fotografii, kterou nám k tomu můžete poslat? (nepovinné)
           </Typography>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <UploadPicture />
-        </Grid> */}
+        <Grid item xs={12}>
+          <UploadPicture uploadedImage={uploadedImage} />
+        </Grid>
       </Grid>
     </>
   );

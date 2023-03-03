@@ -19,17 +19,12 @@ function StepSuccess() {
               sx={{ fontWeight: "bold" }}
               variant="h2"
               align="center"
-              color="primary.main"
+              color="#3e3e3e"
               gutterBottom
             >
               Děkujeme
             </Typography>
-            <Typography
-              variant="h6"
-              align="center"
-              color="primary.main"
-              paragraph
-            >
+            <Typography variant="h6" align="center" color="#3e3e3e" paragraph>
               Váš dotaz jsme přijali ke zpracování. Do 2 dnů Vás bude
               telefonicky kontaktovat digitální asistent, který Vám pomůže
               situaci vyřešit. Společně se domluvíte, zda bude potřeba osobní

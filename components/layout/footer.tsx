@@ -11,15 +11,7 @@ function Footer() {
           gutterBottom
           color="secondary.contrastText"
         >
-          Patička
-        </Typography>
-        <Typography
-          variant="body2"
-          color="secondary.contrastText"
-          align="center"
-        >
-          Moudrá Síť {new Date().getFullYear()}
-          {"."}
+          {new Date().getFullYear()} © Moudrá Síť z.s. – Všechna práva vyhrazena
         </Typography>
       </Box>
       <ContactLine />

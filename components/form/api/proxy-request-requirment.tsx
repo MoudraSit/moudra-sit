@@ -11,6 +11,8 @@ export interface IRequirmentResponse {
 }
 
 async function ApiRequestRequirment(values: IValues, idSenior: string) {
+  let currentDate = new Date();
+
   try {
     const response = await fetch("/api/tabidoo-requirment", {
       method: "POST",
@@ -18,6 +20,8 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
         fields: {
           popis: values.requirmentName,
           podrobnosti: values.description,
+          datumVytvoreni: currentDate,
+          fotka: URL.createObjectURL(values.image),
           iDSeniora: {
             id: idSenior,
           },
