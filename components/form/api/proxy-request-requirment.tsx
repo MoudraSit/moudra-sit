@@ -21,7 +21,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
-          fotka: URL.createObjectURL(values.image),
+          fotka: values.image,
           iDSeniora: {
             id: idSenior,
           },
