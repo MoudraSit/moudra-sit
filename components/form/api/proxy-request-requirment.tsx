@@ -12,6 +12,7 @@ export interface IRequirmentResponse {
 
 async function ApiRequestRequirment(values: IValues, idSenior: string) {
   let currentDate = new Date();
+  let datass = JSON.stringify(values.image);
 
   try {
     const response = await fetch("/api/tabidoo-requirment", {
@@ -21,7 +22,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
-          fotka: values.image,
+          fotka: datass,
           iDSeniora: {
             id: idSenior,
           },

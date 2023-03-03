@@ -50,7 +50,7 @@ export interface IValues {
   phoneNumber: string;
   email: string;
   agreement: boolean;
-  image: URL;
+  image: string;
 }
 
 let lastStep = false;
@@ -94,7 +94,7 @@ const intial = {
   phoneNumber: "",
   email: "",
   agreement: false,
-  image: null,
+  image: "",
 };
 
 function scrollIntoView() {

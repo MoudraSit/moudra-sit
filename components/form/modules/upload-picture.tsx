@@ -34,11 +34,12 @@ function UploadPicture({ uploadedImage }: ImageType) {
 
   const onChange = (imageList: any, addUpdateIndex: any) => {
     // data for submit
-    var blob = dataURItoBlob(imageList[0].data_url);
+    let blob = dataURItoBlob(imageList[0].data_url);
+    let urlimage = URL.createObjectURL(blob);
+    urlimage = urlimage.substring(12);
 
-    console.log(blob, addUpdateIndex);
-
-    uploadedImage(blob);
+    console.log(urlimage, addUpdateIndex);
+    uploadedImage(urlimage);
     setImages(imageList);
   };
 
