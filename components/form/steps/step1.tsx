@@ -7,16 +7,14 @@ function Step1Form() {
     <>
       <div id="section1" />
       <Typography
-        sx={{ fontWeight: "bold" }}
-        variant="h4"
-        align="center"
+        variant="h5"
+        align="left"
         color="#3e3e3e"
-        gutterBottom
+        paragraph
+        fontWeight="bold"
       >
-        Službu poskytujeme seniorům 60+ let zdarma
-      </Typography>
-      <Typography variant="h5" align="center" color="#3e3e3e" paragraph>
-        Pro zadání dotazu prosím vyplňte Váš ročník narození
+        Službu poskytujeme seniorům 60+ let zdarma, proto potřebujeme ověřit Váš
+        věk.
       </Typography>
       <Box
         sx={{
@@ -29,7 +27,7 @@ function Step1Form() {
           id="year"
           label="Rok narození"
           name="year"
-          type="number"
+          type="tel"
           color="info"
           variant="outlined"
           inputhelper="Napište rok Vašeho narození"

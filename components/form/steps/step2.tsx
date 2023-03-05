@@ -45,22 +45,13 @@ function Step2Form(props: any) {
     <>
       <div id="section2" />
       <Typography
-        sx={{ fontWeight: "bold" }}
-        variant="h4"
-        align="center"
-        color="#3e3e3e"
-        gutterBottom
-      >
-        Vyberte, s čím potřebujete pomoct
-      </Typography>
-      <Typography
-        sx={{ pb: 6 }}
+        sx={{ pb: 6, fontWeight: "bold" }}
         variant="h5"
-        align="center"
+        align="left"
         color="#3e3e3e"
         paragraph
       >
-        V případě potřeby klikněte na více možností
+        S čím potřebujete pomoci? Můžete vybrat více možností.
       </Typography>
       <Grid container alignItems="stretch" spacing={1.5}>
         <Grid item xs={12} md={3}>

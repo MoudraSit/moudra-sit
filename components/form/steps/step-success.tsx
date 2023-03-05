@@ -25,7 +25,7 @@ function StepSuccess() {
               Děkujeme
             </Typography>
             <Typography variant="h6" align="center" color="#3e3e3e" paragraph>
-              Váš dotaz jsme přijali ke zpracování. Do 2 dnů Vás bude
+              Váš dotaz jsme přijali ke zpracování. Do 5 dnů Vás bude
               telefonicky kontaktovat digitální asistent, který Vám pomůže
               situaci vyřešit. Společně se domluvíte, zda bude potřeba osobní
               návštěva, nebo to zvládnete po telefonu. Do e-mailu Vám přišel

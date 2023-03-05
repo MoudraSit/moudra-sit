@@ -75,22 +75,14 @@ function Step5Form(props: { values: IValues }) {
   return (
     <>
       <Typography
-        sx={{ fontWeight: "bold" }}
-        variant="h4"
-        align="center"
-        color="#3e3e3e"
-        gutterBottom
-      >
-        Zkontrolujte uvedené údaje
-      </Typography>
-      <Typography
         variant="h5"
-        align="center"
+        align="left"
         color="#3e3e3e"
-        sx={{ pb: 2 }}
+        sx={{ pb: 2, fontWeight: "bold" }}
         paragraph
       >
-        Prosím, ještě jednou si projděte vyplněné údaje a dobře je zkontrolujte
+        Nyní prosím zkontrolujte správnost vyplněných údajů a níže klikněte na
+        tlačítko “Odeslat požadavek“.
       </Typography>
       <Box
         sx={{
@@ -169,13 +161,13 @@ function Step5Form(props: { values: IValues }) {
         </TableContainer>
       </Box>
       <Typography
-        sx={{ pt: 5 }}
+        sx={{ pt: 5, fontWeight: "bold" }}
         variant="h5"
         align="center"
         color="#3e3e3e"
         paragraph
       >
-        Pokud je vše správně, klikněte na Odeslat
+        Pokud je vše správně, klikněte na tlačítko “Odeslat požadavek“
       </Typography>
     </>
   );

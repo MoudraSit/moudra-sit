@@ -10,26 +10,22 @@ function Step3Form({ uploadedImage }: ImageType) {
   return (
     <>
       <div id="section3" />
-      <Typography
-        sx={{ fontWeight: "bold", pb: 6 }}
-        variant="h4"
-        align="center"
-        color="#3e3e3e"
-        gutterBottom
-      >
-        Popište Váš problém
-      </Typography>
       <Grid item xs={12}>
-        <Typography variant="h5" align="left" color="#3e3e3e" paragraph>
-          Popište Váš problém několika slovy (např. nefunguje wifi, nejede
-          tiskárna)
+        <Typography
+          variant="h5"
+          align="left"
+          color="#3e3e3e"
+          paragraph
+          sx={{ fontWeight: "bold" }}
+        >
+          Popište Váš problém několika slovy (např. “nefunguje wifi”)
         </Typography>
       </Grid>
 
       <Grid item xs={12}>
         <TextFieldForm
           id="requirmentName"
-          label="Název"
+          label="Napište několik slov"
           name="requirmentName"
           inputhelper=""
           variant="outlined"
@@ -49,20 +45,20 @@ function Step3Form({ uploadedImage }: ImageType) {
       </Grid>
       <Grid item xs={12}>
         <Typography
-          sx={{ pt: 6 }}
+          sx={{ pt: 6, fontWeight: "bold" }}
           variant="h5"
           align="left"
           color="#3e3e3e"
           paragraph
         >
-          Popište detaily
+          Detailně vysvětlete, s čím přesně potřebujete pomoct
         </Typography>
       </Grid>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <TextFieldForm
             id="description"
-            label="Zde popište problém s Vaším zařízením"
+            label="Zde se rozepište"
             name="description"
             inputhelper=""
             variant="outlined"

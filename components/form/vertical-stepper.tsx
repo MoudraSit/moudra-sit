@@ -65,13 +65,13 @@ const steps = [
     label: "Váš rok narození",
   },
   {
-    label: "S čím potřebujete pomoct",
+    label: "Výběr zařízení",
   },
   {
     label: "Popis Vašeho problému",
   },
   {
-    label: "Kontakt na Vás",
+    label: "Vaše kontaktní údaje",
   },
   {
     label: "Shrnutí",
@@ -248,36 +248,44 @@ export default function VerticalLinearStepper() {
                             },
                           "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text":
                             {
-                              fill: "black", // circle's number (DISABLED)
+                              fill: "#028790", // circle's number (DISABLED)
                             },
                           "& .MuiStepLabel-root .Mui-active": {
                             color: "white", // circle color (ACTIVE)
                           },
                           "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text":
                             {
-                              fill: "black", // circle's text (ACTIVE)
+                              fill: "#028790", // circle's text (ACTIVE)
                             },
                           "& .MuiStepLabel-root .Mui-completed": {
                             color: "#f5f3ee", // circle color (COMPLETED)
                           },
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 25,
+                          },
+                          "& .MuiStepIcon-text": {
+                            fontSize: 18,
+                            fontWeight: "bold",
+                          },
+
                           "& .MuiStepLabel-label": {
                             fontSize: 20,
                           },
                           "& .MuiStepContent-root": {
-                            paddingLeft: 0, // circle color (COMPLETED)
+                            paddingLeft: 0,
                           },
                           "& .MuiFormHelperText-root": {
-                            fontSize: 14, // circle color (COMPLETED)
+                            fontSize: 14,
                           },
                           // plusCode styles
                           "& .MuiFormLabel-root": {
-                            fontSize: 20, // circle color (COMPLETED)
+                            fontSize: 20,
                           },
                           "& .MuiSelect-select": {
-                            fontSize: 20, // circle color (COMPLETED)
+                            fontSize: 20,
                           },
                           "& .MuiInputBase-root": {
-                            fontSize: 20, // circle color (COMPLETED)
+                            fontSize: 20,
                           },
                         }}
                         key={step.label}
@@ -331,7 +339,7 @@ export default function VerticalLinearStepper() {
                                         sx={{
                                           mt: 1,
                                           mr: 1,
-                                          bgcolor: "#e25b5b",
+                                          bgcolor: "#e25b5b !important",
                                           color: "white",
                                         }}
                                       >
@@ -350,7 +358,7 @@ export default function VerticalLinearStepper() {
                                         color: "white",
                                       }}
                                     >
-                                      Odeslat
+                                      Odeslat požadavek
                                     </Button>
                                   )}
                                 </Box>

@@ -8,24 +8,6 @@ function Step4Form(props: any) {
   return (
     <>
       <div id="section4" />
-      <Typography
-        sx={{ fontWeight: "bold" }}
-        variant="h4"
-        align="center"
-        color="#3e3e3e"
-        gutterBottom
-      >
-        Vyplňte Vaše kontaktní údaje
-      </Typography>
-      <Typography
-        sx={{ pb: 6 }}
-        variant="h5"
-        align="center"
-        color="#3e3e3e"
-        paragraph
-      >
-        Koordinátor Vás následně propojí s digitálním asistentem
-      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextFieldForm
