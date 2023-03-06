@@ -152,7 +152,7 @@ function Step4Form(props: any) {
             label={
               <Link
                 color="#000000"
-                href="http://test.moudrasit.cz/wp-content/uploads/2023/03/Zasady-ochrany-osobnich-udaju_Moudra-Sit_03032023.pdf"
+                href="http://test.moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju"
                 rel="noopener"
                 target="_blank"
                 fontSize={24}
