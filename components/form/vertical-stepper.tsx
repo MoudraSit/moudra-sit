@@ -327,7 +327,7 @@ export default function VerticalLinearStepper() {
                                   sx={{
                                     bgcolor: "#f5f3ee",
                                     pt: 8,
-                                    textAlign: "center",
+                                    textAlign: "left",
                                   }}
                                 >
                                   {index === activeStep &&

@@ -16,9 +16,9 @@ function Step3Form({ uploadedImage }: ImageType) {
           align="left"
           color="#3e3e3e"
           paragraph
-          sx={{ fontWeight: "bold" }}
+          sx={{ fontWeight: "bold", pb: 4 }}
         >
-          Popište Váš problém několika slovy (např. “nefunguje wifi”)
+          Popište Váš problém několika slovy (např. “nefunguje wifi”).
         </Typography>
       </Grid>
 
@@ -45,13 +45,13 @@ function Step3Form({ uploadedImage }: ImageType) {
       </Grid>
       <Grid item xs={12}>
         <Typography
-          sx={{ pt: 6, fontWeight: "bold" }}
+          sx={{ pt: 6, pb: 4, fontWeight: "bold" }}
           variant="h5"
           align="left"
           color="#3e3e3e"
           paragraph
         >
-          Detailně vysvětlete, s čím přesně potřebujete pomoct
+          Detailně vysvětlete, s čím přesně potřebujete pomoct.
         </Typography>
       </Grid>
       <Grid container spacing={1}>

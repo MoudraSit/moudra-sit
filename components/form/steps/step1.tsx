@@ -20,7 +20,7 @@ function Step1Form() {
         sx={{
           bgcolor: "#f5f3ee",
           pt: 4,
-          textAlign: "center",
+          textAlign: "left",
         }}
       >
         <TextFieldForm

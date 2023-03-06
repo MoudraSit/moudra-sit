@@ -78,7 +78,7 @@ function Step5Form(props: { values: IValues }) {
         variant="h5"
         align="left"
         color="#3e3e3e"
-        sx={{ pb: 2, fontWeight: "bold" }}
+        sx={{ pb: 4, fontWeight: "bold" }}
         paragraph
       >
         Nyní prosím zkontrolujte správnost vyplněných údajů a níže klikněte na
@@ -161,9 +161,9 @@ function Step5Form(props: { values: IValues }) {
         </TableContainer>
       </Box>
       <Typography
-        sx={{ pt: 5, fontWeight: "bold" }}
+        sx={{ pt: 4, fontWeight: "bold" }}
         variant="h5"
-        align="center"
+        align="left"
         color="#3e3e3e"
         paragraph
       >
