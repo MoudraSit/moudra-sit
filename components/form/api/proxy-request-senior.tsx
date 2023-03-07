@@ -17,6 +17,11 @@ export interface ISeniorResponse {
   };
 }
 
+// check if name and surname start with capital letter
+function capitalizeFirstLetter(name: string) {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
 // call proxy API
 async function ApiRequestSenior(props: IValues) {
   try {
@@ -24,12 +29,12 @@ async function ApiRequestSenior(props: IValues) {
       method: "POST",
       body: JSON.stringify({
         fields: {
-          jmeno: props.name,
-          prijmeni: props.surname,
+          jmeno: capitalizeFirstLetter(props.name),
+          prijmeni: capitalizeFirstLetter(props.surname),
           PSC: props.zipCode,
           email: props.email,
           telefon: props.plusCode.concat(props.phoneNumber),
-          rokNarozeni: props.year,
+          rokNarozeni: parseInt(props.year),
         },
       }),
       headers: {

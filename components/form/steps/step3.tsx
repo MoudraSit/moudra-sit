@@ -99,7 +99,7 @@ function Step3Form({ uploadedImage }: ImageType) {
         </Grid> */}
         <Grid item xs={12}>
           <Typography
-            sx={{ pt: 6 }}
+            sx={{ pt: 6, fontWeight: "bold" }}
             variant="h5"
             align="left"
             color="#3e3e3e"
