@@ -1,4 +1,4 @@
-import { RequirmentTabidooRequest } from "components/form/api/api-handler";
+import { RequirmentTabidooRequest } from "components/form/handler/api-handler";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(

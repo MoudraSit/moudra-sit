@@ -1,40 +1,28 @@
 import * as React from "react";
-import styles from "./vertical-stepper.module.css";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "../theme/theme";
-import { CircularProgress, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import Step1Form from "./steps/step1";
 import Step2Form from "./steps/step2";
 import Step3Form from "./steps/step3";
 import Step4Form from "./steps/step4";
-import Link from "next/link";
 import { defaultSchema } from "./schemas/default-schema";
-import {
-  Form,
-  Formik,
-  FormikErrors,
-  FormikHelpers,
-  useFormikContext,
-} from "formik";
+import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import Step5Form from "./steps/step5";
 import ApiRequestSenior from "./api/proxy-request-senior";
 import ApiRequestRequirment from "./api/proxy-request-requirment";
 import ApiRequestCategory from "./api/proxy-request-category";
 import ApiGetRequestSenior from "./api/proxy-request-get-senior";
 import StepSuccess from "./steps/step-success";
-import ErrorMessageStep from "./steps/error-message";
 import ErrorMessageComponent from "./steps/error-message";
 import ProgressBarComponent from "./steps/progress-bar";
 import { ImageType } from "react-images-uploading";
-import ApiUploadImage from "./api/proxy-upload-image";
-import fs from "fs";
 
 export interface IValues {
   requirmentName: string;
@@ -152,14 +140,13 @@ export default function VerticalLinearStepper() {
   ) {
     if (index === steps.length - 1) {
       try {
-        //alert(JSON.stringify(values, null, 2));
-
+        // show progress bar
         setProgressbBar(true);
-        //console.log("PROgress bar");
 
         // TODO: cannot use because need public URL to upload file to Tabidoo
         //if (values.image) await ApiUploadImage(values.image);
 
+        // simulate API calling
         //await new Promise((resolve) => setTimeout(resolve, 3000));
 
         let idRequirment = null;
@@ -196,14 +183,20 @@ export default function VerticalLinearStepper() {
           }
         }
 
+        // switch off progress bar
         setProgressbBar(false);
+
+        // fold steps
         lastStep = true;
 
+        // show content of last step
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } catch (error) {
         lastStep = false;
         setProgressbBar(false);
         setErrorMessage(true);
+
+        // set submit button to default position
         actions.setTouched({});
         actions.setSubmitting(false);
         console.log("error");

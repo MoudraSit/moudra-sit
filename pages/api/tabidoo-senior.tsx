@@ -1,4 +1,4 @@
-import { SeniorTabidooRequest } from "components/form/api/api-handler";
+import { SeniorTabidooRequest } from "components/form/handler/api-handler";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(

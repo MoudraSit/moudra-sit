@@ -43,7 +43,7 @@ async function ApiGetRequestSenior(values: IValues) {
 
     console.log(jsonObject);
 
-    // senior with was found in the table
+    // senior was found in the table, take first record
     if (jsonObject.data[0]) {
       console.log(jsonObject.data[0].id);
 
@@ -58,7 +58,6 @@ async function ApiGetRequestSenior(values: IValues) {
     // return id of senior object
   } catch (error) {
     console.log("There was an error", error);
-    //TODO: FIX ME
     return Promise.reject(error);
   }
 }

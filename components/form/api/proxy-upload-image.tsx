@@ -5,8 +5,8 @@ async function ApiUploadImage(image: string) {
 
   body.append("myImage", image);
 
-  console.log("posilam na API");
-  console.log(image);
+  //console.log("posilam na API");
+  //console.log(image);
 
   try {
     const response = await axios.post("/api/upload", body);

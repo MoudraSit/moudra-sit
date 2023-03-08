@@ -1,5 +1,4 @@
-import { ISeniorResponse } from "./proxy-request-senior";
-import Formidable from "formidable";
+import { ISeniorResponse } from "../api/proxy-request-senior";
 
 export interface IFilterSenior {
   filter: {
