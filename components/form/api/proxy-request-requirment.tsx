@@ -22,8 +22,6 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
-          fotka:
-            "http://localhost:3000/upload/1678261721881_20210523-0016%201.svg",
           iDSeniora: {
             id: idSenior,
           },

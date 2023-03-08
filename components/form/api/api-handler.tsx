@@ -8,6 +8,7 @@ export interface IFilterSenior {
   };
 }
 
+// try to get existing senior record from Tabidoo
 export async function GetSeniorTabidooRequest(
   apiToken: string,
   body: IFilterSenior
@@ -57,17 +58,6 @@ export async function SeniorTabidooRequest(
       "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data",
       {
         method: "POST",
-        //TODO: error handling pro spatny vstup pri volani na API Tabidoo, na frontend vypsat, ze maji operaci opakovat a ne ze byl pozadavek zaslan
-
-        // body: JSON.stringify({
-        //   fields: {
-        //     jmeno: "Jan",
-        //     prijmeni: "Klan",
-        //     PSC: "60200",
-        //     telefon: "777888999",
-        //     rokNarozeni: "1912",
-        //   },
-        // }),
         body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",

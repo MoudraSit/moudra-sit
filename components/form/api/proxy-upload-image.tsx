@@ -10,10 +10,9 @@ async function ApiUploadImage(image: string) {
 
   try {
     const response = await axios.post("/api/upload", body);
-    const jsonObject = await response; //extract JSON from the http response
 
     // return id of senior object
-    return jsonObject;
+    return response;
   } catch (error) {
     console.log("There was an error ", error);
     return Promise.reject(error);

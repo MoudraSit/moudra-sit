@@ -15,16 +15,16 @@ const readFile = (
   const options: formidable.Options = {};
   options.uploadDir = path.join(process.cwd(), "/public/upload");
   options.filename = (name, ext, path, form) => {
-    return Date.now().toString() + "_" + path.originalFilename;
+    return path.originalFilename!.toString();
   };
   options.maxFileSize = 4000 * 1024 * 1024;
 
-  console.log(options.filename);
+  //console.log(options.filename);
 
   const form = formidable(options);
   return new Promise((resolve, reject) => {
     form.parse(req, (err, fields, files) => {
-      console.log(files);
+      //console.log(files);
       if (err) reject(err);
       resolve({ fields, files });
     });

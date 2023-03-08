@@ -8,24 +8,18 @@ import ReactImageUploading, { ImageType } from "react-images-uploading";
 // Sources: https://codesandbox.io/s/react-images-uploading-demo-u0khz?file=/src/index.js:158-1697
 // https://www.npmjs.com/package/react-images-uploading?activeTab=readme
 
-function dataURItoBlob(dataURI: string) {
-  // convert base64/URLEncoded data component to raw binary data held in a string
-  var byteString;
+function dataURLtoFile(dataurl: any, filename: any) {
+  var arr = dataurl.split(","),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
 
-  if (dataURI.split(",")[0].indexOf("base64") >= 0)
-    byteString = atob(dataURI.split(",")[1]);
-  else byteString = unescape(dataURI.split(",")[1]);
-
-  // separate out the mime component
-  var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
-
-  // write the bytes of the string to a typed array
-  var ia = new Uint8Array(byteString.length);
-  for (var i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
   }
 
-  return new Blob([ia], { type: mimeString });
+  return new File([u8arr], filename, { type: mime });
 }
 
 function UploadPicture({ uploadedImage }: ImageType) {
@@ -34,9 +28,31 @@ function UploadPicture({ uploadedImage }: ImageType) {
   const [selectedFile, setSelectedFile] = useState<File>();
   const maxNumber = 1;
 
+  const onChange = (imageList: any, addUpdateIndex: any) => {
+    setImages(imageList);
+
+    if (imageList[0]) {
+      let stringObject: string = imageList[0].data_url;
+      let typeOfImage: string =
+        "image." +
+        stringObject.substring(
+          stringObject.indexOf("/") + 1,
+          stringObject.lastIndexOf(";")
+        );
+      let newFile = dataURLtoFile(imageList[0].data_url, typeOfImage);
+      let newUrl = URL.createObjectURL(newFile);
+
+      console.log(newFile);
+
+      setSelectedImage(newUrl);
+      setSelectedFile(newFile);
+      uploadedImage(newFile);
+    }
+  };
+
   return (
     <>
-      {/* <ReactImageUploading
+      <ReactImageUploading
         multiple
         value={images}
         onChange={onChange}
@@ -88,8 +104,8 @@ function UploadPicture({ uploadedImage }: ImageType) {
             )}
           </>
         )}
-      </ReactImageUploading> */}
-      <div className="max-w-4xl mx-auto p-20 space-y-6">
+      </ReactImageUploading>
+      {/* <div className="max-w-4xl mx-auto p-20 space-y-6">
         <label>
           <input
             type="file"
@@ -99,19 +115,26 @@ function UploadPicture({ uploadedImage }: ImageType) {
                 const file = target.files[0];
                 setSelectedImage(URL.createObjectURL(file));
                 setSelectedFile(file);
-                uploadedImage(selectedFile);
               }
             }}
           />
           <div className="w-40 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer">
             {selectedImage ? (
-              <img src={selectedImage} width={300} alt="" />
+              <img src={selectedImage} alt="" />
             ) : (
-              <span>Nahrát fotku</span>
+              <span>Select Image</span>
             )}
           </div>
         </label>
-      </div>
+        <Button
+          onClick={handleUpload}
+          disabled={uploading}
+          style={{ opacity: uploading ? ".5" : "1" }}
+          className="bg-red-600 p-3 w-32 text-center rounded text-white"
+        >
+          {uploading ? "Uploading.." : "Upload"}
+        </Button>
+      </div> */}
     </>
   );
 }
