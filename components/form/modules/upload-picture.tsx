@@ -1,6 +1,6 @@
 import { Button, Grid, ImageList, ImageListItem } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import ReactImageUploading, { ImageType } from "react-images-uploading";
 
 // TODO: fix any for imageList, addUpdateIndex
@@ -30,22 +30,13 @@ function dataURItoBlob(dataURI: string) {
 
 function UploadPicture({ uploadedImage }: ImageType) {
   const [images, setImages] = React.useState([]);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File>();
   const maxNumber = 1;
-
-  const onChange = (imageList: any, addUpdateIndex: any) => {
-    // data for submit
-
-    let blob = dataURItoBlob(imageList[0].data_url);
-    let urlimage = URL.createObjectURL(blob);
-
-    console.log(blob, addUpdateIndex);
-    uploadedImage(blob);
-    setImages(imageList);
-  };
 
   return (
     <>
-      <ReactImageUploading
+      {/* <ReactImageUploading
         multiple
         value={images}
         onChange={onChange}
@@ -68,16 +59,15 @@ function UploadPicture({ uploadedImage }: ImageType) {
             >
               Nahrát fotku
             </Button>
-            <ImageList
-              gap={6}
-              sx={{
-                gridTemplateColumns:
-                  "repeat(auto-fill, minmax(280px,1fr)) !important",
-              }}
-            >
-              {imageList.map((image, index) => (
-                <ImageListItem key={index} sx={{ height: "100% !important" }}>
-                  <img id="input-image" alt="" src={image.data_url} />
+            {imageList.map((image, index) =>
+              ({ selectedImage } ? (
+                <div key={index}>
+                  <img
+                    width={300}
+                    id="input-image"
+                    alt=""
+                    src={selectedImage}
+                  />
                   <div className="image-item__btn-wrapper">
                     <Button
                       variant="contained"
@@ -93,12 +83,35 @@ function UploadPicture({ uploadedImage }: ImageType) {
                       Odstranit
                     </Button>
                   </div>
-                </ImageListItem>
-              ))}
-            </ImageList>
+                </div>
+              ) : null)
+            )}
           </>
         )}
-      </ReactImageUploading>
+      </ReactImageUploading> */}
+      <div className="max-w-4xl mx-auto p-20 space-y-6">
+        <label>
+          <input
+            type="file"
+            hidden
+            onChange={({ target }) => {
+              if (target.files) {
+                const file = target.files[0];
+                setSelectedImage(URL.createObjectURL(file));
+                setSelectedFile(file);
+                uploadedImage(selectedFile);
+              }
+            }}
+          />
+          <div className="w-40 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer">
+            {selectedImage ? (
+              <img src={selectedImage} width={300} alt="" />
+            ) : (
+              <span>Nahrát fotku</span>
+            )}
+          </div>
+        </label>
+      </div>
     </>
   );
 }

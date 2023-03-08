@@ -2,6 +2,7 @@ import axios from "axios";
 
 async function ApiUploadImage(image: string) {
   const body = new FormData();
+
   body.append("myImage", image);
 
   console.log("posilam na API");

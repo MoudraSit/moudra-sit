@@ -19,7 +19,7 @@ const readFile = (
   };
   options.maxFileSize = 4000 * 1024 * 1024;
 
-  console.log("cajk");
+  console.log(options.filename);
 
   const form = formidable(options);
   return new Promise((resolve, reject) => {
