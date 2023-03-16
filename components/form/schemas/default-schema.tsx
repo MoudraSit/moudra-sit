@@ -1,6 +1,7 @@
 import * as yup from "yup";
 
-const phoneRegExp = /^[0-9]{9}$/;
+const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
+const pscRegex = /^\d{3}[ ]?\d{2}$/;
 
 export const defaultSchema = [
   yup.object().shape({
@@ -31,7 +32,7 @@ export const defaultSchema = [
     checkbox_selection: yup
       .boolean()
       .required()
-      .oneOf([true], "At least one checkbox is to be selected"),
+      .oneOf([true], "Označte prosím alespoň jedno zařízení"),
   }),
   yup.object().shape({
     year: yup
@@ -50,7 +51,7 @@ export const defaultSchema = [
     checkbox_selection: yup
       .boolean()
       .required()
-      .oneOf([true], "At least one checkbox is to be selected"),
+      .oneOf([true], "Označte prosím alespoň jedno zařízení"),
     requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
   }),
@@ -71,7 +72,7 @@ export const defaultSchema = [
     checkbox_selection: yup
       .boolean()
       .required()
-      .oneOf([true], "At least one checkbox is to be selected"),
+      .oneOf([true], "Označte prosím alespoň jedno zařízení"),
     requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
     name: yup
@@ -86,16 +87,18 @@ export const defaultSchema = [
       .required("Napište Vaše příjmení"),
     zipCode: yup
       .string()
-      .length(5, "PSČ musí mít délku 5")
-      .matches(/^[0-9]{5}/, "Špatný tvar PSČ")
+      .matches(pscRegex, "Napište správný tvar PSČ (např. 60200)")
       .required("Napište Vaše PSČ"),
+    city: yup
+      .string()
+      .required("Napište název obce/města"),
     plusCode: yup
       .string()
       .required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
       .matches(
-        phoneRegExp,
+        phoneRegex,
         "Napište správný tvar telefonního čísla (např. 123456789)"
       )
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
@@ -121,7 +124,7 @@ export const defaultSchema = [
     otherCheckbox: yup.boolean(),
     checkbox_selection: yup
       .boolean()
-      .oneOf([true], "At least one checkbox is to be selected"),
+      .oneOf([true], "Označte prosím alespoň jedno zařízení"),
     requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
     name: yup
@@ -136,16 +139,18 @@ export const defaultSchema = [
       .required("Napište Vaše příjmení"),
     zipCode: yup
       .string()
-      .length(5, "PSČ musí mít délku 5")
-      .matches(/^[0-9]{5}/, "Špatný tvar PSČ")
+      .matches(pscRegex, "Špatný tvar PSČ")
       .required("Napište Vaše PSČ"),
+    city: yup
+      .string()
+      .required("Napište název obce/města"),
     plusCode: yup
       .string()
       .required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
       .matches(
-        phoneRegExp,
+        phoneRegex,
         "Napište správný tvar telefonního čísla (např. 123456789)"
       )
       .required("Napište Váš kontaktní telefon (např. 123456789)"),

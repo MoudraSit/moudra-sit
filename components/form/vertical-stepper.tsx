@@ -41,6 +41,7 @@ export interface IValues {
   email: string;
   agreement: boolean;
   image: string;
+  city: string;
 }
 
 let lastStep = false;
@@ -85,6 +86,7 @@ const intial = {
   email: "",
   agreement: false,
   image: "",
+  city: "",
 };
 
 function scrollIntoView() {

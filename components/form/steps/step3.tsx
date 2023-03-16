@@ -18,7 +18,7 @@ function Step3Form({ uploadedImage }: ImageType) {
           paragraph
           sx={{ fontWeight: "bold", pb: 4 }}
         >
-          Popište Váš problém několika slovy (např. “nefunguje wifi”).
+          Charakterizujte Váš problém několika slovy (např. “nefunguje wifi”).
         </Typography>
       </Grid>
 
@@ -33,6 +33,7 @@ function Step3Form({ uploadedImage }: ImageType) {
           fullWidth
           required
           inputProps={{
+            maxLength: 40,
             style: {
               WebkitBoxShadow: "0 0 0 1000px white inset",
               WebkitTextFillColor: "black",
@@ -97,7 +98,7 @@ function Step3Form({ uploadedImage }: ImageType) {
         <Grid item xs={12} md={4}>
           <UploadRecord />
         </Grid> */}
-        {/* <Grid item xs={12}>
+        <Grid item xs={12}>
           <Typography
             sx={{ pt: 6, fontWeight: "bold" }}
             variant="h5"
@@ -110,7 +111,7 @@ function Step3Form({ uploadedImage }: ImageType) {
         </Grid>
         <Grid item xs={12}>
           <UploadPicture uploadedImage={uploadedImage} />
-        </Grid> */}
+        </Grid>
       </Grid>
     </>
   );

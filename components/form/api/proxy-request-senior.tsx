@@ -5,6 +5,8 @@ export interface ISeniorResponse {
     created: string;
     fields: {
       PSC: string;
+      mesto: string;
+      stat: string;
       jmeno: string;
       prijmeni: string;
       rokNarozeni: number;
@@ -22,6 +24,10 @@ function capitalizeFirstLetter(name: string) {
   return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
+export function removeSpaces(str: string) {
+  return str = str.replace(/\s/g, '');
+}
+
 // call proxy API
 async function ApiRequestSenior(props: IValues) {
   try {
@@ -31,9 +37,11 @@ async function ApiRequestSenior(props: IValues) {
         fields: {
           jmeno: capitalizeFirstLetter(props.name),
           prijmeni: capitalizeFirstLetter(props.surname),
-          PSC: props.zipCode,
+          PSC: removeSpaces(props.zipCode),
+          mesto: props.city,
           email: props.email,
-          telefon: props.plusCode.concat(props.phoneNumber),
+          stat: "Česko",
+          telefon: props.plusCode.concat(removeSpaces(props.phoneNumber)),
           rokNarozeni: parseInt(props.year),
         },
       }),

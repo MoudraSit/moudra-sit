@@ -8,6 +8,17 @@ function Step4Form(props: any) {
   return (
     <>
       <div id="section4" />
+      <Grid item xs={12}>
+        <Typography
+          variant="h5"
+          align="left"
+          color="#3e3e3e"
+          paragraph
+          sx={{ fontWeight: "bold", pb: 4 }}
+        >
+          Vyplňte prosím Vaše kontaktní údaje, aby Vás mohl kontaktovat náš digitální asistent. Na zadaný e-mail Vám přijde potvrzení přijetí požadavku.
+        </Typography>
+      </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextFieldForm
@@ -53,11 +64,33 @@ function Step4Form(props: any) {
             InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextFieldForm
             id="zipCode"
             label="PSČ vašeho bydliště"
             name="zipCode"
+            inputhelper="Pro nalezení nejbližšího dobrovolníka"
+            variant="outlined"
+            color="info"
+            fullWidth
+            required
+            inputProps={{
+              maxLength: 6,
+              style: {
+                WebkitBoxShadow: "0 0 0 1000px white inset",
+                WebkitTextFillColor: "black",
+                fontSize: 20,
+              },
+            }}
+            InputProps={{ style: { fontSize: 20 } }}
+            InputLabelProps={{ style: { fontSize: 20 } }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextFieldForm
+            id="city"
+            label="Obec/město"
+            name="city"
             inputhelper="Pro nalezení nejbližšího dobrovolníka"
             variant="outlined"
             color="info"
@@ -96,13 +129,13 @@ function Step4Form(props: any) {
             id="phoneNumber"
             label="Kontaktní telefon"
             name="phoneNumber"
-            inputhelper=""
+            inputhelper="Pro kontakování digitálním asistentem"
             variant="outlined"
             color="info"
             fullWidth
             required
             inputProps={{
-              maxLength: 9,
+              maxLength: 11,
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
@@ -118,7 +151,7 @@ function Step4Form(props: any) {
             id="email"
             label="Kontaktní email (nepovinné)"
             name="email"
-            inputhelper=""
+            inputhelper="Pro zaslání potvrzovacího emailu"
             variant="outlined"
             color="info"
             fullWidth
@@ -157,7 +190,7 @@ function Step4Form(props: any) {
                 target="_blank"
                 fontSize={24}
               >
-                Souhlasím se zpracováním osobních údajů
+                Souhlasím se zpracováním osobních údajů *
               </Link>
             }
           />

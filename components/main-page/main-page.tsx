@@ -165,7 +165,7 @@ function MainPage() {
                           display: "flexend",
                         }}
                       >
-                        <Link href={"/form/" + helpItem.id}>
+                        <Link href={"/form/"}>
                           <Button
                             color="info"
                             size="large"

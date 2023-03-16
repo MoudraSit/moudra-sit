@@ -33,7 +33,7 @@ function ResponsiveAppBar() {
     <AppBar position="sticky" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link href="http://test.moudrasit.cz/">
+          <Link href="https://moudrasit.cz/">
             <Image src={logo} alt={""} height="30" />
           </Link>
           <Box

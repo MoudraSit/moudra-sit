@@ -1,3 +1,4 @@
+import { validateYupSchema } from "formik";
 import { IValues } from "../vertical-stepper";
 
 export interface IRequirmentResponse {
@@ -10,8 +11,52 @@ export interface IRequirmentResponse {
   };
 }
 
+export interface IImage {
+    filename: string;
+    mimetype: string;
+    filedata: string;
+}
+
+function base64MimeType(encoded:string):string {
+  let result:string = "";
+
+  if (typeof encoded !== 'string') {
+    return result;
+  }
+
+  const mime: RegExpMatchArray | null= encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+
+  if (mime && mime.length) {
+    result = mime[1];
+  }
+
+  return result;
+}
+
+function isUploadedPhoto(values:IValues): IImage|null{
+  // if image was uploaded
+  if(values.image){
+
+    let myImage:string = values.image;
+
+    console.log({
+            filename: "fotka",
+            mimetype: base64MimeType(values.image),
+            filedata: values.image
+    })
+    return {
+            filename: "fotka",
+            mimetype: base64MimeType(values.image),
+            filedata: values.image
+            }
+  } else {
+    return null
+  }
+ 
+}
+
 async function ApiRequestRequirment(values: IValues, idSenior: string) {
-  let currentDate = new Date();
+  const currentDate = new Date();
   //let datass = JSON.stringify(values.image);
 
   try {
@@ -22,6 +67,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
+          fotka: [isUploadedPhoto(values)],
           iDSeniora: {
             id: idSenior,
           },

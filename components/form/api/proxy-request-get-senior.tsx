@@ -1,4 +1,5 @@
 import { IValues } from "../vertical-stepper";
+import { removeSpaces } from "./proxy-request-senior";
 
 export interface ISeniorGetResponse {
   data: [
@@ -25,12 +26,16 @@ export interface ISeniorGetNoResponse {
 
 // call proxy API (use POST method for proxy and GET for Tabidoo call)
 async function ApiGetRequestSenior(values: IValues) {
+
+  let fixedPhoneNumber:string = values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
+
+
   try {
     const response = await fetch("/api/tabidoo-get-senior", {
       method: "POST",
       body: JSON.stringify({
         filter: {
-          telefon: values.plusCode.replace("+", "%2B") + values.phoneNumber,
+          telefon: fixedPhoneNumber,
         },
       }),
       headers: {

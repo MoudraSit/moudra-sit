@@ -33,7 +33,7 @@ function StepSuccess() {
               prosím složku Spam.
             </Typography>
             <Button
-              href="http://test.moudrasit.cz/"
+              href="http://moudrasit.cz/"
               type="submit"
               variant="contained"
               sx={{
