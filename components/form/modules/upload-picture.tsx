@@ -1,4 +1,5 @@
 import { Button, Grid, ImageList, ImageListItem, Typography } from "@mui/material";
+import { maxWidth } from "@mui/system";
 import Image from "next/image";
 import React, { useState } from "react";
 import ReactImageUploading, { ImageType } from "react-images-uploading";
@@ -107,7 +108,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                 mt: 1,
                 mr: 1,
                 mb: 1,
-                bgcolor: "secondary.main",
+                bgcolor: "#028790 !important",
                 color: "white",
               }}
             >
@@ -146,7 +147,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
               ({ selectedImage } ? (
                 <div key={index}>
                   <img
-                    width={300}
+                    style={{maxWidth:"100%", height:"auto"}}
                     id="input-image"
                     alt=""
                     src={selectedImage}
@@ -158,7 +159,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                         mt: 1,
                         mr: 1,
                         mb: 2,
-                        bgcolor: "#e25b5b",
+                        bgcolor: "#e25b5b !important",
                         color: "white",
                       }}
                       onClick={() => onImageRemove(index)}
