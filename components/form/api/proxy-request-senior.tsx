@@ -25,7 +25,7 @@ function capitalizeFirstLetter(name: string) {
 }
 
 export function removeSpaces(str: string) {
-  return str = str.replace(/\s/g, '');
+  return (str = str.replace(/\s/g, ""));
 }
 
 // call proxy API

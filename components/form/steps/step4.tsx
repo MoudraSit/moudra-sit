@@ -16,7 +16,9 @@ function Step4Form(props: any) {
           paragraph
           sx={{ fontWeight: "bold", pb: 4 }}
         >
-          Vyplňte prosím Vaše kontaktní údaje, aby Vás mohl kontaktovat náš digitální asistent. Na zadaný e-mail Vám přijde potvrzení přijetí požadavku.
+          Vyplňte prosím Vaše kontaktní údaje, aby Vás mohl kontaktovat náš
+          digitální asistent. Na zadaný e-mail Vám přijde potvrzení přijetí
+          požadavku.
         </Typography>
       </Grid>
       <Grid container spacing={3}>

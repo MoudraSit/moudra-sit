@@ -12,19 +12,22 @@ export interface IRequirmentResponse {
 }
 
 export interface IImage {
-    filename: string;
-    mimetype: string;
-    filedata: string;
+  filename: string;
+  mimetype: string;
+  filedata: string;
 }
 
-function base64MimeType(encoded:string):string {
-  let result:string = "";
+// get type of mime
+function base64MimeType(encoded: string): string {
+  let result: string = "";
 
-  if (typeof encoded !== 'string') {
+  if (typeof encoded !== "string") {
     return result;
   }
 
-  const mime: RegExpMatchArray | null= encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+  const mime: RegExpMatchArray | null = encoded.match(
+    /data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/
+  );
 
   if (mime && mime.length) {
     result = mime[1];
@@ -33,26 +36,25 @@ function base64MimeType(encoded:string):string {
   return result;
 }
 
-function isUploadedPhoto(values:IValues): IImage|null{
+// return the photo to upload in API format or null
+function isUploadedPhoto(values: IValues): IImage | null {
   // if image was uploaded
-  if(values.image){
-
-    let myImage:string = values.image;
+  if (values.image) {
+    let myImage: string = values.image;
 
     console.log({
-            filename: "fotka",
-            mimetype: base64MimeType(values.image),
-            filedata: values.image
-    })
+      filename: "fotka",
+      mimetype: base64MimeType(values.image),
+      filedata: values.image,
+    });
     return {
-            filename: "fotka",
-            mimetype: base64MimeType(values.image),
-            filedata: values.image
-            }
+      filename: "fotka",
+      mimetype: base64MimeType(values.image),
+      filedata: values.image,
+    };
   } else {
-    return null
+    return null;
   }
- 
 }
 
 async function ApiRequestRequirment(values: IValues, idSenior: string) {

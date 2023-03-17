@@ -354,7 +354,7 @@ export default function VerticalLinearStepper() {
                                       sx={{
                                         mt: 1,
                                         mr: 1,
-                                        bgcolor: "#e25b5b",
+                                        bgcolor: "#e25b5b !important",
                                         color: "white",
                                       }}
                                     >

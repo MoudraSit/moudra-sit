@@ -89,9 +89,7 @@ export const defaultSchema = [
       .string()
       .matches(pscRegex, "Napište správný tvar PSČ (např. 60200)")
       .required("Napište Vaše PSČ"),
-    city: yup
-      .string()
-      .required("Napište název obce/města"),
+    city: yup.string().required("Napište název obce/města"),
     plusCode: yup
       .string()
       .required("Napište správný tvar předvolby (např. +420)"),
@@ -141,9 +139,7 @@ export const defaultSchema = [
       .string()
       .matches(pscRegex, "Špatný tvar PSČ")
       .required("Napište Vaše PSČ"),
-    city: yup
-      .string()
-      .required("Napište název obce/města"),
+    city: yup.string().required("Napište název obce/města"),
     plusCode: yup
       .string()
       .required("Napište správný tvar předvolby (např. +420)"),
