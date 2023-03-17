@@ -25,7 +25,7 @@ function dataURLtoFile(dataurl: any, filename: any) {
   return new File([u8arr], filename, { type: mime });
 }
 
-// resize image
+// resize image with canvas creating new image
 function resizeImage(base64Str: string, maxWidth = 500, maxHeight = 500) {
   return new Promise<string>((resolve) => {
     let img = new (window as any).Image();

@@ -14,17 +14,21 @@ function UploadRecord() {
     setRecords(blob);
   };
 
+  const onChange = () => {
+    setRecords([]);
+  };
+
   return (
     <>
       <AudioRecorder
         onRecordingComplete={(blob) => addAudioElement(blob)}
-        //recorderControls={recorderControls}
+        recorderControls={recorderControls}
       />
-      {/* {({}) => (
+      {records[0] ? (
         <>
           <Button
             variant="contained"
-            onClick={recorderControls.stopRecording}
+            onClick={onChange}
             sx={{
               mt: 1,
               mr: 1,
@@ -32,10 +36,10 @@ function UploadRecord() {
               color: "white",
             }}
           >
-            Zastavit nahrávání
+            Odstranit
           </Button>
         </>
-      )} */}
+      ) : null}
     </>
   );
 }

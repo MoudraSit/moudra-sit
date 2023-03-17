@@ -37,21 +37,21 @@ function base64MimeType(encoded: string): string {
 }
 
 // return the photo to upload in API format or null
-function isUploadedPhoto(values: IValues): IImage | null {
+function isUploadedPhoto(values: IValues): [IImage] | null {
   // if image was uploaded
   if (values.image) {
-    let myImage: string = values.image;
-
     console.log({
       filename: "fotka",
       mimetype: base64MimeType(values.image),
       filedata: values.image,
     });
-    return {
-      filename: "fotka",
-      mimetype: base64MimeType(values.image),
-      filedata: values.image,
-    };
+    return [
+      {
+        filename: "fotka",
+        mimetype: base64MimeType(values.image),
+        filedata: values.image,
+      },
+    ];
   } else {
     return null;
   }
@@ -59,7 +59,6 @@ function isUploadedPhoto(values: IValues): IImage | null {
 
 async function ApiRequestRequirment(values: IValues, idSenior: string) {
   const currentDate = new Date();
-  //let datass = JSON.stringify(values.image);
 
   try {
     const response = await fetch("/api/tabidoo-requirment", {
@@ -69,7 +68,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
-          fotka: [isUploadedPhoto(values)],
+          fotka: isUploadedPhoto(values),
           iDSeniora: {
             id: idSenior,
           },
@@ -80,9 +79,6 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
       },
     });
     const jsonObject: IRequirmentResponse = await response.json(); //extract JSON from the http response
-
-    //console.log(jsonObject);
-    //console.log(jsonObject.data.id);
 
     // return id of senior object
     return jsonObject.data.id;

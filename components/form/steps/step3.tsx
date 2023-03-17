@@ -85,17 +85,18 @@ function Step3Form({ uploadedImage }: ImageType) {
             InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
-        {/* <Grid item xs={12} md={8}>
+        {/* <Grid item xs={12}>
           <Typography
-            variant="h6"
+            sx={{ pt: 6, fontWeight: "bold" }}
+            variant="h5"
             align="left"
-            color="primary.main"
+            color="#3e3e3e"
             paragraph
           >
             Váš vzkaz můžete napsat nebo nahrát hlasem (nepovinné)
           </Typography>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12}>
           <UploadRecord />
         </Grid> */}
         <Grid item xs={12}>
