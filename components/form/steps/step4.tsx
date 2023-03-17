@@ -99,7 +99,6 @@ function Step4Form(props: any) {
             fullWidth
             required
             inputProps={{
-              maxLength: 5,
               style: {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
