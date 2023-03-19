@@ -74,6 +74,7 @@ function Step5Form(props: { values: IValues }) {
 
   return (
     <>
+      <div id="section5" />
       <Typography
         variant="h5"
         align="left"

@@ -6,15 +6,6 @@ import loading from "../../../public/images/form/loading.gif";
 function ProgressBarComponent() {
   return (
     <>
-      {/* <CircularProgress
-        sx={{
-          margin: "10px",
-          color: "#e25b5b",
-          position: "relative",
-          top: "20%",
-          left: "46%",
-        }}
-      /> */}
       <Image
         src={loading}
         alt={""}

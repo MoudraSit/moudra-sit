@@ -276,6 +276,7 @@ function Step2Form(props: any) {
           </Card>
         </Grid>
       </Grid>
+      <div id="top"></div>
     </>
   );
 }
