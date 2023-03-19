@@ -154,41 +154,41 @@ export default function VerticalLinearStepper() {
         //if (values.image) await ApiUploadImage(values.image);
 
         // simulate API calling
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        //await new Promise((resolve) => setTimeout(resolve, 3000));
 
-        // let idRequirment = null;
+        let idRequirment = null;
 
-        // // GET method to check if the record is already in the table
-        // let idSenior = await ApiGetRequestSenior(values);
+        // GET method to check if the record is already in the table
+        let idSenior = await ApiGetRequestSenior(values);
 
-        // // POST method to create new senior record
-        // if (!idSenior) {
-        //   idSenior = await ApiRequestSenior(values);
-        // }
+        // POST method to create new senior record
+        if (!idSenior) {
+          idSenior = await ApiRequestSenior(values);
+        }
 
-        // // POST method to create new requirment record
-        // if (idSenior) {
-        //   idRequirment = await ApiRequestRequirment(values, idSenior);
-        // }
+        // POST method to create new requirment record
+        if (idSenior) {
+          idRequirment = await ApiRequestRequirment(values, idSenior);
+        }
 
-        // // POST method to connect requirment to multiple categories
-        // if (idRequirment) {
-        //   if (values.phoneCheckbox) {
-        //     await ApiRequestCategory(idRequirment, phoneCategory);
-        //   }
+        // POST method to connect requirment to multiple categories
+        if (idRequirment) {
+          if (values.phoneCheckbox) {
+            await ApiRequestCategory(idRequirment, phoneCategory);
+          }
 
-        //   if (values.pcCheckbox) {
-        //     await ApiRequestCategory(idRequirment, pcCategory);
-        //   }
+          if (values.pcCheckbox) {
+            await ApiRequestCategory(idRequirment, pcCategory);
+          }
 
-        //   if (values.printerCheckbox) {
-        //     await ApiRequestCategory(idRequirment, printerCategory);
-        //   }
+          if (values.printerCheckbox) {
+            await ApiRequestCategory(idRequirment, printerCategory);
+          }
 
-        //   if (values.otherCheckbox) {
-        //     await ApiRequestCategory(idRequirment, otherCategory);
-        //   }
-        // }
+          if (values.otherCheckbox) {
+            await ApiRequestCategory(idRequirment, otherCategory);
+          }
+        }
 
         // switch off progress bar
         setProgressbBar(false);
