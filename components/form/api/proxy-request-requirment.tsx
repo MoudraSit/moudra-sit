@@ -36,18 +36,36 @@ function base64MimeType(encoded: string): string {
   return result;
 }
 
+function base64ImageType(encoded: string): string {
+  let result: string = "";
+
+  if (typeof encoded !== "string") {
+    return result;
+  }
+
+  const mime: RegExpMatchArray | null = encoded.match(
+    /image\/([a-zA-Z0-9-.+]+).*,.*/
+  );
+
+  if (mime && mime.length) {
+    result = mime[1];
+  }
+
+  return result;
+}
+
 // return the photo to upload in API format or null
 function isUploadedPhoto(values: IValues): [IImage] | null {
   // if image was uploaded
   if (values.image) {
     console.log({
-      filename: "fotka",
+      filename: "fotka." + base64ImageType(values.image),
       mimetype: base64MimeType(values.image),
       filedata: values.image,
     });
     return [
       {
-        filename: "fotka",
+        filename: "fotka." + base64ImageType(values.image),
         mimetype: base64MimeType(values.image),
         filedata: values.image,
       },
