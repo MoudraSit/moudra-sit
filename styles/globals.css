@@ -18,18 +18,18 @@ a {
 /* Form */
 
 .MuiFormHelperText-root {
-  font-size: 14px;
+  font-size: 14px !important;
 }
 
 /* plusCode styles */
 .MuiFormLabel-root {
-  font-size: 20px;
+  font-size: 20px !important;
 }
 .MuiSelect-select {
-  font-size: 20px;
+  font-size: 20px !important;
 }
 .MuiInputBase-root {
-  font-size: 20px;
+  font-size: 20px !important;
 }
 
 /* @media (prefers-color-scheme: dark) {
