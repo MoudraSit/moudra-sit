@@ -1,4 +1,10 @@
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  IconButton,
+  InputAdornment,
+  Typography,
+} from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,264 +17,441 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import { Copyright, Visibility, VisibilityOff } from "@mui/icons-material";
+import { IRegisterFields } from "pages/api/auth/register";
+import ApiRegisterSenior from "./api/proxy-senior";
+import ApiGetRegisterSenior from "./api/proxy-get-senior";
 
 import logo from "public/images/logo/logo.svg";
 import singin from "public/images/sing-in/singin.jpg";
 import Image from "next/image";
+import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
+import { Form, Formik } from "formik";
+import { registerSchema } from "./schema/register-schema";
+import TextFieldForm from "components/form/model/input-form";
+
+export interface IValuesRegister {
+  name: string;
+  surname: string;
+  email: string;
+  year: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  region: string;
+  plusCode: string;
+  phoneNumber: string;
+  password: string;
+  agreement: boolean;
+}
+
+const initialValues = {
+  name: "",
+  surname: "",
+  email: "",
+  year: "",
+  address: "",
+  city: "",
+  zipCode: "",
+  region: "",
+  plusCode: "",
+  phoneNumber: "",
+  password: "",
+  agreement: false,
+};
 
 function Register() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const currentValidationSchema = registerSchema;
+
+  async function handleSend(values: IValuesRegister) {
+    // event.preventDefault();
+    // const data = new FormData(event.currentTarget);
+
+    // const values: IRegisterFields = {
+    //   fields: {
+    //     jmeno: data.get("firstName") as string,
+    //     prijmeni: data.get("lastName") as string,
+    //     ulice: data.get("address") as string,
+    //     mesto: data.get("city") as string,
+    //     PSC: data.get("zipCode") as string,
+    //     kraj: data.get("region") as string,
+    //     stat: "Česko",
+    //     email: data.get("email") as string,
+    //     rokNarozeni: +(data.get("birth") as string),
+    //     telefon: ((data.get("pluscode") as string) +
+    //       data.get("phone")) as string,
+    //     heslo: data.get("password") as string,
+    //   },
+    // };
+
+    const formValues: IRegisterFields = {
+      fields: {
+        jmeno: values.name,
+        prijmeni: values.surname,
+        ulice: values.address,
+        mesto: values.city,
+        PSC: values.zipCode,
+        kraj: values.region,
+        stat: "Česko",
+        email: values.email,
+        rokNarozeni: +values.year,
+        telefon: values.plusCode + values.phoneNumber,
+        heslo: values.password,
+      },
+    };
+
+    //console.log(values);
+
+    console.log("zasilam na API");
+
+    // check if user with the same email doesn't exists
+    const isRegistred = await ApiGetRegisterSenior(formValues);
+
+    // TODO: napis, ze uzivatel existuje
+    console.log(isRegistred);
+
+    if (!isRegistred) {
+      const regi = await ApiRegisterSenior(formValues);
+    }
+  }
 
   return (
-    <ThemeProvider theme={appTheme}>
-      <Container
-        component="main"
-        style={{ backgroundColor: "#ffffff" }}
-        maxWidth="xs"
-      >
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+    <>
+      <ThemeProvider theme={appTheme}>
+        <Container
+          component="main"
+          style={{ backgroundColor: "#ffffff" }}
+          maxWidth="sm"
         >
-          <Image src={logo} alt={""} height="30" />
-          <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 3 }}>
-            Registrace nového uživatele
-          </Typography>
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{
+              marginTop: 8,
+              mb: 5,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="Jméno"
-                  color="info"
-                  autoFocus
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Příjmení"
-                  name="lastName"
-                  autoComplete="family-name"
-                  color="info"
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Emailová adresa"
-                  name="email"
-                  autoComplete="email"
-                  color="info"
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="birth"
-                  label="Rok narození"
-                  name="birth"
-                  autoComplete="birthday"
-                  color="info"
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="address"
-                  label="Ulice a číslo popisné"
-                  name="address"
-                  autoComplete="birthday"
-                  color="info"
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="city"
-                  label="Obec/město"
-                  name="city"
-                  autoComplete="birthday"
-                  color="info"
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="zipCode"
-                  label="PSČ"
-                  name="zipCode"
-                  autoComplete="birthday"
-                  color="info"
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="phone"
-                  label="Telefonní číslo"
-                  name="phone"
-                  autoComplete="birthday"
-                  color="info"
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Heslo"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  color="info"
-                  inputProps={{
-                    style: {
-                      WebkitBoxShadow: "0 0 0 1000px white inset",
-                      WebkitTextFillColor: "black",
-                      fontSize: 20,
-                    },
-                  }}
-                  InputProps={{ style: { fontSize: 20 } }}
-                  InputLabelProps={{ style: { fontSize: 20 } }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="secondary" />
-                  }
-                  label="Souhlasím s podmínkami užití"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 3,
-                mb: 3,
-                bgcolor: "#e25b5b !important",
-                color: "white",
+            <Formik
+              initialValues={initialValues}
+              validationSchema={currentValidationSchema}
+              onSubmit={(values: IValuesRegister, actions) => {
+                console.log("handluj");
+                handleSend(values);
+                // scroll into new section
+                //scrollIntoView();
               }}
             >
-              Registrovat se
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/sing-in" variant="body2" color="#000000">
-                  Již máte účet? Přihlaste se zde
-                </Link>
-              </Grid>
-            </Grid>
+              {({ isSubmitting, values }) => (
+                <Form autoComplete="on">
+                  <Image src={logo} alt={""} height="30" />
+                  <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 3 }}>
+                    Registrace nového uživatele
+                  </Typography>
+                  <Box sx={{ mt: 3 }}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        <TextFieldForm
+                          name="name"
+                          required
+                          fullWidth
+                          id="name"
+                          label="Jméno"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          id="surname"
+                          label="Příjmení"
+                          name="surname"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          id="email"
+                          label="Emailová adresa"
+                          name="email"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          type="tel"
+                          id="year"
+                          label="Rok narození"
+                          name="year"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          id="address"
+                          label="Ulice a číslo popisné"
+                          name="address"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={8}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          id="city"
+                          label="Obec/město"
+                          name="city"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          id="zipCode"
+                          label="PSČ"
+                          name="zipCode"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            maxLength: 6,
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          id="region"
+                          label="Kraj"
+                          name="region"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          id="plusCode"
+                          label="Předvolba"
+                          name="plusCode"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={8}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          id="phoneNumber"
+                          label="Telefonní číslo"
+                          name="phoneNumber"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            maxLength: 11,
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          InputProps={{ style: { fontSize: 20 } }}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          name="password"
+                          label="Heslo"
+                          id="password"
+                          color="info"
+                          inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          type={showPassword ? "text" : "password"}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                          InputProps={{
+                            style: { fontSize: 20 },
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                >
+                                  {showPassword ? (
+                                    <Visibility />
+                                  ) : (
+                                    <VisibilityOff />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          sx={{ pt: 6 }}
+                          control={
+                            <Checkbox
+                              id="agreement"
+                              name="agreement"
+                              required
+                              sx={{
+                                color: "info.main",
+                                "&.Mui-checked": {
+                                  color: "black",
+                                },
+                              }}
+                            />
+                          }
+                          label={
+                            <Link
+                              color="#000000"
+                              href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
+                              rel="noopener"
+                              target="_blank"
+                              fontSize={24}
+                            >
+                              Souhlasím se zpracováním osobních údajů *
+                            </Link>
+                          }
+                        />
+                      </Grid>
+                    </Grid>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      disabled={isSubmitting}
+                      sx={{
+                        mt: 3,
+                        mb: 3,
+                        bgcolor: "#e25b5b !important",
+                        color: "white",
+                      }}
+                    >
+                      Registrovat se
+                    </Button>
+                    <Grid container justifyContent="flex-end">
+                      <Grid item>
+                        <Link href="/sing-in" variant="body2" color="#000000">
+                          Již máte účet? Přihlaste se zde
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Form>
+              )}
+            </Formik>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
+    </>
   );
 }
 

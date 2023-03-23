@@ -1,5 +1,4 @@
-import { IValues } from "../vertical-stepper";
-import { removeSpaces } from "./proxy-request-senior";
+import { IRegisterFields } from "pages/api/auth/register";
 
 export interface ISeniorGetResponse {
   data: [
@@ -11,7 +10,6 @@ export interface ISeniorGetResponse {
         prijmeni: string;
         rokNarozeni: number;
         telefon: string;
-        heslo: string;
         x_id: number;
       };
       id: string;
@@ -26,17 +24,13 @@ export interface ISeniorGetNoResponse {
 }
 
 // call proxy API (use POST method for proxy and GET for Tabidoo call)
-async function ApiGetRequestSenior(values: IValues) {
-  // format for Tabidoo filter
-  let fixedPhoneNumber: string =
-    values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
-
+async function ApiGetRegisterSenior(props: IRegisterFields) {
   try {
-    const response = await fetch("/api/tabidoo-get-senior", {
+    const response = await fetch("/api/auth/get-senior", {
       method: "POST",
       body: JSON.stringify({
         filter: {
-          telefon: fixedPhoneNumber,
+          email: props.fields.email,
         },
       }),
       headers: {
@@ -47,8 +41,6 @@ async function ApiGetRequestSenior(values: IValues) {
     // extract JSON from the http response
     const jsonObject: ISeniorGetResponse | ISeniorGetNoResponse =
       await response.json();
-
-    //console.log(jsonObject);
 
     // senior was found in the table, take first record
     if (jsonObject.data[0]) {
@@ -68,4 +60,4 @@ async function ApiGetRequestSenior(values: IValues) {
   }
 }
 
-export default ApiGetRequestSenior;
+export default ApiGetRegisterSenior;

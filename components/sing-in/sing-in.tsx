@@ -1,36 +1,46 @@
-import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
+import { Box, IconButton, InputAdornment } from "@mui/material";
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
-import { Copyright, Visibility, VisibilityOff } from "@mui/icons-material";
-import TextFieldForm from "components/form/model/input-form";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 import logo from "public/images/logo/logo.svg";
-import singin from "public/images/sing-in/singin.jpg";
+import { useRouter } from "next/router";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+
+    const result = await signIn("credentials", {
+      redirect: false,
       email: data.get("email"),
       password: data.get("password"),
     });
-  };
+
+    // succesfully singed in
+    if (!result?.error) {
+      console.log(result);
+      router.replace("/profile");
+
+      // TODO: show incorrect password or email
+    } else {
+      console.log(result);
+    }
+  }
 
   return (
     <ThemeProvider theme={appTheme}>

@@ -14,7 +14,10 @@ async function ApiRequestCategory(idRequirment: string, category: string) {
         "Content-Type": "application/json",
       },
     });
-    const jsonObject = await response.json(); //extract JSON from the http response
+
+    //extract JSON from the http response
+    const jsonObject = await response.json();
+
     //console.log(jsonObject);
   } catch (error) {
     console.log("There was an error ", error);

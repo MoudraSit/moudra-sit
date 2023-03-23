@@ -17,7 +17,7 @@ export interface IImage {
   filedata: string;
 }
 
-// get type of mime
+// get mime type of base64
 function base64MimeType(encoded: string): string {
   let result: string = "";
 
@@ -36,6 +36,7 @@ function base64MimeType(encoded: string): string {
   return result;
 }
 
+// get image type of base64
 function base64ImageType(encoded: string): string {
   let result: string = "";
 
@@ -58,11 +59,11 @@ function base64ImageType(encoded: string): string {
 function isUploadedPhoto(values: IValues): [IImage] | null {
   // if image was uploaded
   if (values.image) {
-    console.log({
-      filename: "fotka." + base64ImageType(values.image),
-      mimetype: base64MimeType(values.image),
-      filedata: values.image,
-    });
+    // console.log({
+    //   filename: "fotka." + base64ImageType(values.image),
+    //   mimetype: base64MimeType(values.image),
+    //   filedata: values.image,
+    // });
     return [
       {
         filename: "fotka." + base64ImageType(values.image),
@@ -96,7 +97,9 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
         "Content-Type": "application/json",
       },
     });
-    const jsonObject: IRequirmentResponse = await response.json(); //extract JSON from the http response
+
+    //extract JSON from the http response
+    const jsonObject: IRequirmentResponse = await response.json();
 
     // return id of senior object
     return jsonObject.data.id;

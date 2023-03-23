@@ -24,6 +24,7 @@ function capitalizeFirstLetter(name: string) {
   return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
+// remove spaces from string
 export function removeSpaces(str: string) {
   return (str = str.replace(/\s/g, ""));
 }
@@ -49,7 +50,9 @@ async function ApiRequestSenior(props: IValues) {
         "Content-Type": "application/json",
       },
     });
-    const jsonObject: ISeniorResponse = await response.json(); //extract JSON from the http response
+
+    //extract JSON from the http response
+    const jsonObject: ISeniorResponse = await response.json();
 
     //console.log(jsonObject);
     //console.log(jsonObject.data.id);
@@ -58,7 +61,6 @@ async function ApiRequestSenior(props: IValues) {
     return jsonObject.data.id;
   } catch (error) {
     console.log("There was an error", error);
-    //TODO: FIX ME
     return Promise.reject(error);
   }
 }
