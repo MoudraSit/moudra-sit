@@ -3,7 +3,6 @@ import { ISeniorResponse } from "../api/proxy-request-senior";
 export interface IFilterSenior {
   filter: {
     telefon: string;
-    prijmeni: string;
   };
 }
 
@@ -113,7 +112,7 @@ export async function RequirmentTabidooRequest(
   }
 }
 
-// Tabidoo API request for requirment table
+// Tabidoo API request for category table
 export async function CategoryTabidooRequest(
   apiToken: string,
   body: any

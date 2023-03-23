@@ -186,7 +186,7 @@ function Step4Form(props: any) {
             label={
               <Link
                 color="#000000"
-                href="http://test.moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju"
+                href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
                 rel="noopener"
                 target="_blank"
                 fontSize={24}

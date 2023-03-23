@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import ReactImageUploading, { ImageType } from "react-images-uploading";
 
 // TODO: fix any for imageList, addUpdateIndex
-// TODO: fix size uploaded pictures
 // Sources: https://codesandbox.io/s/react-images-uploading-demo-u0khz?file=/src/index.js:158-1697
 // https://www.npmjs.com/package/react-images-uploading?activeTab=readme
 

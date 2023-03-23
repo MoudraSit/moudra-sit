@@ -15,19 +15,30 @@ import Link from "next/link";
 
 import logo from "public/images/logo/logo.svg";
 import Image from "next/image";
+import InformationLine from "./information-line";
+import { useSession, signOut } from "next-auth/react";
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
+  // const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+  //   null
+  // );
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  // const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorElNav(event.currentTarget);
+  // };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  // const handleCloseNavMenu = () => {
+  //   setAnchorElNav(null);
+  // };
+
+  const { status, data } = useSession();
+
+  //console.log(status);
+  //console.log(data);
+
+  function logoutHandler() {
+    signOut();
+  }
 
   return (
     <AppBar position="sticky" color="primary">
@@ -44,23 +55,52 @@ function ResponsiveAppBar() {
               justifyContent: "center",
             }}
           ></Box>
-          {/* <Stack direction="row" spacing={2}>
-            <Button
-              variant="contained"
-              color="warning"
-              sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
-            >
-              REGISTROVAT SE
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
-            >
-              PŘIHLÁSIT SE
-            </Button>
+          <Stack direction="row" spacing={2}>
+            {status === "unauthenticated" && (
+              <Link href="/register">
+                <Button
+                  variant="contained"
+                  color="warning"
+                  sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
+                >
+                  REGISTROVAT SE
+                </Button>
+              </Link>
+            )}
+            {status === "unauthenticated" && (
+              <Link href="/sing-in">
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
+                >
+                  PŘIHLÁSIT SE
+                </Button>
+              </Link>
+            )}
+            {status === "authenticated" && (
+              <Link href="/profile">
+                <Button
+                  variant="contained"
+                  color="warning"
+                  sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
+                >
+                  PROFIL
+                </Button>
+              </Link>
+            )}
+            {status === "authenticated" && (
+              <Button
+                variant="outlined"
+                onClick={logoutHandler}
+                color="secondary"
+                sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
+              >
+                ODHLÁSIT SE
+              </Button>
+            )}
           </Stack>
-          <Box
+          {/*<Box
             justifyContent="flex-end"
             sx={{
               flexGrow: 1,
@@ -104,6 +144,7 @@ function ResponsiveAppBar() {
           </Box> */}
         </Toolbar>
       </Container>
+      <InformationLine />
     </AppBar>
   );
 }

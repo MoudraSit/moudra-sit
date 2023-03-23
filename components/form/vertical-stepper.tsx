@@ -206,12 +206,14 @@ export default function VerticalLinearStepper() {
         // set submit button to default position
         actions.setTouched({});
         actions.setSubmitting(false);
-        console.log("error");
+
+        //show error
+        console.log(error);
       }
     } else {
       // go to next step
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      console.log(values);
+      //console.log(values);
 
       // set submit button to default position
       actions.setTouched({});
@@ -280,19 +282,6 @@ export default function VerticalLinearStepper() {
                           },
                           "& .MuiStepContent-root": {
                             paddingLeft: 0,
-                          },
-                          "& .MuiFormHelperText-root": {
-                            fontSize: 14,
-                          },
-                          // plusCode styles
-                          "& .MuiFormLabel-root": {
-                            fontSize: 20,
-                          },
-                          "& .MuiSelect-select": {
-                            fontSize: 20,
-                          },
-                          "& .MuiInputBase-root": {
-                            fontSize: 20,
                           },
                         }}
                         key={step.label}

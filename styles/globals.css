@@ -15,6 +15,23 @@ a {
   box-sizing: border-box;
 }
 
+/* Form */
+
+.MuiFormHelperText-root {
+  font-size: 14px;
+}
+
+/* plusCode styles */
+.MuiFormLabel-root {
+  font-size: 20px;
+}
+.MuiSelect-select {
+  font-size: 20px;
+}
+.MuiInputBase-root {
+  font-size: 20px;
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
