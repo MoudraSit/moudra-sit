@@ -56,7 +56,7 @@ function ResponsiveAppBar() {
             }}
           ></Box>
           <Stack direction="row" spacing={2}>
-            {status === "unauthenticated" && (
+            {/* {status === "unauthenticated" && (
               <Link href="/register">
                 <Button
                   variant="contained"
@@ -98,7 +98,7 @@ function ResponsiveAppBar() {
               >
                 ODHLÁSIT SE
               </Button>
-            )}
+            )} */}
           </Stack>
           {/*<Box
             justifyContent="flex-end"
