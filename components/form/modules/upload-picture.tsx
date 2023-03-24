@@ -90,7 +90,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
 
       // resize uploaded file to be smaller and able to send with API
       resizeImage(base64object).then((result: string) => {
-        //console.log(base64object);
+        // show compressed photo
         console.log(result);
 
         // set image to a form
@@ -98,8 +98,6 @@ function UploadPicture({ uploadedImage }: ImageType) {
 
         const img: string = result;
         const buffer = Buffer.from(img.substring(img.indexOf(",") + 1));
-        //console.log("Byte length: " + buffer.length);
-        //console.log("MB: " + buffer.length / 1e6);
 
         // if image has more than 1MB show text
         if (buffer.length / 1e6 > 1) {

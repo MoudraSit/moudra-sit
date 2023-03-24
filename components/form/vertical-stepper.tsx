@@ -90,9 +90,6 @@ const intial = {
 };
 
 function scrollIntoView() {
-  console.log(document.body.scrollHeight);
-  console.log(document.body.scrollHeight - 100);
-
   setTimeout(function () {
     window.scrollBy({
       top: 500,
@@ -198,6 +195,8 @@ export default function VerticalLinearStepper() {
 
         // show content of last step
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+        console.log("API communication successful");
       } catch (error) {
         lastStep = false;
         setProgressbBar(false);
