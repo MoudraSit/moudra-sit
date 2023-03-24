@@ -533,7 +533,7 @@ function Register() {
                             paragraph
                           >
                             Uživatele se zadaným emailem už v systému evidujeme.
-                            Zkuste se proto přihlásit tlačítkem "Přihlásit se".
+                            Zkuste se proto přihlásit tlačítkem Přihlásit se.
                           </Typography>
                         </Link>
                       </>
@@ -553,7 +553,7 @@ function Register() {
                             paragraph
                           >
                             Byl jste úspěšně registrován. Nyní se můžete
-                            přihlásit pod tlačítkem "Přihlásit se".
+                            přihlásit pod tlačítkem Přihlásit se.
                           </Typography>
                         </Link>
                       </>
