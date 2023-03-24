@@ -35,8 +35,12 @@ export default NextAuth({
           password: string;
         };
 
-        if (!email || !password) {
-          throw Error("Cannot sign in");
+        if (!email) {
+          throw Error("Zadejte prosím email");
+        }
+
+        if (!password) {
+          throw Error("Zadejte prosím heslo");
         }
 
         // EMAIL
@@ -81,7 +85,7 @@ export default NextAuth({
                 await responseSenior.json();
 
               // password
-              console.log(jsonObjectSenior.data.fields.heslo);
+              //console.log(jsonObjectSenior.data.fields.heslo);
 
               // compare passwords
               const isValid = await verifyPassword(
@@ -96,24 +100,24 @@ export default NextAuth({
 
               // not valid password
               else {
-                throw Error("Incorrect password!");
+                throw Error("Špatně zadaný email nebo heslo");
               }
 
               // error password api call
             } catch (error) {
-              console.log("There was an error", error);
-              throw Error("Cannot sign in");
+              console.log("There was an API error", error);
+              throw Error("Špatně zadaný email nebo heslo");
             }
 
             // no entry with the email
           } else {
-            throw Error("No user found!");
+            throw Error("Špatně zadaný email nebo heslo");
           }
 
           // error email api call
         } catch (error) {
-          console.log("There was an error", error);
-          throw Error("Cannot sign in");
+          console.log("There was an API error", error);
+          throw Error("Špatně zadaný email nebo heslo");
         }
       },
     }),

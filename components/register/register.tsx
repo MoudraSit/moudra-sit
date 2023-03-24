@@ -25,9 +25,11 @@ import logo from "public/images/logo/logo.svg";
 import singin from "public/images/sing-in/singin.jpg";
 import Image from "next/image";
 import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik, FormikHelpers } from "formik";
 import { registerSchema } from "./schema/register-schema";
 import TextFieldForm from "components/form/model/input-form";
+import RegionForm from "components/form/model/region-form";
+import { redirect } from "next/navigation";
 
 export interface IValuesRegister {
   name: string;
@@ -61,11 +63,17 @@ const initialValues = {
 
 function Register() {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(false);
+  const [APIerrorMessage, setAPIErrorMessage] = React.useState(false);
+  const [successMessage, setSuccessMessage] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const currentValidationSchema = registerSchema;
 
-  async function handleSend(values: IValuesRegister) {
+  async function handleSend(
+    values: IValuesRegister,
+    actions: FormikHelpers<IValuesRegister>
+  ) {
     // event.preventDefault();
     // const data = new FormData(event.currentTarget);
 
@@ -106,14 +114,36 @@ function Register() {
 
     console.log("zasilam na API");
 
-    // check if user with the same email doesn't exists
-    const isRegistred = await ApiGetRegisterSenior(formValues);
+    try {
+      setAPIErrorMessage(false);
+      setErrorMessage(false);
 
-    // TODO: napis, ze uzivatel existuje
-    console.log(isRegistred);
+      // check if user with the same email doesn't exists
+      const isRegistred = await ApiGetRegisterSenior(formValues);
 
-    if (!isRegistred) {
-      const regi = await ApiRegisterSenior(formValues);
+      // TODO: napis, ze uzivatel existuje
+      console.log(isRegistred);
+
+      if (!isRegistred) {
+        const regi = await ApiRegisterSenior(formValues);
+
+        setSuccessMessage(true);
+      } else {
+        setErrorMessage(true);
+
+        // set submit button to default position
+        actions.setTouched({});
+        actions.setSubmitting(false);
+      }
+    } catch (error) {
+      setAPIErrorMessage(true);
+
+      // set submit button to default position
+      actions.setTouched({});
+      actions.setSubmitting(false);
+
+      //show error
+      console.log(error);
     }
   }
 
@@ -134,22 +164,22 @@ function Register() {
               alignItems: "center",
             }}
           >
+            <Image src={logo} alt={""} height="30" />
+            <Typography variant="h5" sx={{ mt: 3, mb: 3 }}>
+              Registrace nového uživatele
+            </Typography>
             <Formik
               initialValues={initialValues}
               validationSchema={currentValidationSchema}
               onSubmit={(values: IValuesRegister, actions) => {
                 console.log("handluj");
-                handleSend(values);
+                handleSend(values, actions);
                 // scroll into new section
                 //scrollIntoView();
               }}
             >
-              {({ isSubmitting, values }) => (
+              {({ isSubmitting, setFieldValue, values }) => (
                 <Form autoComplete="on">
-                  <Image src={logo} alt={""} height="30" />
-                  <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 3 }}>
-                    Registrace nového uživatele
-                  </Typography>
                   <Box sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
@@ -295,43 +325,35 @@ function Register() {
                         />
                       </Grid>
                       <Grid item xs={12}>
-                        <TextFieldForm
-                          required
-                          fullWidth
+                        <RegionForm
                           id="region"
                           label="Kraj"
                           name="region"
-                          color="info"
                           inputhelper=""
-                          inputProps={{
-                            style: {
-                              WebkitBoxShadow: "0 0 0 1000px white inset",
-                              WebkitTextFillColor: "black",
-                              fontSize: 20,
-                            },
+                          variant="outlined"
+                          color="info"
+                          fullWidth
+                          required
+                          setFieldValue={setFieldValue}
+                          sx={{
+                            ".MuiInputBase-root": { backgroundColor: "white" },
                           }}
-                          InputProps={{ style: { fontSize: 20 } }}
-                          InputLabelProps={{ style: { fontSize: 20 } }}
                         />
                       </Grid>
                       <Grid item xs={12} sm={4}>
-                        <TextFieldForm
-                          required
-                          fullWidth
+                        <PhoneCodeFieldForm
                           id="plusCode"
                           label="Předvolba"
                           name="plusCode"
-                          color="info"
                           inputhelper=""
-                          inputProps={{
-                            style: {
-                              WebkitBoxShadow: "0 0 0 1000px white inset",
-                              WebkitTextFillColor: "black",
-                              fontSize: 20,
-                            },
+                          variant="outlined"
+                          color="info"
+                          fullWidth
+                          required
+                          setFieldValue={setFieldValue}
+                          sx={{
+                            ".MuiInputBase-root": { backgroundColor: "white" },
                           }}
-                          InputProps={{ style: { fontSize: 20 } }}
-                          InputLabelProps={{ style: { fontSize: 20 } }}
                         />
                       </Grid>
                       <Grid item xs={12} sm={8}>
@@ -364,6 +386,44 @@ function Register() {
                           id="password"
                           color="info"
                           inputhelper=""
+                          inputProps={{
+                            style: {
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "black",
+                              fontSize: 20,
+                            },
+                          }}
+                          type={showPassword ? "text" : "password"}
+                          InputLabelProps={{ style: { fontSize: 20 } }}
+                          InputProps={{
+                            style: { fontSize: 20 },
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                >
+                                  {showPassword ? (
+                                    <Visibility />
+                                  ) : (
+                                    <VisibilityOff />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextFieldForm
+                          required
+                          fullWidth
+                          name="confirmPwd"
+                          label="Heslo znovu"
+                          id="confirmPwd"
+                          color="info"
+                          inputhelper="Prosím napište Vaše heslo ještě jednou"
                           inputProps={{
                             style: {
                               WebkitBoxShadow: "0 0 0 1000px white inset",
@@ -437,10 +497,73 @@ function Register() {
                     >
                       Registrovat se
                     </Button>
+                    {APIerrorMessage ? (
+                      <>
+                        <Typography
+                          sx={{
+                            pt: 5,
+                            color: "red",
+                            fontWeight: "bold",
+                          }}
+                          variant="h5"
+                          align="center"
+                          color="primary.main"
+                          paragraph
+                        >
+                          Omlouváme se, ale došlo k chybě. Zkontrolujte prosím
+                          internetové připojení a zkuste stisknout na tlačítko
+                          Registrovat se znovu. Pokud problémy nadále
+                          přetrvávají, zkuste prosím vyplnit registraci později.
+                          Děkujeme za pochopení.
+                        </Typography>
+                      </>
+                    ) : null}
+                    {errorMessage ? (
+                      <>
+                        <Link href="/sing-in" variant="body2" color="#ff0000">
+                          <Typography
+                            sx={{
+                              pt: 5,
+                              color: "red",
+                              fontWeight: "bold",
+                            }}
+                            variant="h5"
+                            align="center"
+                            color="primary.main"
+                            paragraph
+                          >
+                            Uživatele se zadaným emailem už v systému evidujeme.
+                            Zkuste se proto přihlásit tlačítkem "Přihlásit se".
+                          </Typography>
+                        </Link>
+                      </>
+                    ) : null}
+                    {successMessage ? (
+                      <>
+                        <Link href="/sing-in" variant="body2" color="#028790">
+                          <Typography
+                            sx={{
+                              pt: 5,
+                              color: "#028790",
+                              fontWeight: "bold",
+                            }}
+                            variant="h5"
+                            align="center"
+                            color="#028790"
+                            paragraph
+                          >
+                            Byl jste úspěšně registrován. Nyní se můžete
+                            přihlásit pod tlačítkem "Přihlásit se".
+                          </Typography>
+                        </Link>
+                      </>
+                    ) : null}
                     <Grid container justifyContent="flex-end">
                       <Grid item>
                         <Link href="/sing-in" variant="body2" color="#000000">
-                          Již máte účet? Přihlaste se zde
+                          <Typography align="center" paragraph>
+                            Již máte účet? Přihlaste se zde
+                          </Typography>
                         </Link>
                       </Grid>
                     </Grid>

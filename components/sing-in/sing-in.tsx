@@ -1,4 +1,4 @@
-import { Box, IconButton, InputAdornment } from "@mui/material";
+import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const router = useRouter();
@@ -39,6 +40,7 @@ function SignInSide() {
       // TODO: show incorrect password or email
     } else {
       console.log(result);
+      setErrorMessage(result.error);
     }
   }
 
@@ -49,20 +51,24 @@ function SignInSide() {
         <Grid
           item
           xs={false}
-          sm={4}
+          sm={false}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: `url('/images/sing-in/sing-in.jpg')`,
             backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+        >
           <Box
             sx={{
               my: 8,
@@ -157,6 +163,23 @@ function SignInSide() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               /> */}
+              {errorMessage ? (
+                <>
+                  <Typography
+                    sx={{
+                      pt: 5,
+                      color: "red",
+                      fontWeight: "bold",
+                    }}
+                    variant="h5"
+                    align="center"
+                    color="primary.main"
+                    paragraph
+                  >
+                    {errorMessage}
+                  </Typography>
+                </>
+              ) : null}
               <Button
                 type="submit"
                 fullWidth
@@ -173,12 +196,16 @@ function SignInSide() {
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2" color="#000000">
-                    Zapomněli jste heslo?
+                    <Typography align="left" paragraph>
+                      Zapomněli jste heslo?
+                    </Typography>
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="/register" variant="body2" color="#000000">
-                    {"Nemáte účet? Zaregistrujte se zde"}
+                    <Typography align="right" paragraph>
+                      Nemáte účet? Zaregistrujte se zde
+                    </Typography>
                   </Link>
                 </Grid>
               </Grid>

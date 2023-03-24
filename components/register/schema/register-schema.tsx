@@ -38,11 +38,14 @@ export const registerSchema = yup.object().shape({
     .string()
     .matches(pscRegex, "Špatný tvar PSČ")
     .required("Napište Vaše PSČ"),
-  city: yup.string().required("Napište název obce/města"),
-  region: yup.string().required("Napište kraj Vašeho bydliště"),
-  plusCode: yup
+  city: yup
     .string()
-    .required("Napište správný tvar předvolby (např. +420)"),
+    .matches(/^[A-Ža-ž]*$/, "Prosím napište správně název obce/města")
+    .required("Napište název obce/města"),
+  region: yup.string().required("Zvolte kraj Vašeho bydliště"),
+  // plusCode: yup
+  //   .string()
+  //   .required("Napište správný tvar předvolby (např. +420)"),
   phoneNumber: yup
     .string()
     .matches(
@@ -50,9 +53,9 @@ export const registerSchema = yup.object().shape({
       "Napište správný tvar telefonního čísla (např. 123456789)"
     )
     .required("Napište Váš kontaktní telefon (např. 123456789)"),
-  // agreement: yup
-  //   .boolean()
-  //   .oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),
+  agreement: yup
+    .boolean()
+    .required("Prosím potvrďte souhlas se zpracováním osobních údajů"),
   password: yup
     .string()
     .matches(
@@ -60,4 +63,8 @@ export const registerSchema = yup.object().shape({
       "Heslo musí mít minimálně 8 znaků a obsahovat alespoň 1 číslo"
     )
     .required("Prosím zvolte Vaše heslo"),
+  confirmPwd: yup
+    .string()
+    .required("Prosím napište Vaše heslo ještě jednou")
+    .oneOf([yup.ref("password")], "Hesla se neshodují"),
 });

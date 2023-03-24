@@ -77,7 +77,7 @@ function ResponsiveAppBar() {
                   PŘIHLÁSIT SE
                 </Button>
               </Link>
-            )}
+            )} */}
             {status === "authenticated" && (
               <Link href="/profile">
                 <Button
@@ -98,7 +98,7 @@ function ResponsiveAppBar() {
               >
                 ODHLÁSIT SE
               </Button>
-            )} */}
+            )}
           </Stack>
           {/*<Box
             justifyContent="flex-end"
