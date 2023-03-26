@@ -23,6 +23,8 @@ import StepSuccess from "./steps/step-success";
 import ErrorMessageComponent from "./steps/error-message";
 import ProgressBarComponent from "./steps/progress-bar";
 import { ImageType } from "react-images-uploading";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import ApiRecaptcha from "./api/recaptcha";
 
 export interface IValues {
   requirmentName: string;
@@ -137,21 +139,40 @@ export default function VerticalLinearStepper() {
   const [errorMessage, setErrorMessage] = React.useState(false);
   const currentValidationSchema = defaultSchema[activeStep];
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   async function handleSend(
     index: number,
     values: IValues,
     actions: FormikHelpers<IValues>
   ) {
     if (index === steps.length - 1) {
+      let token: string = "";
+
+      if (!executeRecaptcha) {
+        console.log("Execute recaptcha not yet available");
+        return;
+      }
+
       try {
         // show progress bar
         setProgressbBar(true);
 
-        // TODO: cannot use because need public URL to upload file to Tabidoo
-        //if (values.image) await ApiUploadImage(values.image);
-
         // simulate API calling
         //await new Promise((resolve) => setTimeout(resolve, 3000));
+
+        // get recaptcha token
+        const gReCaptchaToken: string = await executeRecaptcha(
+          "enquiryFormSubmit"
+        );
+
+        // recaptcha v3 validation check - score based validation
+        try {
+          await ApiRecaptcha(gReCaptchaToken);
+          console.log("Recaptcha - OK");
+        } catch (error) {
+          throw new Error("Recaptcha - you are not a human");
+        }
 
         let idRequirment = null;
 
@@ -196,7 +217,7 @@ export default function VerticalLinearStepper() {
         // show content of last step
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-        console.log("API communication successful");
+        console.log("API communication - OK");
       } catch (error) {
         lastStep = false;
         setProgressbBar(false);

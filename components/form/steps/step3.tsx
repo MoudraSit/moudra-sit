@@ -12,41 +12,7 @@ function Step3Form({ uploadedImage }: ImageType) {
       <div id="section3" />
       <Grid item xs={12}>
         <Typography
-          variant="h5"
-          align="left"
-          color="#3e3e3e"
-          paragraph
-          sx={{ fontWeight: "bold", pb: 4 }}
-        >
-          Charakterizujte Váš problém několika slovy (např. “nefunguje wifi”).
-        </Typography>
-      </Grid>
-
-      <Grid item xs={12}>
-        <TextFieldForm
-          id="requirmentName"
-          label="Napište několik slov"
-          name="requirmentName"
-          inputhelper=""
-          variant="outlined"
-          color="info"
-          fullWidth
-          required
-          inputProps={{
-            maxLength: 40,
-            style: {
-              WebkitBoxShadow: "0 0 0 1000px white inset",
-              WebkitTextFillColor: "black",
-              fontSize: 20,
-            },
-          }}
-          InputProps={{ style: { fontSize: 20 } }}
-          InputLabelProps={{ style: { fontSize: 20 } }}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography
-          sx={{ pt: 6, pb: 4, fontWeight: "bold" }}
+          sx={{ pb: 4, fontWeight: "bold" }}
           variant="h5"
           align="left"
           color="#3e3e3e"
@@ -78,6 +44,40 @@ function Step3Form({ uploadedImage }: ImageType) {
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
                 padding: 0,
+                fontSize: 20,
+              },
+            }}
+            InputProps={{ style: { fontSize: 20 } }}
+            InputLabelProps={{ style: { fontSize: 20 } }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography
+            variant="h5"
+            align="left"
+            color="#3e3e3e"
+            paragraph
+            sx={{ fontWeight: "bold", pt: 6, pb: 4 }}
+          >
+            Shrňte Váš problém do několika slov (např. “nefunguje wifi”)
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextFieldForm
+            id="requirmentName"
+            label="Napište několik slov"
+            name="requirmentName"
+            inputhelper=""
+            variant="outlined"
+            color="info"
+            fullWidth
+            required
+            inputProps={{
+              maxLength: 40,
+              style: {
+                WebkitBoxShadow: "0 0 0 1000px white inset",
+                WebkitTextFillColor: "black",
                 fontSize: 20,
               },
             }}
