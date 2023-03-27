@@ -57,9 +57,9 @@ function Step3Form({ uploadedImage }: ImageType) {
             align="left"
             color="#3e3e3e"
             paragraph
-            sx={{ fontWeight: "bold", pt: 6, pb: 4 }}
+            sx={{ fontWeight: "bold", pt: 12, pb: 4 }}
           >
-            Shrňte Váš problém do několika slov (např. “nefunguje wifi”)
+            Název problému (max. 6 slov, např. “nefunguje wifi”)
           </Typography>
         </Grid>
 

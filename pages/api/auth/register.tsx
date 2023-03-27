@@ -5,7 +5,7 @@ export interface IRegisterFields {
   fields: {
     jmeno: string;
     prijmeni: string;
-    ulice: string;
+    // ulice: string;
     mesto: string;
     PSC: string;
     kraj: string;

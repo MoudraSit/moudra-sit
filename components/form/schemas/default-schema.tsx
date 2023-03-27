@@ -100,7 +100,7 @@ export const defaultSchema = [
         "Napište správný tvar telefonního čísla (např. 123456789)"
       )
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
-    email: yup.string().email("Napište správně Váš kontaktní email"),
+    email: yup.string().email("Napište správně Váš kontaktní e-mail"),
     agreement: yup
       .boolean()
       .required()
@@ -150,7 +150,7 @@ export const defaultSchema = [
         "Napište správný tvar telefonního čísla (např. 123456789)"
       )
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
-    email: yup.string().email("Napište správně Váš kontaktní email"),
+    email: yup.string().email("Napište správně Váš kontaktní e-mail"),
     agreement: yup
       .boolean()
       .oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),

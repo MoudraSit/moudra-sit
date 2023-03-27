@@ -1,3 +1,4 @@
+/* Roboto font */
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 
 html,
@@ -31,13 +32,3 @@ a {
 .MuiInputBase-root {
   font-size: 20px !important;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-} */

@@ -13,8 +13,8 @@ function Step1Form() {
         paragraph
         fontWeight="bold"
       >
-        Službu poskytujeme seniorům 60+ let žijícím v Česku zdarma, proto
-        potřebujeme ověřit Váš věk.
+        Službu poskytujeme zdarma seniorům starším 60 let, proto potřebujeme
+        ověřit Váš věk.
       </Typography>
       <Box
         sx={{

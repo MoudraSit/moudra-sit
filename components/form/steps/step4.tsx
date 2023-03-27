@@ -69,7 +69,7 @@ function Step4Form(props: any) {
         <Grid item xs={12} sm={6}>
           <TextFieldForm
             id="zipCode"
-            label="PSČ vašeho bydliště"
+            label="PSČ Vašeho bydliště"
             name="zipCode"
             inputhelper="Pro nalezení nejbližšího dobrovolníka"
             variant="outlined"
@@ -150,9 +150,9 @@ function Step4Form(props: any) {
         <Grid item xs={12}>
           <TextFieldForm
             id="email"
-            label="Kontaktní email (nepovinné)"
+            label="Kontaktní e-mail (pokud máte)"
             name="email"
-            inputhelper="Pro zaslání potvrzovacího emailu"
+            inputhelper="Pro zaslání potvrzovacího e-mailu"
             variant="outlined"
             color="info"
             fullWidth

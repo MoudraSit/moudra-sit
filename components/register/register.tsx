@@ -36,7 +36,7 @@ export interface IValuesRegister {
   surname: string;
   email: string;
   year: string;
-  address: string;
+  // address: string;
   city: string;
   zipCode: string;
   region: string;
@@ -51,7 +51,7 @@ const initialValues = {
   surname: "",
   email: "",
   year: "",
-  address: "",
+  // address: "",
   city: "",
   zipCode: "",
   region: "",
@@ -98,7 +98,7 @@ function Register() {
       fields: {
         jmeno: values.name,
         prijmeni: values.surname,
-        ulice: values.address,
+        // ulice: values.address,
         mesto: values.city,
         PSC: values.zipCode,
         kraj: values.region,
@@ -263,7 +263,7 @@ function Register() {
                           InputLabelProps={{ style: { fontSize: 20 } }}
                         />
                       </Grid>
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <TextFieldForm
                           required
                           fullWidth
@@ -282,7 +282,7 @@ function Register() {
                           InputProps={{ style: { fontSize: 20 } }}
                           InputLabelProps={{ style: { fontSize: 20 } }}
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12} sm={8}>
                         <TextFieldForm
                           required
