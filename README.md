@@ -9,6 +9,6 @@ Statická část webu běží na https://moudrasit.cz/, který je vytvořen ve [
 
 Web je napsaný ve frameworku [Next.js](https://nextjs.org/) a [TypeScriptu](https://www.typescriptlang.org/) s využitím komponent knihovny [MUI](https://mui.com/). Výsledek aktuálně běží na [Vercelu](https://vercel.com/).
 
-Jako databázový model využíváme [Tabidoo](https://app.tabidoo.cloud/), z něhož za použití API čteme a zapisujeme data.
+Jako databázový model využíváme [Tabidoo](https://app.tabidoo.cloud/), z něhož pomocí API čteme a zapisujeme data.
 
-Pro vytvoření a validaci formulářů využíváme [Formik](https://formik.org/) v kombinaci s [Yup](https://www.npmjs.com/package/yup).
+Pro vytvoření a validaci formulářů využíváme [Formik](https://formik.org/) v kombinaci s [Yup](https://www.npmjs.com/package/yup), pro ochranu formulářů [reCAPTCHA](https://www.google.com/recaptcha/about/), pro autentifikaci knihovnu [Next Auth](https://next-auth.js.org/).
