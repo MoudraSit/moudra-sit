@@ -1,7 +1,7 @@
 ## Moudrá Síť
 ![alt text](https://moudrasit.cz/wp-content/uploads/2023/02/Group-482001.svg)
 
-Moudrá Síť je projekt, který propojuje digitální asistenty a seniory pomocí webové aplikace, přes kterou si senior zadá dotaz nebo technický problém se svým chytrým zařízením. Požadavek si převezme konkrétní digitální asistent poblíž bydliště seniora a problém vyřeší buď online, nebo se domluví na osobní schůzce.
+[Moudrá Síť](https://moudrasit.cz/) je projekt, který propojuje digitální asistenty a seniory pomocí webové aplikace, přes kterou si senior zadá dotaz nebo technický problém se svým chytrým zařízením. Požadavek si převezme konkrétní digitální asistent poblíž bydliště seniora a problém vyřeší buď online, nebo se domluví na osobní schůzce.
 
 Web Moudré Sítě - https://moudra-sit.vercel.app/. V rámci něj senioři pokládají dotazy ve formuláři, mohou se zaregistrovat a přihlásit se do svého osobního profilu. 
 
