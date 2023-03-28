@@ -3,6 +3,7 @@ import * as yup from "yup";
 const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
 const pscRegex = /^\d{3}[ ]?\d{2}$/;
 
+// schema for form validation
 export const registerSchema = yup.object().shape({
   name: yup
     .string()
@@ -27,13 +28,13 @@ export const registerSchema = yup.object().shape({
     )
     .required("Napište rok Vašeho narození")
     .typeError("Napište rok Vašeho narození"),
-  address: yup
-    .string()
-    .matches(
-      /^[A-Ža-ž ]*[ ][0-9]+[/]?[0-9]*$/,
-      "Prosím vložte příjmení ve správném tvaru"
-    )
-    .required("Napište ulici a číslo popisné"),
+  // address: yup
+  //   .string()
+  //   .matches(
+  //     /^[A-Ža-ž ]*[ ][0-9]+[/]?[0-9]*$/,
+  //     "Prosím vložte příjmení ve správném tvaru"
+  //   )
+  //   .required("Napište ulici a číslo popisné"),
   zipCode: yup
     .string()
     .matches(pscRegex, "Špatný tvar PSČ")
@@ -43,9 +44,9 @@ export const registerSchema = yup.object().shape({
     .matches(/^[A-Ža-ž]*$/, "Prosím napište správně název obce/města")
     .required("Napište název obce/města"),
   region: yup.string().required("Zvolte kraj Vašeho bydliště"),
-  // plusCode: yup
-  //   .string()
-  //   .required("Napište správný tvar předvolby (např. +420)"),
+  plusCode: yup
+    .string()
+    .required("Napište správný tvar předvolby (např. +420)"),
   phoneNumber: yup
     .string()
     .matches(

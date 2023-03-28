@@ -1,4 +1,3 @@
-import { RequirmentTabidooRequest } from "components/form/handler/api-handler";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(
@@ -11,6 +10,11 @@ async function handler(
 
   if (request.method !== "POST") {
     response.status(400).send("Use POST method");
+    return;
+  }
+
+  if (!body.gRecaptchaToken) {
+    response.status(400).send("Cannot get recaptcha token");
     return;
   }
 
@@ -29,21 +33,24 @@ async function handler(
 
     const reCaptchaRes = await responseAPI.json();
 
+    // human or robot validation based on score
     if (reCaptchaRes?.score > 0.5) {
-      // Save data to the database from here
       response.status(200).json({
         status: "success",
         message: "Enquiry submitted successfully",
       });
+      return;
     } else {
       response.status(200).json({
         status: "failure",
         message: "Google ReCaptcha Failure",
       });
+      return;
     }
   } catch (error) {
     console.log("There was an error", error);
-    return Promise.reject(error);
+    response.status(500).send("Unexpected error");
+    return;
   }
 }
 

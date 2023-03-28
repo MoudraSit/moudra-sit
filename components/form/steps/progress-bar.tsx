@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Image from "next/image";
 import * as React from "react";
 import loading from "../../../public/images/form/loading.gif";

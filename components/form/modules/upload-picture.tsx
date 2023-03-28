@@ -2,20 +2,17 @@ import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import ReactImageUploading, { ImageType } from "react-images-uploading";
 
-// TODO: fix any for imageList, addUpdateIndex
+// TODO: fix any
 // Sources: https://codesandbox.io/s/react-images-uploading-demo-u0khz?file=/src/index.js:158-1697
 // https://www.npmjs.com/package/react-images-uploading?activeTab=readme
 
-// Sources: compress photo
-// https://gist.github.com/ORESoftware/ba5d03f3e1826dc15d5ad2bcec37f7bf
-
 // convert url to file
-function dataURLtoFile(dataurl: any, filename: any) {
-  var arr = dataurl.split(","),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
+function dataURLtoFile(dataurl: any, filename: string) {
+  const arr = dataurl.split(",");
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
 
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n);
@@ -24,14 +21,17 @@ function dataURLtoFile(dataurl: any, filename: any) {
   return new File([u8arr], filename, { type: mime });
 }
 
-// resize image with canvas creating new image
+// Sources: compress photo
+// https://gist.github.com/ORESoftware/ba5d03f3e1826dc15d5ad2bcec37f7bf
+
+// resize input image, create new image with canvas
 function resizeImage(base64Str: string, maxWidth = 500, maxHeight = 500) {
   return new Promise<string>((resolve) => {
     let img = new (window as any).Image();
     img.src = base64Str;
 
     img.onload = () => {
-      let canvas = document.createElement("canvas");
+      const canvas = document.createElement("canvas");
       const MAX_WIDTH = maxWidth;
       const MAX_HEIGHT = maxHeight;
       let width = img.width;
@@ -50,7 +50,7 @@ function resizeImage(base64Str: string, maxWidth = 500, maxHeight = 500) {
       }
       canvas.width = width;
       canvas.height = height;
-      let ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
       ctx?.drawImage(img, 0, 0, width, height);
       resolve(canvas.toDataURL());
     };
@@ -63,27 +63,27 @@ function UploadPicture({ uploadedImage }: ImageType) {
   const [maxSizeOverflow, setMaxSizeOverflow] = useState(false);
   const maxNumber = 1;
 
+  // upload image handler
   const onChange = (imageList: any, addUpdateIndex: any) => {
     setImages(imageList);
 
     // image was upload
     if (imageList[0]) {
       // get base64 string
-      let base64object: string = imageList[0].data_url;
+      const base64object: string = imageList[0].data_url;
 
       // get type of image
-      let typeOfImage: string =
+      const typeOfImage: string =
         "image." +
         base64object.substring(
           base64object.indexOf("/") + 1,
           base64object.lastIndexOf(";")
         );
 
-      // create new file
-      let newFile = dataURLtoFile(imageList[0].data_url, typeOfImage);
-
       // create new URL for a file
-      let newUrl = URL.createObjectURL(newFile);
+      const newUrl = URL.createObjectURL(
+        dataURLtoFile(imageList[0].data_url, typeOfImage)
+      );
 
       // set image as selected
       setSelectedImage(newUrl);
@@ -91,7 +91,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
       // resize uploaded file to be smaller and able to send with API
       resizeImage(base64object).then((result: string) => {
         // show compressed photo
-        console.log(result);
+        // console.log(result);
 
         // set image to a form
         uploadedImage(result);

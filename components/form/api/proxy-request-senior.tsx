@@ -20,7 +20,7 @@ export interface ISeniorResponse {
 }
 
 // check if name and surname start with capital letter
-function capitalizeFirstLetter(name: string) {
+export function capitalizeFirstLetter(name: string) {
   return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
@@ -32,14 +32,14 @@ export function removeSpaces(str: string) {
 // call proxy API
 async function ApiRequestSenior(props: IValues) {
   try {
-    const response = await fetch("/api/tabidoo-senior", {
+    const response = await fetch("/api/form/senior", {
       method: "POST",
       body: JSON.stringify({
         fields: {
           jmeno: capitalizeFirstLetter(props.name),
           prijmeni: capitalizeFirstLetter(props.surname),
           PSC: removeSpaces(props.zipCode),
-          mesto: props.city,
+          mesto: capitalizeFirstLetter(props.city),
           email: props.email,
           stat: "Česko",
           telefon: props.plusCode.concat(removeSpaces(props.phoneNumber)),

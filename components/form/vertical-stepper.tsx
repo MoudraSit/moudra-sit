@@ -15,16 +15,32 @@ import Step4Form from "./steps/step4";
 import { defaultSchema } from "./schemas/default-schema";
 import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import Step5Form from "./steps/step5";
-import ApiRequestSenior from "./api/proxy-request-senior";
-import ApiRequestRequirment from "./api/proxy-request-requirment";
-import ApiRequestCategory from "./api/proxy-request-category";
-import ApiGetRequestSenior from "./api/proxy-request-get-senior";
 import StepSuccess from "./steps/step-success";
 import ErrorMessageComponent from "./steps/error-message";
 import ProgressBarComponent from "./steps/progress-bar";
 import { ImageType } from "react-images-uploading";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import ApiRecaptcha from "./api/recaptcha";
+import submitHelper from "./submit-helper";
+
+let lastStep = false;
+
+const steps = [
+  {
+    label: "Váš rok narození",
+  },
+  {
+    label: "Výběr zařízení",
+  },
+  {
+    label: "Popis Vašeho problému",
+  },
+  {
+    label: "Vaše kontaktní údaje",
+  },
+  {
+    label: "Shrnutí",
+  },
+];
 
 export interface IValues {
   requirmentName: string;
@@ -46,31 +62,6 @@ export interface IValues {
   city: string;
 }
 
-let lastStep = false;
-
-const pcCategory = "Počítač";
-const phoneCategory = "Mobil";
-const printerCategory = "Tiskárna";
-const otherCategory = "Jiné IT zařízení";
-
-const steps = [
-  {
-    label: "Váš rok narození",
-  },
-  {
-    label: "Výběr zařízení",
-  },
-  {
-    label: "Popis Vašeho problému",
-  },
-  {
-    label: "Vaše kontaktní údaje",
-  },
-  {
-    label: "Shrnutí",
-  },
-];
-
 const intial = {
   requirmentName: "",
   phoneCheckbox: false,
@@ -91,7 +82,7 @@ const intial = {
   city: "",
 };
 
-function scrollIntoView() {
+export function scrollIntoView() {
   setTimeout(function () {
     window.scrollBy({
       top: 500,
@@ -101,6 +92,7 @@ function scrollIntoView() {
   }, 300);
 }
 
+// render step content based on form progress
 function renderStepContent(
   step: number,
   values: IValues,
@@ -132,8 +124,6 @@ function renderStepContent(
 }
 
 export default function VerticalLinearStepper() {
-  const divRef = React.useRef<HTMLDivElement | null>(null);
-
   const [activeStep, setActiveStep] = React.useState(0);
   const [progressBar, setProgressbBar] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(false);
@@ -141,14 +131,14 @@ export default function VerticalLinearStepper() {
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 
+  // onSubmit handler function
   async function handleSend(
     index: number,
     values: IValues,
     actions: FormikHelpers<IValues>
   ) {
     if (index === steps.length - 1) {
-      let token: string = "";
-
+      // is recpatcha check ready
       if (!executeRecaptcha) {
         console.log("Execute recaptcha not yet available");
         return;
@@ -161,52 +151,7 @@ export default function VerticalLinearStepper() {
         // simulate API calling
         //await new Promise((resolve) => setTimeout(resolve, 3000));
 
-        // get recaptcha token
-        const gReCaptchaToken: string = await executeRecaptcha(
-          "enquiryFormSubmit"
-        );
-
-        // recaptcha v3 validation check - score based validation
-        try {
-          await ApiRecaptcha(gReCaptchaToken);
-          console.log("Recaptcha - OK");
-        } catch (error) {
-          throw new Error("Recaptcha - you are not a human");
-        }
-
-        let idRequirment = null;
-
-        // GET method to check if the record is already in the table
-        let idSenior = await ApiGetRequestSenior(values);
-
-        // POST method to create new senior record
-        if (!idSenior) {
-          idSenior = await ApiRequestSenior(values);
-        }
-
-        // POST method to create new requirment record
-        if (idSenior) {
-          idRequirment = await ApiRequestRequirment(values, idSenior);
-        }
-
-        // POST method to connect requirment to multiple categories
-        if (idRequirment) {
-          if (values.phoneCheckbox) {
-            await ApiRequestCategory(idRequirment, phoneCategory);
-          }
-
-          if (values.pcCheckbox) {
-            await ApiRequestCategory(idRequirment, pcCategory);
-          }
-
-          if (values.printerCheckbox) {
-            await ApiRequestCategory(idRequirment, printerCategory);
-          }
-
-          if (values.otherCheckbox) {
-            await ApiRequestCategory(idRequirment, otherCategory);
-          }
-        }
+        await submitHelper(index, values, actions, executeRecaptcha);
 
         // switch off progress bar
         setProgressbBar(false);
@@ -385,9 +330,7 @@ export default function VerticalLinearStepper() {
                       </Step>
                     ))}
                   </Stepper>
-                  <div ref={divRef}>
-                    {activeStep === steps.length && <StepSuccess />}
-                  </div>
+                  {activeStep === steps.length && <StepSuccess />}
                 </Container>
               </Form>
             )}

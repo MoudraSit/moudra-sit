@@ -18,13 +18,10 @@ const PhoneCodeFieldForm = ({
   inputhelper: string;
 }) => {
   const [field, meta] = useField(props);
-  // console.log("field", field);
-  // console.log("meta", meta);
 
   const [countryCode, setCountryCode] = React.useState("+420");
 
   const handleChange = (event: SelectChangeEvent) => {
-    console.log(event.target.value);
     setCountryCode(event.target.value as string);
     setFieldValue("plusCode", event.target.value);
   };

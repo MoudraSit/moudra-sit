@@ -1,6 +1,6 @@
 async function ApiRequestCategory(idRequirment: string, category: string) {
   try {
-    const response = await fetch("/api/tabidoo-category", {
+    const response = await fetch("/api/form/category", {
       method: "POST",
       body: JSON.stringify({
         fields: {

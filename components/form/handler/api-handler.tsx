@@ -6,6 +6,8 @@ export interface IFilterSenior {
   };
 }
 
+// TODO: put into pages/api/form and delete this file
+
 // try to get existing senior record from Tabidoo
 export async function GetSeniorTabidooRequest(
   apiToken: string,

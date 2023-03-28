@@ -1,4 +1,3 @@
-import { WorkHistoryTwoTone } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 import { ImageType } from "react-images-uploading";

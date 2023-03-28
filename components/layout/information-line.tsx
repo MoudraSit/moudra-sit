@@ -5,6 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 function InfoLine() {
   const [hideInfo, setHideInfo] = React.useState("flex");
 
+  // save closing info line to local storage
   React.useEffect(() => {
     const myState = window.localStorage.getItem("INFO_LINE");
     if (myState) {

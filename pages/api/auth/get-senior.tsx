@@ -1,11 +1,10 @@
-import { ISeniorResponse } from "components/form/api/proxy-request-senior";
 import { NextApiRequest, NextApiResponse } from "next";
 
 // registration
 async function handler(
   request: NextApiRequest,
   response: NextApiResponse
-): Promise<ISeniorResponse | void> {
+): Promise<void> {
   const { body } = request;
 
   console.log("Executing /api/auth/get-senior handler.");
@@ -50,7 +49,6 @@ async function handler(
 
     // send response from Tabidoo API to the client-side
     response.status(200).send(jsonObject);
-
     return;
   } catch (error) {
     response.status(500).send("Unexpected error");

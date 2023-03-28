@@ -80,7 +80,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
   const currentDate = new Date();
 
   try {
-    const response = await fetch("/api/tabidoo-requirment", {
+    const response = await fetch("/api/form/requirment", {
       method: "POST",
       body: JSON.stringify({
         fields: {

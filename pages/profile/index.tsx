@@ -16,7 +16,7 @@ function ProfilePage() {
 export async function getServerSideProps(context: { req: any }) {
   const session = await getSession({ req: context.req });
 
-  // user is not authenticated
+  // user is not authenticated, can't visit profile page
   if (!session) {
     return {
       redirect: {

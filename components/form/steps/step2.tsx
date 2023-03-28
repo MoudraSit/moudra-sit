@@ -104,7 +104,6 @@ function Step2Form(props: any) {
                 display: "none",
               }}
               checked={checkedPhone}
-              //onChange={handleChangePhone}
               color="secondary"
             />
           </Card>
@@ -160,7 +159,6 @@ function Step2Form(props: any) {
                 display: "none",
               }}
               checked={checkedPc}
-              //onChange={handleChangePc}
               color="secondary"
             />
           </Card>
@@ -215,7 +213,6 @@ function Step2Form(props: any) {
                 display: "none",
               }}
               checked={checkedPrinter}
-              //onChange={handleChangePrinter}
               color="secondary"
             />
           </Card>
@@ -270,13 +267,11 @@ function Step2Form(props: any) {
                 display: "none",
               }}
               checked={checkedOther}
-              //nChange={handleChangeOther}
               color="secondary"
             />
           </Card>
         </Grid>
       </Grid>
-      <div id="top"></div>
     </>
   );
 }

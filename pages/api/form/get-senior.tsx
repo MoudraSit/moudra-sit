@@ -1,4 +1,4 @@
-import { SeniorTabidooRequest } from "components/form/handler/api-handler";
+import { GetSeniorTabidooRequest } from "components/form/handler/api-handler";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(
@@ -7,20 +7,20 @@ async function handler(
 ): Promise<void> {
   const { body } = request;
 
-  console.log("Executing /api/tabidoo-senior handler.");
+  console.log("Executing /api/form/get-senior handler.");
 
   if (request.method !== "POST") {
     response.status(400).send("Use POST method");
     return;
   }
 
-  if (!body.fields) {
+  if (!body.filter) {
     response.status(400).send("Cannot get body of request");
     return;
   }
 
   try {
-    const responseAPI = await SeniorTabidooRequest(
+    const responseAPI = await GetSeniorTabidooRequest(
       process.env.TABIDOO_API_KEY as string,
       body
     );
@@ -33,10 +33,9 @@ async function handler(
 
     // send response from Tabidoo API to the client-side
     response.status(200).send(responseAPI);
-
     return;
   } catch (error) {
-    response.status(500).send("Unexpected error");
+    response.status(500).send("Unexpected error on /api/form/get-senior");
     return;
   }
 }

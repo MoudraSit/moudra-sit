@@ -1,7 +1,6 @@
 import {
   Button,
   Grid,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +12,6 @@ import { Box } from "@mui/system";
 import React from "react";
 import { IValues } from "../vertical-stepper";
 import EditIcon from "@mui/icons-material/Edit";
-import styles from "./step5.module.css";
 
 function scrollIntoSection(elemId: string) {
   const element = document.getElementById(elemId);

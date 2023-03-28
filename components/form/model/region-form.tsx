@@ -18,13 +18,10 @@ const RegionForm = ({
   inputhelper: string;
 }) => {
   const [field, meta] = useField(props);
-  // console.log("field", field);
-  // console.log("meta", meta);
 
   const [region, setRegion] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
-    //console.log(event.target.value);
     setRegion(event.target.value as string);
     setFieldValue("region", event.target.value);
   };

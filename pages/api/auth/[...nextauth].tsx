@@ -22,7 +22,7 @@ export interface ISeniorEntry {
 
 export default NextAuth({
   callbacks: {
-    session({ session, token, user }) {
+    session({ session }) {
       return session;
     },
   },
@@ -44,7 +44,7 @@ export default NextAuth({
         }
 
         // EMAIL
-        // email validation (does it exist in Tabidoo)
+        // email validation (does it exist in Tabidoo?)
         try {
           const responseAPI = await fetch(
             "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=email(eq)" +
@@ -67,7 +67,7 @@ export default NextAuth({
             console.log(userObject);
 
             // PASSWORD
-            // password validation (does it exist in Tabidoo)
+            // password validation (does it exist in Tabidoo?)
             try {
               const responseSenior = await fetch(
                 "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data/" +

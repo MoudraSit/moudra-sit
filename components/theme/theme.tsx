@@ -3,9 +3,7 @@ import { createTheme } from "@mui/material/styles";
 export let appTheme = createTheme({
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
       main: "#ffffff",
-      // dark: will be calculated from palette.primary.main,
       contrastText: "#000000",
     },
     secondary: {
@@ -16,9 +14,6 @@ export let appTheme = createTheme({
     warning: { main: "#D20000" },
     info: { main: "#000000" },
     contrastThreshold: 3,
-    // Used by the functions below to shift a color's luminance by approximately
-    // two indexes within its tonal palette.
-    // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset: 0.2,
   },
   typography: {

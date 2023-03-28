@@ -78,7 +78,7 @@ async function handler(
 
     return;
   } catch (error) {
-    response.status(500).send("Unexpected error");
+    response.status(500).send("Unexpected error on /api/register");
     return;
   }
 }

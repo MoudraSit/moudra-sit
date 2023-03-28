@@ -8,6 +8,7 @@ import { useEffect } from "react";
 function SinginPage() {
   const router = useRouter();
 
+  // when sign-in redirect to profile page
   useEffect(() => {
     getSession().then((session) => {
       if (session) {

@@ -1,4 +1,3 @@
-import ContactLine from "components/layout/contact-line";
 import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
 import MainPage from "components/main-page/main-page";

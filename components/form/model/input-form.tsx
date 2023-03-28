@@ -11,8 +11,6 @@ const TextFieldForm = ({
   inputhelper: string;
 }) => {
   const [field, meta] = useField(props);
-  // console.log("field", field);
-  // console.log("meta", meta);
 
   return (
     <>

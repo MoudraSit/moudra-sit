@@ -100,6 +100,7 @@ function Step4Form(props: any) {
             required
             inputProps={{
               style: {
+                textTransform: "capitalize",
                 WebkitBoxShadow: "0 0 0 1000px white inset",
                 WebkitTextFillColor: "black",
                 fontSize: 20,

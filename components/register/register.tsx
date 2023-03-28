@@ -7,29 +7,29 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
-import { Copyright, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IRegisterFields } from "pages/api/auth/register";
 import ApiRegisterSenior from "./api/proxy-senior";
 import ApiGetRegisterSenior from "./api/proxy-get-senior";
-
-import logo from "public/images/logo/logo.svg";
-import singin from "public/images/sing-in/singin.jpg";
-import Image from "next/image";
 import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
-import { ErrorMessage, Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import { registerSchema } from "./schema/register-schema";
 import TextFieldForm from "components/form/model/input-form";
 import RegionForm from "components/form/model/region-form";
-import { redirect } from "next/navigation";
+import Image from "next/image";
+
+import logo from "public/images/logo/logo.svg";
+import {
+  capitalizeFirstLetter,
+  removeSpaces,
+} from "components/form/api/proxy-request-senior";
+import { scrollIntoView } from "components/form/vertical-stepper";
 
 export interface IValuesRegister {
   name: string;
@@ -43,6 +43,7 @@ export interface IValuesRegister {
   plusCode: string;
   phoneNumber: string;
   password: string;
+  confirmPwd: string;
   agreement: boolean;
 }
 
@@ -55,9 +56,10 @@ const initialValues = {
   city: "",
   zipCode: "",
   region: "",
-  plusCode: "",
+  plusCode: "+420",
   phoneNumber: "",
   password: "",
+  confirmPwd: "",
   agreement: false,
 };
 
@@ -70,51 +72,31 @@ function Register() {
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const currentValidationSchema = registerSchema;
 
+  // onSubmit method
   async function handleSend(
     values: IValuesRegister,
     actions: FormikHelpers<IValuesRegister>
   ) {
-    // event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-
-    // const values: IRegisterFields = {
-    //   fields: {
-    //     jmeno: data.get("firstName") as string,
-    //     prijmeni: data.get("lastName") as string,
-    //     ulice: data.get("address") as string,
-    //     mesto: data.get("city") as string,
-    //     PSC: data.get("zipCode") as string,
-    //     kraj: data.get("region") as string,
-    //     stat: "Česko",
-    //     email: data.get("email") as string,
-    //     rokNarozeni: +(data.get("birth") as string),
-    //     telefon: ((data.get("pluscode") as string) +
-    //       data.get("phone")) as string,
-    //     heslo: data.get("password") as string,
-    //   },
-    // };
-
     const formValues: IRegisterFields = {
       fields: {
-        jmeno: values.name,
-        prijmeni: values.surname,
+        jmeno: capitalizeFirstLetter(values.name),
+        prijmeni: capitalizeFirstLetter(values.surname),
         // ulice: values.address,
-        mesto: values.city,
-        PSC: values.zipCode,
+        mesto: capitalizeFirstLetter(values.city),
+        PSC: removeSpaces(values.zipCode),
         kraj: values.region,
         stat: "Česko",
         email: values.email,
         rokNarozeni: +values.year,
-        telefon: values.plusCode + values.phoneNumber,
+        telefon: values.plusCode + removeSpaces(values.phoneNumber),
         heslo: values.password,
       },
     };
 
-    //console.log(values);
-
     console.log("zasilam na API");
 
     try {
+      // set messages to default state
       setAPIErrorMessage(false);
       setErrorMessage(false);
 
@@ -145,6 +127,15 @@ function Register() {
       //show error
       console.log(error);
     }
+
+    // automatically scrolling into result
+    setTimeout(function () {
+      window.scrollBy({
+        top: 500,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 300);
   }
 
   return (
@@ -172,10 +163,7 @@ function Register() {
               initialValues={initialValues}
               validationSchema={currentValidationSchema}
               onSubmit={(values: IValuesRegister, actions) => {
-                console.log("handluj");
                 handleSend(values, actions);
-                // scroll into new section
-                //scrollIntoView();
               }}
             >
               {({ isSubmitting, setFieldValue, values }) => (
@@ -193,6 +181,7 @@ function Register() {
                           inputhelper=""
                           inputProps={{
                             style: {
+                              textTransform: "capitalize",
                               WebkitBoxShadow: "0 0 0 1000px white inset",
                               WebkitTextFillColor: "black",
                               fontSize: 20,
@@ -213,6 +202,7 @@ function Register() {
                           inputhelper=""
                           inputProps={{
                             style: {
+                              textTransform: "capitalize",
                               WebkitBoxShadow: "0 0 0 1000px white inset",
                               WebkitTextFillColor: "black",
                               fontSize: 20,
@@ -294,6 +284,7 @@ function Register() {
                           inputhelper=""
                           inputProps={{
                             style: {
+                              textTransform: "capitalize",
                               WebkitBoxShadow: "0 0 0 1000px white inset",
                               WebkitTextFillColor: "black",
                               fontSize: 20,

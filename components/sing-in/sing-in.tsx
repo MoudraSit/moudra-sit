@@ -32,12 +32,12 @@ function SignInSide() {
       password: data.get("password"),
     });
 
-    // succesfully singed in
+    // succesfully singed in, redirect to profile
     if (!result?.error) {
       console.log(result);
       router.replace("/profile");
 
-      // TODO: show incorrect password or email
+      // otherwise show error to user
     } else {
       console.log(result);
       setErrorMessage(result.error);
@@ -105,27 +105,6 @@ function SignInSide() {
                 InputProps={{ style: { fontSize: 20 } }}
                 InputLabelProps={{ style: { fontSize: 20 } }}
               />
-              {/* <TextFieldForm
-                id="year"
-                label="Rok narození"
-                name="year"
-                type="tel"
-                color="info"
-                variant="outlined"
-                inputhelper="Napište rok Vašeho narození"
-                inputProps={{
-                  maxLength: 4,
-                  style: {
-                    WebkitBoxShadow: "0 0 0 1000px white inset",
-                    WebkitTextFillColor: "black",
-                    fontSize: 20,
-                  },
-                }}
-                InputProps={{ style: { fontSize: 20 } }}
-                InputLabelProps={{ style: { fontSize: 20 } }}
-                sx={{ maxWidth: 230 }}
-                required
-              /> */}
               <TextField
                 margin="normal"
                 required
@@ -159,10 +138,6 @@ function SignInSide() {
                   ),
                 }}
               />
-              {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
               {errorMessage ? (
                 <>
                   <Typography

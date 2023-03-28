@@ -7,7 +7,7 @@ async function handler(
 ): Promise<void> {
   const { body } = request;
 
-  console.log("Executing /api/tabidoo-requirment handler.");
+  console.log("Executing /api/form/requirment handler.");
 
   if (request.method !== "POST") {
     response.status(400).send("Use POST method");
@@ -33,10 +33,11 @@ async function handler(
 
     // send response from Tabidoo API to the client-side
     response.status(200).send(responseAPI);
-
     return;
   } catch (error) {
-    response.status(500).send("Unexpected error");
+    response
+      .status(500)
+      .send("Unexpected error on /api/form/requirment handler.");
     return;
   }
 }
