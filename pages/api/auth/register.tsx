@@ -69,7 +69,7 @@ async function handler(
 
     // error handling
     if (!responseAPI) {
-      response.status(500).send("Unexpected error from server API call");
+      response.status(500).send("Failed to fetch data from server");
       return;
     }
 
@@ -78,7 +78,7 @@ async function handler(
 
     return;
   } catch (error) {
-    response.status(500).send("Unexpected error on /api/register");
+    response.status(500).send(`Unexpected error: ${error}`);
     return;
   }
 }

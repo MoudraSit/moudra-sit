@@ -22,8 +22,9 @@ async function handler(
   // send API call to Tabidoo
   try {
     const responseAPI = await fetch(
-      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=email(eq)" +
-        encodeURI(body.filter.email),
+      `https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=email(eq)${encodeURI(
+        body.filter.email
+      )}`,
       {
         method: "GET",
         headers: {
@@ -43,7 +44,7 @@ async function handler(
 
     // error handling
     if (!responseAPI) {
-      response.status(500).send("Unexpected error from server API call");
+      response.status(500).send("Failed to fetch data from server");
       return;
     }
 
@@ -51,7 +52,7 @@ async function handler(
     response.status(200).send(jsonObject);
     return;
   } catch (error) {
-    response.status(500).send("Unexpected error");
+    response.status(500).send(`Unexpected error: ${error}`);
     return;
   }
 }

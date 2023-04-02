@@ -68,6 +68,15 @@ function MainPage() {
                   Přejít na náš web
                 </Button>
               </Link>
+              <Link href="https://moudrasit.cz/form">
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  endIcon={<KeyboardArrowRightIcon />}
+                >
+                  Vyplnit formulář
+                </Button>
+              </Link>
             </Stack>
           </Container>
         </Box>
