@@ -120,16 +120,7 @@ function Chatbot() {
     prevMessage.current = message;
   }, [message]);
 
-  // send message by pressing the enter key
-  function handleKeypress(e: { keyCode: number }) {
-    if (e.keyCode === 13) {
-      handleSend();
-    }
-  }
-
   async function handleSend() {
-    // TODO: loading set
-
     setLoading(true);
 
     setInput("");
@@ -193,6 +184,34 @@ function Chatbot() {
 
   return (
     <>
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+      ></meta>
+      <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `
+   <df-messenger
+  intent="WELCOME"
+  chat-title="Chatbot"
+  agent-id="2ca6976c-d320-4c33-93ca-fd3eebe5af47"
+  language-code="cs"
+></df-messenger>
+<style>
+  df-messenger {
+   --df-messenger-bot-message: #e3d65b;
+   --df-messenger-button-titlebar-color: #e25b5b;
+   --df-messenger-chat-background-color: #f5f3ee;
+   --df-messenger-font-color: black;
+   --df-messenger-send-icon: #878fac;
+   --df-messenger-user-message: #ffffff;
+  }
+</style>
+`,
+        }}
+      />
+
       <ThemeProvider theme={appTheme}>
         <Box
           sx={{
