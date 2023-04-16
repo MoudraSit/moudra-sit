@@ -1,6 +1,8 @@
 import {
   Button,
+  FormControlLabel,
   Grid,
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -12,6 +14,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import { IValues } from "../vertical-stepper";
 import EditIcon from "@mui/icons-material/Edit";
+import CheckboxForm from "../model/checkbox-form";
 
 function scrollIntoSection(elemId: string) {
   const element = document.getElementById(elemId);
@@ -166,8 +169,38 @@ function Step5Form(props: { values: IValues }) {
         color="#3e3e3e"
         paragraph
       >
-        Pokud je vše správně, klikněte na tlačítko “Odeslat požadavek“
+        Pokud je vše správně, potvrďte prosím souhlas se zpracováním osobních
+        údajů a klikněte na tlačítko “Odeslat požadavek“.
       </Typography>
+      <Grid item xs={12}>
+        <FormControlLabel
+          sx={{ pt: 6 }}
+          control={
+            <CheckboxForm
+              id="agreement"
+              name="agreement"
+              required
+              sx={{
+                color: "info.main",
+                "&.Mui-checked": {
+                  color: "black",
+                },
+              }}
+            />
+          }
+          label={
+            <Link
+              color="#000000"
+              href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
+              rel="noopener"
+              target="_blank"
+              fontSize={24}
+            >
+              Souhlasím se zpracováním osobních údajů *
+            </Link>
+          }
+        />
+      </Grid>
     </>
   );
 }
