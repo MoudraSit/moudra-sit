@@ -1,4 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { callTabidoo } from "backend/tabidoo";
+import { ISeniorEntry } from "backend/tabidoo/types/Senior";
 
 // registration
 async function handler(
@@ -21,36 +23,15 @@ async function handler(
 
   // send API call to Tabidoo
   try {
-    const responseAPI = await fetch(
-      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=email(eq)" +
-        encodeURI(body.filter.email),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: process.env.TABIDOO_API_KEY as string,
-        },
-      }
-    );
-
-    // parse response body to json
-    const jsonObject = await responseAPI.json();
-
-    // check if response contains error send from Tabidoo API
-    if (JSON.stringify(jsonObject).includes("errors")) {
-      throw new Error(JSON.stringify(jsonObject));
-    }
-
-    // error handling
-    if (!responseAPI) {
-      response.status(500).send("Unexpected error from server API call");
-      return;
-    }
+    const seniors = await callTabidoo<ISeniorEntry[]>("/tables/senior/data", {
+      urlParams: { filter: `email(eq)${encodeURI(body.filter.email)}` },
+    });
 
     // send response from Tabidoo API to the client-side
-    response.status(200).send(jsonObject);
+    response.status(200).send(seniors[0]);
     return;
   } catch (error) {
+    console.log(error);
     response.status(500).send("Unexpected error");
     return;
   }
