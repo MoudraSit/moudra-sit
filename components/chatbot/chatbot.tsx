@@ -120,6 +120,27 @@ function Chatbot() {
     prevMessage.current = message;
   }, [message]);
 
+  // YOUR CODE (NOT RELATED TO DIALOGFLOW MESSENGER)
+
+  // if (typeof window !== "undefined") {
+  //   window.addEventListener("dfMessengerLoaded", function (event) {
+  //     const dfMessenger = document.querySelector("df-messenger");
+  //     const style = document.createElement("style");
+
+  //     const nonMobileMinWidth = 501; // Breakpoint where DF Messenger switches between mobile/non-mobile styles
+
+  //     style.textContent =
+  //       "@media screen and (min-width: " +
+  //       nonMobileMinWidth +
+  //       "px) { .chat-wrapper { max-height: 45% } }";
+  //     if (dfMessenger) {
+  //       dfMessenger.shadowRoot
+  //         ?.querySelector("df-messenger-chat")
+  //         ?.shadowRoot?.appendChild(style);
+  //     }
+  //   });
+  // }
+
   async function handleSend() {
     setLoading(true);
 
@@ -195,19 +216,39 @@ function Chatbot() {
    <df-messenger
   intent="WELCOME"
   chat-title="Chatbot"
+  ask-something="Zeptejte se"
   agent-id="2ca6976c-d320-4c33-93ca-fd3eebe5af47"
   language-code="cs"
+  chat-icon="https://moudrasit.cz/wp-content/uploads/2023/04/bot.png"
 ></df-messenger>
 <style>
+
   df-messenger {
-   --df-messenger-bot-message: #e3d65b;
-   --df-messenger-button-titlebar-color: #e25b5b;
+   --df-messenger-bot-message: #ffffff;
+   --df-messenger-button-titlebar-color: #ffffff;
+   --df-messenger-button-titlebar-font-color: #000000;
    --df-messenger-chat-background-color: #f5f3ee;
    --df-messenger-font-color: black;
    --df-messenger-send-icon: #878fac;
-   --df-messenger-user-message: #ffffff;
+   --df-messenger-user-message: #FF9800;
+   --df-messenger-chip-color: #FF9800;
+   --df-messenger-chip-border-color: #FF9800;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    right: 80px;
+    transform: translateX(10%) translateY(10%);
+    bottom: 0px;
+    z-index: 200;
+
+    div.chat-wrapper[opened="true"] { height: 440px; } 
+
   }
 </style>
+<script>
+
+
+</script>
 `,
         }}
       />
