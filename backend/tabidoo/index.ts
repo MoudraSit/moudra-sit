@@ -16,8 +16,6 @@ export async function callTabidoo<T = unknown>(
     fullUrl.searchParams.set(key, value);
   }
 
-  fullUrl.search = fullUrl.search.replace("?", "");
-
   const apiResponse = await fetch(fullUrl, {
     method,
     body,
@@ -32,8 +30,6 @@ export async function callTabidoo<T = unknown>(
   }
 
   const responseJson = (await apiResponse.json()) as { data: T };
-
-  console.log(fullUrl.toString());
 
   if (JSON.stringify(responseJson).includes("errors")) {
     throw new Error("Tabidoo API call failed" + JSON.stringify(responseJson));
