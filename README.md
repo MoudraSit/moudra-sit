@@ -17,9 +17,23 @@ Pro vytvoření a validaci formulářů využíváme [Formik](https://formik.org
 
 ## Instalace 
 
+K plnému zprovoznění API vrstvy aplikace je potřeba získat **Tabidoo API klíč** (kontaktujte nás na Slacku)
+
+1. **stáhnutí zdrojového kódu**
 ```
 git clone https://github.com/cesko-digital/moudra-sit.git
+```
+
+2. **instalace balíčků**
+```
 cd moudra-sit
 npm install
+```
+
+3. **nastavit systémové proměnné**
+   vytvořte v rootu aplikace soubor `.env`, zkopírujte do něj obsah suboru `.env.template` a vyplňte hodnoty
+
+4. **spuštění aplikace** 🚀
+```
 npm run dev
 ```
