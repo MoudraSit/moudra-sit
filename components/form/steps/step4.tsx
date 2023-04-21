@@ -168,35 +168,6 @@ function Step4Form(props: any) {
             InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            sx={{ pt: 6 }}
-            control={
-              <CheckboxForm
-                id="agreement"
-                name="agreement"
-                required
-                sx={{
-                  color: "info.main",
-                  "&.Mui-checked": {
-                    color: "black",
-                  },
-                }}
-              />
-            }
-            label={
-              <Link
-                color="#000000"
-                href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
-                rel="noopener"
-                target="_blank"
-                fontSize={24}
-              >
-                Souhlasím se zpracováním osobních údajů *
-              </Link>
-            }
-          />
-        </Grid>
       </Grid>
     </>
   );
