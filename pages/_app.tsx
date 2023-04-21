@@ -9,6 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+      language="cs"
       scriptProps={{
         async: false,
         defer: false,

@@ -41,7 +41,7 @@ function ResponsiveAppBar() {
   }
 
   return (
-    <AppBar position="sticky" color="primary">
+    <AppBar position="sticky" color="primary" sx={{ zIndex: 100 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link href="https://moudrasit.cz/">
