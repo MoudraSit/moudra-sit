@@ -205,27 +205,28 @@ function Chatbot() {
 
   return (
     <>
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-      ></meta>
-      <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+      {/* <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
       <div
         dangerouslySetInnerHTML={{
           __html: `
+          <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+      ></meta>
    <df-messenger
   intent="WELCOME"
   chat-title="Chatbot"
-  ask-something="Zeptejte se"
   agent-id="2ca6976c-d320-4c33-93ca-fd3eebe5af47"
   language-code="cs"
   chat-icon="https://moudrasit.cz/wp-content/uploads/2023/04/bot.png"
 ></df-messenger>
 <style>
 
+   df-messenger #messageList .message {font-size: 18px !important;}
+
   df-messenger {
    --df-messenger-bot-message: #ffffff;
-   --df-messenger-button-titlebar-color: #ffffff;
+   --df-messenger-button-titlebar-color: #FF9800;
    --df-messenger-button-titlebar-font-color: #000000;
    --df-messenger-chat-background-color: #f5f3ee;
    --df-messenger-font-color: black;
@@ -241,9 +242,9 @@ function Chatbot() {
     bottom: 0px;
     z-index: 200;
 
-    div.chat-wrapper[opened="true"] { height: 440px; } 
-
   }
+
+  div.chat-wrapper[opened="true"] { height: 465px; } 
 </style>
 <script>
 
@@ -251,7 +252,7 @@ function Chatbot() {
 </script>
 `,
         }}
-      />
+      /> */}
 
       <ThemeProvider theme={appTheme}>
         <Box
@@ -310,7 +311,7 @@ function Chatbot() {
                 color="#3e3e3e"
                 gutterBottom
               >
-                Zeptejte se našeho chatbota!
+                Zeptejte se našeho chatbota (jedná se o testovací verzi).
               </Typography>
               <Typography
                 sx={{ pb: 4, fontWeight: "bold" }}
@@ -319,7 +320,7 @@ function Chatbot() {
                 color="#3e3e3e"
                 paragraph
               >
-                S čím přesně potřebujete pomoct?
+                S čím potřebujete pomoct?
               </Typography>
 
               <Container maxWidth="sm">
