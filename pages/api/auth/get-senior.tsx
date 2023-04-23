@@ -22,9 +22,9 @@ async function handler(
   // send API call to Tabidoo
   try {
     const responseAPI = await fetch(
-      `https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=email(eq)${encodeURI(
-        body.filter.email
-      )}`,
+      `https://app.tabidoo.cloud/api/v2/apps/${
+        process.env.TABIDOO_APP_NAME
+      }/tables/senior/data?filter=email(eq)${encodeURI(body.filter.email)}`,
       {
         method: "GET",
         headers: {

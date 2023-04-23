@@ -15,12 +15,12 @@ export async function GetSeniorTabidooRequest(
 ): Promise<ISeniorResponse | null> {
   try {
     console.log(
-      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=telefon(eq)" +
+      `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/senior/data?filter=telefon(eq)` +
         body.filter.telefon
     );
 
     const response = await fetch(
-      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=telefon(eq)" +
+      `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/senior/data?filter=telefon(eq)` +
         body.filter.telefon,
       {
         method: "GET",
@@ -55,7 +55,7 @@ export async function SeniorTabidooRequest(
 ): Promise<ISeniorResponse | null> {
   try {
     const response = await fetch(
-      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data",
+      `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/senior/data`,
       {
         method: "POST",
         body: JSON.stringify(body),
@@ -90,7 +90,7 @@ export async function RequirmentTabidooRequest(
 ): Promise<ISeniorResponse | null> {
   try {
     const response = await fetch(
-      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/dotaz/data",
+      `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/dotaz/data`,
       {
         method: "POST",
         body: JSON.stringify(body),
@@ -121,7 +121,7 @@ export async function CategoryTabidooRequest(
 ): Promise<ISeniorResponse | null> {
   try {
     const response = await fetch(
-      "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/kategorie/data",
+      `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/kategorie/data`,
       {
         method: "POST",
         body: JSON.stringify(body),

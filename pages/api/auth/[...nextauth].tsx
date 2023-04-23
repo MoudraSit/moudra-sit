@@ -47,7 +47,7 @@ export default NextAuth({
         // email validation (does it exist in Tabidoo?)
         try {
           const responseAPI = await fetch(
-            "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data?filter=email(eq)" +
+            `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/senior/data?filter=email(eq)` +
               encodeURI(email),
             {
               method: "GET",
@@ -70,7 +70,7 @@ export default NextAuth({
             // password validation (does it exist in Tabidoo?)
             try {
               const responseSenior = await fetch(
-                "https://app.tabidoo.cloud/api/v2/apps/crmdemo-oidl/tables/senior/data/" +
+                "https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/senior/data/" +
                   jsonObject.data[0].id,
                 {
                   method: "GET",
