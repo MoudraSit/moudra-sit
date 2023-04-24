@@ -21,6 +21,14 @@ export interface ISeniorGetResponse {
   ];
 }
 
+interface ISeniorGetId {
+  id: string;
+}
+
+interface ISeniorGetNoId {
+  id: null;
+}
+
 export interface ISeniorGetNoResponse {
   data: [];
 }
@@ -44,18 +52,20 @@ async function ApiGetRequestSenior(values: IValues) {
       },
     });
 
-    // extract JSON from the http response
-    const jsonObject: ISeniorGetResponse | ISeniorGetNoResponse =
-      await response.json();
+    // DELETE ME
+    console.log(response);
 
-    //console.log(jsonObject);
+    // extract JSON from the http response
+    const seniorId: ISeniorGetId | ISeniorGetNoId = await response.json();
 
     // senior was found in the table, take first record
-    if (jsonObject.data[0]) {
+    if (seniorId.id) {
       //console.log(jsonObject.data[0].id);
 
-      // return id of senior object
-      return jsonObject.data[0].id;
+      // return id of senior
+      // DELETE ME
+      console.log(seniorId.id);
+      return seniorId.id;
     }
 
     // no record in the table

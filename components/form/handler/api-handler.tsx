@@ -1,3 +1,7 @@
+import {
+  ISeniorGetNoResponse,
+  ISeniorGetResponse,
+} from "../api/proxy-request-get-senior";
 import { ISeniorResponse } from "../api/proxy-request-senior";
 
 export interface IFilterSenior {
@@ -12,7 +16,7 @@ export interface IFilterSenior {
 export async function GetSeniorTabidooRequest(
   apiToken: string,
   body: IFilterSenior
-): Promise<ISeniorResponse | null> {
+): Promise<string | null> {
   try {
     console.log(
       `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/senior/data?filter=telefon(eq)` +
@@ -32,14 +36,19 @@ export async function GetSeniorTabidooRequest(
     );
 
     // parse response body to json
-    const jsonObject: ISeniorResponse = await response.json();
+    const seniorObject: ISeniorGetResponse | ISeniorGetNoResponse =
+      await response.json();
 
     // check if response contains error send from Tabidoo API
-    if (JSON.stringify(jsonObject).includes("errors")) {
-      throw new Error(JSON.stringify(jsonObject));
+    if (JSON.stringify(seniorObject).includes("errors")) {
+      throw new Error(JSON.stringify(seniorObject));
     }
 
-    return jsonObject;
+    if (seniorObject.data[0]) {
+      return seniorObject.data[0].id;
+    } else {
+      return null;
+    }
 
     // error handling
   } catch (error) {

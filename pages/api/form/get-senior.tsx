@@ -25,15 +25,18 @@ async function handler(
       body
     );
 
+    console.log(responseAPI);
+
     // error handling
     if (!responseAPI) {
-      response.status(500).send("Unexpected error from server API call");
+      response.status(200).send({ id: null });
+      return;
+    } else {
+      response.status(200).send({ id: responseAPI });
       return;
     }
 
     // send response from Tabidoo API to the client-side
-    response.status(200).send(responseAPI);
-    return;
   } catch (error) {
     response.status(500).send("Unexpected error on /api/form/get-senior");
     return;
