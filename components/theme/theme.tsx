@@ -18,6 +18,9 @@ export let appTheme = createTheme({
   },
   typography: {
     fontFamily: "Roboto",
+    allVariants: {
+      color: "#3E3E3E",
+    },
   },
 });
 
