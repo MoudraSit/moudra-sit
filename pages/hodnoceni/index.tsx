@@ -20,7 +20,7 @@ import * as yup from "yup";
 
 const ratingError = "Zvolte hodnocení 1-5";
 
-const validationSchema = yup.object().shape({
+export const validationSchema = yup.object().shape({
   spokojenostSenior: yup.number().integer().min(1).max(5).required(),
   problemVyresenHodnoceni: yup.number().integer().min(1).max(5).required(),
   poznamkaSeniorem: yup.string().optional().nullable(),

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { callTabidoo } from "../../../backend/tabidoo";
 
 export type VisitDTO = {
+  id: string;
   ratingAlreadyDone: boolean;
   assistant: {
     name: string;
@@ -22,6 +23,7 @@ async function handler(
 
   const resp = await callTabidoo<
     {
+      id: string;
       fields: {
         spokojenostSenior?: number;
         problemVyresenHodnoceni?: number;
@@ -46,6 +48,7 @@ async function handler(
   const assistent = resp[0].fields.iDUzivatele.fields;
 
   const data: VisitDTO = {
+    id: resp[0].id,
     ratingAlreadyDone,
     assistant: {
       name: `${assistent.jmeno} ${assistent.prijmeni}`,

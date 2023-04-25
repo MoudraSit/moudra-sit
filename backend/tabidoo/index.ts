@@ -1,8 +1,8 @@
-type TabidooRequestParams = Partial<
-  Pick<Request, "method" | "body"> & {
-    urlParams: Record<string, string>;
-  }
->;
+type TabidooRequestParams = {
+  method?: string;
+  body?: Record<string, unknown>;
+  urlParams?: Record<string, string>;
+};
 
 export async function callTabidoo<T = unknown>(
   url: string,
@@ -18,7 +18,7 @@ export async function callTabidoo<T = unknown>(
 
   const apiResponse = await fetch(fullUrl, {
     method,
-    body,
+    body: body ? JSON.stringify(body) : undefined,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.TABIDOO_API_KEY}`,
@@ -26,12 +26,14 @@ export async function callTabidoo<T = unknown>(
   });
 
   if (!apiResponse.ok) {
+    console.error(apiResponse);
     throw new Error("Tabidoo API call failed");
   }
 
   const responseJson = (await apiResponse.json()) as { data: T };
 
   if (JSON.stringify(responseJson).includes("errors")) {
+    console.error(responseJson);
     throw new Error("Tabidoo API call failed" + JSON.stringify(responseJson));
   }
 
