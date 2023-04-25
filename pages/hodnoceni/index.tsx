@@ -48,6 +48,7 @@ function RatingPage() {
     },
     validationSchema,
     validateOnBlur: false,
+    validateOnChange: false,
   });
 
   const { query } = useRouter();
@@ -166,6 +167,7 @@ function RatingPage() {
                       onClick={() =>
                         formik.setFieldValue("spokojenostSenior", item.value)
                       }
+                      type="button"
                     >
                       <Image
                         alt={item.image}
