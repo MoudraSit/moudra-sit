@@ -8,6 +8,7 @@ import {
   ThemeProvider,
   Typography,
   useMediaQuery,
+  FormHelperText,
 } from "@mui/material";
 import { appTheme } from "components/theme/theme";
 import { useFormik } from "formik";
@@ -15,6 +16,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { VisitDTO } from "../api/rating/getVisit";
 import { useRouter } from "next/router";
+import * as yup from "yup";
+
+const ratingError = "Zvolte hodnocení 1-5";
+
+const validationSchema = yup.object().shape({
+  spokojenostSenior: yup.number().integer().min(1).max(5).required(),
+  problemVyresenHodnoceni: yup.number().integer().min(1).max(5).required(),
+  poznamkaSeniorem: yup.string().optional().nullable(),
+});
 
 type FormValues = {
   spokojenostSenior: number | null;
@@ -36,6 +46,8 @@ function RatingPage() {
     onSubmit: (values) => {
       console.log(values);
     },
+    validationSchema,
+    validateOnBlur: false,
   });
 
   const { query } = useRouter();
@@ -165,6 +177,9 @@ function RatingPage() {
                   </Grid>
                 ))}
               </Grid>
+              {formik.errors.spokojenostSenior && (
+                <FormHelperText error>{ratingError}</FormHelperText>
+              )}
             </Box>
           </Grid>
           <Grid item xs={16} md={8}>
@@ -179,6 +194,10 @@ function RatingPage() {
                 name="problemVyresenHodnoceni"
                 value={formik.values.problemVyresenHodnoceni}
                 onChange={formik.handleChange}
+                error={!!formik.errors.problemVyresenHodnoceni}
+                helperText={
+                  formik.errors.problemVyresenHodnoceni ? ratingError : null
+                }
               />
             </Box>
           </Grid>
@@ -196,6 +215,8 @@ function RatingPage() {
               name="poznamkaSeniorem"
               value={formik.values.poznamkaSeniorem}
               onChange={formik.handleChange}
+              error={!!formik.errors.poznamkaSeniorem}
+              helperText={formik.errors.poznamkaSeniorem}
             />
           </Box>
         </Box>
