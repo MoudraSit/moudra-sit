@@ -64,6 +64,16 @@ function RatingPage() {
     );
   }
 
+  if (assistantDetails.ratingAlreadyDone) {
+    return (
+      <Container maxWidth="md">
+        <Typography variant="h6" component="h6" mt="2rem">
+          Hodnocení již bylo provedeno. Děkujeme.
+        </Typography>
+      </Container>
+    );
+  }
+
   return (
     <ThemeProvider theme={appTheme}>
       <Container maxWidth="md" component="form" onSubmit={formik.handleSubmit}>
