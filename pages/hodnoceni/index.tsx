@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   TextField,
@@ -11,6 +12,9 @@ import {
 import { appTheme } from "components/theme/theme";
 import { useFormik } from "formik";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { VisitDTO } from "../api/rating/getVisit";
+import { useRouter } from "next/router";
 
 type FormValues = {
   spokojenostSenior: number | null;
@@ -19,6 +23,9 @@ type FormValues = {
 };
 
 function RatingPage() {
+  const [assistantDetails, setAssistantDetails] = useState<VisitDTO | null>(
+    null
+  );
   const isSmallScreen = useMediaQuery(appTheme.breakpoints.down("sm"));
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -30,6 +37,32 @@ function RatingPage() {
       console.log(values);
     },
   });
+
+  const { query } = useRouter();
+
+  useEffect(() => {
+    if (!query.klic) {
+      return;
+    }
+
+    fetch(`/api/rating/getVisit?ratingKey=${query.klic}`).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          setAssistantDetails(data);
+        });
+      }
+    });
+  }, [query.klic]);
+
+  if (!assistantDetails) {
+    return (
+      <Container maxWidth="md">
+        <Grid container justifyContent="center" my="4rem">
+          <CircularProgress color="secondary" />
+        </Grid>
+      </Container>
+    );
+  }
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -58,7 +91,7 @@ function RatingPage() {
                 </Grid>
                 <Grid item>
                   <Typography variant="h4" component="h4" fontWeight="bold">
-                    Jan Novák
+                    {assistantDetails?.assistant.name}
                   </Typography>
                   <Typography
                     variant="h6"
@@ -66,7 +99,7 @@ function RatingPage() {
                     fontSize={16}
                     fontWeight="regular"
                   >
-                    Brno-Město
+                    {assistantDetails?.assistant.city}
                   </Typography>
                 </Grid>
               </Grid>
