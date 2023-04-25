@@ -2,11 +2,15 @@ import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
 import Profile from "components/profile/profile";
 import { getSession } from "next-auth/react";
+import Head from "next/head";
 
 function ProfilePage() {
   return (
     <>
       <Layout />
+      <Head>
+        <title>Profil | Moudrá Síť App</title>
+      </Head>
       <Profile />
       <Footer />
     </>
