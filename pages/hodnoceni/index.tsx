@@ -33,7 +33,7 @@ function RatingPage() {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <Container maxWidth="md">
+      <Container maxWidth="md" component="form" onSubmit={formik.handleSubmit}>
         <Box my="1rem">
           <Typography variant="h6" component="h6">
             Hodnocení digitálního asistenta
