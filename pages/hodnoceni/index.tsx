@@ -33,10 +33,10 @@ type FormValues = {
 };
 
 function RatingPage() {
-  const [assistantDetails, setAssistantDetails] = useState<VisitDTO | null>(
-    null
-  );
+  const [visitDetails, setVisitDetails] = useState<VisitDTO | null>(null);
   const isSmallScreen = useMediaQuery(appTheme.breakpoints.down("sm"));
+  const { push, query } = useRouter();
+
   const formik = useFormik<FormValues>({
     initialValues: {
       spokojenostSenior: null,
@@ -44,14 +44,23 @@ function RatingPage() {
       poznamkaSeniorem: null,
     },
     onSubmit: (values) => {
-      console.log(values);
+      fetch(`/api/rating/submit?visitId=${visitDetails?.id}`, {
+        method: "POST",
+        body: JSON.stringify({
+          spokojenostSenior: values.spokojenostSenior,
+          problemVyresenHodnoceni: values.problemVyresenHodnoceni,
+          poznamkaSeniorem: values.poznamkaSeniorem,
+        }),
+      }).then((response) => {
+        if (response.ok) {
+          push("/hodnoceni/diky");
+        }
+      });
     },
     validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
   });
-
-  const { query } = useRouter();
 
   useEffect(() => {
     if (!query.klic) {
@@ -61,13 +70,17 @@ function RatingPage() {
     fetch(`/api/rating/getVisit?ratingKey=${query.klic}`).then((response) => {
       if (response.ok) {
         response.json().then((data) => {
-          setAssistantDetails(data);
+          setVisitDetails(data);
         });
+      }
+
+      if (response.status === 404) {
+        push("/hodnoceni/404");
       }
     });
   }, [query.klic]);
 
-  if (!assistantDetails) {
+  if (!visitDetails) {
     return (
       <Container maxWidth="md">
         <Grid container justifyContent="center" my="4rem">
@@ -77,7 +90,7 @@ function RatingPage() {
     );
   }
 
-  if (assistantDetails.ratingAlreadyDone) {
+  if (visitDetails.ratingAlreadyDone) {
     return (
       <Container maxWidth="md">
         <Typography variant="h6" component="h6" mt="2rem">
@@ -114,7 +127,7 @@ function RatingPage() {
                 </Grid>
                 <Grid item>
                   <Typography variant="h4" component="h4" fontWeight="bold">
-                    {assistantDetails?.assistant.name}
+                    {visitDetails?.assistant.name}
                   </Typography>
                   <Typography
                     variant="h6"
@@ -122,7 +135,7 @@ function RatingPage() {
                     fontSize={16}
                     fontWeight="regular"
                   >
-                    {assistantDetails?.assistant.city}
+                    {visitDetails?.assistant.city}
                   </Typography>
                 </Grid>
               </Grid>
