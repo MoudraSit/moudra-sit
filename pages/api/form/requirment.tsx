@@ -1,4 +1,4 @@
-import { RequirmentTabidooRequest } from "components/form/handler/api-handler";
+import { ISeniorResponse } from "backend/interfaces/api";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(
@@ -20,10 +20,22 @@ async function handler(
   }
 
   try {
-    const responseAPI = await RequirmentTabidooRequest(
-      process.env.TABIDOO_API_KEY as string,
-      body
+    const responseAPI = await fetch(
+      `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/dotaz/data`,
+      {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: process.env.TABIDOO_API_KEY as string,
+        },
+      }
     );
+    const jsonObject: ISeniorResponse = await responseAPI.json();
+
+    if (JSON.stringify(jsonObject).includes("errors")) {
+      throw new Error(JSON.stringify(jsonObject));
+    }
 
     // error handling
     if (!responseAPI) {
@@ -32,7 +44,7 @@ async function handler(
     }
 
     // send response from Tabidoo API to the client-side
-    response.status(200).send(responseAPI);
+    response.status(200).send(jsonObject);
     return;
   } catch (error) {
     response

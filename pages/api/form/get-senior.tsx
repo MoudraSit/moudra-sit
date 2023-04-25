@@ -1,10 +1,13 @@
-import { GetSeniorTabidooRequest } from "components/form/handler/api-handler";
+import {
+  ISeniorGetNoResponse,
+  ISeniorGetResponse,
+} from "backend/interfaces/api";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(
   request: NextApiRequest,
   response: NextApiResponse
-): Promise<void> {
+): Promise<string | void> {
   const { body } = request;
 
   console.log("Executing /api/form/get-senior handler.");
@@ -20,23 +23,35 @@ async function handler(
   }
 
   try {
-    const responseAPI = await GetSeniorTabidooRequest(
-      process.env.TABIDOO_API_KEY as string,
-      body
+    const responseAPI = await fetch(
+      `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/senior/data?filter=telefon(eq)` +
+        body.filter.telefon,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: process.env.TABIDOO_API_KEY as string,
+        },
+      }
     );
 
-    console.log(responseAPI);
+    const seniorObject: ISeniorGetResponse | ISeniorGetNoResponse =
+      await responseAPI.json();
 
-    // error handling
-    if (!responseAPI) {
-      response.status(200).send({ id: null });
-      return;
-    } else {
-      response.status(200).send({ id: responseAPI });
-      return;
+    if (JSON.stringify(seniorObject).includes("errors")) {
+      throw new Error(JSON.stringify(seniorObject));
     }
 
-    // send response from Tabidoo API to the client-side
+    // send seniorId to the client-side
+    if (seniorObject.data[0]) {
+      response.status(200).send({ id: seniorObject.data[0].id });
+      return;
+
+      // there is no senior with phone number from input
+    } else {
+      response.status(200).send({ id: null });
+      return;
+    }
   } catch (error) {
     response.status(500).send("Unexpected error on /api/form/get-senior");
     return;

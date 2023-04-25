@@ -1,10 +1,13 @@
+import {
+  ISeniorGetNoResponse,
+  ISeniorGetResponse,
+} from "backend/interfaces/api";
 import { NextApiRequest, NextApiResponse } from "next";
 
-// registration
 async function handler(
   request: NextApiRequest,
   response: NextApiResponse
-): Promise<void> {
+): Promise<string | void> {
   const { body } = request;
 
   console.log("Executing /api/auth/get-senior handler.");
@@ -19,7 +22,6 @@ async function handler(
     return;
   }
 
-  // send API call to Tabidoo
   try {
     const responseAPI = await fetch(
       `https://app.tabidoo.cloud/api/v2/apps/${
@@ -35,11 +37,11 @@ async function handler(
     );
 
     // parse response body to json
-    const jsonObject = await responseAPI.json();
+    const seniorObject: ISeniorGetResponse | ISeniorGetNoResponse =
+      await responseAPI.json();
 
-    // check if response contains error send from Tabidoo API
-    if (JSON.stringify(jsonObject).includes("errors")) {
-      throw new Error(JSON.stringify(jsonObject));
+    if (JSON.stringify(seniorObject).includes("errors")) {
+      throw new Error(JSON.stringify(seniorObject));
     }
 
     // error handling
@@ -48,9 +50,16 @@ async function handler(
       return;
     }
 
-    // send response from Tabidoo API to the client-side
-    response.status(200).send(jsonObject);
-    return;
+    // send seniorId to the client-side
+    if (seniorObject.data[0]) {
+      response.status(200).send({ id: seniorObject.data[0].id });
+      return;
+
+      // there is no senior with this email
+    } else {
+      response.status(200).send({ id: null });
+      return;
+    }
   } catch (error) {
     response.status(500).send(`Unexpected error: ${error}`);
     return;

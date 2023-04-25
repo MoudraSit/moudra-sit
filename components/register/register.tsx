@@ -15,8 +15,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IRegisterFields } from "pages/api/auth/register";
-import ApiRegisterSenior from "./api/proxy-senior";
-import ApiGetRegisterSenior from "./api/proxy-get-senior";
+import ApiRegisterSenior from "./api/senior";
+import ApiGetRegisterSenior from "./api/get-senior";
 import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
 import { Form, Formik, FormikHelpers } from "formik";
 import { registerSchema } from "./schema/register-schema";
@@ -28,7 +28,7 @@ import logo from "public/images/logo/logo.svg";
 import {
   capitalizeFirstLetter,
   removeSpaces,
-} from "components/form/api/proxy-request-senior";
+} from "components/form/api/senior";
 import { scrollIntoView } from "components/form/vertical-stepper";
 
 export interface IValuesRegister {
@@ -102,9 +102,6 @@ function Register() {
 
       // check if user with the same email doesn't exists
       const isRegistred = await ApiGetRegisterSenior(formValues);
-
-      // TODO: napis, ze uzivatel existuje
-      console.log(isRegistred);
 
       if (!isRegistred) {
         const regi = await ApiRegisterSenior(formValues);

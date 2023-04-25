@@ -120,27 +120,6 @@ function Chatbot() {
     prevMessage.current = message;
   }, [message]);
 
-  // YOUR CODE (NOT RELATED TO DIALOGFLOW MESSENGER)
-
-  // if (typeof window !== "undefined") {
-  //   window.addEventListener("dfMessengerLoaded", function (event) {
-  //     const dfMessenger = document.querySelector("df-messenger");
-  //     const style = document.createElement("style");
-
-  //     const nonMobileMinWidth = 501; // Breakpoint where DF Messenger switches between mobile/non-mobile styles
-
-  //     style.textContent =
-  //       "@media screen and (min-width: " +
-  //       nonMobileMinWidth +
-  //       "px) { .chat-wrapper { max-height: 45% } }";
-  //     if (dfMessenger) {
-  //       dfMessenger.shadowRoot
-  //         ?.querySelector("df-messenger-chat")
-  //         ?.shadowRoot?.appendChild(style);
-  //     }
-  //   });
-  // }
-
   async function handleSend() {
     setLoading(true);
 
@@ -160,8 +139,6 @@ function Chatbot() {
 
     setMessage([...(prevMessage.current as IMessage[]), newMessage]);
 
-    console.log(input);
-
     try {
       const response = await fetch("/api/chatbot/chat-gpt", {
         method: "POST",
@@ -171,12 +148,7 @@ function Chatbot() {
         },
       });
 
-      console.log(response);
-
-      // TODO: parse response
       const jsonObject: any = await response.json();
-
-      console.log(jsonObject.text);
 
       const dtb = new Date();
 
@@ -205,55 +177,6 @@ function Chatbot() {
 
   return (
     <>
-      {/* <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-      <div
-        dangerouslySetInnerHTML={{
-          __html: `
-          <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-      ></meta>
-   <df-messenger
-  intent="WELCOME"
-  chat-title="Chatbot"
-  agent-id="2ca6976c-d320-4c33-93ca-fd3eebe5af47"
-  language-code="cs"
-  chat-icon="https://moudrasit.cz/wp-content/uploads/2023/04/bot.png"
-></df-messenger>
-<style>
-
-   df-messenger #messageList .message {font-size: 18px !important;}
-
-  df-messenger {
-   --df-messenger-bot-message: #ffffff;
-   --df-messenger-button-titlebar-color: #FF9800;
-   --df-messenger-button-titlebar-font-color: #000000;
-   --df-messenger-chat-background-color: #f5f3ee;
-   --df-messenger-font-color: black;
-   --df-messenger-send-icon: #878fac;
-   --df-messenger-user-message: #FF9800;
-   --df-messenger-chip-color: #FF9800;
-   --df-messenger-chip-border-color: #FF9800;
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    right: 80px;
-    transform: translateX(10%) translateY(10%);
-    bottom: 0px;
-    z-index: 200;
-
-  }
-
-  div.chat-wrapper[opened="true"] { height: 465px; } 
-</style>
-<script>
-
-
-</script>
-`,
-        }}
-      /> */}
-
       <ThemeProvider theme={appTheme}>
         <Box
           sx={{
@@ -273,25 +196,6 @@ function Chatbot() {
                 borderRadius: 2,
               }}
             >
-              {/* <Typography
-                sx={{ fontWeight: "bold", mt: 5, pt: 4 }}
-                variant="h2"
-                align="center"
-                color="#3e3e3e"
-                gutterBottom
-              >
-                Chatbot
-              </Typography> */}
-
-              {/* <Typography
-                sx={{ fontWeight: "bold" }}
-                variant="h5"
-                align="center"
-                color="#3e3e3e"
-                gutterBottom
-              >
-                Pokusí se Vám poskytnout nejlepší možnou odpověď na Váš dotaz.
-              </Typography> */}
               <Image
                 src={chatIcon}
                 alt={""}
@@ -325,7 +229,6 @@ function Chatbot() {
 
               <Container maxWidth="sm">
                 {message.map((msg: IMessage) => (
-                  //console.log(msg.key),
                   <SingleMessage
                     key={msg.key}
                     dateTime={msg.dateTime}
@@ -367,7 +270,6 @@ function Chatbot() {
                       InputLabelProps={{ style: { fontSize: 20 } }}
                       onChange={(ev) => setInput(ev.target.value)}
                       onKeyPress={(ev) => {
-                        //console.log(`Pressed keyCode ${ev.key}`);
                         if (ev.key === "Enter") {
                           handleSend();
                           ev.preventDefault();

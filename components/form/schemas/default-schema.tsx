@@ -101,10 +101,6 @@ export const defaultSchema = [
       )
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email("Napište správně Váš kontaktní e-mail"),
-    // agreement: yup
-    //   .boolean()
-    //   .required()
-    //   .oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),
   }),
   yup.object().shape({
     year: yup

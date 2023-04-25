@@ -1,9 +1,9 @@
 import { FormikHelpers } from "formik";
 import { IValues } from "./vertical-stepper";
-import ApiRequestSenior from "./api/proxy-request-senior";
-import ApiRequestRequirment from "./api/proxy-request-requirment";
-import ApiRequestCategory from "./api/proxy-request-category";
-import ApiGetRequestSenior from "./api/proxy-request-get-senior";
+import ApiRequestSenior from "./api/senior";
+import ApiRequestRequirment from "./api/requirment";
+import ApiRequestCategory from "./api/category";
+import ApiGetRequestSenior from "./api/get-senior";
 import ApiRecaptcha from "./api/recaptcha";
 
 const pcCategory = "Počítač";
