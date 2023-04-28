@@ -13,10 +13,11 @@ import {
 import { appTheme } from "components/theme/theme";
 import { useFormik } from "formik";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { VisitDTO } from "../api/rating/getVisit";
 import { useRouter } from "next/router";
 import * as yup from "yup";
+import axios, { AxiosError } from "axios";
+import { useMutation, useQuery } from "react-query";
 
 const ratingError = "Zvolte hodnocení 1-5";
 
@@ -33,9 +34,46 @@ type FormValues = {
 };
 
 function RatingPage() {
-  const [visitDetails, setVisitDetails] = useState<VisitDTO | null>(null);
   const isSmallScreen = useMediaQuery(appTheme.breakpoints.down("sm"));
   const { push, query } = useRouter();
+
+  const { mutate: submitRating } = useMutation({
+    mutationFn: (values: FormValues) =>
+      axios
+        .post<VisitDTO>(
+          `/api/rating/submit`,
+          {
+            spokojenostSenior: values.spokojenostSenior,
+            problemVyresenHodnoceni: values.problemVyresenHodnoceni,
+            poznamkaSeniorem: values.poznamkaSeniorem,
+          },
+          {
+            params: { visitId: visitDetails?.id },
+          }
+        )
+        .then((res) => res.data),
+    retry: false,
+    onSuccess: () => {
+      push("/hodnoceni/diky");
+    },
+  });
+
+  const { data: visitDetails, isLoading } = useQuery({
+    queryKey: ["hodnoceni/senior", query.klic],
+    enabled: !!query.klic,
+    queryFn: () =>
+      axios
+        .get<VisitDTO>(`/api/rating/getVisit`, {
+          params: { ratingKey: query.klic },
+        })
+        .then((res) => res.data),
+    retry: false,
+    onError: (err: AxiosError) => {
+      if (err.response?.status === 404) {
+        push("/hodnoceni/404");
+      }
+    },
+  });
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -43,44 +81,13 @@ function RatingPage() {
       problemVyresenHodnoceni: null,
       poznamkaSeniorem: null,
     },
-    onSubmit: (values) => {
-      fetch(`/api/rating/submit?visitId=${visitDetails?.id}`, {
-        method: "POST",
-        body: JSON.stringify({
-          spokojenostSenior: values.spokojenostSenior,
-          problemVyresenHodnoceni: values.problemVyresenHodnoceni,
-          poznamkaSeniorem: values.poznamkaSeniorem,
-        }),
-      }).then((response) => {
-        if (response.ok) {
-          push("/hodnoceni/diky");
-        }
-      });
-    },
+    onSubmit: (values) => submitRating(values),
     validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
   });
 
-  useEffect(() => {
-    if (!query.klic) {
-      return;
-    }
-
-    fetch(`/api/rating/getVisit?ratingKey=${query.klic}`).then((response) => {
-      if (response.ok) {
-        response.json().then((data) => {
-          setVisitDetails(data);
-        });
-      }
-
-      if (response.status === 404) {
-        push("/hodnoceni/404");
-      }
-    });
-  }, [query.klic]);
-
-  if (!visitDetails) {
+  if (isLoading || !visitDetails) {
     return (
       <Container maxWidth="md">
         <Grid container justifyContent="center" my="4rem">

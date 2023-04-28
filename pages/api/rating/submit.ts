@@ -55,7 +55,7 @@ async function handler(
     return;
   }
 
-  const resp = await callTabidoo(`/tables/navsteva/data/${visitId}`, {
+  await callTabidoo(`/tables/navsteva/data/${visitId}`, {
     method: "PATCH",
     body: {
       fields: {
@@ -66,7 +66,7 @@ async function handler(
     },
   });
 
-  return response.json(resp);
+  return response.json({});
 }
 
 export default handler;
