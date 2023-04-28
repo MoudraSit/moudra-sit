@@ -39,6 +39,9 @@ async function submitHelper(
   // POST method to create new senior record
   if (!idSenior) {
     idSenior = await ApiRequestSenior(values);
+
+    // wait to generate new Google Meet link on Make.com
+    await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
   // POST method to create new requirment record
