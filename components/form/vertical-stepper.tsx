@@ -224,6 +224,9 @@ export default function VerticalLinearStepper() {
                             {
                               fill: "#028790", // circle's number (DISABLED)
                             },
+                          "& .MuiStepLabel-root .Mui-disabled": {
+                            color: "white", // text color (DISABLED)
+                          },
                           "& .MuiStepLabel-root .Mui-active": {
                             color: "white", // circle color (ACTIVE)
                           },
