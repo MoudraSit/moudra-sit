@@ -4,6 +4,9 @@ import { ThemeProvider } from "@mui/material";
 import { appTheme } from "components/theme/theme";
 import { SessionProvider } from "next-auth/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -17,11 +20,13 @@ export default function App({ Component, pageProps }: AppProps) {
         nonce: undefined,
       }}
     >
-      <SessionProvider session={pageProps.session}>
-        <ThemeProvider theme={appTheme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <SessionProvider session={pageProps.session}>
+          <ThemeProvider theme={appTheme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </SessionProvider>
+      </QueryClientProvider>
     </GoogleReCaptchaProvider>
   );
 }
