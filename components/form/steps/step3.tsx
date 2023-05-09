@@ -12,10 +12,9 @@ function Step3Form({ uploadedImage }: ImageType) {
       <Grid item xs={12}>
         <Typography
           sx={{ pb: 4, fontWeight: "bold" }}
-          variant="h5"
+          variant="h2"
           align="left"
           color="#3e3e3e"
-          paragraph
         >
           Detailně vysvětlete, s čím přesně potřebujete pomoct.
         </Typography>
@@ -52,16 +51,14 @@ function Step3Form({ uploadedImage }: ImageType) {
         </Grid>
         <Grid item xs={12}>
           <Typography
-            variant="h5"
+            variant="h2"
             align="left"
             color="#3e3e3e"
-            paragraph
             sx={{ fontWeight: "bold", pt: 12, pb: 4 }}
           >
             Název problému (max. 6 slov, např. “nefunguje wifi”)
           </Typography>
         </Grid>
-
         <Grid item xs={12}>
           <TextFieldForm
             id="requirmentName"
@@ -87,10 +84,10 @@ function Step3Form({ uploadedImage }: ImageType) {
         {/* <Grid item xs={12}>
           <Typography
             sx={{ pt: 6, fontWeight: "bold" }}
-            variant="h5"
+            variant="h2"
             align="left"
             color="#3e3e3e"
-            paragraph
+             
           >
             Váš vzkaz můžete napsat nebo nahrát hlasem (nepovinné)
           </Typography>
@@ -101,10 +98,9 @@ function Step3Form({ uploadedImage }: ImageType) {
         <Grid item xs={12}>
           <Typography
             sx={{ pt: 6, fontWeight: "bold" }}
-            variant="h5"
+            variant="h2"
             align="left"
             color="#3e3e3e"
-            paragraph
           >
             Máte fotografii, kterou nám k tomu můžete poslat? (nepovinné)
           </Typography>

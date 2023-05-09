@@ -78,7 +78,10 @@ function SignInSide() {
               alignItems: "center",
             }}
           >
-            <Image src={logo} alt={""} height="30" />
+            <Image src={logo} alt={"Moudrá Síť logo"} height="30" />
+            <Typography variant="h1" sx={{ mt: 3, mb: 3, fontWeight: "bold" }}>
+              Přihlašování do účtu
+            </Typography>
             <Box
               component="form"
               noValidate
@@ -149,7 +152,6 @@ function SignInSide() {
                     variant="h5"
                     align="center"
                     color="primary.main"
-                    paragraph
                   >
                     {errorMessage}
                   </Typography>
@@ -162,7 +164,7 @@ function SignInSide() {
                 sx={{
                   mt: 3,
                   mb: 3,
-                  bgcolor: "#e25b5b !important",
+                  bgcolor: "#D3215D !important",
                   color: "white",
                 }}
               >

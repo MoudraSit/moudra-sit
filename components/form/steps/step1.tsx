@@ -6,13 +6,7 @@ function Step1Form() {
   return (
     <>
       <div id="section1" />
-      <Typography
-        variant="h5"
-        align="left"
-        color="#3e3e3e"
-        paragraph
-        fontWeight="bold"
-      >
+      <Typography variant="h2" align="left" color="#3e3e3e" fontWeight="bold">
         Službu poskytujeme zdarma seniorům starším 60 let, proto potřebujeme
         ověřit Váš věk.
       </Typography>

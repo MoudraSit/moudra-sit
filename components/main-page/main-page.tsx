@@ -31,12 +31,12 @@ function MainPage() {
               }}
             >
               <Link href="https://moudrasit.cz/">
-                <Image src={logo} alt={""} height="50" />
+                <Image src={logo} alt={"Moudrá Síť logo"} height="50" />
               </Link>
             </Box>
             <Typography
               sx={{ fontWeight: "bold", mt: 5 }}
-              variant="h2"
+              variant="h1"
               align="center"
               color="#3e3e3e"
               gutterBottom
@@ -45,7 +45,7 @@ function MainPage() {
             </Typography>
             <Typography
               sx={{ fontWeight: "bold" }}
-              variant="h2"
+              variant="h1"
               align="center"
               color="#3e3e3e"
               gutterBottom

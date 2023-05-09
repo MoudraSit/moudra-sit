@@ -247,7 +247,7 @@ function RatingPage() {
             type="submit"
             variant="contained"
             sx={{
-              bgcolor: "#e25b5b !important",
+              bgcolor: "#D3215D !important",
               color: "white",
             }}
           >

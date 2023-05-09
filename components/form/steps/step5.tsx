@@ -24,8 +24,8 @@ function scrollIntoSection(elemId: string) {
   }
 }
 
-function createData(name: string, calories: string, edit: string, id: string) {
-  return { name, calories, edit, id };
+function createData(name: string, value: string, edit: string, id: string) {
+  return { name, value, edit, id };
 }
 
 function Step5Form(props: { values: IValues }) {
@@ -77,11 +77,10 @@ function Step5Form(props: { values: IValues }) {
     <>
       <div id="section5" />
       <Typography
-        variant="h5"
+        variant="h2"
         align="left"
         color="#3e3e3e"
         sx={{ pb: 4, fontWeight: "bold" }}
-        paragraph
       >
         Nyní prosím zkontrolujte správnost vyplněných údajů a níže klikněte na
         tlačítko “Odeslat požadavek“.
@@ -96,7 +95,7 @@ function Step5Form(props: { values: IValues }) {
       >
         <TableContainer>
           <Grid container>
-            <Table aria-label="simple table">
+            <Table aria-label="shrnuti-dotazu">
               <TableBody>
                 {rows.map((row) => (
                   <TableRow
@@ -130,7 +129,7 @@ function Step5Form(props: { values: IValues }) {
                         scrollIntoSection(row.id);
                       }}
                     >
-                      {row.calories}
+                      {row.value}
                     </TableCell>
 
                     <TableCell
@@ -147,7 +146,7 @@ function Step5Form(props: { values: IValues }) {
                         sx={{
                           mt: 1,
                           mr: 1,
-                          bgcolor: "#e25b5b",
+                          bgcolor: "#D3215D",
                           color: "white",
                         }}
                         startIcon={<EditIcon />}
@@ -164,10 +163,9 @@ function Step5Form(props: { values: IValues }) {
       </Box>
       <Typography
         sx={{ pt: 4, fontWeight: "bold" }}
-        variant="h5"
+        variant="h2"
         align="left"
         color="#3e3e3e"
-        paragraph
       >
         Pokud je vše správně, potvrďte prosím souhlas se zpracováním osobních
         údajů a klikněte na tlačítko “Odeslat požadavek“.

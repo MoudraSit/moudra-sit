@@ -7,7 +7,7 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "../theme/theme";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import Step1Form from "./steps/step1";
 import Step2Form from "./steps/step2";
 import Step3Form from "./steps/step3";
@@ -191,7 +191,7 @@ export default function VerticalLinearStepper() {
       <ThemeProvider theme={appTheme}>
         <Box
           sx={{
-            bgcolor: "#028790",
+            bgcolor: "#037f87",
             pt: 8,
             pb: 6,
           }}
@@ -209,6 +209,14 @@ export default function VerticalLinearStepper() {
             {({ isSubmitting, setFieldValue, values, errors }) => (
               <Form autoComplete="on">
                 <Container maxWidth="xl">
+                  <Typography
+                    variant="h1"
+                    align="left"
+                    color="primary"
+                    fontWeight="bold"
+                  >
+                    Kontaktní formulář
+                  </Typography>
                   <Stepper activeStep={activeStep} orientation="vertical">
                     {steps.map((step, index) => (
                       <Step
@@ -235,7 +243,7 @@ export default function VerticalLinearStepper() {
                               fill: "#028790", // circle's text (ACTIVE)
                             },
                           "& .MuiStepLabel-root .Mui-completed": {
-                            color: "#f5f3ee", // circle color (COMPLETED)
+                            color: "white", // circle color (COMPLETED)
                           },
                           "& .MuiSvgIcon-root": {
                             fontSize: 25,
@@ -303,7 +311,7 @@ export default function VerticalLinearStepper() {
                                         sx={{
                                           mt: 1,
                                           mr: 1,
-                                          bgcolor: "#e25b5b !important",
+                                          bgcolor: "#D3215D !important",
                                           color: "white",
                                         }}
                                       >
@@ -318,7 +326,7 @@ export default function VerticalLinearStepper() {
                                       sx={{
                                         mt: 1,
                                         mr: 1,
-                                        bgcolor: "#e25b5b !important",
+                                        bgcolor: "#D3215D !important",
                                         color: "white",
                                       }}
                                     >

@@ -10,10 +10,9 @@ function Step4Form(props: any) {
       <div id="section4" />
       <Grid item xs={12}>
         <Typography
-          variant="h5"
+          variant="h2"
           align="left"
           color="#3e3e3e"
-          paragraph
           sx={{ fontWeight: "bold", pb: 4 }}
         >
           Vyplňte prosím Vaše kontaktní údaje, aby Vás mohl kontaktovat náš

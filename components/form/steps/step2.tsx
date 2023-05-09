@@ -1,9 +1,11 @@
 import {
   Box,
+  Button,
   ButtonBase,
   Card,
   CardContent,
   Grid,
+  InputLabel,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
@@ -46,10 +48,9 @@ function Step2Form(props: any) {
       <div id="section2" />
       <Typography
         sx={{ pb: 6, fontWeight: "bold" }}
-        variant="h5"
+        variant="h2"
         align="left"
         color="#3e3e3e"
-        paragraph
       >
         S čím potřebujete pomoci? Můžete vybrat více možností.
       </Typography>
@@ -62,11 +63,20 @@ function Step2Form(props: any) {
               flexDirection: "column",
               justifyContent: "space-between",
               border: 2,
-              backgroundColor: checkedPhone ? "#e25b5b" : "white",
+              backgroundColor: checkedPhone ? "#D3215D !important" : "white",
             }}
           >
-            <ButtonBase
-              sx={{ marginTop: "auto" }}
+            <Button
+              sx={{
+                marginTop: "auto",
+                p: 0,
+                textTransform: "none",
+                "&.MuiButtonBase-root:hover": {
+                  bgcolor: "transparent",
+                },
+                backgroundColor: checkedPhone ? "#D3215D !important" : "white",
+              }}
+              variant="contained"
               onClick={() => {
                 setCheckedPhone(!checkedPhone);
                 props.setFieldValue("phoneCheckbox", !checkedPhone);
@@ -75,10 +85,12 @@ function Step2Form(props: any) {
               <CardContent>
                 <Typography
                   gutterBottom
-                  variant="h5"
-                  component="h2"
+                  variant="h3"
                   align="center"
-                  sx={{ color: checkedPhone ? "white" : "black" }}
+                  sx={{
+                    color: checkedPhone ? "white" : "black",
+                    fontWeight: "bold",
+                  }}
                 >
                   Mobilní telefon
                 </Typography>
@@ -96,7 +108,7 @@ function Step2Form(props: any) {
                   />
                 </Box>
               </CardContent>
-            </ButtonBase>
+            </Button>
             <CheckboxForm
               id="phoneCheckbox"
               name="phoneCheckbox"
@@ -117,11 +129,20 @@ function Step2Form(props: any) {
               flexDirection: "column",
               justifyContent: "space-between",
               border: 2,
-              backgroundColor: checkedPc ? "#e25b5b" : "white",
+              backgroundColor: checkedPc ? "#D3215D !important" : "white",
             }}
           >
-            <ButtonBase
-              sx={{ marginTop: "auto" }}
+            <Button
+              sx={{
+                marginTop: "auto",
+                p: 0,
+                textTransform: "none",
+                "&.MuiButtonBase-root:hover": {
+                  bgcolor: "transparent",
+                },
+                backgroundColor: checkedPc ? "#D3215D !important" : "white",
+              }}
+              variant="contained"
               onClick={() => {
                 setCheckedPc(!checkedPc);
                 props.setFieldValue("pcCheckbox", !checkedPc);
@@ -130,10 +151,12 @@ function Step2Form(props: any) {
               <CardContent>
                 <Typography
                   gutterBottom
-                  variant="h5"
-                  component="h2"
+                  variant="h3"
                   align="center"
-                  sx={{ color: checkedPc ? "white" : "black" }}
+                  sx={{
+                    color: checkedPc ? "white" : "black",
+                    fontWeight: "bold",
+                  }}
                 >
                   Počítač
                 </Typography>
@@ -151,7 +174,7 @@ function Step2Form(props: any) {
                   />
                 </Box>
               </CardContent>
-            </ButtonBase>
+            </Button>
             <CheckboxForm
               id="pcCheckbox"
               name="pcCheckbox"
@@ -171,11 +194,22 @@ function Step2Form(props: any) {
               flexDirection: "column",
               justifyContent: "space-between",
               border: 2,
-              backgroundColor: checkedPrinter ? "#e25b5b" : "white",
+              backgroundColor: checkedPrinter ? "#D3215D !important" : "white",
             }}
           >
-            <ButtonBase
-              sx={{ marginTop: "auto" }}
+            <Button
+              sx={{
+                marginTop: "auto",
+                p: 0,
+                textTransform: "none",
+                "&.MuiButtonBase-root:hover": {
+                  bgcolor: "transparent",
+                },
+                backgroundColor: checkedPrinter
+                  ? "#D3215D !important"
+                  : "white",
+              }}
+              variant="contained"
               onClick={() => {
                 setCheckedPrinter(!checkedPrinter);
                 props.setFieldValue("printerCheckbox", !checkedPrinter);
@@ -184,10 +218,12 @@ function Step2Form(props: any) {
               <CardContent>
                 <Typography
                   gutterBottom
-                  variant="h5"
-                  component="h2"
+                  variant="h3"
                   align="center"
-                  sx={{ color: checkedPrinter ? "white" : "black" }}
+                  sx={{
+                    color: checkedPrinter ? "white" : "black",
+                    fontWeight: "bold",
+                  }}
                 >
                   Tiskárna
                 </Typography>
@@ -205,7 +241,7 @@ function Step2Form(props: any) {
                   />
                 </Box>
               </CardContent>
-            </ButtonBase>
+            </Button>
             <CheckboxForm
               id="printerCheckbox"
               name="printerCheckbox"
@@ -225,11 +261,20 @@ function Step2Form(props: any) {
               flexDirection: "column",
               justifyContent: "space-between",
               border: 2,
-              backgroundColor: checkedOther ? "#e25b5b" : "white",
+              backgroundColor: checkedOther ? "#D3215D !important" : "white",
             }}
           >
-            <ButtonBase
-              sx={{ marginTop: "auto" }}
+            <Button
+              sx={{
+                marginTop: "auto",
+                p: 0,
+                textTransform: "none",
+                "&.MuiButtonBase-root:hover": {
+                  bgcolor: "transparent",
+                },
+                backgroundColor: checkedOther ? "#D3215D !important" : "white",
+              }}
+              variant="contained"
               onClick={() => {
                 setCheckedOther(!checkedOther);
                 props.setFieldValue("otherCheckbox", !checkedOther);
@@ -238,10 +283,12 @@ function Step2Form(props: any) {
               <CardContent>
                 <Typography
                   gutterBottom
-                  variant="h5"
-                  component="h2"
+                  variant="h3"
                   align="center"
-                  sx={{ color: checkedOther ? "white" : "black" }}
+                  sx={{
+                    color: checkedOther ? "white" : "black",
+                    fontWeight: "bold",
+                  }}
                 >
                   Jiné IT zařízení
                 </Typography>
@@ -259,7 +306,7 @@ function Step2Form(props: any) {
                   />
                 </Box>
               </CardContent>
-            </ButtonBase>
+            </Button>
             <CheckboxForm
               id="otherCheckbox"
               name="otherCheckbox"

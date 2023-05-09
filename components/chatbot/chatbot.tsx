@@ -186,9 +186,18 @@ function Chatbot() {
           }}
         >
           <Container maxWidth="md">
+            <Typography
+              variant="h1"
+              align="left"
+              color="primary"
+              fontWeight="bold"
+            >
+              Chatbot
+            </Typography>
             <Box
               sx={{
                 bgcolor: "#f5f3ee",
+                mt: 4,
                 pt: 10,
                 pb: 6,
                 pl: 2,
@@ -202,7 +211,7 @@ function Chatbot() {
                 height="170"
                 style={{
                   margin: "10px",
-                  color: "#e25b5b",
+                  color: "#D3215D",
                   display: "block",
                   marginLeft: "auto",
                   marginRight: "auto",
@@ -210,7 +219,7 @@ function Chatbot() {
               />
               <Typography
                 sx={{ fontWeight: "bold", mt: 5 }}
-                variant="h5"
+                variant="h2"
                 align="center"
                 color="#3e3e3e"
                 gutterBottom
@@ -219,10 +228,9 @@ function Chatbot() {
               </Typography>
               <Typography
                 sx={{ pb: 4, fontWeight: "bold" }}
-                variant="h5"
+                variant="h2"
                 align="center"
                 color="#3e3e3e"
-                paragraph
               >
                 S čím potřebujete pomoct?
               </Typography>
@@ -245,9 +253,9 @@ function Chatbot() {
                 >
                   <Grid item xs={12} sm={10}>
                     <TextField
-                      id="description"
-                      label="Dotaz"
-                      name="description"
+                      id="question"
+                      label="Zde zadejte dotaz"
+                      name="question"
                       variant="outlined"
                       color="info"
                       multiline
@@ -285,7 +293,7 @@ function Chatbot() {
                       sx={{
                         mt: { xs: 2, sm: 0 },
                         ml: { xs: 0, sm: 1 },
-                        bgcolor: "#e25b5b !important",
+                        bgcolor: "#D3215D !important",
                         color: "white",
                       }}
                       onClick={() => handleSend()}

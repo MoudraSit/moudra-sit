@@ -8,7 +8,7 @@ function StepSuccess() {
         <Box
           sx={{
             bgcolor: "#f5f3ee",
-            pt: 8,
+            pt: 6,
             pb: 6,
             borderRadius: 2,
             textAlign: "center",
@@ -17,14 +17,19 @@ function StepSuccess() {
           <Container maxWidth="md">
             <Typography
               sx={{ fontWeight: "bold" }}
-              variant="h2"
+              variant="h1"
               align="center"
               color="#3e3e3e"
               gutterBottom
             >
               Děkujeme
             </Typography>
-            <Typography variant="h5" align="center" color="#3e3e3e" paragraph>
+            <Typography
+              variant="h2"
+              align="center"
+              color="#3e3e3e"
+              sx={{ fontWeight: "bold", pb: 2 }}
+            >
               Váš dotaz jsme přijali ke zpracování. Do 5 dnů Vás bude
               telefonicky kontaktovat digitální asistent, který Vám pomůže
               situaci vyřešit. Společně se domluvíte, zda bude potřeba osobní
@@ -39,7 +44,7 @@ function StepSuccess() {
               sx={{
                 mt: 1,
                 mr: 1,
-                bgcolor: "#e25b5b",
+                bgcolor: "#D3215D !important",
                 color: "secondary.contrastText",
               }}
             >

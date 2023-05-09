@@ -21,7 +21,7 @@ function InfoLine() {
     <Box
       display={hideInfo}
       sx={{
-        bgcolor: "#e25b5b",
+        bgcolor: "#D3215D",
         padding: 1,
         alignItems: "center",
         justifyContent: "center",
@@ -37,10 +37,12 @@ function InfoLine() {
           alignItems: "right",
         }}
         type="button"
-        variant="text"
+        variant="outlined"
         startIcon={<CloseIcon />}
         onClick={() => setHideInfo("none")}
-      ></Button>
+      >
+        Zavřít
+      </Button>
     </Box>
   );
 }

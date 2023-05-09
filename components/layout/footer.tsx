@@ -6,7 +6,7 @@ function Footer() {
     <>
       <Box sx={{ bgcolor: "black", p: 6 }} component="footer">
         <Typography
-          variant="h6"
+          variant="h3"
           align="center"
           gutterBottom
           color="secondary.contrastText"

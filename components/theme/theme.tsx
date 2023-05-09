@@ -8,10 +8,10 @@ export let appTheme = createTheme({
     },
     secondary: {
       light: "#5884b9",
-      main: "#028790",
+      main: "#037f87",
       contrastText: "#ffffff",
     },
-    warning: { main: "#D20000" },
+    warning: { main: "#D3215D" },
     info: { main: "#000000" },
     contrastThreshold: 3,
     tonalOffset: 0.2,
@@ -26,28 +26,28 @@ export let appTheme = createTheme({
 
 appTheme = createTheme(appTheme, {
   typography: {
-    h2: {
+    h1: {
       fontSize: "45px",
       [appTheme.breakpoints.down("sm")]: {
         fontSize: "35px",
       },
     },
-    h4: {
-      fontSize: "32px",
-      [appTheme.breakpoints.down("sm")]: {
-        fontSize: "26px",
-      },
-    },
-    h5: {
+    h2: {
       fontSize: "24px",
       [appTheme.breakpoints.down("sm")]: {
         fontSize: "18px",
       },
     },
-    h6: {
+    h3: {
       fontSize: "20px",
       [appTheme.breakpoints.down("sm")]: {
         fontSize: "14px",
+      },
+    },
+    h4: {
+      fontSize: "18px",
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "12px",
       },
     },
   },

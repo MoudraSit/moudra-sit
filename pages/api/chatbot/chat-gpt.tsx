@@ -40,14 +40,13 @@ async function handler(
     { role: "user", content: body.prompt },
   ]);
 
-  // send API call to Tabidoo
   try {
     const responseAPI = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
-          content: `Jsi asistent pro pomoc seniorů s digitálními technologiemi`,
+          content: `Jsi asistent pro pomoc seniorům s digitálními technologiemi`,
         },
         ...body.message.map((msg: IMessage) => ({
           role: msg.author == Author.User ? "user" : "assistant",
@@ -56,29 +55,11 @@ async function handler(
         { role: "user", content: body.prompt },
       ],
       max_tokens: 1024,
-      // frequency_penalty: 2,
     });
-
-    // const responseAPI = await openai.createCompletion({
-    //   model: "text-davinci-003",
-    //   prompt: body.prompt,
-    //   temperature: 0,
-    //   max_tokens: 324,
-    //   frequency_penalty: 2,
-    // });
-
-    // parse response body to json
-
-    //console.log(responseAPI);
 
     const gptResponse =
       (await responseAPI.data.choices[0].message?.content.trim()) ||
       "Omlouváme se, došlo k chybě.";
-
-    // text-davinci-003
-    // const gptResponse =
-    //   (await responseAPI.data.choices[0].text?.trim()) ||
-    //   "Omlouváme se, došlo k chybě.";
 
     console.log(gptResponse);
 

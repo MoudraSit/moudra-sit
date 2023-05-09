@@ -45,7 +45,7 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link href="https://moudrasit.cz/">
-            <Image src={logo} alt={""} height="30" />
+            <Image src={logo} alt={"Moudrá Síť logo"} height="30" />
           </Link>
           <Box
             sx={{
@@ -82,7 +82,7 @@ function ResponsiveAppBar() {
               <Link href="/profile">
                 <Button
                   variant="contained"
-                  color="warning"
+                  color="secondary"
                   sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
                 >
                   PROFIL
@@ -93,7 +93,7 @@ function ResponsiveAppBar() {
               <Button
                 variant="outlined"
                 onClick={logoutHandler}
-                color="secondary"
+                color="warning"
                 sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
               >
                 ODHLÁSIT SE

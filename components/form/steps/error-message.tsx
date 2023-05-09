@@ -13,7 +13,6 @@ function ErrorMessageComponent() {
         variant="h5"
         align="center"
         color="primary.main"
-        paragraph
       >
         Omlouváme se, ale došlo k chybě. Zkontrolujte prosím internetové
         připojení a zkuste stisknout na Odeslat znovu. Pokud problémy nadále

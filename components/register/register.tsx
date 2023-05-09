@@ -152,9 +152,9 @@ function Register() {
               alignItems: "center",
             }}
           >
-            <Image src={logo} alt={""} height="30" />
-            <Typography variant="h5" sx={{ mt: 3, mb: 3 }}>
-              Registrace nového uživatele
+            <Image src={logo} alt={"Moudrá Síť logo"} height="30" />
+            <Typography variant="h1" sx={{ mt: 3, mb: 3, fontWeight: "bold" }}>
+              Registrace uživatele
             </Typography>
             <Formik
               initialValues={initialValues}
@@ -479,7 +479,7 @@ function Register() {
                       sx={{
                         mt: 3,
                         mb: 3,
-                        bgcolor: "#e25b5b !important",
+                        bgcolor: "#D3215D !important",
                         color: "white",
                       }}
                     >
@@ -496,7 +496,6 @@ function Register() {
                           variant="h5"
                           align="center"
                           color="primary.main"
-                          paragraph
                         >
                           Omlouváme se, ale došlo k chybě. Zkontrolujte prosím
                           internetové připojení a zkuste stisknout na tlačítko
@@ -518,7 +517,6 @@ function Register() {
                             variant="h5"
                             align="center"
                             color="primary.main"
-                            paragraph
                           >
                             Uživatele se zadaným emailem už v systému evidujeme.
                             Zkuste se proto přihlásit tlačítkem Přihlásit se.
@@ -538,7 +536,6 @@ function Register() {
                             variant="h5"
                             align="center"
                             color="#028790"
-                            paragraph
                           >
                             Byl jste úspěšně registrován. Nyní se můžete
                             přihlásit pod tlačítkem Přihlásit se.

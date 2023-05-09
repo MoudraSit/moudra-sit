@@ -141,8 +141,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                     sx={{ pt: 6, fontWeight: "bold" }}
                     variant="h5"
                     align="left"
-                    color="#e25b5b"
-                    paragraph
+                    color="#D3215D"
                   >
                     Vložte prosím pouze 1 fotografii
                   </Typography>
@@ -152,8 +151,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                     sx={{ pt: 6, fontWeight: "bold" }}
                     variant="h5"
                     align="left"
-                    color="#e25b5b"
-                    paragraph
+                    color="#D3215D"
                   >
                     Tento typ fotografie bohužel nepodporujeme
                   </Typography>
@@ -163,8 +161,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                     sx={{ pt: 6, fontWeight: "bold" }}
                     variant="h5"
                     align="left"
-                    color="#e25b5b"
-                    paragraph
+                    color="#D3215D"
                   >
                     Vložená fotka je příliš velká. Prosím nahrajte nějakou
                     jinou.
@@ -188,7 +185,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                         mt: 1,
                         mr: 1,
                         mb: 2,
-                        bgcolor: "#e25b5b !important",
+                        bgcolor: "#D3215D !important",
                         color: "white",
                       }}
                       onClick={() => (
@@ -209,8 +206,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
           sx={{ pt: 6, fontWeight: "bold" }}
           variant="h5"
           align="left"
-          color="#e25b5b"
-          paragraph
+          color="#D3215D"
         >
           Vložená fotka je příliš velká. Prosím nahrajte nějakou jinou.
         </Typography>
