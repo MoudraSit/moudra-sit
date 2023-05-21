@@ -2,11 +2,15 @@ import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import ReactImageUploading, { ImageType } from "react-images-uploading";
 
-// TODO: fix any
-// Sources: https://codesandbox.io/s/react-images-uploading-demo-u0khz?file=/src/index.js:158-1697
-// https://www.npmjs.com/package/react-images-uploading?activeTab=readme
-
-// convert url to file
+/**
+ * Function converts base64 image format to a new blob file
+ *
+ * function dataURLtoFile(dataurl: any, filename: string) is taken from GitHub Gist
+ *
+ * Title: file upload from dataUrl with axios
+ * Author: Isaac Young - https://gist.github.com/ibreathebsb
+ * Available: https://gist.github.com/ibreathebsb/a104a9297d5df4c8ae944a4ed149bcf1#file-upload-js
+ * */
 function dataURLtoFile(dataurl: any, filename: string) {
   const arr = dataurl.split(",");
   const mime = arr[0].match(/:(.*?);/)[1];
@@ -21,12 +25,18 @@ function dataURLtoFile(dataurl: any, filename: string) {
   return new File([u8arr], filename, { type: mime });
 }
 
-// Sources: compress photo
-// https://gist.github.com/ORESoftware/ba5d03f3e1826dc15d5ad2bcec37f7bf
-
-// resize input image, create new image with canvas
+/**
+ * Function resize an input image and create new image with canvas
+ *
+ * function resizeImage(base64Str: string, maxWidth, maxHeight) is taken from GitHub Gist
+ *
+ * Title: resizing an image on the front-end before sending to a server
+ * Author: Alexander Mills - https://gist.github.com/ORESoftware
+ * Available: https://gist.github.com/ORESoftware/ba5d03f3e1826dc15d5ad2bcec37f7bf
+ * */
 function resizeImage(base64Str: string, maxWidth = 500, maxHeight = 500) {
   return new Promise<string>((resolve) => {
+    //create new image file based on base64 image
     let img = new (window as any).Image();
     img.src = base64Str;
 
@@ -37,6 +47,7 @@ function resizeImage(base64Str: string, maxWidth = 500, maxHeight = 500) {
       let width = img.width;
       let height = img.height;
 
+      // change size of an new image
       if (width > height) {
         if (width > MAX_WIDTH) {
           height *= MAX_WIDTH / width;
@@ -48,9 +59,13 @@ function resizeImage(base64Str: string, maxWidth = 500, maxHeight = 500) {
           height = MAX_HEIGHT;
         }
       }
+
+      // set props to a canva
       canvas.width = width;
       canvas.height = height;
       const ctx = canvas.getContext("2d");
+
+      // draw image on the created canva
       ctx?.drawImage(img, 0, 0, width, height);
       resolve(canvas.toDataURL());
     };

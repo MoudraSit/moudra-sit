@@ -1,3 +1,11 @@
+/**
+ * loading - free gif created by Michael B. Myers Jr. - LottieFiles
+ * https://lottiefiles.com/8414-lottie-doggie
+ *
+ * Gif under Lottie Simple License:
+ * https://lottiefiles.com/page/license
+ */
+
 import { Typography } from "@mui/material";
 import Image from "next/image";
 import * as React from "react";

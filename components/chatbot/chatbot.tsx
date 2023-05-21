@@ -1,3 +1,11 @@
+/**
+ * chatIcon - free icon created by Freepik - Flaticon
+ * Free for personal and commercial use with attribution
+ *
+ * Flaticon license:
+ * https://www.freepikcompany.com/legal?_gl=1*wlrn0w*test_ga*MTA0Nzc2OTQ5LjE2ODA0MjY0MjY.*test_ga_523JXC6VL7*MTY4NDE1NTQ3Ni4xMC4xLjE2ODQxNTU1MTQuMjIuMC4w*fp_ga*MTA0Nzc2OTQ5LjE2ODA0MjY0MjY.*fp_ga_1ZY8468CQB*MTY4NDE1NTQ3Ni4xMC4xLjE2ODQxNTU1MTQuMjIuMC4w&_ga=2.204569112.985862183.1684155476-104776949.1680426426#nav-flaticon
+ */
+
 import { useState, useRef, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { appTheme } from "../theme/theme";
@@ -12,9 +20,6 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import SendIcon from "@mui/icons-material/Send";
-import PersonIcon from "@mui/icons-material/Person";
-
-import chatbot from "../../public/images/chatbot/chatbot.gif";
 import chatIcon from "../../public/images/chatbot/bot.png";
 import LoadingComponent from "./loading";
 
@@ -30,6 +35,7 @@ export interface IMessage {
   author: Author;
 }
 
+/** Component representing one message in conversation */
 function SingleMessage({ text, author, dateTime }: IMessage) {
   if (author === Author.User) {
     return (
