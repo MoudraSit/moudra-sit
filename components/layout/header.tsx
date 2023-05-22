@@ -63,7 +63,7 @@ function ResponsiveAppBar() {
                   color="secondary"
                   href="/profile"
                 >
-                  <Person style={{ marginRight: 6 }} /> Profil
+                  <Person style={{ marginRight: 6 }} /> {data.user?.name}
                 </Button>
                 <Tooltip title="Account settings">
                   <IconButton
@@ -123,7 +123,7 @@ function ResponsiveAppBar() {
                   <ListItemIcon>
                     <Person fontSize="small" />
                   </ListItemIcon>
-                  Profil
+                  {data.user?.name}
                 </MenuItem>
                 <MenuItem onClick={logoutHandler}>
                   <ListItemIcon>
