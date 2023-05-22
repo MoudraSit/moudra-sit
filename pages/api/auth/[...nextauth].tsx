@@ -1,11 +1,21 @@
-import { ISeniorGetResponse } from "backend/interfaces/api";
+import { Role, detectUserRole } from "backend/role";
+import { callTabidoo } from "backend/tabidoo";
+import { LoginResponse } from "backend/tabidoo/interfaces/login";
 import { verifyPassword } from "helper/auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   callbacks: {
-    session({ session }) {
+    async jwt({ token, user }) {
+      token.role = user?.role;
+      return token;
+    },
+    session({ session, token }) {
+      /* Step 2: update the session.user based on the token object */
+      if (token && session.user) {
+        session.user.role = token.role;
+      }
       return session;
     },
   },
@@ -26,55 +36,42 @@ export default NextAuth({
           throw Error("Zadejte prosím heslo");
         }
 
-        // EMAIL
-        // email validation (does it exist in Tabidoo?)
-        try {
-          const responseAPI = await fetch(
-            `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}/tables/senior/data?filter=email(eq)` +
-              encodeURI(email),
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: process.env.TABIDOO_API_KEY as string,
-              },
-            }
-          );
-
-          // parse response body to json
-          const seniorObject: ISeniorGetResponse = await responseAPI.json();
-
-          // senior was found in the table, take first record
-          if (seniorObject.data[0]) {
-            const userObject = seniorObject.data[0].id;
-            console.log(userObject);
-
-            // compare passwords
-            const isValid = await verifyPassword(
-              password,
-              seniorObject.data[0].fields.heslo
-            );
-
-            // password validated
-            if (isValid) {
-              return { id: userObject, email: email };
-            }
-
-            // not valid password
-            else {
-              throw Error("Špatně zadaný email nebo heslo");
-            }
-
-            // no entry with the email
-          } else {
-            throw Error("Špatně zadaný email nebo heslo");
+        const foundUsers = await callTabidoo<LoginResponse[]>(
+          "/tables/login/data/filter",
+          {
+            method: "POST",
+            body: {
+              filter: [
+                {
+                  field: "login",
+                  operator: "eq",
+                  value: email,
+                },
+              ],
+            },
+            urlParams: {
+              limit: "1",
+            },
           }
+        );
 
-          // error email api call
-        } catch (error) {
-          console.log("There was an API error", error);
+        if (foundUsers.length === 0) {
+          throw new Error("No users found");
+        }
+
+        const user = foundUsers[0];
+
+        const isValid = await verifyPassword(password, user.fields.heslo);
+
+        if (!isValid) {
           throw Error("Špatně zadaný email nebo heslo");
         }
+
+        return {
+          id: user.id,
+          email: user.fields.login,
+          role: detectUserRole(user),
+        };
       },
     }),
   ],
