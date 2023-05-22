@@ -1,6 +1,6 @@
 import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
-import Profile from "components/profile/profile";
+import Profile from "components/senior/profile";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 

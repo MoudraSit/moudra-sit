@@ -1,7 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
-import Profile from "components/profile/profile";
+import Profile from "components/senior/profile";
 import { getSession, useSession } from "next-auth/react";
 import Head from "next/head";
 
