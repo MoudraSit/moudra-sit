@@ -1,6 +1,7 @@
 import { Role, detectUserRole } from "backend/role";
 import { callTabidoo } from "backend/tabidoo";
 import { LoginResponse } from "backend/tabidoo/interfaces/login";
+import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -8,7 +9,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export default NextAuth({
   callbacks: {
     async jwt({ token, user }) {
-      token.role = user?.role;
+      if (user?.role) {
+        token.role = user.role;
+      }
       return token;
     },
     session({ session, token }) {
@@ -71,6 +74,9 @@ export default NextAuth({
           id: user.id,
           email: user.fields.login,
           role: detectUserRole(user),
+          name: getFullName(
+            user.fields.vazbaAsistent ?? user.fields.vazbaSenior
+          ),
         };
       },
     }),
