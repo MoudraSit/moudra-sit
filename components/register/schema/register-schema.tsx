@@ -4,7 +4,7 @@ const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
 const pscRegex = /^\d{3}[ ]?\d{2}$/;
 
 // schema for form validation
-export const registerSchema = yup.object().shape({
+export const registerSchema = yup.object({}).shape({
   name: yup
     .string()
     .matches(/^[A-Ža-ž]*$/, "Prosím vložte jméno ve správném tvaru")

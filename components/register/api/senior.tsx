@@ -1,12 +1,10 @@
-import { IRegisterFields } from "pages/api/auth/register";
+import { IRegisterValues } from "../register";
 
-async function ApiRegisterSenior(props: IRegisterFields) {
-  console.log(props);
-
+async function ApiRegisterSenior(values: IRegisterValues) {
   try {
     const response = await fetch("/api/auth/register", {
       method: "POST",
-      body: JSON.stringify(props),
+      body: JSON.stringify(values),
       headers: {
         "Content-Type": "application/json",
       },

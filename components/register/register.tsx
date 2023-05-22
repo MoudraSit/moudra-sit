@@ -14,7 +14,6 @@ import Grid from "@mui/material/Grid";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IRegisterFields } from "pages/api/auth/register";
 import ApiRegisterSenior from "./api/senior";
 import ApiGetRegisterSenior from "./api/get-senior";
 import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
@@ -23,36 +22,17 @@ import { registerSchema } from "./schema/register-schema";
 import TextFieldForm from "components/form/model/input-form";
 import RegionForm from "components/form/model/region-form";
 import Image from "next/image";
+import * as yup from "yup";
 
 import logo from "public/images/logo/logo.svg";
-import {
-  capitalizeFirstLetter,
-  removeSpaces,
-} from "components/form/api/senior";
-import { scrollIntoView } from "components/form/vertical-stepper";
 
-export interface IValuesRegister {
-  name: string;
-  surname: string;
-  email: string;
-  year: string;
-  // address: string;
-  city: string;
-  zipCode: string;
-  region: string;
-  plusCode: string;
-  phoneNumber: string;
-  password: string;
-  confirmPwd: string;
-  agreement: boolean;
-}
+export type IRegisterValues = yup.InferType<typeof registerSchema>;
 
 const initialValues = {
   name: "",
   surname: "",
   email: "",
   year: "",
-  // address: "",
   city: "",
   zipCode: "",
   region: "",
@@ -74,37 +54,19 @@ function Register() {
 
   // onSubmit method
   async function handleSend(
-    values: IValuesRegister,
-    actions: FormikHelpers<IValuesRegister>
+    values: IRegisterValues,
+    actions: FormikHelpers<IRegisterValues>
   ) {
-    const formValues: IRegisterFields = {
-      fields: {
-        jmeno: capitalizeFirstLetter(values.name),
-        prijmeni: capitalizeFirstLetter(values.surname),
-        // ulice: values.address,
-        mesto: capitalizeFirstLetter(values.city),
-        PSC: removeSpaces(values.zipCode),
-        kraj: values.region,
-        stat: "Česko",
-        email: values.email,
-        rokNarozeni: +values.year,
-        telefon: values.plusCode + removeSpaces(values.phoneNumber),
-        heslo: values.password,
-      },
-    };
-
-    console.log("zasilam na API");
-
     try {
       // set messages to default state
       setAPIErrorMessage(false);
       setErrorMessage(false);
 
       // check if user with the same email doesn't exists
-      const isRegistred = await ApiGetRegisterSenior(formValues);
+      const isRegistred = await ApiGetRegisterSenior(values);
 
       if (!isRegistred) {
-        const regi = await ApiRegisterSenior(formValues);
+        const regi = await ApiRegisterSenior(values);
 
         setSuccessMessage(true);
       } else {
@@ -156,15 +118,16 @@ function Register() {
             <Typography variant="h1" sx={{ mt: 3, mb: 3, fontWeight: "bold" }}>
               Registrace uživatele
             </Typography>
-            <Formik
-              initialValues={initialValues}
+            <Formik<IRegisterValues>
+              initialValues={initialValues as unknown as IRegisterValues}
               validationSchema={currentValidationSchema}
-              onSubmit={(values: IValuesRegister, actions) => {
+              onSubmit={(values: IRegisterValues, actions) => {
                 handleSend(values, actions);
               }}
             >
-              {({ isSubmitting, setFieldValue, values }) => (
+              {({ isSubmitting, setFieldValue, errors }) => (
                 <Form autoComplete="on">
+                  {JSON.stringify(errors)}
                   <Box sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>

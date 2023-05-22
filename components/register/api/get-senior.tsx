@@ -1,13 +1,13 @@
 import { SeniorGetId, SeniorGetNoId } from "backend/tabidoo/interfaces/senior";
-import { IRegisterFields } from "pages/api/auth/register";
+import { IRegisterValues } from "../register";
 
-async function ApiGetRegisterSenior(props: IRegisterFields) {
+async function ApiGetRegisterSenior(props: IRegisterValues) {
   try {
     const response = await fetch("/api/auth/get-senior", {
       method: "POST",
       body: JSON.stringify({
         filter: {
-          email: props.fields.email,
+          email: props.email,
         },
       }),
       headers: {

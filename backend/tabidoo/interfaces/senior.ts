@@ -4,11 +4,12 @@ export interface SeniorResponse {
     PSC: string;
     mesto: string;
     stat: string;
+    kraj: string;
     jmeno: string;
     prijmeni: string;
     rokNarozeni: number;
     telefon: string;
-    x_id: number;
+    x_id?: number;
   };
   id: string;
   modified: string;
