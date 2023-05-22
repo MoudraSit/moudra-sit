@@ -1,4 +1,7 @@
-import { ISeniorGetId, ISeniorGetNoId } from "backend/interfaces/api";
+import {
+  ISeniorGetId,
+  ISeniorGetNoId,
+} from "backend/tabidoo/interfaces/senior";
 import { IRegisterFields } from "pages/api/auth/register";
 
 async function ApiGetRegisterSenior(props: IRegisterFields) {

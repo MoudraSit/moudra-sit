@@ -18,23 +18,7 @@ export interface ISeniorResponse {
 }
 
 export interface ISeniorGetResponse {
-  data: [
-    {
-      created: string;
-      fields: {
-        PSC: string;
-        jmeno: string;
-        prijmeni: string;
-        rokNarozeni: number;
-        telefon: string;
-        heslo: string;
-        x_id: number;
-      };
-      id: string;
-      modified: string;
-      ver: number;
-    }
-  ];
+  data: ISeniorResponse[];
 }
 
 export interface ISeniorGetNoResponse {

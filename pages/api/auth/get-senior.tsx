@@ -1,7 +1,7 @@
 import {
   ISeniorGetNoResponse,
   ISeniorGetResponse,
-} from "backend/interfaces/api";
+} from "backend/tabidoo/interfaces/senior";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(

@@ -1,4 +1,7 @@
-import { ISeniorGetId, ISeniorGetNoId } from "backend/interfaces/api";
+import {
+  ISeniorGetId,
+  ISeniorGetNoId,
+} from "backend/tabidoo/interfaces/senior";
 import { IValues } from "../vertical-stepper";
 import { removeSpaces } from "./senior";
 
