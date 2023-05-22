@@ -63,13 +63,16 @@ function SignInSide() {
           xs={false}
           sm={false}
           md={7}
-          sx={{
-            backgroundImage: `url('/images/prihlaseni/prihlaseni.jpg')`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+          style={{ position: "relative", overflow: "hidden" }}
+        >
+          <Image
+            src="/images/sign-in/welcome.jpg"
+            alt="Uvodni foto - Moudra sit"
+            style={{ objectFit: "cover" }}
+            quality={100}
+            fill
+          />
+        </Grid>
         <Grid
           item
           xs={12}
