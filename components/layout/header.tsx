@@ -68,7 +68,7 @@ function ResponsiveAppBar() {
               </Link>
             )}
             {status === "unauthenticated" && (
-              <Link href="/sing-in">
+              <Link href="/prihlaseni">
                 <Button
                   variant="outlined"
                   color="secondary"

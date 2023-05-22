@@ -507,7 +507,11 @@ function Register() {
                     ) : null}
                     {errorMessage ? (
                       <>
-                        <Link href="/sing-in" variant="body2" color="#ff0000">
+                        <Link
+                          href="/prihlaseni"
+                          variant="body2"
+                          color="#ff0000"
+                        >
                           <Typography
                             sx={{
                               pt: 5,
@@ -526,7 +530,11 @@ function Register() {
                     ) : null}
                     {successMessage ? (
                       <>
-                        <Link href="/sing-in" variant="body2" color="#028790">
+                        <Link
+                          href="/prihlaseni"
+                          variant="body2"
+                          color="#028790"
+                        >
                           <Typography
                             sx={{
                               pt: 5,
@@ -545,7 +553,11 @@ function Register() {
                     ) : null}
                     <Grid container justifyContent="flex-end">
                       <Grid item>
-                        <Link href="/sing-in" variant="body2" color="#000000">
+                        <Link
+                          href="/prihlaseni"
+                          variant="body2"
+                          color="#000000"
+                        >
                           <Typography align="center" paragraph>
                             Již máte účet? Přihlaste se zde
                           </Typography>

@@ -9,7 +9,7 @@ function ProfilePage() {
     <>
       <Layout />
       <Head>
-        <title>Profil | Moudrá Síť App</title>
+        <title>Profil Seniora | Moudrá Síť App</title>
       </Head>
       <Profile />
       <Footer />
@@ -24,7 +24,7 @@ export async function getServerSideProps(context: { req: any }) {
   if (!session) {
     return {
       redirect: {
-        destination: "/sing-in",
+        destination: "/prihlaseni",
         permanent: false,
       },
     };

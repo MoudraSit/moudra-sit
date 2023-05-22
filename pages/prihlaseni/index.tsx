@@ -1,3 +1,4 @@
+import { Role } from "backend/role";
 import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
 import SignInSide from "components/sing-in/sing-in";
@@ -13,7 +14,10 @@ function SinginPage() {
   useEffect(() => {
     getSession().then((session) => {
       if (session) {
-        router.replace("/profile");
+        if (session.user?.role === Role.DA) {
+          return router.replace("/asistent");
+        }
+        router.replace("/senior");
       }
     });
   }, [router]);
