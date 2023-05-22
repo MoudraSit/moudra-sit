@@ -1,7 +1,4 @@
-import {
-  ISeniorGetId,
-  ISeniorGetNoId,
-} from "backend/tabidoo/interfaces/senior";
+import { SeniorGetId, SeniorGetNoId } from "backend/tabidoo/interfaces/senior";
 import { IValues } from "../vertical-stepper";
 import { removeSpaces } from "./senior";
 
@@ -22,7 +19,7 @@ async function ApiGetRequestSenior(values: IValues) {
       },
     });
 
-    const seniorId: ISeniorGetId | ISeniorGetNoId = await response.json();
+    const seniorId: SeniorGetId | SeniorGetNoId = await response.json();
 
     // senior was found in the table, take the first record
     if (seniorId.id) {

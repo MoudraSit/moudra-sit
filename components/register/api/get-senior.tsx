@@ -1,7 +1,4 @@
-import {
-  ISeniorGetId,
-  ISeniorGetNoId,
-} from "backend/tabidoo/interfaces/senior";
+import { SeniorGetId, SeniorGetNoId } from "backend/tabidoo/interfaces/senior";
 import { IRegisterFields } from "pages/api/auth/register";
 
 async function ApiGetRegisterSenior(props: IRegisterFields) {
@@ -18,7 +15,7 @@ async function ApiGetRegisterSenior(props: IRegisterFields) {
       },
     });
 
-    const seniorId: ISeniorGetId | ISeniorGetNoId = await response.json();
+    const seniorId: SeniorGetId | SeniorGetNoId = await response.json();
 
     // senior was found in the table, take the first record
     if (seniorId.id) {

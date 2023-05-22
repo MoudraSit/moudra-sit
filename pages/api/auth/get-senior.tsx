@@ -1,7 +1,4 @@
-import {
-  ISeniorGetNoResponse,
-  ISeniorGetResponse,
-} from "backend/tabidoo/interfaces/senior";
+import { SeniorGetResponse } from "backend/tabidoo/interfaces/senior";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(
@@ -37,8 +34,7 @@ async function handler(
     );
 
     // parse response body to json
-    const seniorObject: ISeniorGetResponse | ISeniorGetNoResponse =
-      await responseAPI.json();
+    const seniorObject: SeniorGetResponse = await responseAPI.json();
 
     if (JSON.stringify(seniorObject).includes("errors")) {
       throw new Error(JSON.stringify(seniorObject));

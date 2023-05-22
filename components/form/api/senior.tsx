@@ -1,4 +1,4 @@
-import { ISeniorResponse } from "backend/tabidoo/interfaces/senior";
+import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
 import { IValues } from "../vertical-stepper";
 
 // check if name and surname start with capital letter
@@ -32,7 +32,7 @@ async function ApiRequestSenior(props: IValues) {
       },
     });
 
-    const jsonObject: ISeniorResponse = await response.json();
+    const jsonObject: { data: SeniorResponse } = await response.json();
 
     return jsonObject.data.id;
   } catch (error) {
