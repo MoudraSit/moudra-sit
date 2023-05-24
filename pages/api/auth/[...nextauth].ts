@@ -1,6 +1,7 @@
-import { Role, detectUserRole } from "backend/role";
+import { Role } from "backend/role";
 import { callTabidoo } from "backend/tabidoo";
-import { LoginResponse } from "backend/tabidoo/interfaces/login";
+import { AsistentResponse } from "backend/tabidoo/interfaces/asistent";
+import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
 import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
 import NextAuth from "next-auth/next";
@@ -39,27 +40,37 @@ export default NextAuth({
           throw Error("Zadejte prosím heslo");
         }
 
-        const foundUsers = await callTabidoo<LoginResponse[]>(
-          "/tables/login/data/filter",
-          {
-            method: "POST",
-            body: {
-              filter: [
-                {
-                  field: "login",
-                  operator: "eq",
-                  value: email,
-                },
-              ],
-            },
-            urlParams: {
-              limit: "1",
-            },
-          }
-        );
+        const tabidooRequestPayload = {
+          method: "POST",
+          body: {
+            filter: [
+              {
+                field: "email",
+                operator: "eq",
+                value: email,
+              },
+            ],
+          },
+          urlParams: {
+            limit: "1",
+          },
+        };
+
+        const [foundSeniors, foundAssistants] = await Promise.all([
+          callTabidoo<SeniorResponse[]>(
+            "/tables/senior/data/filter",
+            tabidooRequestPayload
+          ),
+          callTabidoo<AsistentResponse[]>(
+            "/tables/uzivatel/data/filter",
+            tabidooRequestPayload
+          ),
+        ]);
+
+        const foundUsers = [...foundSeniors, ...foundAssistants];
 
         if (foundUsers.length === 0) {
-          throw new Error("No users found");
+          throw new Error("Uživatel nebyl nalezen");
         }
 
         const user = foundUsers[0];
@@ -72,11 +83,9 @@ export default NextAuth({
 
         return {
           id: user.id,
-          email: user.fields.login,
-          role: detectUserRole(user),
-          name: getFullName(
-            user.fields.vazbaAsistent ?? user.fields.vazbaSenior
-          ),
+          email: user.fields.email,
+          role: foundSeniors.length > 0 ? Role.SENIOR : Role.DA,
+          name: getFullName(user),
         };
       },
     }),

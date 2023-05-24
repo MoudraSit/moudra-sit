@@ -12,6 +12,7 @@ export interface AsistentResponse {
     PSC: string;
     telefon: string;
     email: string;
+    heslo: string;
     kraj: string;
     pozvan: boolean;
     skolainstituce: string;

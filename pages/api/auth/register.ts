@@ -1,5 +1,4 @@
 import { callTabidoo } from "backend/tabidoo";
-import { LoginResponse } from "backend/tabidoo/interfaces/login";
 import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
 import {
   capitalizeFirstLetter,
@@ -25,16 +24,6 @@ async function handler(
 
     const hashedPassword = await hashPassword(values.password);
 
-    const login = await callTabidoo<LoginResponse>("/tables/login/data", {
-      method: "POST",
-      body: {
-        fields: {
-          login: values.email,
-          heslo: hashedPassword,
-        },
-      },
-    });
-
     const seniorFieldsPayload: SeniorResponse["fields"] = {
       jmeno: capitalizeFirstLetter(values.name),
       prijmeni: capitalizeFirstLetter(values.surname),
@@ -44,29 +33,19 @@ async function handler(
       stat: "Česko",
       rokNarozeni: +values.year,
       telefon: values.plusCode + removeSpaces(values.phoneNumber),
+      email: values.email,
+      heslo: hashedPassword,
     };
 
-    const senior = await callTabidoo<LoginResponse>("/tables/senior/data", {
+    const senior = await callTabidoo<SeniorResponse>("/tables/senior/data", {
       method: "POST",
       body: {
         fields: seniorFieldsPayload,
       },
     });
 
-    // link senior to login
-    await callTabidoo<LoginResponse>(`/tables/login/data/${login.id}`, {
-      method: "PATCH",
-      body: {
-        fields: {
-          vazbaSenior: {
-            id: senior.id,
-          },
-        },
-      },
-    });
-
     response.status(200).json({
-      message: "Success",
+      id: senior.id,
     });
   } catch (err) {
     console.error(err);

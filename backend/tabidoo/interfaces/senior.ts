@@ -1,6 +1,8 @@
 export interface SeniorResponse {
   created: string;
   fields: {
+    email: string;
+    heslo: string;
     PSC: string;
     mesto: string;
     stat: string;
