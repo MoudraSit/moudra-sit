@@ -7,7 +7,7 @@ type Props = PropsWithChildren<{
 }>;
 
 const StyledButton = styled.button<{ isSelected: boolean }>`
-  padding: 10px;
+  padding: 0;
   width: 3.5rem;
   height: 3.5rem;
   background-color: ${({ isSelected }) => (isSelected ? "#48D1CC" : "#EFF0F6")};
@@ -32,7 +32,6 @@ const StyledButton = styled.button<{ isSelected: boolean }>`
   }
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    padding: 6px;
     width: 3rem;
     height: 3rem;
   }
@@ -43,6 +42,8 @@ const CenteredChildren = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
 export const RatingButton: React.FC<Props> = ({

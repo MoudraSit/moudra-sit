@@ -19,6 +19,7 @@ import * as yup from "yup";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQuery } from "react-query";
 import { RatingButton } from "components/rating/RatingButton";
+import { RatingNumber } from "components/rating/RatingNumber";
 
 const ratingError = "Zvolte hodnocení 1-5";
 
@@ -223,7 +224,7 @@ function RatingPage() {
                         )
                       }
                     >
-                      {item.value}
+                      <RatingNumber>{item.value}</RatingNumber>
                     </RatingButton>
                   </Grid>
                 ))}
