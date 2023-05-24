@@ -69,7 +69,7 @@ function SignInSide() {
             src="/images/sign-in/welcome.jpg"
             alt="Uvodni foto - Moudra sit"
             style={{ objectFit: "cover" }}
-            quality={100}
+            quality={75}
             fill
           />
         </Grid>
