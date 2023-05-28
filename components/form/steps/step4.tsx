@@ -3,6 +3,7 @@ import React from "react";
 import TextFieldForm from "../model/input-form";
 import PhoneCodeFieldForm from "../model/phone-code-form ";
 import { PSCAutosuggest } from "../components/PSCAutosuggest";
+import { CityAutosuggest } from "../components/CityAutosuggest";
 
 function Step4Form(props: any) {
   return (
@@ -59,18 +60,7 @@ function Step4Form(props: any) {
           <PSCAutosuggest />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextFieldForm
-            id="city"
-            label="Obec/město"
-            name="city"
-            inputhelper="Pro nalezení nejbližšího dobrovolníka"
-            variant="outlined"
-            color="info"
-            fullWidth
-            required
-            InputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 20 } }}
-          />
+          <CityAutosuggest />
         </Grid>
         <Grid item xs={12} sm={4}>
           <PhoneCodeFieldForm

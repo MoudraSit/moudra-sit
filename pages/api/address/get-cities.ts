@@ -18,6 +18,8 @@ const serializer = (mun: Municipality) => {
   };
 };
 
+export type MunicipalityDto = ReturnType<typeof serializer>;
+
 export const validationSchema = yup.object().shape({
   zipCode: yup.number().integer().min(10000).max(80000).required(),
 });
