@@ -1,6 +1,5 @@
-import { FormControlLabel, Grid, Link, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
-import CheckboxForm from "../model/checkbox-form";
 import TextFieldForm from "../model/input-form";
 import PhoneCodeFieldForm from "../model/phone-code-form ";
 
@@ -34,13 +33,8 @@ function Step4Form(props: any) {
             inputProps={{
               style: {
                 textTransform: "capitalize",
-                WebkitBoxShadow: "0 0 0 1000px white inset",
-                WebkitTextFillColor: "black",
-                fontSize: 20,
               },
             }}
-            InputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -56,13 +50,8 @@ function Step4Form(props: any) {
             inputProps={{
               style: {
                 textTransform: "capitalize",
-                WebkitBoxShadow: "0 0 0 1000px white inset",
-                WebkitTextFillColor: "black",
-                fontSize: 20,
               },
             }}
-            InputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -97,14 +86,6 @@ function Step4Form(props: any) {
             color="info"
             fullWidth
             required
-            inputProps={{
-              style: {
-                textTransform: "capitalize",
-                WebkitBoxShadow: "0 0 0 1000px white inset",
-                WebkitTextFillColor: "black",
-                fontSize: 20,
-              },
-            }}
             InputProps={{ style: { fontSize: 20 } }}
             InputLabelProps={{ style: { fontSize: 20 } }}
           />
@@ -120,9 +101,6 @@ function Step4Form(props: any) {
             fullWidth
             required
             setFieldValue={props.setFieldValue}
-            sx={{
-              ".MuiInputBase-root": { backgroundColor: "white" },
-            }}
           />
         </Grid>
         <Grid item xs={12} sm={8}>
@@ -137,14 +115,7 @@ function Step4Form(props: any) {
             required
             inputProps={{
               maxLength: 11,
-              style: {
-                WebkitBoxShadow: "0 0 0 1000px white inset",
-                WebkitTextFillColor: "black",
-                fontSize: 20,
-              },
             }}
-            InputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -156,14 +127,6 @@ function Step4Form(props: any) {
             variant="outlined"
             color="info"
             fullWidth
-            inputProps={{
-              style: {
-                WebkitBoxShadow: "0 0 0 1000px white inset",
-                WebkitTextFillColor: "black",
-                fontSize: 20,
-              },
-            }}
-            InputProps={{ style: { fontSize: 20 } }}
             InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
