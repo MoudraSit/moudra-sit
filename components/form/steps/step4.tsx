@@ -2,6 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import React from "react";
 import TextFieldForm from "../model/input-form";
 import PhoneCodeFieldForm from "../model/phone-code-form ";
+import { PSCAutosuggest } from "../components/PSCAutosuggest";
 
 function Step4Form(props: any) {
   return (
@@ -55,26 +56,7 @@ function Step4Form(props: any) {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextFieldForm
-            id="zipCode"
-            label="PSČ Vašeho bydliště"
-            name="zipCode"
-            inputhelper="Pro nalezení nejbližšího dobrovolníka"
-            variant="outlined"
-            color="info"
-            fullWidth
-            required
-            inputProps={{
-              maxLength: 6,
-              style: {
-                WebkitBoxShadow: "0 0 0 1000px white inset",
-                WebkitTextFillColor: "black",
-                fontSize: 20,
-              },
-            }}
-            InputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 20 } }}
-          />
+          <PSCAutosuggest />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextFieldForm
