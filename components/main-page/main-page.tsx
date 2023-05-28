@@ -68,7 +68,7 @@ function MainPage() {
                   Přejít na náš web
                 </Button>
               </Link>
-              <Link href="https://app.moudrasit.cz/form">
+              <Link href="/form">
                 <Button
                   color="secondary"
                   variant="contained"
