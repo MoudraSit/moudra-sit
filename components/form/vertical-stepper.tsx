@@ -356,4 +356,11 @@ const FormContainer = styled(Container)`
   .MuiInputBase-root {
     background-color: white;
   }
+
+  //autocomplete overrides
+  .MuiInputBase-input {
+    -webkit-text-fill-color: black;
+    box-shadow: 0 0 0 1000px white inset;
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
 `;
