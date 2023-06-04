@@ -425,8 +425,8 @@ function Register() {
                           align="center"
                           color="primary.main"
                         >
-                          {error ? (
-                            <>{error.response?.data.message}</>
+                          {error.response?.data.message ? (
+                            <>{error.response.data.message}</>
                           ) : (
                             <>
                               Omlouváme se, ale došlo k chybě. Zkontrolujte

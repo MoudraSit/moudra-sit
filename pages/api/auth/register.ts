@@ -82,9 +82,7 @@ async function handler(
     }
   }
 
-  response.status(500).json({
-    message: "Something went wrong",
-  });
+  response.status(500);
 }
 
 export default handler;
