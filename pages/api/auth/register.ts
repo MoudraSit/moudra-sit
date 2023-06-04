@@ -1,5 +1,6 @@
 import { callTabidoo } from "backend/tabidoo";
 import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
+import { getSeniorBy } from "backend/tabidoo/senior/getSeniorBy";
 import {
   capitalizeFirstLetter,
   removeSpaces,
@@ -22,6 +23,27 @@ async function handler(
   try {
     const values = await registerSchema.validate(request.body);
 
+    const phoneValue = values.plusCode + removeSpaces(values.phoneNumber);
+
+    const [seniorByEmail, seniorByPhone] = await Promise.all([
+      getSeniorBy("email", values.email),
+      getSeniorBy("telefon", phoneValue),
+    ]);
+
+    if (seniorByEmail.length > 0) {
+      response.status(400).json({
+        message: "Uživatel s tímto emailem již existuje",
+      });
+      return;
+    }
+
+    if (seniorByPhone.length > 0) {
+      response.status(400).json({
+        message: "Uživatel s tímto telefonním číslem již existuje",
+      });
+      return;
+    }
+
     const hashedPassword = await hashPassword(values.password);
 
     const seniorFieldsPayload: SeniorResponse["fields"] = {
@@ -32,7 +54,7 @@ async function handler(
       kraj: values.region,
       stat: "Česko",
       rokNarozeni: +values.year,
-      telefon: values.plusCode + removeSpaces(values.phoneNumber),
+      telefon: phoneValue,
       email: values.email,
       heslo: hashedPassword,
     };
@@ -47,12 +69,16 @@ async function handler(
     response.status(200).json({
       id: senior.id,
     });
+
+    return;
   } catch (err) {
     console.error(err);
     if (err instanceof yup.ValidationError) {
       response.status(400).json({
         message: err.message,
       });
+
+      return;
     }
   }
 

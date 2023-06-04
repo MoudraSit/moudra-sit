@@ -21,7 +21,7 @@ import TextFieldForm from "components/form/model/input-form";
 import RegionForm from "components/form/model/region-form";
 import Image from "next/image";
 import * as yup from "yup";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 import logo from "public/images/logo/logo.svg";
 import { useMutation } from "react-query";
@@ -53,9 +53,9 @@ function Register() {
     isSuccess,
     isLoading: isSubmitting,
     error,
-  } = useMutation({
+  } = useMutation<AxiosResponse, AxiosError<{ message: string }>, any, any>({
     mutationFn: (values: IRegisterValues) =>
-      axios.post(`/api/auth/register`, values),
+      axios.post<unknown>(`/api/auth/register`, values),
     onSuccess: () => {
       setTimeout(function () {
         window.scrollBy({
@@ -426,7 +426,7 @@ function Register() {
                           color="primary.main"
                         >
                           {error ? (
-                            <>{error}</>
+                            <>{error.response?.data.message}</>
                           ) : (
                             <>
                               Omlouváme se, ale došlo k chybě. Zkontrolujte
