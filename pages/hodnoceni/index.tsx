@@ -39,7 +39,7 @@ function RatingPage() {
   const isSmallScreen = useMediaQuery(appTheme.breakpoints.down("sm"));
   const { push, query } = useRouter();
 
-  const { mutate: submitRating } = useMutation({
+  const { mutate: submitRating, isLoading: isSubmitting } = useMutation({
     mutationFn: (values: FormValues) =>
       axios
         .post<VisitDTO>(
@@ -251,16 +251,32 @@ function RatingPage() {
           </Box>
         </Box>
         <Box my="2rem">
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              bgcolor: "#D3215D !important",
-              color: "white",
-            }}
-          >
-            ODESLAT HODNOCENÍ
-          </Button>
+          <Box sx={{ position: "relative", display: "inline-block" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                bgcolor: "#D3215D !important",
+                color: "white",
+              }}
+              disabled={isSubmitting}
+            >
+              ODESLAT HODNOCENÍ
+            </Button>
+            {isSubmitting && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  color: "white",
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-12px",
+                  marginLeft: "-12px",
+                }}
+              />
+            )}
+          </Box>
         </Box>
       </Container>
     </ThemeProvider>
