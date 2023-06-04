@@ -18,6 +18,8 @@ import { useRouter } from "next/router";
 import * as yup from "yup";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQuery } from "react-query";
+import { RatingButton } from "components/rating/RatingButton";
+import { RatingNumber } from "components/rating/RatingNumber";
 
 const ratingError = "Zvolte hodnocení 1-5";
 
@@ -169,25 +171,13 @@ function RatingPage() {
                   { image: "love.png", value: 1 },
                 ].map((item) => (
                   <Grid item key={item.value}>
-                    <button
-                      style={{
-                        padding: isSmallScreen ? "6px" : "10px",
-                        backgroundColor:
-                          formik.values.spokojenostSenior === item.value
-                            ? "#0056B2"
-                            : "#EFF0F6",
-                        display: "flex",
-                        alignItems: "center",
-                        borderRadius: "100%",
-                        border: "none",
-                        outline: "none",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease-in-out",
-                      }}
+                    <RatingButton
+                      isSelected={
+                        formik.values.spokojenostSenior === item.value
+                      }
                       onClick={() =>
                         formik.setFieldValue("spokojenostSenior", item.value)
                       }
-                      type="button"
                     >
                       <Image
                         alt={item.image}
@@ -195,7 +185,7 @@ function RatingPage() {
                         width={isSmallScreen ? 32 : 40}
                         height={isSmallScreen ? 32 : 40}
                       />
-                    </button>
+                    </RatingButton>
                   </Grid>
                 ))}
               </Grid>
@@ -209,18 +199,36 @@ function RatingPage() {
               Podařilo se vyřešit dotaz?
             </Typography>
             <Box mt="1rem">
-              <TextField
-                fullWidth
-                type="number"
-                placeholder="ohodnoťte 1-5 jako ve škole *"
-                name="problemVyresenHodnoceni"
-                value={formik.values.problemVyresenHodnoceni}
-                onChange={formik.handleChange}
-                error={!!formik.errors.problemVyresenHodnoceni}
-                helperText={
-                  formik.errors.problemVyresenHodnoceni ? ratingError : null
-                }
-              />
+              <Grid
+                container
+                columns={16}
+                spacing="8px"
+                justifyContent={isSmallScreen ? "center" : "flex-start"}
+              >
+                {[
+                  { value: 1 },
+                  { value: 2 },
+                  { value: 3 },
+                  { value: 4 },
+                  { value: 5 },
+                ].map((item) => (
+                  <Grid item key={item.value}>
+                    <RatingButton
+                      isSelected={
+                        formik.values.problemVyresenHodnoceni === item.value
+                      }
+                      onClick={() =>
+                        formik.setFieldValue(
+                          "problemVyresenHodnoceni",
+                          item.value
+                        )
+                      }
+                    >
+                      <RatingNumber>{item.value}</RatingNumber>
+                    </RatingButton>
+                  </Grid>
+                ))}
+              </Grid>
             </Box>
           </Grid>
         </Grid>
