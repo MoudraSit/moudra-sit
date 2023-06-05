@@ -18,6 +18,9 @@ import { useRouter } from "next/router";
 import * as yup from "yup";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQuery } from "react-query";
+import { RatingButton } from "components/rating/RatingButton";
+import { RatingNumber } from "components/rating/RatingNumber";
+import styled from "@emotion/styled";
 
 const ratingError = "Zvolte hodnocení 1-5";
 
@@ -37,7 +40,7 @@ function RatingPage() {
   const isSmallScreen = useMediaQuery(appTheme.breakpoints.down("sm"));
   const { push, query } = useRouter();
 
-  const { mutate: submitRating } = useMutation({
+  const { mutate: submitRating, isLoading: isSubmitting } = useMutation({
     mutationFn: (values: FormValues) =>
       axios
         .post<VisitDTO>(
@@ -110,14 +113,14 @@ function RatingPage() {
   return (
     <ThemeProvider theme={appTheme}>
       <Container maxWidth="md" component="form" onSubmit={formik.handleSubmit}>
-        <Box my="1rem">
-          <Typography variant="h6" component="h6">
-            Hodnocení digitálního asistenta
-          </Typography>
-        </Box>
-        <Box my="2rem">
-          <Typography variant="h4" component="h4" fontWeight="bold">
-            Ohodnoťte prosím spolupráci
+        <Box mb="1rem" mt="3rem">
+          <Typography
+            variant="h6"
+            component="h6"
+            fontWeight="normal"
+            fontSize="1.5rem"
+          >
+            Hodnocení návštěvy digitálního asistenta
           </Typography>
         </Box>
         <Grid container justifyContent="flex-start" columns={16}>
@@ -149,10 +152,19 @@ function RatingPage() {
             </Box>
           </Grid>
         </Grid>
-        <Grid container columns={16} mt="2rem" rowSpacing="2rem">
+        <Box my="2rem">
+          <StyledTitle>{visitDetails.name}</StyledTitle>
+          <Typography fontWeight={400} fontSize="1rem">
+            Vytvořeno: {new Date(visitDetails.createdAt).toLocaleDateString()}
+          </Typography>
+        </Box>
+        <Grid container columns={16} rowSpacing="2rem">
           <Grid item xs={16} md={8}>
             <Typography variant="h6" component="h6">
               Jak hodnotíte komunikaci?
+            </Typography>
+            <Typography variant="h6" component="h6">
+              Vyberte smajlíka.
             </Typography>
             <Box mt="1rem">
               <Grid
@@ -169,25 +181,13 @@ function RatingPage() {
                   { image: "love.png", value: 1 },
                 ].map((item) => (
                   <Grid item key={item.value}>
-                    <button
-                      style={{
-                        padding: isSmallScreen ? "6px" : "10px",
-                        backgroundColor:
-                          formik.values.spokojenostSenior === item.value
-                            ? "#0056B2"
-                            : "#EFF0F6",
-                        display: "flex",
-                        alignItems: "center",
-                        borderRadius: "100%",
-                        border: "none",
-                        outline: "none",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease-in-out",
-                      }}
+                    <RatingButton
+                      isSelected={
+                        formik.values.spokojenostSenior === item.value
+                      }
                       onClick={() =>
                         formik.setFieldValue("spokojenostSenior", item.value)
                       }
-                      type="button"
                     >
                       <Image
                         alt={item.image}
@@ -195,7 +195,7 @@ function RatingPage() {
                         width={isSmallScreen ? 32 : 40}
                         height={isSmallScreen ? 32 : 40}
                       />
-                    </button>
+                    </RatingButton>
                   </Grid>
                 ))}
               </Grid>
@@ -208,19 +208,40 @@ function RatingPage() {
             <Typography variant="h6" component="h6">
               Podařilo se vyřešit dotaz?
             </Typography>
+            <Typography variant="h6" component="h6">
+              Vyberte známku 1-5 jako ve škole.
+            </Typography>
             <Box mt="1rem">
-              <TextField
-                fullWidth
-                type="number"
-                placeholder="ohodnoťte 1-5 jako ve škole *"
-                name="problemVyresenHodnoceni"
-                value={formik.values.problemVyresenHodnoceni}
-                onChange={formik.handleChange}
-                error={!!formik.errors.problemVyresenHodnoceni}
-                helperText={
-                  formik.errors.problemVyresenHodnoceni ? ratingError : null
-                }
-              />
+              <Grid
+                container
+                columns={16}
+                spacing="8px"
+                justifyContent={isSmallScreen ? "center" : "flex-start"}
+              >
+                {[
+                  { value: 1 },
+                  { value: 2 },
+                  { value: 3 },
+                  { value: 4 },
+                  { value: 5 },
+                ].map((item) => (
+                  <Grid item key={item.value}>
+                    <RatingButton
+                      isSelected={
+                        formik.values.problemVyresenHodnoceni === item.value
+                      }
+                      onClick={() =>
+                        formik.setFieldValue(
+                          "problemVyresenHodnoceni",
+                          item.value
+                        )
+                      }
+                    >
+                      <RatingNumber>{item.value}</RatingNumber>
+                    </RatingButton>
+                  </Grid>
+                ))}
+              </Grid>
             </Box>
           </Grid>
         </Grid>
@@ -243,16 +264,32 @@ function RatingPage() {
           </Box>
         </Box>
         <Box my="2rem">
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              bgcolor: "#D3215D !important",
-              color: "white",
-            }}
-          >
-            ODESLAT HODNOCENÍ
-          </Button>
+          <Box sx={{ position: "relative", display: "inline-block" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                bgcolor: "#D3215D !important",
+                color: "white",
+              }}
+              disabled={isSubmitting}
+            >
+              ODESLAT HODNOCENÍ
+            </Button>
+            {isSubmitting && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  color: "white",
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-12px",
+                  marginLeft: "-12px",
+                }}
+              />
+            )}
+          </Box>
         </Box>
       </Container>
     </ThemeProvider>
@@ -260,3 +297,12 @@ function RatingPage() {
 }
 
 export default RatingPage;
+
+const StyledTitle = styled(Typography)`
+  font-size: 2rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.palette.warning.main};
+  &:first-letter {
+    text-transform: uppercase;
+  }
+`;
