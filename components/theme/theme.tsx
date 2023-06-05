@@ -17,10 +17,12 @@ export let appTheme = createTheme({
     tonalOffset: 0.2,
   },
   typography: {
-    fontFamily: "Roboto",
+    fontFamily: "Roboto Condensed",
     allVariants: {
       color: "#3E3E3E",
     },
+    fontWeightBold: 700,
+    fontWeightMedium: 700,
   },
 });
 
