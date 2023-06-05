@@ -3,6 +3,8 @@ import { callTabidoo } from "../../../backend/tabidoo";
 
 export type VisitDTO = {
   id: string;
+  name: string;
+  createdAt: string;
   ratingAlreadyDone: boolean;
   assistant: {
     name: string;
@@ -30,6 +32,12 @@ async function handler(
         iDUzivatele: {
           fields: { jmeno: string; prijmeni: string; mesto: string };
         };
+        dotaz: {
+          fields: {
+            popis: string;
+            datumVytvoreni: string;
+          };
+        };
       };
     }[]
   >("/tables/navsteva/data", {
@@ -45,14 +53,17 @@ async function handler(
     !!resp[0].fields.spokojenostSenior &&
     !!resp[0].fields.problemVyresenHodnoceni;
 
-  const assistent = resp[0].fields.iDUzivatele.fields;
+  const asistent = resp[0].fields.iDUzivatele.fields;
+  const dotaz = resp[0].fields.dotaz.fields;
 
   const data: VisitDTO = {
     id: resp[0].id,
     ratingAlreadyDone,
+    name: dotaz.popis,
+    createdAt: dotaz.datumVytvoreni,
     assistant: {
-      name: `${assistent.jmeno} ${assistent.prijmeni}`,
-      city: assistent.mesto,
+      name: `${asistent.jmeno} ${asistent.prijmeni}`,
+      city: asistent.mesto,
     },
   };
 

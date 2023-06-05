@@ -20,6 +20,7 @@ import axios, { AxiosError } from "axios";
 import { useMutation, useQuery } from "react-query";
 import { RatingButton } from "components/rating/RatingButton";
 import { RatingNumber } from "components/rating/RatingNumber";
+import styled from "@emotion/styled";
 
 const ratingError = "Zvolte hodnocení 1-5";
 
@@ -114,12 +115,7 @@ function RatingPage() {
       <Container maxWidth="md" component="form" onSubmit={formik.handleSubmit}>
         <Box my="1rem">
           <Typography variant="h6" component="h6">
-            Hodnocení digitálního asistenta
-          </Typography>
-        </Box>
-        <Box my="2rem">
-          <Typography variant="h4" component="h4" fontWeight="bold">
-            Ohodnoťte prosím spolupráci
+            Hodnocení návštěvy digitálního asistenta
           </Typography>
         </Box>
         <Grid container justifyContent="flex-start" columns={16}>
@@ -151,10 +147,19 @@ function RatingPage() {
             </Box>
           </Grid>
         </Grid>
+        <Box my="2rem">
+          <StyledTitle>{visitDetails.name}</StyledTitle>
+          <Typography fontWeight={400} fontSize="1rem">
+            Vytvořeno: {new Date(visitDetails.createdAt).toLocaleDateString()}
+          </Typography>
+        </Box>
         <Grid container columns={16} mt="2rem" rowSpacing="2rem">
           <Grid item xs={16} md={8}>
             <Typography variant="h6" component="h6">
               Jak hodnotíte komunikaci?
+            </Typography>
+            <Typography variant="h6" component="h6">
+              Vyberte smajlíka.
             </Typography>
             <Box mt="1rem">
               <Grid
@@ -197,6 +202,9 @@ function RatingPage() {
           <Grid item xs={16} md={8}>
             <Typography variant="h6" component="h6">
               Podařilo se vyřešit dotaz?
+            </Typography>
+            <Typography variant="h6" component="h6">
+              Vyberte známku 1-5 jako ve škole.
             </Typography>
             <Box mt="1rem">
               <Grid
@@ -284,3 +292,12 @@ function RatingPage() {
 }
 
 export default RatingPage;
+
+const StyledTitle = styled(Typography)`
+  font-size: 2rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.palette.warning.main};
+  &:first-letter {
+    text-transform: uppercase;
+  }
+`;
