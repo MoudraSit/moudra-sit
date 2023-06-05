@@ -113,8 +113,13 @@ function RatingPage() {
   return (
     <ThemeProvider theme={appTheme}>
       <Container maxWidth="md" component="form" onSubmit={formik.handleSubmit}>
-        <Box my="1rem">
-          <Typography variant="h6" component="h6">
+        <Box mb="1rem" mt="3rem">
+          <Typography
+            variant="h6"
+            component="h6"
+            fontWeight="normal"
+            fontSize="1.5rem"
+          >
             Hodnocení návštěvy digitálního asistenta
           </Typography>
         </Box>
@@ -153,7 +158,7 @@ function RatingPage() {
             Vytvořeno: {new Date(visitDetails.createdAt).toLocaleDateString()}
           </Typography>
         </Box>
-        <Grid container columns={16} mt="2rem" rowSpacing="2rem">
+        <Grid container columns={16} rowSpacing="2rem">
           <Grid item xs={16} md={8}>
             <Typography variant="h6" component="h6">
               Jak hodnotíte komunikaci?
