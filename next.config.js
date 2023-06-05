@@ -16,7 +16,7 @@ const nextConfig = {
         has: [
           {
             type: "host",
-            value: "moudrasit.cz",
+            value: "app.moudrasit.cz",
           },
         ],
       },
