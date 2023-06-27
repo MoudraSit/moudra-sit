@@ -32,21 +32,6 @@ function Step3Form({ uploadedImage }: ImageType) {
             rows={5}
             fullWidth
             required
-            sx={{
-              ".MuiInputBase-root": {
-                backgroundColor: "white",
-              },
-            }}
-            inputProps={{
-              style: {
-                WebkitBoxShadow: "0 0 0 1000px white inset",
-                WebkitTextFillColor: "black",
-                padding: 0,
-                fontSize: 20,
-              },
-            }}
-            InputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -71,14 +56,7 @@ function Step3Form({ uploadedImage }: ImageType) {
             required
             inputProps={{
               maxLength: 40,
-              style: {
-                WebkitBoxShadow: "0 0 0 1000px white inset",
-                WebkitTextFillColor: "black",
-                fontSize: 20,
-              },
             }}
-            InputProps={{ style: { fontSize: 20 } }}
-            InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>
         {/* <Grid item xs={12}>

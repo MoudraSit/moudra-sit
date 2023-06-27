@@ -7,7 +7,7 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "../theme/theme";
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, styled } from "@mui/material";
 import Step1Form from "./steps/step1";
 import Step2Form from "./steps/step2";
 import Step3Form from "./steps/step3";
@@ -282,7 +282,7 @@ export default function VerticalLinearStepper() {
                                 borderRadius: 2,
                               }}
                             >
-                              <Container maxWidth="md">
+                              <FormContainer maxWidth="md">
                                 <>
                                   {renderStepContent(
                                     index,
@@ -334,7 +334,7 @@ export default function VerticalLinearStepper() {
                                     </Button>
                                   )}
                                 </Box>
-                              </Container>
+                              </FormContainer>
                             </Box>
                           </Container>
                         </StepContent>
@@ -351,3 +351,16 @@ export default function VerticalLinearStepper() {
     </>
   );
 }
+
+const FormContainer = styled(Container)`
+  .MuiInputBase-root {
+    background-color: white;
+  }
+
+  //autocomplete overrides
+  .MuiInputBase-input {
+    -webkit-text-fill-color: black;
+    box-shadow: 0 0 0 1000px white inset;
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
+`;
