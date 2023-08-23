@@ -10,10 +10,11 @@ import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Image from "next/image";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import logo from "public/images/logo/logo.svg";
 import { useRouter } from "next/router";
+import { Role } from "backend/role";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -21,6 +22,7 @@ function SignInSide() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const router = useRouter();
+  const session = useSession();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -32,10 +34,8 @@ function SignInSide() {
       password: data.get("password"),
     });
 
-    // succesfully singed in, redirect to profile
     if (!result?.error) {
       console.log(result);
-      router.replace("/profile");
 
       // otherwise show error to user
     } else {
@@ -43,6 +43,16 @@ function SignInSide() {
       setErrorMessage(result.error);
     }
   }
+
+  React.useEffect(() => {
+    // succesfully singed in, redirect to profile
+    if (session?.data?.user?.role === Role.SENIOR) {
+      router.replace("/senior");
+    }
+    if (session?.data?.user?.role === Role.DA) {
+      router.replace("/asistent");
+    }
+  }, [router, session]);
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -53,13 +63,16 @@ function SignInSide() {
           xs={false}
           sm={false}
           md={7}
-          sx={{
-            backgroundImage: `url('/images/sing-in/sing-in.jpg')`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+          style={{ position: "relative", overflow: "hidden" }}
+        >
+          <Image
+            src="/images/sign-in/welcome.jpg"
+            alt="Uvodni foto - Moudra sit"
+            style={{ objectFit: "cover" }}
+            quality={75}
+            fill
+          />
+        </Grid>
         <Grid
           item
           xs={12}

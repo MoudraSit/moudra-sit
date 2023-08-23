@@ -14,45 +14,25 @@ import Grid from "@mui/material/Grid";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IRegisterFields } from "pages/api/auth/register";
-import ApiRegisterSenior from "./api/senior";
-import ApiGetRegisterSenior from "./api/get-senior";
 import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik } from "formik";
 import { registerSchema } from "./schema/register-schema";
 import TextFieldForm from "components/form/model/input-form";
 import RegionForm from "components/form/model/region-form";
 import Image from "next/image";
+import * as yup from "yup";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 import logo from "public/images/logo/logo.svg";
-import {
-  capitalizeFirstLetter,
-  removeSpaces,
-} from "components/form/api/senior";
-import { scrollIntoView } from "components/form/vertical-stepper";
+import { useMutation } from "react-query";
 
-export interface IValuesRegister {
-  name: string;
-  surname: string;
-  email: string;
-  year: string;
-  // address: string;
-  city: string;
-  zipCode: string;
-  region: string;
-  plusCode: string;
-  phoneNumber: string;
-  password: string;
-  confirmPwd: string;
-  agreement: boolean;
-}
+export type IRegisterValues = yup.InferType<typeof registerSchema>;
 
 const initialValues = {
   name: "",
   surname: "",
   email: "",
   year: "",
-  // address: "",
   city: "",
   zipCode: "",
   region: "",
@@ -65,75 +45,27 @@ const initialValues = {
 
 function Register() {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState(false);
-  const [APIerrorMessage, setAPIErrorMessage] = React.useState(false);
-  const [successMessage, setSuccessMessage] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  const currentValidationSchema = registerSchema;
 
-  // onSubmit method
-  async function handleSend(
-    values: IValuesRegister,
-    actions: FormikHelpers<IValuesRegister>
-  ) {
-    const formValues: IRegisterFields = {
-      fields: {
-        jmeno: capitalizeFirstLetter(values.name),
-        prijmeni: capitalizeFirstLetter(values.surname),
-        // ulice: values.address,
-        mesto: capitalizeFirstLetter(values.city),
-        PSC: removeSpaces(values.zipCode),
-        kraj: values.region,
-        stat: "Česko",
-        email: values.email,
-        rokNarozeni: +values.year,
-        telefon: values.plusCode + removeSpaces(values.phoneNumber),
-        heslo: values.password,
-      },
-    };
-
-    console.log("zasilam na API");
-
-    try {
-      // set messages to default state
-      setAPIErrorMessage(false);
-      setErrorMessage(false);
-
-      // check if user with the same email doesn't exists
-      const isRegistred = await ApiGetRegisterSenior(formValues);
-
-      if (!isRegistred) {
-        const regi = await ApiRegisterSenior(formValues);
-
-        setSuccessMessage(true);
-      } else {
-        setErrorMessage(true);
-
-        // set submit button to default position
-        actions.setTouched({});
-        actions.setSubmitting(false);
-      }
-    } catch (error) {
-      setAPIErrorMessage(true);
-
-      // set submit button to default position
-      actions.setTouched({});
-      actions.setSubmitting(false);
-
-      //show error
-      console.log(error);
-    }
-
-    // automatically scrolling into result
-    setTimeout(function () {
-      window.scrollBy({
-        top: 500,
-        left: 0,
-        behavior: "smooth",
-      });
-    }, 300);
-  }
+  const {
+    mutate: register,
+    isError,
+    isSuccess,
+    isLoading: isSubmitting,
+    error,
+  } = useMutation<AxiosResponse, AxiosError<{ message: string }>, any, any>({
+    mutationFn: (values: IRegisterValues) =>
+      axios.post<unknown>(`/api/auth/register`, values),
+    onSuccess: () => {
+      setTimeout(function () {
+        window.scrollBy({
+          top: 500,
+          left: 0,
+          behavior: "smooth",
+        });
+      }, 300);
+    },
+  });
 
   return (
     <>
@@ -156,14 +88,12 @@ function Register() {
             <Typography variant="h1" sx={{ mt: 3, mb: 3, fontWeight: "bold" }}>
               Registrace uživatele
             </Typography>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={currentValidationSchema}
-              onSubmit={(values: IValuesRegister, actions) => {
-                handleSend(values, actions);
-              }}
+            <Formik<IRegisterValues>
+              initialValues={initialValues as unknown as IRegisterValues}
+              validationSchema={registerSchema}
+              onSubmit={(values) => register(values)}
             >
-              {({ isSubmitting, setFieldValue, values }) => (
+              {({ setFieldValue }) => (
                 <Form autoComplete="on">
                   <Box sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
@@ -390,7 +320,6 @@ function Register() {
                                 <IconButton
                                   aria-label="toggle password visibility"
                                   onClick={handleClickShowPassword}
-                                  onMouseDown={handleMouseDownPassword}
                                 >
                                   {showPassword ? (
                                     <Visibility />
@@ -428,7 +357,6 @@ function Register() {
                                 <IconButton
                                   aria-label="toggle password visibility"
                                   onClick={handleClickShowPassword}
-                                  onMouseDown={handleMouseDownPassword}
                                 >
                                   {showPassword ? (
                                     <Visibility />
@@ -485,7 +413,7 @@ function Register() {
                     >
                       Registrovat se
                     </Button>
-                    {APIerrorMessage ? (
+                    {isError && (
                       <>
                         <Typography
                           sx={{
@@ -497,36 +425,27 @@ function Register() {
                           align="center"
                           color="primary.main"
                         >
-                          Omlouváme se, ale došlo k chybě. Zkontrolujte prosím
-                          internetové připojení a zkuste stisknout na tlačítko
-                          Registrovat se znovu. Pokud problémy nadále
-                          přetrvávají, zkuste prosím vyplnit registraci později.
-                          Děkujeme za pochopení.
+                          {error.response?.data.message ? (
+                            <>{error.response.data.message}</>
+                          ) : (
+                            <>
+                              Omlouváme se, ale došlo k chybě. Zkontrolujte
+                              prosím internetové připojení a zkuste stisknout na
+                              tlačítko Registrovat se znovu. Pokud problémy
+                              nadále přetrvávají, zkuste prosím vyplnit
+                              registraci později. Děkujeme za pochopení.
+                            </>
+                          )}
                         </Typography>
                       </>
-                    ) : null}
-                    {errorMessage ? (
+                    )}
+                    {isSuccess && (
                       <>
-                        <Link href="/sing-in" variant="body2" color="#ff0000">
-                          <Typography
-                            sx={{
-                              pt: 5,
-                              color: "red",
-                              fontWeight: "bold",
-                            }}
-                            variant="h5"
-                            align="center"
-                            color="primary.main"
-                          >
-                            Uživatele se zadaným emailem už v systému evidujeme.
-                            Zkuste se proto přihlásit tlačítkem Přihlásit se.
-                          </Typography>
-                        </Link>
-                      </>
-                    ) : null}
-                    {successMessage ? (
-                      <>
-                        <Link href="/sing-in" variant="body2" color="#028790">
+                        <Link
+                          href="/prihlaseni"
+                          variant="body2"
+                          color="#028790"
+                        >
                           <Typography
                             sx={{
                               pt: 5,
@@ -542,10 +461,14 @@ function Register() {
                           </Typography>
                         </Link>
                       </>
-                    ) : null}
+                    )}
                     <Grid container justifyContent="flex-end">
                       <Grid item>
-                        <Link href="/sing-in" variant="body2" color="#000000">
+                        <Link
+                          href="/prihlaseni"
+                          variant="body2"
+                          color="#000000"
+                        >
                           <Typography align="center" paragraph>
                             Již máte účet? Přihlaste se zde
                           </Typography>

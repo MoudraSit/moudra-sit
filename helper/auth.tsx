@@ -1,7 +1,7 @@
 import { compare, hash } from "bcryptjs";
 
 // for hashing and salting the user passwords
-export async function hashPassword(password: string): Promise<void | string> {
+export async function hashPassword(password: string): Promise<string> {
   const hashedPassword = await hash(password, 12);
   return hashedPassword;
 }

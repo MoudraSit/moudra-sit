@@ -15,8 +15,11 @@ import { appTheme } from "components/theme/theme";
 import Image from "next/image";
 
 import logo from "public/images/logo/logo.svg";
+import { useSession } from "next-auth/react";
 
 function Profile() {
+  const session = useSession();
+
   return (
     <ThemeProvider theme={appTheme}>
       <Box
@@ -275,7 +278,10 @@ function Profile() {
             >
               <Image src={logo} alt={""} height="30" />
               <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 3 }}>
-                Toto je skrytý obsah, který vidí pouze přihlášení uživatelé
+                {session.data?.user?.name}
+              </Typography>
+              <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 3 }}>
+                {session.data?.user?.email}
               </Typography>
             </Box>
           </Grid>
