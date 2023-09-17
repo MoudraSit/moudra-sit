@@ -1,6 +1,6 @@
+import CloseIcon from "@mui/icons-material/Close";
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
-import CloseIcon from "@mui/icons-material/Close";
 
 function InfoLine() {
   const [hideInfo, setHideInfo] = React.useState("flex");
@@ -28,9 +28,8 @@ function InfoLine() {
       }}
     >
       <Typography variant="h6" align="center" color="white">
-        Upozornění: Tato služba je v pilotním provozu a návštěvy digitálních
-        asistentů fungují zatím pouze v Praze, Brandýse nad Labem, Mnichově
-        Hradišti.
+        Upozornění: Tato služba je v pilotním provozu a návštěvy digitálních asistentů fungují zatím pouze v Praze,
+        Brandýse nad Labem, Mnichově Hradišti a Poděbradech.
       </Typography>
       <Button
         sx={{
