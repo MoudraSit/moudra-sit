@@ -28,7 +28,7 @@ function InfoLine() {
       }}
     >
       <Typography variant="h6" align="center" color="white">
-        Upozornění: Tato služba je v pilotním provozu a návštěvy digitálních asistentů fungují zatím pouze v Praze,
+        Upozornění - Tato služba je v pilotním provozu a návštěvy digitálních asistentů fungují zatím pouze v Praze,
         Brandýse nad Labem, Mnichově Hradišti a Poděbradech.
       </Typography>
       <Button
