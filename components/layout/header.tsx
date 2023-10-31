@@ -1,20 +1,20 @@
-import * as React from "react";
+import { Avatar, ListItemIcon, Tooltip } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import { Avatar, ListItemIcon, Tooltip } from "@mui/material";
+import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link";
+import * as React from "react";
 
-import logo from "public/images/logo/logo.svg";
-import Image from "next/image";
-import InformationLine from "./information-line";
-import { useSession, signOut } from "next-auth/react";
 import { Logout, Person } from "@mui/icons-material";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import logo from "public/images/logo/logo.svg";
+import InformationLine from "./information-line";
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -37,7 +37,7 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link href="https://moudrasit.cz/">
-            <Image src={logo} alt={"Moudrá Síť logo"} height="30" />
+            <Image src={logo} alt={"Moudrá Síť logo"} height="40" />
           </Link>
           <Box
             sx={{
@@ -74,9 +74,7 @@ function ResponsiveAppBar() {
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
-                    <Avatar sx={{ width: 32, height: 32 }}>
-                      {data.user?.name?.charAt(0) ?? "M"}
-                    </Avatar>
+                    <Avatar sx={{ width: 32, height: 32 }}>{data.user?.name?.charAt(0) ?? "M"}</Avatar>
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -116,10 +114,7 @@ function ResponsiveAppBar() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem
-                  href="/profile"
-                  sx={{ display: { xs: "flex", sm: "none" } }}
-                >
+                <MenuItem href="/profile" sx={{ display: { xs: "flex", sm: "none" } }}>
                   <ListItemIcon>
                     <Person fontSize="small" />
                   </ListItemIcon>
