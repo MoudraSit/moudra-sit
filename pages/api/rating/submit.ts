@@ -62,6 +62,7 @@ async function handler(
         spokojenostSenior: values.spokojenostSenior,
         problemVyresenHodnoceni: values.problemVyresenHodnoceni,
         poznamkaSeniorem: values.poznamkaSeniorem,
+        hodnoceniVyplneno: new Date(),
       },
     },
   });
