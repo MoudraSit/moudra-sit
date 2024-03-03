@@ -7,10 +7,7 @@ const configuration = new Configuration({ apiKey: process.env.OPENAI_API_KEY });
 const openai = new OpenAIApi(configuration);
 
 // registration
-async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
-): Promise<void> {
+async function handler(request: NextApiRequest, response: NextApiResponse): Promise<void> {
   const { body } = request;
 
   console.log("Executing /api/chatbot/chat-gpt handler.");
@@ -57,9 +54,7 @@ async function handler(
       max_tokens: 1024,
     });
 
-    const gptResponse =
-      (await responseAPI.data.choices[0].message?.content.trim()) ||
-      "Omlouváme se, došlo k chybě.";
+    const gptResponse = responseAPI.data.choices[0].message?.content?.trim() || "Omlouváme se, došlo k chybě.";
 
     console.log(gptResponse);
 
