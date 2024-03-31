@@ -120,28 +120,35 @@ function renderStepContent(
 export default function FormTest() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [progressBar, setProgressbBar] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(false);
   const currentValidationSchema = defaultSchema[activeStep];
 
   // onSubmit handler function
-  async function handleSend(index: number, values: IValues, actions: FormikHelpers<IValues>) {
+  async function handleSendTest(index: number, values: IValues, actions: FormikHelpers<IValues>) {
     if (index === steps.length - 1) {
-      // show progress bar
-      setProgressbBar(true);
+      try {
+        // show progress bar
+        setProgressbBar(true);
 
-      lastStep = false;
+        // switch off progress bar
+        setProgressbBar(false);
 
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+        // fold steps
+        lastStep = true;
 
-      // switch off progress bar
-      setProgressbBar(false);
+        // show content of last step
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-      // fold steps
-      lastStep = true;
+        console.log("API communication - OK");
+      } catch (error) {
+        lastStep = false;
+        setProgressbBar(false);
+        setErrorMessage(true);
 
-      // show content of last step
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
-      console.log("Succesfully finished testing form.");
+        // set submit button to default position
+        actions.setTouched({});
+        actions.setSubmitting(false);
+      }
     } else {
       // go to next step
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -168,7 +175,7 @@ export default function FormTest() {
             initialValues={intial}
             validationSchema={currentValidationSchema}
             onSubmit={(values: IValues, actions) => {
-              handleSend(activeStep, values, actions);
+              handleSendTest(activeStep, values, actions);
 
               // scroll into new section
               scrollIntoView();
