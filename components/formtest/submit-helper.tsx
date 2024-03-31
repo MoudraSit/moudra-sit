@@ -10,18 +10,7 @@ const phoneCategory = "Mobil";
 const printerCategory = "Tiskárna";
 const otherCategory = "Jiné IT zařízení";
 
-async function submitHelperTest(
-  index: number,
-  values: IValues,
-  actions: FormikHelpers<IValues>,
-  executeRecaptcha: {
-    (action?: string | undefined): Promise<string>;
-    (arg0: string): string | PromiseLike<string>;
-  }
-) {
-  // get recaptcha token
-  const gReCaptchaToken: string = await executeRecaptcha("enquiryFormSubmit");
-
+async function submitHelperTest(index: number, values: IValues, actions: FormikHelpers<IValues>) {
   let idRequirment = null;
 
   // GET method to check if the record is already in the table

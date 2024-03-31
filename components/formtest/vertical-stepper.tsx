@@ -19,6 +19,7 @@ import Step3Form from "../form/steps/step3";
 import Step4Form from "../form/steps/step4";
 import Step5Form from "../form/steps/step5";
 import { appTheme } from "../theme/theme";
+import submitHelperTest from "./submit-helper";
 
 let lastStep = false;
 
@@ -129,6 +130,8 @@ export default function FormTest() {
       try {
         // show progress bar
         setProgressbBar(true);
+
+        await submitHelperTest(index, values, actions);
 
         // switch off progress bar
         setProgressbBar(false);
