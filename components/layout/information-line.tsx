@@ -1,5 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Link } from "@mui/material";
 import React from "react";
 
 function InfoLine() {
@@ -27,10 +27,10 @@ function InfoLine() {
         justifyContent: "center",
       }}
     >
-      <Typography variant="h6" align="center" color="white">
-        Upozornění - Tato služba je v pilotním provozu a návštěvy digitálních asistentů fungují zatím pouze v Praze,
-        Brandýse nad Labem, Mnichově Hradišti a Poděbradech.
-      </Typography>
+      <Link variant="h6" href="https://moudrasit.cz/mapa">
+        Upozornění - návštěvy digitálních asistentů fungují zatím pouze ve vybraných lokalitách. Pro
+        zobrazení lokalit klikněte zde.
+      </Link>
       <Button
         sx={{
           ml: 1,
