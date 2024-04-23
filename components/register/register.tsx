@@ -393,7 +393,7 @@ function Register() {
                               target="_blank"
                               fontSize={24}
                             >
-                              Souhlasím se zpracováním osobních údajů *
+                              Souhlasím se zpracováním osobních údajů
                             </Link>
                           }
                         />
