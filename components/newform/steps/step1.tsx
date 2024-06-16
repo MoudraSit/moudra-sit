@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import TextFieldForm from "../model/input-form";
 
-function Step1Form() {
+function Step1Form({ onClick }: { onClick: () => void }) {
   return (
     <>
       <div id="section1" />
@@ -15,20 +15,22 @@ function Step1Form() {
           textAlign: "left",
         }}
       >
-        <TextFieldForm
-          id="year"
-          label="Rok narození"
-          name="year"
-          type="tel"
-          color="info"
-          variant="outlined"
-          inputhelper="Napište rok Vašeho narození"
-          inputProps={{
-            maxLength: 4,
-          }}
-          sx={{ maxWidth: 230 }}
-          required
-        />
+        <div onClick={onClick}>
+          <TextFieldForm
+            id="year"
+            label="Rok narození"
+            name="year"
+            type="tel"
+            color="info"
+            variant="outlined"
+            inputhelper="Napište rok Vašeho narození"
+            inputProps={{
+              maxLength: 4,
+            }}
+            sx={{ maxWidth: 230 }}
+            required
+          />
+        </div>
       </Box>
     </>
   );
