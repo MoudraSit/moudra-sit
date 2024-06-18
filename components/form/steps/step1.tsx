@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import * as React from "react";
 import TextFieldForm from "../model/input-form";
 
 function Step1Form() {
@@ -7,8 +6,7 @@ function Step1Form() {
     <>
       <div id="section1" />
       <Typography variant="h2" align="left" color="#3e3e3e" fontWeight="bold">
-        Službu poskytujeme zdarma seniorům starším 60 let, proto potřebujeme
-        ověřit Váš věk.
+        Službu poskytujeme zdarma seniorům starším 60 let, proto potřebujeme ověřit Váš věk.
       </Typography>
       <Box
         sx={{
