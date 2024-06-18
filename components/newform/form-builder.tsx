@@ -1,6 +1,5 @@
 import { Container, Typography, styled } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { ThemeProvider } from "@mui/material/styles";
 import TestInfoLine from "components/newform/test-info-line";
 import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
@@ -8,12 +7,13 @@ import * as React from "react";
 import { ImageType } from "react-images-uploading";
 import { defaultSchema } from "../form/schemas/default-schema";
 import ProgressBarComponent from "../form/steps/progress-bar";
-import Step2Form from "../form/steps/step2";
-import Step3Form from "../form/steps/step3";
-import Step4Form from "../form/steps/step4";
-import Step5Form from "../form/steps/step5";
 import { appTheme } from "../theme/theme";
+import FinalStep from "./steps/final-step";
+import StepSuccess from "./steps/step-success";
 import Step1Form from "./steps/step1";
+import Step2Form from "./steps/step2";
+import Step3Form from "./steps/step3";
+import Step4Form from "./steps/step4";
 import submitHelperTest from "./submit-helper";
 
 let lastStep = false;
@@ -92,7 +92,7 @@ function renderStepContent(
   values: IValues,
   errors: FormikErrors<IValues>,
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void,
-  handleClick: () => void
+  setActiveStep: (step: number) => void
 ) {
   const uploadedImage = (image: ImageType) => {
     setFieldValue("image", image);
@@ -100,15 +100,21 @@ function renderStepContent(
 
   switch (step) {
     case 0:
-      return <Step1Form onClick={handleClick} />;
+      return <Step1Form values={values} />;
     case 1:
-      return <Step2Form setFieldValue={setFieldValue} errors={errors} />;
+      return (
+        <Step2Form setFieldValue={setFieldValue} errors={errors} setActiveStep={setActiveStep} />
+      );
     case 2:
-      return <Step3Form uploadedImage={uploadedImage} />;
+      return (
+        <Step3Form uploadedImage={uploadedImage} setActiveStep={setActiveStep} values={values} />
+      );
     case 3:
-      return <Step4Form setFieldValue={setFieldValue} />;
+      return (
+        <Step4Form setFieldValue={setFieldValue} setActiveStep={setActiveStep} values={values} />
+      );
     case 4:
-      return <Step5Form values={values} />;
+      return <FinalStep values={values} setActiveStep={setActiveStep} />;
     default:
       return <div>Not Found</div>;
   }
@@ -118,12 +124,7 @@ export default function FormBuilder() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [progressBar, setProgressbBar] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(false);
-  const [buttonOpacity, setButtonOpacity] = React.useState(0);
   const currentValidationSchema = defaultSchema[activeStep];
-
-  const handleClick = () => {
-    setButtonOpacity(1);
-  };
 
   // onSubmit handler function
   async function handleSendTest(index: number, values: IValues, actions: FormikHelpers<IValues>) {
@@ -171,7 +172,7 @@ export default function FormBuilder() {
         <Box
           sx={{
             bgcolor: "#037f87",
-            pt: 8,
+            pt: 4,
             pb: 6,
           }}
         >
@@ -182,55 +183,40 @@ export default function FormBuilder() {
               handleSendTest(activeStep, values, actions);
 
               // scroll into new section
-              scrollIntoView();
+              //scrollIntoView();
             }}
           >
             {({ isSubmitting, setFieldValue, values, errors }) => (
               <Form autoComplete="on">
                 <Container maxWidth="xl">
-                  <Typography variant="h1" align="left" color="primary" fontWeight="bold">
+                  <Typography
+                    sx={{ pl: 8 }}
+                    variant="h1"
+                    align="left"
+                    color="primary"
+                    fontWeight="bold"
+                  >
                     Kontaktní formulář
                   </Typography>
 
-                  <Box
-                    sx={{
-                      bgcolor: "#f5f3ee",
-                      mt: 8,
-                      pt: 8,
-                      pl: 8,
-                      pb: 6,
-                      borderRadius: 2,
-                    }}
-                  >
-                    {renderStepContent(activeStep, values, errors, setFieldValue, handleClick)}
-                    {progressBar ? <ProgressBarComponent /> : null}
-                    {activeStep === 0 && (
-                      <Box
-                        sx={{
-                          bgcolor: "#f5f3ee",
-                          pt: 8,
-                          textAlign: "left",
-                          opacity: buttonOpacity,
-                          transition: "opacity 0.3s ease-in-out",
-                        }}
-                      >
-                        <Button
-                          variant="contained"
-                          type="submit"
-                          disabled={isSubmitting}
-                          sx={{
-                            mt: 1,
-                            mr: 1,
-                            bgcolor: "#D3215D !important",
-                            color: "white",
-                          }}
-                        >
-                          Pokračovat
-                        </Button>
-                      </Box>
-                    )}
-                  </Box>
+                  {activeStep !== steps.length && (
+                    <Box
+                      sx={{
+                        bgcolor: "#f5f3ee",
+                        mt: 4,
+                        pt: 8,
+                        pl: 8,
+                        pr: 8,
+                        pb: 6,
+                        borderRadius: 2,
+                      }}
+                    >
+                      {renderStepContent(activeStep, values, errors, setFieldValue, setActiveStep)}
+                      {progressBar ? <ProgressBarComponent /> : null}
+                    </Box>
+                  )}
                 </Container>
+                {activeStep === steps.length && <StepSuccess />}
               </Form>
             )}
           </Formik>

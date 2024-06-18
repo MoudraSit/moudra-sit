@@ -1,17 +1,43 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
-import { ImageType } from "react-images-uploading";
 import TextFieldForm from "../model/input-form";
 import UploadPicture from "../modules/upload-picture";
-import UploadRecord from "../modules/upload-record";
 
-function Step3Form({ uploadedImage }: ImageType) {
+function Step3Form(props: any) {
+  const [buttonOpacity, setButtonOpacity] = React.useState(0);
+
+  const handleClick = () => {
+    setButtonOpacity(1);
+  };
+
+  const handleClickBack = () => {
+    props.setActiveStep(1);
+  };
+
   return (
     <>
       <div id="section3" />
+      <div style={{ display: "flex" }}>
+        <Button
+          variant="contained"
+          onClick={handleClickBack}
+          sx={{
+            mt: 1,
+            mr: 1,
+            bgcolor: "#D3215D !important",
+            color: "white",
+          }}
+        >
+          Zpět
+        </Button>
+        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+          Popis problému
+        </Typography>
+      </div>
+
       <Grid item xs={12}>
         <Typography
-          sx={{ pb: 4, fontWeight: "bold" }}
+          sx={{ pb: 4, pt: 4, fontWeight: "bold" }}
           variant="h2"
           align="left"
           color="#3e3e3e"
@@ -44,21 +70,25 @@ function Step3Form({ uploadedImage }: ImageType) {
             Název problému (max. 6 slov, např. “nefunguje wifi”)
           </Typography>
         </Grid>
+
         <Grid item xs={12}>
-          <TextFieldForm
-            id="requirmentName"
-            label="Napište několik slov"
-            name="requirmentName"
-            inputhelper=""
-            variant="outlined"
-            color="info"
-            fullWidth
-            required
-            inputProps={{
-              maxLength: 40,
-            }}
-          />
+          <div onClick={handleClick}>
+            <TextFieldForm
+              id="requirmentName"
+              label="Napište několik slov"
+              name="requirmentName"
+              inputhelper=""
+              variant="outlined"
+              color="info"
+              fullWidth
+              required
+              inputProps={{
+                maxLength: 40,
+              }}
+            />
+          </div>
         </Grid>
+
         {/* <Grid item xs={12}>
           <Typography
             sx={{ pt: 6, fontWeight: "bold" }}
@@ -74,19 +104,36 @@ function Step3Form({ uploadedImage }: ImageType) {
           <UploadRecord />
         </Grid> */}
         <Grid item xs={12}>
-          <Typography
-            sx={{ pt: 6, fontWeight: "bold" }}
-            variant="h2"
-            align="left"
-            color="#3e3e3e"
-          >
+          <Typography sx={{ pt: 6, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
             Máte fotografii, kterou nám k tomu můžete poslat? (nepovinné)
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <UploadPicture uploadedImage={uploadedImage} />
+          <UploadPicture uploadedImage={props.uploadedImage} />
         </Grid>
       </Grid>
+      <Box
+        sx={{
+          bgcolor: "#f5f3ee",
+          pt: 8,
+          textAlign: "left",
+          opacity: props.values.requirmentName === "" ? buttonOpacity : 1,
+          transition: "opacity 0.3s ease-in-out",
+        }}
+      >
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{
+            mt: 1,
+            mr: 1,
+            bgcolor: "#D3215D !important",
+            color: "white",
+          }}
+        >
+          Pokračovat
+        </Button>
+      </Box>
     </>
   );
 }

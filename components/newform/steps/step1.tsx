@@ -1,10 +1,28 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import React from "react";
+import { IValues } from "../form-builder";
 import TextFieldForm from "../model/input-form";
 
-function Step1Form({ onClick }: { onClick: () => void }) {
+function Step1Form(props: { values: IValues }) {
+  const [buttonOpacity, setButtonOpacity] = React.useState(0);
+
+  const handleClick = () => {
+    setButtonOpacity(1);
+  };
+
   return (
     <>
       <div id="section1" />
+      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+        Rok narození
+      </Typography>
+      <Box
+        sx={{
+          bgcolor: "#f5f3ee",
+          pt: 4,
+          textAlign: "left",
+        }}
+      ></Box>
       <Typography variant="h2" align="left" color="#3e3e3e" fontWeight="bold">
         Službu poskytujeme zdarma seniorům starším 60 let, proto potřebujeme ověřit Váš věk.
       </Typography>
@@ -15,7 +33,7 @@ function Step1Form({ onClick }: { onClick: () => void }) {
           textAlign: "left",
         }}
       >
-        <div onClick={onClick}>
+        <div onClick={handleClick}>
           <TextFieldForm
             id="year"
             label="Rok narození"
@@ -31,6 +49,29 @@ function Step1Form({ onClick }: { onClick: () => void }) {
             required
           />
         </div>
+      </Box>
+
+      <Box
+        sx={{
+          bgcolor: "#f5f3ee",
+          pt: 8,
+          textAlign: "left",
+          opacity: props.values.year === "" ? buttonOpacity : 1,
+          transition: "opacity 0.3s ease-in-out",
+        }}
+      >
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{
+            mt: 1,
+            mr: 1,
+            bgcolor: "#D3215D !important",
+            color: "white",
+          }}
+        >
+          Pokračovat
+        </Button>
       </Box>
     </>
   );
