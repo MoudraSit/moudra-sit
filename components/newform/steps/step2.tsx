@@ -309,7 +309,7 @@ function Step2Form(props: any) {
                       fontWeight: "bold",
                     }}
                   >
-                    Jiné IT zařízení
+                    Jiné zařízení
                   </Typography>
                   <Box
                     textAlign="center"
