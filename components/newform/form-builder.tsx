@@ -114,7 +114,9 @@ function renderStepContent(
         <Step4Form setFieldValue={setFieldValue} setActiveStep={setActiveStep} values={values} />
       );
     case 4:
-      return <FinalStep values={values} setActiveStep={setActiveStep} />;
+      return (
+        <FinalStep values={values} setActiveStep={setActiveStep} setFieldValue={setFieldValue} />
+      );
     default:
       return <div>Not Found</div>;
   }
