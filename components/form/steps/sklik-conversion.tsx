@@ -15,7 +15,7 @@ function SklikConversion() {
     <>
       <Head>
         <script type="text/javascript" src="https://c.seznam.cz/js/rc.js"></script>
-        <script>customScript</script>
+        <script>{customScript}</script>
       </Head>
     </>
   );
