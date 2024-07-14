@@ -1,10 +1,11 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import * as React from "react";
+import SklikConversion from "./sklik-conversion";
 
 function StepSuccess() {
   return (
     <>
       <Container maxWidth="md">
+        <SklikConversion />
         <Box
           sx={{
             bgcolor: "#f5f3ee",
@@ -30,12 +31,10 @@ function StepSuccess() {
               color="#3e3e3e"
               sx={{ fontWeight: "bold", pb: 2 }}
             >
-              Váš dotaz jsme přijali ke zpracování. Do 5 dnů Vás bude
-              telefonicky kontaktovat digitální asistent, který Vám pomůže
-              situaci vyřešit. Společně se domluvíte, zda bude potřeba osobní
-              návštěva, nebo to zvládnete po telefonu. Do e-mailu Vám přišel
-              souhrn Vašeho dotazu. Pokud ho tam nevidíte, zkontrolujte si
-              prosím složku Spam.
+              Váš dotaz jsme přijali ke zpracování. Do 5 dnů Vás bude telefonicky kontaktovat
+              digitální asistent, který Vám pomůže situaci vyřešit. Společně se domluvíte, zda bude
+              potřeba osobní návštěva, nebo to zvládnete po telefonu. Do e-mailu Vám přišel souhrn
+              Vašeho dotazu. Pokud ho tam nevidíte, zkontrolujte si prosím složku Spam.
             </Typography>
             <Button
               href="http://moudrasit.cz/"

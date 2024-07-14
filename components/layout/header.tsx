@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link";
 import * as React from "react";
+import SklikRtg from "./sklik-rtg";
 
 import { Logout, Person } from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
@@ -35,6 +36,7 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="sticky" color="primary" sx={{ zIndex: 100 }}>
       <Container maxWidth="xl">
+        <SklikRtg />
         <Toolbar disableGutters>
           <Link href="https://moudrasit.cz/">
             <Image src={logo} alt={"Moudrá Síť logo"} height="40" />
@@ -74,7 +76,9 @@ function ResponsiveAppBar() {
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
-                    <Avatar sx={{ width: 32, height: 32 }}>{data.user?.name?.charAt(0) ?? "M"}</Avatar>
+                    <Avatar sx={{ width: 32, height: 32 }}>
+                      {data.user?.name?.charAt(0) ?? "M"}
+                    </Avatar>
                   </IconButton>
                 </Tooltip>
               </Box>
