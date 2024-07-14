@@ -13,7 +13,7 @@ function SklikRtg() {
   return (
     <>
       <script type="text/javascript" src="https://c.seznam.cz/js/rc.js"></script>
-      <script>{customScript}ß</script>
+      <script>{customScript}</script>
     </>
   );
 }
