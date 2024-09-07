@@ -16,7 +16,7 @@ import { appTheme } from "components/theme/theme";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
 import { Form, Formik } from "formik";
-import { registerSchema } from "./schema/register-schema";
+import { registerSeniorSchema } from "./schema/register-senior-schema";
 import TextFieldForm from "components/form/model/input-form";
 import RegionForm from "components/form/model/region-form";
 import Image from "next/image";
@@ -26,7 +26,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import logo from "public/images/logo/logo.svg";
 import { useMutation } from "react-query";
 
-export type IRegisterValues = yup.InferType<typeof registerSchema>;
+export type IRegisterValues = yup.InferType<typeof registerSeniorSchema>;
 
 const initialValues = {
   name: "",
@@ -43,7 +43,7 @@ const initialValues = {
   agreement: false,
 };
 
-function Register() {
+function RegisterAssistant() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
@@ -90,7 +90,7 @@ function Register() {
             </Typography>
             <Formik<IRegisterValues>
               initialValues={initialValues as unknown as IRegisterValues}
-              validationSchema={registerSchema}
+              validationSchema={registerSeniorSchema}
               onSubmit={(values) => register(values)}
             >
               {({ setFieldValue }) => (
@@ -486,4 +486,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterAssistant;

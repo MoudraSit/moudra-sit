@@ -9,6 +9,7 @@ export interface SeniorResponse {
     kraj: string;
     jmeno: string;
     prijmeni: string;
+    prijmeniJmeno?: string;
     rokNarozeni: number;
     telefon: string;
     x_id?: number;

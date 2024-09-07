@@ -5,7 +5,7 @@ import {
   capitalizeFirstLetter,
   removeSpaces,
 } from "components/form/api/senior";
-import { registerSchema } from "components/register/schema/register-schema";
+import { registerSeniorSchema } from "components/register/schema/register-senior-schema";
 import { hashPassword } from "helper/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import * as yup from "yup";
@@ -21,7 +21,7 @@ async function handler(
   }
 
   try {
-    const values = await registerSchema.validate(request.body);
+    const values = await registerSeniorSchema.validate(request.body);
 
     const phoneValue = values.plusCode + removeSpaces(values.phoneNumber);
 
