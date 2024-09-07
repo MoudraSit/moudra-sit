@@ -1,5 +1,5 @@
-import { callTabidoo } from "..";
-import { SeniorResponse } from "../interfaces/senior";
+import { callTabidoo } from "../tabidoo";
+import { SeniorResponse } from "../tabidoo/interfaces/senior";
 
 export const getSeniorBy = async (
   field: "email" | "telefon",

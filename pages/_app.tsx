@@ -7,6 +7,9 @@ import type { AppProps } from "next/app";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "styles/globals.css";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/cs";
 
 const queryClient = new QueryClient();
 
@@ -24,11 +27,13 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <QueryClientProvider client={queryClient}>
         <SessionProvider session={pageProps.session}>
-          <ThemeProvider theme={appTheme}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="cs">
             <GoogleHeadScript />
             <SklikRtg />
-            <Component {...pageProps} />
-          </ThemeProvider>
+            <ThemeProvider theme={appTheme}>
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </LocalizationProvider>
         </SessionProvider>
       </QueryClientProvider>
     </GoogleReCaptchaProvider>

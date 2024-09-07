@@ -17,8 +17,8 @@ export const registerSeniorSchema = yup.object({}).shape({
     .required("Napište Vaše příjmení"),
   email: yup
     .string()
-    .email("Napište správně Váš kontaktní email")
-    .required("Napište Váš email"),
+    .email("Napište správně Váš kontaktní e-mail")
+    .required("Napište Váš e-mail"),
   year: yup
     .number()
     .min(1900, "Napište správný rok Vašeho narození")

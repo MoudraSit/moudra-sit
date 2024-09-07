@@ -56,7 +56,7 @@ function RegisterSenior() {
     error,
   } = useMutation<AxiosResponse, AxiosError<{ message: string }>, any, any>({
     mutationFn: (values: IRegisterValues) =>
-      axios.post<unknown>(`/api/auth/register`, values),
+      axios.post<unknown>(`/api/auth/register/senior`, values),
     onSuccess: () => {
       setTimeout(function () {
         window.scrollBy({
@@ -145,7 +145,7 @@ function RegisterSenior() {
                           required
                           fullWidth
                           id="email"
-                          label="Emailová adresa"
+                          label="E-mailová adresa"
                           name="email"
                           color="info"
                           inputhelper=""
