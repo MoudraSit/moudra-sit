@@ -16,7 +16,7 @@ import { appTheme } from "components/theme/theme";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
 import { Form, Formik } from "formik";
-import { registerSeniorSchema } from "./schema/register-senior-schema";
+import { registerAssistantSchema } from "./schema/register-assistant-schema";
 import TextFieldForm from "components/form/model/input-form";
 import RegionForm from "components/form/model/region-form";
 import Image from "next/image";
@@ -25,8 +25,9 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 
 import logo from "public/images/logo/logo.svg";
 import { useMutation } from "react-query";
+import DateForm from "components/form/model/date-form";
 
-export type IRegisterValues = yup.InferType<typeof registerSeniorSchema>;
+export type IRegisterValues = yup.InferType<typeof registerAssistantSchema>;
 
 const initialValues = {
   name: "",
@@ -55,7 +56,7 @@ function RegisterAssistant() {
     error,
   } = useMutation<AxiosResponse, AxiosError<{ message: string }>, any, any>({
     mutationFn: (values: IRegisterValues) =>
-      axios.post<unknown>(`/api/auth/register`, values),
+      axios.post<unknown>(`/api/auth/register/assistant`, values),
     onSuccess: () => {
       setTimeout(function () {
         window.scrollBy({
@@ -86,11 +87,11 @@ function RegisterAssistant() {
           >
             <Image src={logo} alt={"Moudrá Síť logo"} height="30" />
             <Typography variant="h1" sx={{ mt: 3, mb: 3, fontWeight: "bold" }}>
-              Registrace uživatele
+              Registrace asistenta
             </Typography>
             <Formik<IRegisterValues>
               initialValues={initialValues as unknown as IRegisterValues}
-              validationSchema={registerSeniorSchema}
+              validationSchema={registerAssistantSchema}
               onSubmit={(values) => register(values)}
             >
               {({ setFieldValue }) => (
@@ -144,7 +145,7 @@ function RegisterAssistant() {
                           required
                           fullWidth
                           id="email"
-                          label="Emailová adresa"
+                          label="E-mailová adresa"
                           name="email"
                           color="info"
                           inputhelper=""
@@ -160,13 +161,12 @@ function RegisterAssistant() {
                         />
                       </Grid>
                       <Grid item xs={12}>
-                        <TextFieldForm
+                        <DateForm
                           required
                           fullWidth
-                          type="tel"
                           id="year"
-                          label="Rok narození"
-                          name="year"
+                          label="Datum narození"
+                          name="birthDate"
                           color="info"
                           inputhelper=""
                           inputProps={{
@@ -221,7 +221,7 @@ function RegisterAssistant() {
                           InputLabelProps={{ style: { fontSize: 20 } }}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={4}>
+                      {/* <Grid item xs={12} sm={4}>
                         <TextFieldForm
                           required
                           fullWidth
@@ -257,7 +257,7 @@ function RegisterAssistant() {
                             ".MuiInputBase-root": { backgroundColor: "white" },
                           }}
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12} sm={4}>
                         <PhoneCodeFieldForm
                           id="plusCode"

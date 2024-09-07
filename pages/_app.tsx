@@ -5,6 +5,9 @@ import { appTheme } from "components/theme/theme";
 import { SessionProvider } from "next-auth/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/cs";
 
 const queryClient = new QueryClient();
 
@@ -22,9 +25,11 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <QueryClientProvider client={queryClient}>
         <SessionProvider session={pageProps.session}>
-          <ThemeProvider theme={appTheme}>
-            <Component {...pageProps} />
-          </ThemeProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="cs">
+            <ThemeProvider theme={appTheme}>
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </LocalizationProvider>
         </SessionProvider>
       </QueryClientProvider>
     </GoogleReCaptchaProvider>

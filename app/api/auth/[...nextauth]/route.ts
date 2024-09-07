@@ -1,6 +1,6 @@
 import { Role } from "backend/role";
 import { callTabidoo } from "backend/tabidoo";
-import { AsistentResponse } from "backend/tabidoo/interfaces/asistent";
+import { AssistantResponse } from "backend/tabidoo/interfaces/assistant";
 import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
 import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
@@ -61,7 +61,7 @@ const handler = NextAuth({
             "/tables/senior/data/filter",
             tabidooRequestPayload
           ),
-          callTabidoo<AsistentResponse[]>(
+          callTabidoo<AssistantResponse[]>(
             "/tables/uzivatel/data/filter",
             tabidooRequestPayload
           ),

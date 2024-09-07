@@ -1,4 +1,4 @@
-export interface AsistentResponse {
+export interface AssistantResponse {
   id: string;
   created: string;
   modified: string;
@@ -7,14 +7,15 @@ export interface AsistentResponse {
     jmeno: string;
     prijmeni: string;
     denNarozeni: string;
-    ulice: string;
     mesto: string;
-    PSC: string;
+    stat: string;
+    ulice?: string;
+    PSC?: string;
     telefon: string;
     email: string;
     heslo: string;
-    kraj: string;
-    pozvan: boolean;
-    skolainstituce: string;
+    kraj?: string;
+    pozvan?: boolean;
+    skolainstituce?: string;
   };
 }
