@@ -17,17 +17,13 @@ export const registerAssistantSchema = yup.object({}).shape({
     .required("Napište Vaše příjmení"),
   email: yup
     .string()
-    .email("Napište správně Váš kontaktní email")
-    .required("Napište Váš email"),
-  year: yup
-    .number()
-    .min(1900, "Napište správný rok Vašeho narození")
-    .max(
-      new Date().getFullYear() - 60,
-      "Služba je určena pouze pro seniory s věkem 60 let a více"
-    )
-    .required("Napište rok Vašeho narození")
-    .typeError("Napište rok Vašeho narození"),
+    .email("Napište správně Váš kontaktní e-mail")
+    .required("Napište Váš e-mail"),
+  birthDate: yup
+    .date()
+    .min(new Date(1900, 0, 1), "Napište správné datum Vašeho narození")
+    .required("Napište datum Vašeho narození")
+    .typeError("Napište datum Vašeho narození"),
   // address: yup
   //   .string()
   //   .matches(
@@ -35,15 +31,15 @@ export const registerAssistantSchema = yup.object({}).shape({
   //     "Prosím vložte příjmení ve správném tvaru"
   //   )
   //   .required("Napište ulici a číslo popisné"),
-  zipCode: yup
-    .string()
-    .matches(pscRegex, "Špatný tvar PSČ")
-    .required("Napište Vaše PSČ"),
+  // zipCode: yup
+  //   .string()
+  //   .matches(pscRegex, "Špatný tvar PSČ")
+  //   .required("Napište Vaše PSČ"),
   city: yup
     .string()
     .matches(/^[A-Ža-ž]*$/, "Prosím napište správně název obce/města")
     .required("Napište název obce/města"),
-  region: yup.string().required("Zvolte kraj Vašeho bydliště"),
+  // region: yup.string().required("Zvolte kraj Vašeho bydliště"),
   plusCode: yup
     .string()
     .required("Napište správný tvar předvolby (např. +420)"),
