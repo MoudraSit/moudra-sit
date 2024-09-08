@@ -174,7 +174,7 @@ function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item xs={12} md={4}>
-                  <Link href="#" variant="body2" color="#000000">
+                  <Link href="/prihlaseni/obnova-hesla" variant="body2" color="#000000">
                     <Typography align="left" paragraph>
                       Zapomněli jste heslo?
                     </Typography>
