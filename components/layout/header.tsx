@@ -18,6 +18,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import logo from "public/images/logo/logo.svg";
 import InformationLine from "./information-line";
+import { isUserAssistant, isUserSenior } from "helper/auth";
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -65,11 +66,7 @@ function ResponsiveAppBar() {
                   sx={{ display: { xs: "none", sm: "flex" } }}
                   variant="text"
                   color="secondary"
-                  href={
-                    data.user?.role === "digitalni-asistent"
-                      ? "/asistent"
-                      : "/senior"
-                  }
+                  href={isUserAssistant(data.user) ? "/asistent" : "/senior"}
                 >
                   <Person style={{ marginRight: 6 }} /> {data.user?.name}
                 </Button>
@@ -144,7 +141,7 @@ function ResponsiveAppBar() {
           )}
         </Toolbar>
       </Container>
-      <InformationLine />
+      {isUserSenior(data?.user) ? <InformationLine /> : null}
     </AppBar>
   );
 }

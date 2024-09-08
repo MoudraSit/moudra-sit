@@ -1,3 +1,4 @@
+import { Role } from "backend/role";
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
@@ -15,7 +16,7 @@ export default withAuth(
     for (const assistantPath of assistantProtectedPaths) {
       if (
         req.nextUrl.pathname.startsWith(assistantPath) &&
-        token?.role !== "digitalni-asistent"
+        token?.role !== Role.DA
       ) {
         return NextResponse.redirect(new URL("/senior", req.url));
       }
@@ -25,7 +26,7 @@ export default withAuth(
     for (const seniorPath of seniorProtectedPaths) {
       if (
         req.nextUrl.pathname.startsWith(seniorPath) &&
-        token?.role !== "senior"
+        token?.role !== Role.SENIOR
       ) {
         return NextResponse.redirect(new URL("/asistent", req.url));
       }

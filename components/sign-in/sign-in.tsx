@@ -173,7 +173,7 @@ function SignInSide() {
               <Button
                 type="submit"
                 fullWidth
-                variant="contained"
+                variant="outlined"
                 sx={{
                   mt: 3,
                   mb: 3,
@@ -184,19 +184,38 @@ function SignInSide() {
                 Přihlásit se
               </Button>
               <Grid container>
-                <Grid item xs>
+                <Grid item xs={12} md={4}>
                   <Link href="#" variant="body2" color="#000000">
                     <Typography align="left" paragraph>
                       Zapomněli jste heslo?
                     </Typography>
                   </Link>
                 </Grid>
-                <Grid item>
-                  <Link href="/register" variant="body2" color="#000000">
-                    <Typography align="right" paragraph>
-                      Nemáte účet? Zaregistrujte se zde
-                    </Typography>
-                  </Link>
+                <Grid item xs={12} md={8}>
+                  <Grid item xs={12}>
+                    {/* TODO: Make nicer if there is a better way to display 2 options like this */}
+                    <Link
+                      href="/registrace/senior"
+                      variant="body2"
+                      color="#000000"
+                    >
+                      <Typography align="right" paragraph>
+                        Jste senior a nemáte účet? Zaregistrujte se zde
+                      </Typography>
+                    </Link>
+                  </Grid>
+                  <Grid item xs={12}>
+                    {/* TODO: Make nicer if there is a better way to display 2 options like this */}
+                    <Link
+                      href="/registrace/asistent"
+                      variant="body2"
+                      color="#000000"
+                    >
+                      <Typography align="right" paragraph>
+                        Jste asistent a nemáte účet? Zaregistrujte se zde
+                      </Typography>
+                    </Link>
+                  </Grid>
                 </Grid>
               </Grid>
             </Box>
