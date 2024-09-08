@@ -1,16 +1,18 @@
-import { Role } from "backend/role";
+import { AssistantStatus, Role } from "helper/consts";
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
-// TODO: Unify middleware matcher paths and the these paths
-// For non-trivial patterns like "(.*)", simple string comparison in middleware() would not work
-// Maybe you can move the matcher into authorized() and check it in the same with using .startsWith()
-const assistantProtectedPaths = ["/asistent"];
-const seniorProtectedPaths = ["/senior"];
 
 export default withAuth(
   function middleware(req) {
     const { token } = req.nextauth;
+
+    // Newly created users that were not admin-approved in Tabidoo should have access only to their detail page
+    if (token?.role === Role.DA && token?.status === AssistantStatus.PENDING) {
+      // Prevent inifinite redirection
+      if (req.nextUrl.pathname == "/asistent") return;
+      else return NextResponse.redirect(new URL("/asistent", req.url));
+    }
 
     // If the user is logged in as a senior and is trying to access assistant paths, redirect him.
     for (const assistantPath of assistantProtectedPaths) {
@@ -43,6 +45,13 @@ export default withAuth(
   }
 );
 
+
+const assistantProtectedPaths = ["/asistent", "/dotazy"];
+const seniorProtectedPaths = ["/senior"];
+
+// Needs to be constant at build time, variables would be ignored
+// Defined negatively via regex negative lookahead
+// Includes pages from the older app (mostly form and registration/login)
 export const config = {
-  matcher: ["/asistent", "/senior"],
+  matcher: ['/((?!form|newform|hodnoceni|api|prihlaseni|registrace).*)'],
 };
