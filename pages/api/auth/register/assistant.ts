@@ -25,19 +25,19 @@ async function handler(
 
     const phoneValue = values.plusCode + removeSpaces(values.phoneNumber);
 
-    const [seniorByEmail, seniorByPhone] = await Promise.all([
+    const [assistantByEmail, assistantByPhone] = await Promise.all([
       getAssistantBy("email", values.email),
       getAssistantBy("telefon", phoneValue),
     ]);
 
-    if (seniorByEmail.length > 0) {
+    if (assistantByEmail.length > 0) {
       response.status(400).json({
         message: "Uživatel s tímto e-mailem již existuje",
       });
       return;
     }
 
-    if (seniorByPhone.length > 0) {
+    if (assistantByPhone.length > 0) {
       response.status(400).json({
         message: "Uživatel s tímto telefonním číslem již existuje",
       });
