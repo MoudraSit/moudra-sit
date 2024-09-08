@@ -17,5 +17,6 @@ export interface AssistantResponse {
     kraj?: string;
     pozvan?: boolean;
     skolainstituce?: string;
+    administrativniStav?: string;
   };
 }

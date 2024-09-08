@@ -5,7 +5,7 @@ import type {
 } from "next";
 import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
-import { Role } from "backend/role";
+import { AssistantStatus, Role } from "helper/consts";
 import { callTabidoo } from "backend/tabidoo";
 import { AssistantResponse } from "backend/tabidoo/interfaces/assistant";
 import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
@@ -18,20 +18,22 @@ const AUTH_ERROR_MESSAGE = "Špatně zadaný e-mail nebo heslo";
 export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
-      if (user?.role) {
-        token.role = user.role;
-      }
+      // Do not assign if the user attributes are null
+      if (user?.role) token.role = user.role;
+      if (user?.status) token.status = user.status;
+
       return token;
     },
     session({ session, token }) {
       if (token && session.user) {
         session.user.role = token.role;
+        session.user.status = token.status;
       }
       return session;
     },
   },
   pages: {
-    signIn: "/prihlaseni",
+    signIn: "/prihlaseni"
   },
   providers: [
     CredentialsProvider({
@@ -92,10 +94,21 @@ export const authOptions: NextAuthOptions = {
           throw Error(AUTH_ERROR_MESSAGE);
         }
 
+        const role = foundSeniors.length > 0 ? Role.SENIOR : Role.DA;
+        let status = undefined;
+        if (role == Role.DA) {
+          if (
+            (user as AssistantResponse).fields.administrativniStav === "🟢DONE"
+          )
+            status = AssistantStatus.ACTIVE;
+          else status = AssistantStatus.PENDING;
+        }
+
         return {
           id: user.id,
           email: user.fields.email,
-          role: foundSeniors.length > 0 ? Role.SENIOR : Role.DA,
+          role,
+          status,
           name: getFullName(user),
         };
       },

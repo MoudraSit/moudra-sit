@@ -14,7 +14,6 @@ import { signIn, useSession } from "next-auth/react";
 
 import logo from "public/images/logo/logo.svg";
 import { useRouter } from "next/router";
-import { Role } from "backend/role";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -29,7 +28,7 @@ function SignInSide() {
     const data = new FormData(event.currentTarget);
 
     const result = await signIn("credentials", {
-      redirect: false,
+      redirect: true,
       email: data.get("email"),
       password: data.get("password"),
     });
@@ -43,16 +42,6 @@ function SignInSide() {
       setErrorMessage(result.error);
     }
   }
-
-  React.useEffect(() => {
-    // succesfully singed in, redirect to profile
-    if (session?.data?.user?.role === Role.SENIOR) {
-      router.replace("/senior");
-    }
-    if (session?.data?.user?.role === Role.DA) {
-      router.replace("/asistent");
-    }
-  }, [router, session]);
 
   return (
     <ThemeProvider theme={appTheme}>
