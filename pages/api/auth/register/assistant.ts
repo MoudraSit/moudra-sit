@@ -1,5 +1,5 @@
 import { callTabidoo } from "backend/tabidoo";
-import { AssistantResponse } from "backend/tabidoo/interfaces/assistant";
+import { AssistantResponse } from "types/assistant";
 import { getAssistantBy } from "backend/utils/getAssistantBy";
 import {
   capitalizeFirstLetter,

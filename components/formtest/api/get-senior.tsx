@@ -1,13 +1,12 @@
-import { IValues } from "../model/constants";
 import { SeniorGetId, SeniorGetNoId } from "types/senior";
+import { IValues } from "../vertical-stepper";
 import { removeSpaces } from "./senior";
 
 async function ApiGetRequestSenior(values: IValues) {
-  let fixedPhoneNumber: string =
-    values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
+  let fixedPhoneNumber: string = values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
 
   try {
-    const response = await fetch("/api/form/get-senior", {
+    const response = await fetch("/api/formtest/get-senior", {
       method: "POST",
       body: JSON.stringify({
         filter: {

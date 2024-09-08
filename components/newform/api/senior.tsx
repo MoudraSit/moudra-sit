@@ -1,5 +1,5 @@
-import { IValues } from "../model/constants";
 import { SeniorResponse } from "types/senior";
+import { IValues } from "../vertical-stepper";
 
 // check if name and surname start with capital letter
 export function capitalizeFirstLetter(name: string) {
@@ -13,7 +13,7 @@ export function removeSpaces(str: string) {
 
 async function ApiRequestSenior(props: IValues) {
   try {
-    const response = await fetch("/api/form/senior", {
+    const response = await fetch("/api/formtest/senior", {
       method: "POST",
       body: JSON.stringify({
         fields: {
@@ -21,7 +21,6 @@ async function ApiRequestSenior(props: IValues) {
           prijmeni: capitalizeFirstLetter(props.surname),
           PSC: removeSpaces(props.zipCode),
           mesto: capitalizeFirstLetter(props.city),
-          mestoZkratka: props.zkratka,
           email: props.email,
           stat: "Česko",
           telefon: props.plusCode.concat(removeSpaces(props.phoneNumber)),

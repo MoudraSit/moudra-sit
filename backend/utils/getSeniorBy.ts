@@ -1,5 +1,5 @@
 import { callTabidoo } from "../tabidoo";
-import { SeniorResponse } from "../tabidoo/interfaces/senior";
+import { SeniorResponse } from "../../types/senior";
 
 export const getSeniorBy = async (
   field: "email" | "telefon",
