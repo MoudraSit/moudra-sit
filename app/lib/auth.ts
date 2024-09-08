@@ -13,6 +13,8 @@ import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+const AUTH_ERROR_MESSAGE = "Špatně zadaný e-mail nebo heslo";
+
 export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
@@ -79,7 +81,7 @@ export const authOptions: NextAuthOptions = {
         const foundUsers = [...foundSeniors, ...foundAssistants];
 
         if (foundUsers.length === 0) {
-          throw new Error("Uživatel nebyl nalezen");
+          throw new Error(AUTH_ERROR_MESSAGE);
         }
 
         const user = foundUsers[0];
@@ -87,7 +89,7 @@ export const authOptions: NextAuthOptions = {
         const isValid = await verifyPassword(password, user.fields.heslo);
 
         if (!isValid) {
-          throw Error("Špatně zadaný email nebo heslo");
+          throw Error(AUTH_ERROR_MESSAGE);
         }
 
         return {
