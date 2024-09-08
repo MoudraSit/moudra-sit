@@ -11,10 +11,8 @@ import { appTheme } from "components/theme/theme";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import * as React from "react";
-
-import { Role } from "backend/role";
-import { useRouter } from "next/router";
 import logo from "public/images/logo/logo.png";
+import { useRouter } from "next/router";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -29,7 +27,7 @@ function SignInSide() {
     const data = new FormData(event.currentTarget);
 
     const result = await signIn("credentials", {
-      redirect: false,
+      redirect: true,
       email: data.get("email"),
       password: data.get("password"),
     });
@@ -43,16 +41,6 @@ function SignInSide() {
       setErrorMessage(result.error);
     }
   }
-
-  React.useEffect(() => {
-    // succesfully singed in, redirect to profile
-    if (session?.data?.user?.role === Role.SENIOR) {
-      router.replace("/senior");
-    }
-    if (session?.data?.user?.role === Role.DA) {
-      router.replace("/asistent");
-    }
-  }, [router, session]);
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -73,7 +61,15 @@ function SignInSide() {
             fill
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={5} component={Paper} elevation={6} square>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+        >
           <Box
             sx={{
               my: 8,
@@ -87,7 +83,12 @@ function SignInSide() {
             <Typography variant="h1" sx={{ mt: 3, mb: 3, fontWeight: "bold" }}>
               Přihlašování do účtu
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required

@@ -1,4 +1,4 @@
-import { Role } from "backend/role";
+import { Role } from "./consts";
 import { compare, hash } from "bcryptjs";
 import { User } from "next-auth";
 
