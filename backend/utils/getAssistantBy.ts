@@ -1,5 +1,5 @@
 import { callTabidoo } from "../tabidoo";
-import { AssistantResponse } from "../tabidoo/interfaces/assistant";
+import { AssistantResponse } from "../../types/assistant";
 
 export const getAssistantBy = async (
   field: "email" | "telefon",

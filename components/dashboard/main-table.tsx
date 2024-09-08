@@ -1,6 +1,6 @@
 import { List, ListItem } from "@mui/material";
 import { callTabidoo } from "backend/tabidoo";
-import { ISeniorRequest } from "backend/tabidoo/interfaces/seniorRequest";
+import { ISeniorRequest } from "types/seniorRequest";
 
 export async function MainTable({}) {
   const seniorRequests = await callTabidoo<ISeniorRequest[]>(
