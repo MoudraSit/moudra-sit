@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Avatar, ListItemIcon, Tooltip } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
@@ -65,7 +65,11 @@ function ResponsiveAppBar() {
                   sx={{ display: { xs: "none", sm: "flex" } }}
                   variant="text"
                   color="secondary"
-                  href="/profile"
+                  href={
+                    data.user?.role === "digitalni-asistent"
+                      ? "/asistent"
+                      : "/senior"
+                  }
                 >
                   <Person style={{ marginRight: 6 }} /> {data.user?.name}
                 </Button>
@@ -120,7 +124,10 @@ function ResponsiveAppBar() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem href="/profile" sx={{ display: { xs: "flex", sm: "none" } }}>
+                <MenuItem
+                  href="/profile"
+                  sx={{ display: { xs: "flex", sm: "none" } }}
+                >
                   <ListItemIcon>
                     <Person fontSize="small" />
                   </ListItemIcon>
