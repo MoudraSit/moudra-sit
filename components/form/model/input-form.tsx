@@ -4,7 +4,7 @@ import React from "react";
 
 type Props = {
   name: string;
-  inputhelper: string;
+  inputhelper?: string;
 } & TextFieldProps;
 
 const TextFieldForm = ({ inputhelper, ...props }: Props) => {

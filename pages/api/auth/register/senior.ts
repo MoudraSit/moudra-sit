@@ -16,7 +16,7 @@ async function handler(
   response: NextApiResponse
 ): Promise<void> {
   if (request.method !== "POST") {
-    response.status(400).send("Use POST method");
+    response.status(405).send("Use POST method");
     return;
   }
 
@@ -32,7 +32,7 @@ async function handler(
 
     if (seniorByEmail.length > 0) {
       response.status(400).json({
-        message: "Uživatel s tímto emailem již existuje",
+        message: "Uživatel s tímto e-mailem již existuje",
       });
       return;
     }
