@@ -1,4 +1,4 @@
-import Profile from "components/senior/profile";
+import SeniorRequests from "components/senior-requests/senior-requests";
 import Head from "next/head";
 
 function Page() {
@@ -7,7 +7,7 @@ function Page() {
       <Head>
         <title>Dotazy | Moudrá Síť App</title>
       </Head>
-      Dotazy sem
+      <SeniorRequests />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
+import { SeniorResponse } from "types/senior";
 import { IValues } from "../vertical-stepper";
 
 // check if name and surname start with capital letter

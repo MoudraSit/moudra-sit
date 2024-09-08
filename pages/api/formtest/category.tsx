@@ -1,4 +1,4 @@
-import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
+import { SeniorResponse } from "types/senior";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(request: NextApiRequest, response: NextApiResponse): Promise<void> {

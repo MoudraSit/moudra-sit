@@ -1,5 +1,5 @@
 import { callTabidoo } from "backend/tabidoo";
-import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
+import { SeniorResponse } from "types/senior";
 import { getSeniorBy } from "backend/utils/getSeniorBy";
 import {
   capitalizeFirstLetter,
