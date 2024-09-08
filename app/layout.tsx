@@ -4,6 +4,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import { SessionProvider } from "next-auth/react";
 import { SessionProviderWrapper } from "components/session-provider-wrapper/session-provider-wrapper";
+import ResponsiveAppBar from "components/layout/header";
+import Footer from "components/layout/footer";
 
 export default function RootLayout({
   children,
@@ -15,7 +17,12 @@ export default function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={appTheme}>
-            <SessionProviderWrapper>{children}</SessionProviderWrapper>
+            <SessionProviderWrapper>
+              <ResponsiveAppBar />
+
+              {children}
+              <Footer />
+            </SessionProviderWrapper>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
