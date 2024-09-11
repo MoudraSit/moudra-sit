@@ -4,7 +4,6 @@ import { useField, useFormikContext } from "formik";
 import React from "react";
 
 type Props = {
-  date: string;
   inputhelper: string;
 } & DateFieldProps<Date>;
 
