@@ -46,6 +46,9 @@ async function handler(
 
     const hashedPassword = await hashPassword(values.password);
 
+    // Date comes with a local timezone, make sure the day won't switch to previous day
+    values.birthDate.setUTCHours(24)
+
     const assistantFieldsPayload: AssistantResponse['fields'] = {
       jmeno: capitalizeFirstLetter(values.name),
       prijmeni: capitalizeFirstLetter(values.surname),
