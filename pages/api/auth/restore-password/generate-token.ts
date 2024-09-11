@@ -36,17 +36,21 @@ async function handler(
       token: { userId: "" } as unknown as JWT,
     });
 
+    const restorePasswordUrl = new URL(
+      `${process.env.NEXTAUTH_URL}/obnova-hesla/nove-heslo?token=${token}`
+    );
+
     const restorePasswordPayload = {
       email: values.email,
-      token,
+      url: restorePasswordUrl,
     };
 
-    // await callTabidoo("/tables/obnovyHesla/data", {
-    //   method: "POST",
-    //   body: {
-    //     fields: restorePasswordPayload,
-    //   },
-    // });
+    const webhookUrl = new URL(`${process.env.RESTORE_EMAIL_WEBHOOK_URL}`);
+
+    await fetch(webhookUrl, {
+      method: "POST",
+      body: JSON.stringify(restorePasswordPayload),
+    });
 
     response.status(200);
 
