@@ -1,6 +1,6 @@
 import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
-import RestorePassword from "components/sign-in/restore-password";
+import RestorePasswordPasswordForm from "components/restore-password/password-form";
 import { Role } from "helper/consts";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
@@ -28,7 +28,7 @@ function SignInPage() {
       <Head>
         <title>Obnova hesla | Moudrá Síť App</title>
       </Head>
-      <RestorePassword />
+      <RestorePasswordPasswordForm />
       <Footer />
     </>
   );

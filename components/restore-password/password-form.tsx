@@ -1,8 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -15,15 +14,21 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 
 import { useMutation } from "react-query";
 import logo from "public/images/logo/logo.svg";
-import { restorePasswordSchema } from "components/register/schema/restore-password-schema";
 import { Form, Formik } from "formik";
 import TextFieldForm from "components/form/model/input-form";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { restorePasswordPasswordSchema } from "components/register/schema/restore-password-password-schema";
 
 export type IRestorePasswordValues = yup.InferType<
-  typeof restorePasswordSchema
+  typeof restorePasswordPasswordSchema
 >;
 
-function RestorePassword() {
+function RestorePasswordPasswordForm() {
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+
+  // TODO: capture token from URL and handle invalid ones (redirect)
+
   const {
     mutate: restorePassword,
     isError,
@@ -32,7 +37,7 @@ function RestorePassword() {
     error,
   } = useMutation<AxiosResponse, AxiosError<{ message: string }>, any, any>({
     mutationFn: (values: IRestorePasswordValues) =>
-      axios.post<unknown>(`/api/auth/restore-password/generate-token`, values),
+      axios.post<unknown>(`/api/auth/restore-password/apply-token`, values),
   });
 
   return (
@@ -77,32 +82,88 @@ function RestorePassword() {
               Obnova hesla
             </Typography>
             <Formik<IRestorePasswordValues>
-              initialValues={{ email: "" }}
+              initialValues={{ password: "", confirmPwd: "" }}
               onSubmit={(values) => restorePassword(values)}
-              validationSchema={restorePasswordSchema}
+              validationSchema={restorePasswordPasswordSchema}
             >
               <Form>
                 <Box sx={{ mt: 1 }}>
-                  <TextFieldForm
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    color="info"
-                    label="Emailová adresa"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    inputProps={{
-                      style: {
-                        WebkitBoxShadow: "0 0 0 1000px white inset",
-                        WebkitTextFillColor: "black",
-                        fontSize: 20,
-                      },
-                    }}
-                    InputProps={{ style: { fontSize: 20 } }}
-                    InputLabelProps={{ style: { fontSize: 20 } }}
-                  />
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextFieldForm
+                        required
+                        fullWidth
+                        name="password"
+                        label="Heslo"
+                        id="password"
+                        color="info"
+                        inputhelper=""
+                        inputProps={{
+                          style: {
+                            WebkitBoxShadow: "0 0 0 1000px white inset",
+                            WebkitTextFillColor: "black",
+                            fontSize: 20,
+                          },
+                        }}
+                        type={showPassword ? "text" : "password"}
+                        InputLabelProps={{ style: { fontSize: 20 } }}
+                        InputProps={{
+                          style: { fontSize: 20 },
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                              >
+                                {showPassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextFieldForm
+                        required
+                        fullWidth
+                        name="confirmPwd"
+                        label="Heslo znovu"
+                        id="confirmPwd"
+                        color="info"
+                        inputhelper="Prosím napište Vaše heslo ještě jednou"
+                        inputProps={{
+                          style: {
+                            WebkitBoxShadow: "0 0 0 1000px white inset",
+                            WebkitTextFillColor: "black",
+                            fontSize: 20,
+                          },
+                        }}
+                        type={showPassword ? "text" : "password"}
+                        InputLabelProps={{ style: { fontSize: 20 } }}
+                        InputProps={{
+                          style: { fontSize: 20 },
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                              >
+                                {showPassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
 
                   <Button
                     type="submit"
@@ -115,7 +176,7 @@ function RestorePassword() {
                       color: "white",
                     }}
                   >
-                    Obnovit heslo
+                    Změnit heslo
                   </Button>
                   {isError && (
                     <Typography
@@ -151,7 +212,7 @@ function RestorePassword() {
                       align="center"
                       color="#028790"
                     >
-                      E-mail s odkazem pro obnovu hesla byl zaslán.
+                      Heslo úspěšně změněno, nyn íse můžete přihlásit.
                     </Typography>
                   )}
                   <Grid container>
@@ -173,4 +234,4 @@ function RestorePassword() {
   );
 }
 
-export default RestorePassword;
+export default RestorePasswordPasswordForm;
