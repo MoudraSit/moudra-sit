@@ -19,7 +19,7 @@ export async function callTabidoo<T = unknown>(
     body: body ? JSON.stringify(body) : undefined,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.TABIDOO_API_KEY}`,
+      Authorization: process.env.TABIDOO_API_KEY as string,
     },
   });
 
