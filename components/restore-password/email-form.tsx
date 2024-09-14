@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -17,7 +16,7 @@ import { useMutation } from "react-query";
 import logo from "public/images/logo/logo.svg";
 import { Form, Formik } from "formik";
 import TextFieldForm from "components/form/model/input-form";
-import { restorePasswordEmailSchema } from "components/register/schema/restore-password-email-schema";
+import { restorePasswordEmailSchema } from "components/restore-password/schema/restore-password-email-schema";
 
 export type IRestorePasswordValues = yup.InferType<
   typeof restorePasswordEmailSchema
