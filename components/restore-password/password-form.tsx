@@ -17,7 +17,8 @@ import logo from "public/images/logo/logo.svg";
 import { Form, Formik } from "formik";
 import TextFieldForm from "components/form/model/input-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { restorePasswordPasswordSchema } from "components/register/schema/restore-password-password-schema";
+import { restorePasswordPasswordSchema } from "components/restore-password/schema/restore-password-password-schema";
+import { useSearchParams } from "next/navigation";
 
 export type IRestorePasswordValues = yup.InferType<
   typeof restorePasswordPasswordSchema
@@ -27,17 +28,22 @@ function RestorePasswordPasswordForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
-  // TODO: capture token from URL and handle invalid ones (redirect)
+  const searchParams = useSearchParams();
 
   const {
-    mutate: restorePassword,
+    mutate: generatePassword,
     isError,
     isSuccess,
     isLoading: isSubmitting,
     error,
   } = useMutation<AxiosResponse, AxiosError<{ message: string }>, any, any>({
     mutationFn: (values: IRestorePasswordValues) =>
-      axios.post<unknown>(`/api/auth/restore-password/apply-token`, values),
+      axios.post<unknown>(
+        `/api/auth/restore-password/apply-token?token=${searchParams?.get(
+          "token"
+        )}`,
+        values
+      ),
   });
 
   return (
@@ -82,8 +88,11 @@ function RestorePasswordPasswordForm() {
               Obnova hesla
             </Typography>
             <Formik<IRestorePasswordValues>
-              initialValues={{ password: "", confirmPwd: "" }}
-              onSubmit={(values) => restorePassword(values)}
+              initialValues={{
+                password: "",
+                confirmPwd: "",
+              }}
+              onSubmit={(values) => generatePassword(values)}
               validationSchema={restorePasswordPasswordSchema}
             >
               <Form>
@@ -167,6 +176,7 @@ function RestorePasswordPasswordForm() {
 
                   <Button
                     type="submit"
+                    disabled={isSubmitting}
                     fullWidth
                     variant="outlined"
                     sx={{
@@ -212,7 +222,7 @@ function RestorePasswordPasswordForm() {
                       align="center"
                       color="#028790"
                     >
-                      Heslo úspěšně změněno, nyn íse můžete přihlásit.
+                      Heslo úspěšně změněno, nyní se můžete přihlásit.
                     </Typography>
                   )}
                   <Grid container>
