@@ -1,12 +1,11 @@
 import { callTabidoo } from "backend/tabidoo";
-import { getAssistantBy } from "backend/utils/getAssistantBy";
-import { restorePasswordSchema } from "components/register/schema/restore-password-schema";
+import { restorePasswordPasswordSchema } from "components/restore-password/schema/restore-password-password-schema";
 import { hashPassword } from "helper/auth";
 import { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
 
 import * as yup from "yup";
-import { encode, JWT } from "next-auth/jwt";
+import { decode } from "next-auth/jwt";
+import { AssistantResponse } from "types/assistant";
 
 async function handler(
   request: NextApiRequest,
@@ -18,38 +17,37 @@ async function handler(
   }
 
   try {
-    const values = await restorePasswordSchema.validate(request.body);
+    const { token } = request.query;
+    const values = await restorePasswordPasswordSchema.validate(request.body);
 
-    const assistantByEmail = await getAssistantBy("email", values.email);
+    // Reusing nextAuth's JWT implementation because its secret is more secure
+    const decodedPayload = await decode({
+      token: token as string,
+      secret: process.env.NEXTAUTH_SECRET!,
+    });
 
-    if (!assistantByEmail.length) {
-      response.status(400).json({
-        message: "Uživatel s tímto e-mailem neexistuje",
-      });
+    if (!decodedPayload?.userId) {
+      response.status(400).send("Bad token");
       return;
     }
 
-    // Reusing nextAuth's JWT implementation because its secret is more secure
-    const token = encode({
-      secret: process.env.NEXTAUTH_SECRET!,
-      maxAge: 3600,
-      // The payload has to be 'bent' to allow this in TS
-      token: { userId: "" } as unknown as JWT,
-    });
+    const hashedPassword = await hashPassword(values.password);
 
-    const restorePasswordPayload = {
-      email: values.email,
-      token,
+    const genereatePasswordPayload = {
+      password: hashedPassword,
     };
 
-    // await callTabidoo("/tables/obnovyHesla/data", {
-    //   method: "POST",
-    //   body: {
-    //     fields: restorePasswordPayload,
-    //   },
-    // });
+    await callTabidoo<AssistantResponse>(
+      `/tables/uzivatel/data/${decodedPayload?.userId}`,
+      {
+        method: "PATCH",
+        body: {
+          fields: genereatePasswordPayload,
+        },
+      }
+    );
 
-    response.status(200);
+    response.status(200).json({ status: "success" });
 
     return;
   } catch (err) {
@@ -62,8 +60,7 @@ async function handler(
       return;
     }
   }
-
-  response.status(500);
+  response.status(500).send("Server error");
 }
 
 export default handler;

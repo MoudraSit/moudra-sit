@@ -53,5 +53,5 @@ const seniorProtectedPaths = ["/senior"];
 // Defined negatively via regex negative lookahead
 // Includes pages from the older app (mostly form and registration/login)
 export const config = {
-  matcher: ['/((?!form|newform|hodnoceni|api|prihlaseni|registrace).*)'],
+  matcher: ['/((?!form|newform|hodnoceni|api|prihlaseni|registrace|obnova-hesla).*)'],
 };
