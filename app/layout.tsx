@@ -21,7 +21,6 @@ export default function RootLayout({
               <ResponsiveAppBar />
 
               {children}
-              <Footer />
             </SessionProviderWrapper>
           </ThemeProvider>
         </AppRouterCacheProvider>
