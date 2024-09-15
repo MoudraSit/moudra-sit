@@ -1,7 +1,7 @@
 import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
 import SignInSide from "components/sign-in/sign-in";
-import { Role } from "helper/consts";
+import { AssistantPagePaths, Role, SeniorPagePaths } from "helper/consts";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -15,9 +15,9 @@ function SignInPage() {
     getSession().then((session) => {
       if (session) {
         if (session.user?.role === Role.DA) {
-          return router.replace("/asistent");
+          return router.replace(AssistantPagePaths.DASHBOARD);
         }
-        router.replace("/senior");
+        router.replace(SeniorPagePaths.SENIOR_PROFILE);
       }
     });
   }, [router]);

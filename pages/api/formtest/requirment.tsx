@@ -1,4 +1,4 @@
-import { SeniorResponse } from "types/senior";
+import { Senior } from "types/senior";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(request: NextApiRequest, response: NextApiResponse): Promise<void> {
@@ -28,7 +28,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse): Prom
         },
       }
     );
-    const jsonObject: SeniorResponse = await responseAPI.json();
+    const jsonObject: Senior = await responseAPI.json();
 
     if (JSON.stringify(jsonObject).includes("errors")) {
       throw new Error(JSON.stringify(jsonObject));

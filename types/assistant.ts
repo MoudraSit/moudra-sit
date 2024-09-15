@@ -1,4 +1,4 @@
-export interface AssistantResponse {
+export interface Assistant {
   id: string;
   created: string;
   modified: string;
