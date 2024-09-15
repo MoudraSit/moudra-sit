@@ -1,11 +1,11 @@
 import { callTabidoo } from "../tabidoo";
-import { SeniorResponse } from "../../types/senior";
+import { Senior } from "../../types/senior";
 
 export const getSeniorBy = async (
   field: "email" | "telefon",
   value: string
 ) => {
-  return callTabidoo<SeniorResponse[]>("/tables/senior/data/filter", {
+  return callTabidoo<Senior[]>("/tables/senior/data/filter", {
     method: "POST",
     body: {
       filter: [

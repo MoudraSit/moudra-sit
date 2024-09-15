@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import DynamicList from "components/dynamic-list/dynamic-list";
-import { ISeniorRequest } from "types/seniorRequest";
+import { SeniorRequest } from "types/seniorRequest";
 
 type Props = {
-  requests: Array<ISeniorRequest>;
+  requests: Array<SeniorRequest>;
 };
 
 async function NewRequestsList({ requests }: Props) {
