@@ -1,6 +1,14 @@
 "use client";
 
-import { Card, CardContent, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@mui/material";
+import { AssistantPagePaths } from "helper/consts";
+import Link from "next/link";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList } from "react-window";
 
@@ -26,6 +34,7 @@ function DynamicList({ items }: Props) {
           {({ index, style }) => {
             const item = items[index];
             return (
+              // TODO: make into a separate component under senior-requests/
               <Card
                 style={{
                   ...style,
@@ -35,6 +44,15 @@ function DynamicList({ items }: Props) {
               >
                 <CardContent>
                   <Typography variant="body2">{item.fields.popis}</Typography>
+                  <CardActions>
+                    <Button
+                      LinkComponent={Link}
+                      href={`${AssistantPagePaths.SENIOR_REQUESTS}/${item.id}`}
+                      variant="contained"
+                    >
+                      Zobrazit Detail
+                    </Button>
+                  </CardActions>
                 </CardContent>
               </Card>
             );

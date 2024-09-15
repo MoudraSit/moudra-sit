@@ -1,5 +1,5 @@
 import { callTabidoo } from "backend/tabidoo";
-import { SeniorResponse } from "types/senior";
+import { Senior } from "types/senior";
 import { getSeniorBy } from "backend/utils/getSeniorBy";
 import {
   capitalizeFirstLetter,
@@ -46,7 +46,7 @@ async function handler(
 
     const hashedPassword = await hashPassword(values.password);
 
-    const seniorFieldsPayload: SeniorResponse["fields"] = {
+    const seniorFieldsPayload: Senior["fields"] = {
       jmeno: capitalizeFirstLetter(values.name),
       prijmeni: capitalizeFirstLetter(values.surname),
       mesto: capitalizeFirstLetter(values.city),
@@ -59,7 +59,7 @@ async function handler(
       heslo: hashedPassword,
     };
 
-    const senior = await callTabidoo<SeniorResponse>("/tables/senior/data", {
+    const senior = await callTabidoo<Senior>("/tables/senior/data", {
       method: "POST",
       body: {
         fields: seniorFieldsPayload,

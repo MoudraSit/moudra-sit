@@ -1,5 +1,5 @@
 import { callTabidoo } from "backend/tabidoo";
-import { AssistantResponse } from "types/assistant";
+import { Assistant } from "types/assistant";
 import { getAssistantBy } from "backend/utils/getAssistantBy";
 import {
   capitalizeFirstLetter,
@@ -49,7 +49,7 @@ async function handler(
     // Date comes with a local timezone, make sure the day won't switch to previous day
     values.birthDate.setUTCHours(24)
 
-    const assistantFieldsPayload: AssistantResponse['fields'] = {
+    const assistantFieldsPayload: Assistant['fields'] = {
       jmeno: capitalizeFirstLetter(values.name),
       prijmeni: capitalizeFirstLetter(values.surname),
       mesto: capitalizeFirstLetter(values.city),
@@ -60,7 +60,7 @@ async function handler(
       heslo: hashedPassword,
     };
 
-    const assistant = await callTabidoo<AssistantResponse>("/tables/uzivatel/data", {
+    const assistant = await callTabidoo<Assistant>("/tables/uzivatel/data", {
       method: "POST",
       body: {
         fields: assistantFieldsPayload,

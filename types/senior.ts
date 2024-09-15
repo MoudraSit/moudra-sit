@@ -1,4 +1,4 @@
-export interface SeniorResponse {
+export interface Senior {
   created: string;
   fields: {
     email: string;
@@ -20,7 +20,7 @@ export interface SeniorResponse {
 }
 
 export interface SeniorGetResponse {
-  data: SeniorResponse[];
+  data: Senior[];
 }
 
 export interface SeniorGetId {

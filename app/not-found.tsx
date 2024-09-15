@@ -1,4 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
+import { AssistantPagePaths } from "helper/consts";
 import Link from "next/link";
 
 function Page() {
@@ -16,7 +17,7 @@ function Page() {
         sx={{ alignSelf: "center" }}
         variant="contained"
         LinkComponent={Link}
-        href={"/dotazy"}
+        href={AssistantPagePaths.DASHBOARD}
       >
         Zpět
       </Button>
