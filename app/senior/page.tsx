@@ -1,12 +1,13 @@
 import Profile from "components/senior/profile";
-import Head from "next/head";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profil Seniora",
+};
 
 function Page() {
   return (
     <>
-      <Head>
-        <title>Profil Seniora | Moudrá Síť App</title>
-      </Head>
       <Profile />
     </>
   );
