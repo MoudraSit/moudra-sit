@@ -1,5 +1,5 @@
 import { IValues } from "../model/constants";
-import { SeniorResponse } from "types/senior";
+import { Senior } from "types/senior";
 
 // check if name and surname start with capital letter
 export function capitalizeFirstLetter(name: string) {
@@ -33,7 +33,7 @@ async function ApiRequestSenior(props: IValues) {
       },
     });
 
-    const jsonObject: { data: SeniorResponse } = await response.json();
+    const jsonObject: { data: Senior } = await response.json();
 
     return jsonObject.data.id;
   } catch (error) {

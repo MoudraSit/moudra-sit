@@ -1,21 +1,31 @@
-import { Grid } from "@mui/material";
-import SeniorRequestsWrapper from "components/senior-requests/senior-requests-wrapper";
-import type { Metadata } from "next";
+import NewRequestsList from "components/senior-requests/new-requests-list";
+import { Typography } from "@mui/material";
+import BackButton from "components/buttons/back-button";
+import { AssistantPagePaths, FilterType } from "helper/consts";
+import RequestFilterPanel from "components/senior-requests/request-filter-panel";
+import { SeniorRequestsGetter } from "backend/senior-requests";
 
-export const metadata: Metadata = {
-  title: "Dotazy",
+type Props = {
+  searchParams?: {
+    typDotazu?: string;
+  };
 };
 
-function Page() {
-  // TODO: parallel fetching of senior requests categories (new, my, ...) and loading on this page
-  // TODO: once routed to a specific page (my requests, ...), the fetch will be there too, but caching should take care of that (use the same function defined in a separate file)
-  // TODO: in specific pages, use virtualized lists to render only what is currently displayed
+async function Page({ searchParams }: Props) {
+  const requestsType = searchParams?.typDotazu || "";
+  const requests = await SeniorRequestsGetter.getSeniorRequestsByUIFilters({
+    [FilterType.REQUEST_TYPE]: requestsType,
+  });
 
   return (
-    <Grid container justifyContent="center" flexDirection="column">
-      <SeniorRequestsWrapper />
-      {/* TODO: planned visits overview */}
-    </Grid>
+    <>
+      <BackButton href={AssistantPagePaths.DASHBOARD} />
+      <RequestFilterPanel />
+      <Typography variant="h5" sx={{ margin: "3px", fontWeight: "bold" }}>
+        Dotazy ({requests.length})
+      </Typography>
+      <NewRequestsList requests={requests} />
+    </>
   );
 }
 

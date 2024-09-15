@@ -24,7 +24,7 @@ export async function callTabidoo<T = unknown>(
   });
 
   if (!apiResponse.ok) {
-    console.error(apiResponse);
+    console.error(await apiResponse.text());
     throw new Error("Tabidoo API call failed");
   }
 
