@@ -1,9 +1,19 @@
-import { Card, Skeleton } from "@mui/material";
+import { Card, CardContent, Skeleton } from "@mui/material";
 
-export default function CardSkeleton() {
+type Props = {
+  height?: number;
+  fontSize?: string;
+};
+
+export default function CardSkeleton({
+  height = 60,
+  fontSize = "1.5rem",
+}: Props) {
   return (
-    <Card>
-      <Skeleton variant="text" />
+    <Card style={{ height }}>
+      <CardContent>
+        <Skeleton variant="text" sx={{ fontSize }} />
+      </CardContent>
     </Card>
   );
 }
