@@ -141,6 +141,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                 bgcolor: "#028790 !important",
                 color: "white",
                 letterSpacing: 0.5,
+                fontSize: 20,
               }}
             >
               Nahrát fotku
@@ -198,6 +199,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                         bgcolor: "#D3215D !important",
                         color: "white",
                         letterSpacing: 0.5,
+                        fontSize: 20,
                       }}
                       onClick={() => (onImageRemove(index), setMaxSizeOverflow(false))}
                     >

@@ -94,7 +94,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
-          pozadovaneMistoPomoci: [placesOfHelp(values)],
+          pozadovaneMistoPomoci: placesOfHelp(values),
           fotka: isUploadedPhoto(values),
           iDSeniora: {
             id: idSenior,
