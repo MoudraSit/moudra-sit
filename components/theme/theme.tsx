@@ -49,13 +49,13 @@ appTheme = createTheme(appTheme, {
     h4: {
       fontSize: "18px",
       [appTheme.breakpoints.down("sm")]: {
-        fontSize: "12px",
+        fontSize: "13px",
       },
     },
     h5: {
       fontSize: "16px",
       [appTheme.breakpoints.down("sm")]: {
-        fontSize: "10px",
+        fontSize: "12px",
       },
     },
   },
