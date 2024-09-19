@@ -52,5 +52,11 @@ appTheme = createTheme(appTheme, {
         fontSize: "12px",
       },
     },
+    h5: {
+      fontSize: "16px",
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "10px",
+      },
+    },
   },
 });

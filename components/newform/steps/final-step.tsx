@@ -154,7 +154,6 @@ export default function FinalStep(props: {
                           value={props.values.year.toString()}
                           onChange={(e) => {
                             props.setFieldValue("year", e.target.value);
-                            console.log(e.target.value);
                           }}
                         />
                       </Grid>
@@ -234,7 +233,6 @@ export default function FinalStep(props: {
                       value={props.values.requirmentName}
                       onChange={(e) => {
                         props.setFieldValue("requirmentName", e.target.value);
-                        console.log(e.target.value);
                       }}
                     />
                   </TableCell>
@@ -276,7 +274,6 @@ export default function FinalStep(props: {
                       value={props.values.description}
                       onChange={(e) => {
                         props.setFieldValue("description", e.target.value);
-                        console.log(e.target.value);
                       }}
                     />
                   </TableCell>
@@ -318,7 +315,6 @@ export default function FinalStep(props: {
                           value={props.values.name}
                           onChange={(e) => {
                             props.setFieldValue("name", e.target.value);
-                            console.log(e.target.value);
                           }}
                         />
                       </Grid>
@@ -334,7 +330,6 @@ export default function FinalStep(props: {
                           value={props.values.surname}
                           onChange={(e) => {
                             props.setFieldValue("surname", e.target.value);
-                            console.log(e.target.value);
                           }}
                         />
                       </Grid>
@@ -379,7 +374,6 @@ export default function FinalStep(props: {
                           value={props.values.zipCode}
                           onChange={(e) => {
                             props.setFieldValue("zipCode", e.target.value);
-                            console.log(e.target.value);
                           }}
                         />
                       </Grid>
@@ -395,7 +389,6 @@ export default function FinalStep(props: {
                           value={props.values.city}
                           onChange={(e) => {
                             props.setFieldValue("city", e.target.value);
-                            console.log(e.target.value);
                           }}
                         />
                       </Grid>
@@ -439,7 +432,6 @@ export default function FinalStep(props: {
                           value={props.values.phoneNumber}
                           onChange={(e) => {
                             props.setFieldValue("phoneNumber", e.target.value);
-                            console.log(e.target.value);
                           }}
                         />
                       </Grid>
@@ -482,7 +474,6 @@ export default function FinalStep(props: {
                           value={props.values.email}
                           onChange={(e) => {
                             props.setFieldValue("email", e.target.value);
-                            console.log(e.target.value);
                           }}
                         />
                       </Grid>

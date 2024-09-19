@@ -100,9 +100,6 @@ function UploadPicture({ uploadedImage }: ImageType) {
 
       // resize uploaded file to be smaller and able to send with API
       resizeImage(base64object).then((result: string) => {
-        // show compressed photo
-        // console.log(result);
-
         // set image to a form
         uploadedImage(result);
 

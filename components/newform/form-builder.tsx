@@ -77,8 +77,6 @@ export default function FormBuilder() {
             initialValues={initialValues}
             validationSchema={currentValidationSchema}
             onSubmit={(values: IValues, actions) => {
-              console.log("handling submit");
-              console.log(actions);
               handleSendToDevTabidoo(activeStep, values, actions);
               if (activeStep !== formSteps.length - 1) {
                 scrollIntoView();

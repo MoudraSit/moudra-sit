@@ -33,7 +33,6 @@ export default function PlaceStep(props: {
   };
 
   useEffect(() => {
-    //console.log(checkedPhone);
     checkboxValidation();
   }, [library, publicPlace, virtually, home]);
 

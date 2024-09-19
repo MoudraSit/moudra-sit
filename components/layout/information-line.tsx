@@ -27,7 +27,7 @@ function InfoLine() {
         justifyContent: "center",
       }}
     >
-      <Link variant="h6" href="https://moudrasit.cz/mapa">
+      <Link variant="h5" href="https://moudrasit.cz/mapa">
         Upozornění - návštěvy digitálních asistentů fungují zatím pouze ve vybraných lokalitách. Pro
         zobrazení lokalit klikněte zde.
       </Link>
