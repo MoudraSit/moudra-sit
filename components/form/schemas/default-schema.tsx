@@ -90,19 +90,11 @@ export const defaultSchema = [
       .matches(pscRegex, "Napište správný tvar PSČ (např. 60200)")
       .required("Napište Vaše PSČ")
       .typeError("Napište Vaše PSČ"),
-    city: yup
-      .string()
-      .required("Napište název obce/města")
-      .typeError("Napište název obce/města"),
-    plusCode: yup
-      .string()
-      .required("Napište správný tvar předvolby (např. +420)"),
+    city: yup.string().required("Napište název obce/města").typeError("Napište název obce/města"),
+    plusCode: yup.string().required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
-      .matches(
-        phoneRegex,
-        "Napište správný tvar telefonního čísla (např. 123456789)"
-      )
+      .matches(phoneRegex, "Napište správný tvar telefonního čísla (např. 123456789)")
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email("Napište správně Váš kontaktní e-mail"),
   }),
@@ -120,9 +112,7 @@ export const defaultSchema = [
     pcCheckbox: yup.boolean(),
     printerCheckbox: yup.boolean(),
     otherCheckbox: yup.boolean(),
-    checkbox_selection: yup
-      .boolean()
-      .oneOf([true], "Označte prosím alespoň jedno zařízení"),
+    checkbox_selection: yup.boolean().oneOf([true], "Označte prosím alespoň jedno zařízení"),
     requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
     description: yup.string().required("Prosím popište textem Váš problém"),
     name: yup
@@ -140,23 +130,13 @@ export const defaultSchema = [
       .matches(pscRegex, "Špatný tvar PSČ")
       .required("Napište Vaše PSČ")
       .typeError("Napište Vaše PSČ"),
-    city: yup
-      .string()
-      .required("Napište název obce/města")
-      .typeError("Napište název obce/města"),
-    plusCode: yup
-      .string()
-      .required("Napište správný tvar předvolby (např. +420)"),
+    city: yup.string().required("Napište název obce/města").typeError("Napište název obce/města"),
+    plusCode: yup.string().required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
-      .matches(
-        phoneRegex,
-        "Napište správný tvar telefonního čísla (např. 123456789)"
-      )
+      .matches(phoneRegex, "Napište správný tvar telefonního čísla (např. 123456789)")
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email("Napište správně Váš kontaktní e-mail"),
-    agreement: yup
-      .boolean()
-      .oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),
+    agreement: yup.boolean().oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),
   }),
 ];

@@ -90,15 +90,10 @@ function UploadPicture({ uploadedImage }: ImageType) {
       // get type of image
       const typeOfImage: string =
         "image." +
-        base64object.substring(
-          base64object.indexOf("/") + 1,
-          base64object.lastIndexOf(";")
-        );
+        base64object.substring(base64object.indexOf("/") + 1, base64object.lastIndexOf(";"));
 
       // create new URL for a file
-      const newUrl = URL.createObjectURL(
-        dataURLtoFile(imageList[0].data_url, typeOfImage)
-      );
+      const newUrl = URL.createObjectURL(dataURLtoFile(imageList[0].data_url, typeOfImage));
 
       // set image as selected
       setSelectedImage(newUrl);
@@ -145,6 +140,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                 mb: 1,
                 bgcolor: "#028790 !important",
                 color: "white",
+                letterSpacing: 0.5,
               }}
             >
               Nahrát fotku
@@ -178,8 +174,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                     align="left"
                     color="#D3215D"
                   >
-                    Vložená fotka je příliš velká. Prosím nahrajte nějakou
-                    jinou.
+                    Vložená fotka je příliš velká. Prosím nahrajte nějakou jinou.
                   </Typography>
                 )}
               </div>
@@ -202,10 +197,9 @@ function UploadPicture({ uploadedImage }: ImageType) {
                         mb: 2,
                         bgcolor: "#D3215D !important",
                         color: "white",
+                        letterSpacing: 0.5,
                       }}
-                      onClick={() => (
-                        onImageRemove(index), setMaxSizeOverflow(false)
-                      )}
+                      onClick={() => (onImageRemove(index), setMaxSizeOverflow(false))}
                     >
                       Odstranit
                     </Button>
@@ -217,12 +211,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
         )}
       </ReactImageUploading>
       {maxSizeOverflow ? (
-        <Typography
-          sx={{ pt: 6, fontWeight: "bold" }}
-          variant="h5"
-          align="left"
-          color="#D3215D"
-        >
+        <Typography sx={{ pt: 6, fontWeight: "bold" }} variant="h5" align="left" color="#D3215D">
           Vložená fotka je příliš velká. Prosím nahrajte nějakou jinou.
         </Typography>
       ) : null}

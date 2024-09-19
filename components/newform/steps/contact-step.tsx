@@ -1,41 +1,51 @@
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import React from "react";
-import { CityAutosuggest } from "../components/CityAutosuggest";
+import CityAutosuggest from "../components/CityAutosuggest";
 import { PSCAutosuggest } from "../components/PSCAutosuggest";
+import { IValues } from "../helpers/constants";
 import TextFieldForm from "../model/input-form";
 import PhoneCodeFieldForm from "../model/phone-code-form ";
 
-function Step4Form(props: any) {
-  const [buttonOpacity, setButtonOpacity] = React.useState(0);
+function setOpacity(values: IValues) {
+  return values.name.length > 1 &&
+    values.surname.length > 1 &&
+    values.city.length > 1 &&
+    values.zipCode.length > 1 &&
+    values.phoneNumber.length == 9
+    ? 1
+    : 0;
+}
 
-  const handleClick = () => {
-    setButtonOpacity(1);
-  };
-
+export default function ContactStep(props: {
+  values: IValues;
+  setActiveStep: (val: number) => void;
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
+}) {
   const handleClickBack = () => {
     props.setActiveStep(2);
   };
 
   return (
     <>
-      <div id="section4" />
-      <div style={{ display: "flex" }}>
-        <Button
-          variant="contained"
-          onClick={handleClickBack}
-          sx={{
-            mt: 1,
-            mr: 1,
-            bgcolor: "#D3215D !important",
-            color: "white",
-          }}
-        >
-          Zpět
-        </Button>
-        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-          Kontaktní údaje
-        </Typography>
-      </div>
+      <Button
+        variant="contained"
+        onClick={handleClickBack}
+        color="secondary"
+        sx={{
+          mt: 1,
+          mr: 1,
+          mb: 2,
+          color: "white",
+          letterSpacing: 0.5,
+        }}
+        startIcon={<KeyboardArrowLeftIcon />}
+      >
+        Zpět
+      </Button>
+      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+        Kontaktní údaje
+      </Typography>
       <Grid item xs={12}>
         <Typography
           sx={{ fontWeight: "bold", pb: 4, pt: 4 }}
@@ -45,6 +55,16 @@ function Step4Form(props: any) {
         >
           Vyplňte prosím Vaše kontaktní údaje, aby Vás mohl kontaktovat náš digitální asistent. Na
           zadaný e-mail Vám přijde potvrzení přijetí požadavku.
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography
+          sx={{ fontWeight: "bold", pb: 4, pt: 4 }}
+          variant="h3"
+          align="left"
+          color="#3e3e3e"
+        >
+          Políčka označená * jsou povinná.
         </Typography>
       </Grid>
       <Grid container spacing={3}>
@@ -83,10 +103,10 @@ function Step4Form(props: any) {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <PSCAutosuggest />
+          <PSCAutosuggest defaultValue={props.values.zipCode} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CityAutosuggest />
+          <CityAutosuggest defaultValue={props.values.city} />
         </Grid>
         <Grid item xs={12} sm={4}>
           <PhoneCodeFieldForm
@@ -103,21 +123,19 @@ function Step4Form(props: any) {
         </Grid>
 
         <Grid item xs={12} sm={8}>
-          <div onClick={handleClick}>
-            <TextFieldForm
-              id="phoneNumber"
-              label="Kontaktní telefon"
-              name="phoneNumber"
-              inputhelper="Pro kontakování digitálním asistentem"
-              variant="outlined"
-              color="info"
-              fullWidth
-              required
-              inputProps={{
-                maxLength: 11,
-              }}
-            />
-          </div>
+          <TextFieldForm
+            id="phoneNumber"
+            label="Kontaktní telefon"
+            name="phoneNumber"
+            inputhelper="Pro kontakování digitálním asistentem"
+            variant="outlined"
+            color="info"
+            fullWidth
+            required
+            inputProps={{
+              maxLength: 11,
+            }}
+          />
         </Grid>
 
         <Grid item xs={12}>
@@ -136,9 +154,9 @@ function Step4Form(props: any) {
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 8,
+          pt: 4,
           textAlign: "left",
-          opacity: props.values.phoneNumber === "" ? buttonOpacity : 1,
+          opacity: setOpacity(props.values),
           transition: "opacity 0.3s ease-in-out",
         }}
       >
@@ -148,9 +166,11 @@ function Step4Form(props: any) {
           sx={{
             mt: 1,
             mr: 1,
+            letterSpacing: 0.5,
             bgcolor: "#D3215D !important",
             color: "white",
           }}
+          endIcon={<KeyboardArrowRightIcon />}
         >
           Pokračovat
         </Button>
@@ -158,5 +178,3 @@ function Step4Form(props: any) {
     </>
   );
 }
-
-export default Step4Form;

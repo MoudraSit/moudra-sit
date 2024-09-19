@@ -1,9 +1,11 @@
 import { SeniorGetId, SeniorGetNoId } from "backend/tabidoo/interfaces/senior";
-import { IValues } from "../vertical-stepper";
+
+import { IValues } from "../helpers/constants";
 import { removeSpaces } from "./senior";
 
 async function ApiGetRequestSenior(values: IValues) {
-  let fixedPhoneNumber: string = values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
+  let fixedPhoneNumber: string =
+    values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
 
   try {
     const response = await fetch("/api/formtest/get-senior", {

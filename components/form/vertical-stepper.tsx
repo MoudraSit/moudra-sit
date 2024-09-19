@@ -1,25 +1,25 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
-import Button from "@mui/material/Button";
-import { ThemeProvider } from "@mui/material/styles";
-import { appTheme } from "../theme/theme";
 import { Container, Typography, styled } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Step from "@mui/material/Step";
+import StepContent from "@mui/material/StepContent";
+import StepLabel from "@mui/material/StepLabel";
+import Stepper from "@mui/material/Stepper";
+import { ThemeProvider } from "@mui/material/styles";
+import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
+import * as React from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { ImageType } from "react-images-uploading";
+import { appTheme } from "../theme/theme";
+import { defaultSchema } from "./schemas/default-schema";
+import ErrorMessageComponent from "./steps/error-message";
+import ProgressBarComponent from "./steps/progress-bar";
+import StepSuccess from "./steps/step-success";
 import Step1Form from "./steps/step1";
 import Step2Form from "./steps/step2";
 import Step3Form from "./steps/step3";
 import Step4Form from "./steps/step4";
-import { defaultSchema } from "./schemas/default-schema";
-import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import Step5Form from "./steps/step5";
-import StepSuccess from "./steps/step-success";
-import ErrorMessageComponent from "./steps/error-message";
-import ProgressBarComponent from "./steps/progress-bar";
-import { ImageType } from "react-images-uploading";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import submitHelper from "./submit-helper";
 
 let lastStep = false;
@@ -97,11 +97,7 @@ function renderStepContent(
   step: number,
   values: IValues,
   errors: FormikErrors<IValues>,
-  setFieldValue: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined
-  ) => void
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void
 ) {
   const uploadedImage = (image: ImageType) => {
     setFieldValue("image", image);
@@ -132,11 +128,7 @@ export default function VerticalLinearStepper() {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   // onSubmit handler function
-  async function handleSend(
-    index: number,
-    values: IValues,
-    actions: FormikHelpers<IValues>
-  ) {
+  async function handleSend(index: number, values: IValues, actions: FormikHelpers<IValues>) {
     if (index === steps.length - 1) {
       // is recpatcha check ready
       if (!executeRecaptcha) {
@@ -178,7 +170,7 @@ export default function VerticalLinearStepper() {
     } else {
       // go to next step
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      //console.log(values);
+      console.log(activeStep);
 
       // set submit button to default position
       actions.setTouched({});
@@ -209,12 +201,7 @@ export default function VerticalLinearStepper() {
             {({ isSubmitting, setFieldValue, values, errors }) => (
               <Form autoComplete="on">
                 <Container maxWidth="xl">
-                  <Typography
-                    variant="h1"
-                    align="left"
-                    color="primary"
-                    fontWeight="bold"
-                  >
+                  <Typography variant="h1" align="left" color="primary" fontWeight="bold">
                     Kontaktní formulář
                   </Typography>
                   <Stepper activeStep={activeStep} orientation="vertical">
@@ -224,24 +211,21 @@ export default function VerticalLinearStepper() {
                           "& .MuiStepLabel-labelContainer": {
                             color: "white", // circle's text (DISABLED)
                           },
-                          "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-root":
-                            {
-                              fill: "white", // circle's color (DISABLED)
-                            },
-                          "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text":
-                            {
-                              fill: "#028790", // circle's number (DISABLED)
-                            },
+                          "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-root": {
+                            fill: "white", // circle's color (DISABLED)
+                          },
+                          "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text": {
+                            fill: "#028790", // circle's number (DISABLED)
+                          },
                           "& .MuiStepLabel-root .Mui-disabled": {
                             color: "white", // text color (DISABLED)
                           },
                           "& .MuiStepLabel-root .Mui-active": {
                             color: "white", // circle color (ACTIVE)
                           },
-                          "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text":
-                            {
-                              fill: "#028790", // circle's text (ACTIVE)
-                            },
+                          "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
+                            fill: "#028790", // circle's text (ACTIVE)
+                          },
                           "& .MuiStepLabel-root .Mui-completed": {
                             color: "white", // circle color (COMPLETED)
                           },
@@ -283,18 +267,9 @@ export default function VerticalLinearStepper() {
                               }}
                             >
                               <FormContainer maxWidth="md">
-                                <>
-                                  {renderStepContent(
-                                    index,
-                                    values,
-                                    errors,
-                                    setFieldValue
-                                  )}
-                                </>
+                                <>{renderStepContent(index, values, errors, setFieldValue)}</>
                                 {progressBar ? <ProgressBarComponent /> : null}
-                                {errorMessage ? (
-                                  <ErrorMessageComponent />
-                                ) : null}
+                                {errorMessage ? <ErrorMessageComponent /> : null}
                                 <Box
                                   sx={{
                                     bgcolor: "#f5f3ee",
@@ -302,22 +277,21 @@ export default function VerticalLinearStepper() {
                                     textAlign: "left",
                                   }}
                                 >
-                                  {index === activeStep &&
-                                    index < steps.length - 1 && (
-                                      <Button
-                                        variant="contained"
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        sx={{
-                                          mt: 1,
-                                          mr: 1,
-                                          bgcolor: "#D3215D !important",
-                                          color: "white",
-                                        }}
-                                      >
-                                        Pokračovat
-                                      </Button>
-                                    )}
+                                  {index === activeStep && index < steps.length - 1 && (
+                                    <Button
+                                      variant="contained"
+                                      type="submit"
+                                      disabled={isSubmitting}
+                                      sx={{
+                                        mt: 1,
+                                        mr: 1,
+                                        bgcolor: "#D3215D !important",
+                                        color: "white",
+                                      }}
+                                    >
+                                      Pokračovat
+                                    </Button>
+                                  )}
                                   {index === steps.length - 1 && (
                                     <Button
                                       type="submit"

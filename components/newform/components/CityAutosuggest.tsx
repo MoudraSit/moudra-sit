@@ -1,14 +1,15 @@
 import { Autocomplete } from "@mui/material";
-import React from "react";
-import TextFieldForm from "../model/input-form";
+import axios from "axios";
 import { useField, useFormikContext } from "formik";
 import { useQuery } from "react-query";
 import { MunicipalityDto } from "../../../pages/api/address/get-cities";
-import axios from "axios";
+import TextFieldForm from "../model/input-form";
 
-type Props = {};
+type Props = {
+  defaultValue: string;
+};
 
-export const CityAutosuggest: React.FC<Props> = () => {
+export default function CityAutosuggest({ defaultValue }: Props) {
   const { setFieldValue } = useFormikContext();
   const [{ value: zipCode }] = useField<string>({ name: "zipCode" });
 
@@ -28,9 +29,10 @@ export const CityAutosuggest: React.FC<Props> = () => {
     <Autocomplete
       id="city"
       freeSolo
+      value={defaultValue || ""}
       loading={isLoading}
       options={municipalities?.map((m) => m.name) ?? []}
-      onChange={(_, val) => setFieldValue("city", val)}
+      onChange={(_, val) => setFieldValue("city", val ?? "")}
       renderInput={(params) => (
         <TextFieldForm
           label="Obec/město"
@@ -45,4 +47,4 @@ export const CityAutosuggest: React.FC<Props> = () => {
       )}
     />
   );
-};
+}

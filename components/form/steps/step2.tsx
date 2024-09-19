@@ -1,26 +1,17 @@
-import {
-  Box,
-  Button,
-  ButtonBase,
-  Card,
-  CardContent,
-  Grid,
-  InputLabel,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect } from "react";
 
-import Phone from "public/images/form/phone.svg";
-import Pc from "public/images/form/pc.svg";
-import Printer from "public/images/form/printer.svg";
-import Other from "public/images/form/other.svg";
+import Other from "public/images/form/device-checkboxes/other.svg";
+import Pc from "public/images/form/device-checkboxes/pc.svg";
+import Phone from "public/images/form/device-checkboxes/phone.svg";
+import Printer from "public/images/form/device-checkboxes/printer.svg";
 import CheckboxForm from "../model/checkbox-form";
 
-import PhoneDef from "public/images/form/phone-black.svg";
-import PcDef from "public/images/form/pc-black.svg";
-import PrinterDef from "public/images/form/printer-black.svg";
-import OtherDef from "public/images/form/other-black.svg";
+import OtherDef from "public/images/form/device-checkboxes/other-black.svg";
+import PcDef from "public/images/form/device-checkboxes/pc-black.svg";
+import PhoneDef from "public/images/form/device-checkboxes/phone-black.svg";
+import PrinterDef from "public/images/form/device-checkboxes/printer-black.svg";
 
 function Step2Form(props: any) {
   const [checkedPhone, setCheckedPhone] = React.useState(false);
@@ -46,12 +37,7 @@ function Step2Form(props: any) {
   return (
     <>
       <div id="section2" />
-      <Typography
-        sx={{ pb: 6, fontWeight: "bold" }}
-        variant="h2"
-        align="left"
-        color="#3e3e3e"
-      >
+      <Typography sx={{ pb: 6, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
         S čím potřebujete pomoci? Můžete vybrat více možností.
       </Typography>
       <Grid container alignItems="stretch" spacing={1.5}>
@@ -205,9 +191,7 @@ function Step2Form(props: any) {
                 "&.MuiButtonBase-root:hover": {
                   bgcolor: "transparent",
                 },
-                backgroundColor: checkedPrinter
-                  ? "#D3215D !important"
-                  : "white",
+                backgroundColor: checkedPrinter ? "#D3215D !important" : "white",
               }}
               variant="contained"
               onClick={() => {

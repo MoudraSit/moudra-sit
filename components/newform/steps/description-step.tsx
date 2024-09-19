@@ -1,39 +1,44 @@
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import React from "react";
+import { ImageType } from "react-images-uploading/dist/typings";
+import { IValues } from "../helpers/constants";
 import TextFieldForm from "../model/input-form";
 import UploadPicture from "../modules/upload-picture";
 
-function Step3Form(props: any) {
-  const [buttonOpacity, setButtonOpacity] = React.useState(0);
+function setOpacity(requiredName: string, description: string) {
+  return requiredName.length > 1 && description.length > 1 ? 1 : 0;
+}
 
-  const handleClick = () => {
-    setButtonOpacity(1);
-  };
-
+export default function DescriptionStep(props: {
+  values: IValues;
+  uploadedImage: (image: ImageType) => void;
+  setActiveStep: (val: number) => void;
+}) {
   const handleClickBack = () => {
     props.setActiveStep(1);
   };
 
   return (
     <>
-      <div id="section3" />
-      <div style={{ display: "flex" }}>
-        <Button
-          variant="contained"
-          onClick={handleClickBack}
-          sx={{
-            mt: 1,
-            mr: 1,
-            bgcolor: "#D3215D !important",
-            color: "white",
-          }}
-        >
-          Zpět
-        </Button>
-        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-          Popis problému
-        </Typography>
-      </div>
+      <Button
+        variant="contained"
+        onClick={handleClickBack}
+        color="secondary"
+        sx={{
+          mt: 1,
+          mr: 1,
+          mb: 2,
+          color: "white",
+          letterSpacing: 0.5,
+        }}
+        startIcon={<KeyboardArrowLeftIcon />}
+      >
+        Zpět
+      </Button>
+      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+        Popis požadavku
+      </Typography>
 
       <Grid item xs={12}>
         <Typography
@@ -67,45 +72,28 @@ function Step3Form(props: any) {
             color="#3e3e3e"
             sx={{ fontWeight: "bold", pt: 12, pb: 4 }}
           >
-            Název problému (max. 6 slov, např. “nefunguje wifi”)
+            Název požadavku (max. 6 slov, např. “nefunguje wifi”)
           </Typography>
         </Grid>
 
         <Grid item xs={12}>
-          <div onClick={handleClick}>
-            <TextFieldForm
-              id="requirmentName"
-              label="Napište několik slov"
-              name="requirmentName"
-              inputhelper=""
-              variant="outlined"
-              color="info"
-              fullWidth
-              required
-              inputProps={{
-                maxLength: 40,
-              }}
-            />
-          </div>
+          <TextFieldForm
+            id="requirmentName"
+            label="Napište několik slov"
+            name="requirmentName"
+            inputhelper=""
+            variant="outlined"
+            color="info"
+            fullWidth
+            required
+            inputProps={{
+              maxLength: 40,
+            }}
+          />
         </Grid>
-
-        {/* <Grid item xs={12}>
-          <Typography
-            sx={{ pt: 6, fontWeight: "bold" }}
-            variant="h2"
-            align="left"
-            color="#3e3e3e"
-             
-          >
-            Váš vzkaz můžete napsat nebo nahrát hlasem (nepovinné)
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <UploadRecord />
-        </Grid> */}
         <Grid item xs={12}>
           <Typography sx={{ pt: 6, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
-            Máte fotografii, kterou nám k tomu můžete poslat? (nepovinné)
+            Máte fotografii, na které jde vidět, o co se jedná? (nepovinné)
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -115,9 +103,9 @@ function Step3Form(props: any) {
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 8,
+          pt: 4,
           textAlign: "left",
-          opacity: props.values.requirmentName === "" ? buttonOpacity : 1,
+          opacity: setOpacity(props.values.requirmentName, props.values.description),
           transition: "opacity 0.3s ease-in-out",
         }}
       >
@@ -127,9 +115,11 @@ function Step3Form(props: any) {
           sx={{
             mt: 1,
             mr: 1,
+            letterSpacing: 0.5,
             bgcolor: "#D3215D !important",
             color: "white",
           }}
+          endIcon={<KeyboardArrowRightIcon />}
         >
           Pokračovat
         </Button>
@@ -137,5 +127,3 @@ function Step3Form(props: any) {
     </>
   );
 }
-
-export default Step3Form;

@@ -17,7 +17,7 @@ function StepSuccess() {
             pl: 4,
             pr: 4,
             borderRadius: 2,
-            textAlign: "center",
+            textAlign: "lef t",
           }}
         >
           <Container maxWidth="md">
@@ -52,6 +52,7 @@ function StepSuccess() {
                 mr: 1,
                 bgcolor: "#D3215D !important",
                 color: "secondary.contrastText",
+                letterSpacing: 0.5,
               }}
             >
               Zavřít a zpět na hlavní stránku

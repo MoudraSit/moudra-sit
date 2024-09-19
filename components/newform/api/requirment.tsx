@@ -1,4 +1,4 @@
-import { IValues } from "../vertical-stepper";
+import { IValues } from "../helpers/constants";
 
 interface IRequirmentResponse {
   data: {

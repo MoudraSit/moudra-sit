@@ -31,6 +31,7 @@ function UploadRecord() {
               mr: 1,
               bgcolor: "info.main",
               color: "white",
+              letterSpacing: 0.5,
             }}
           >
             Odstranit
