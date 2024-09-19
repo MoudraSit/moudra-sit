@@ -15,6 +15,7 @@ import BirthStep from "./steps/birth-step";
 import ContactStep from "./steps/contact-step";
 import DescriptionStep from "./steps/description-step";
 import DeviceStep from "./steps/device-step";
+import ErrorMessageComponent from "./steps/error-message";
 import FinalStep from "./steps/final-step";
 import PlaceStep from "./steps/place-step";
 import StepSuccess from "./steps/step-success";
@@ -26,25 +27,24 @@ export default function FormBuilder() {
   const [errorMessage, setErrorMessage] = React.useState(false);
   const currentValidationSchema = defaultSchema[activeStep];
 
-  let lastStep: boolean = false;
-
   // onSubmit handler function
-  async function handleSendTest(index: number, values: IValues, actions: FormikHelpers<IValues>) {
+  async function handleSendToDevTabidoo(
+    index: number,
+    values: IValues,
+    actions: FormikHelpers<IValues>
+  ) {
     if (index === formSteps.length - 1) {
       try {
-        console.log("API communication - START");
         // show progress bar
         setProgressbBar(true);
         await submitHelperTest(index, values, actions);
         // switch off progress bar
         setProgressbBar(false);
         // fold steps
-        lastStep = true;
         // show content of last step
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         console.log("API communication - OK");
       } catch (error) {
-        lastStep = false;
         setProgressbBar(false);
         setErrorMessage(true);
         // set submit button to default position
@@ -79,8 +79,10 @@ export default function FormBuilder() {
             onSubmit={(values: IValues, actions) => {
               console.log("handling submit");
               console.log(actions);
-              handleSendTest(activeStep, values, actions);
-              scrollIntoView();
+              handleSendToDevTabidoo(activeStep, values, actions);
+              if (activeStep !== formSteps.length - 1) {
+                scrollIntoView();
+              }
             }}
           >
             {({ isSubmitting, setFieldValue, values, errors }) => (
@@ -166,6 +168,7 @@ export default function FormBuilder() {
                     </Stepper>
                     {renderStepContent(activeStep, values, errors, setFieldValue, setActiveStep)}
                     {progressBar ? <ProgressBarComponent /> : null}
+                    {errorMessage ? <ErrorMessageComponent /> : null}
                   </Box>
                 </FormContainer>
               </Form>

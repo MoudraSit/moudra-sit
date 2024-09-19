@@ -50,6 +50,18 @@ function base64ImageType(encoded: string): string {
   return result;
 }
 
+function placeOfHelp(props: IValues) {
+  if (props.libraryCheckbox) {
+    return "V knihovně";
+  } else if (props.homeCheckbox) {
+    return "U mě doma";
+  } else if (props.publicPlaceCheckbox) {
+    return "Jinde";
+  } else {
+    return "Na dálku";
+  }
+}
+
 // return the photo to upload in API format or null
 function isUploadedPhoto(values: IValues): [IImage] | null {
   // if image was uploaded
@@ -77,6 +89,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
+          pozadovaneMistoPomoci: placeOfHelp(values),
           fotka: isUploadedPhoto(values),
           iDSeniora: {
             id: idSenior,
