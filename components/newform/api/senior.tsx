@@ -6,6 +6,18 @@ export function capitalizeFirstLetter(name: string) {
   return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
+function placeOfHelp(props: IValues) {
+  if (props.libraryCheckbox) {
+    return "V knihovně";
+  } else if (props.homeCheckbox) {
+    return "U mě doma";
+  } else if (props.publicPlaceCheckbox) {
+    return "Jinde";
+  } else {
+    return "Na dálku";
+  }
+}
+
 // remove spaces from string
 export function removeSpaces(str: string) {
   return (str = str.replace(/\s/g, ""));
@@ -21,6 +33,7 @@ async function ApiRequestSenior(props: IValues) {
           prijmeni: capitalizeFirstLetter(props.surname),
           PSC: removeSpaces(props.zipCode),
           mesto: capitalizeFirstLetter(props.city),
+          pozadovaneMistoPomoci: placeOfHelp(props),
           email: props.email,
           stat: "Česko",
           telefon: props.plusCode.concat(removeSpaces(props.phoneNumber)),

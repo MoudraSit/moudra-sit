@@ -1,15 +1,15 @@
 export const formSteps = [
   {
-    label: "Váš rok narození",
+    label: "Rok narození",
   },
   {
     label: "Výběr zařízení",
   },
   {
-    label: "Popis Vašeho požadavku",
+    label: "Popis požadavku",
   },
   {
-    label: "Vaše kontaktní údaje",
+    label: "Kontaktní údaje",
   },
   {
     label: "Místo setkání",

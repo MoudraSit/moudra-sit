@@ -1,4 +1,4 @@
-import { Container, styled, Typography } from "@mui/material";
+import { Container, Step, StepLabel, Stepper, styled, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
 import TestInfoLine from "components/newform/test-info-line";
@@ -10,6 +10,7 @@ import ProgressBarComponent from "../form/steps/progress-bar";
 import { defaultSchema } from "../newform/schemas/default-schema";
 import { appTheme } from "../theme/theme";
 import { formSteps, initialValues, IValues } from "./helpers/constants";
+import { scrollIntoView } from "./helpers/scroll-into-view";
 import BirthStep from "./steps/birth-step";
 import ContactStep from "./steps/contact-step";
 import DescriptionStep from "./steps/description-step";
@@ -79,6 +80,7 @@ export default function FormBuilder() {
               console.log("handling submit");
               console.log(actions);
               handleSendTest(activeStep, values, actions);
+              scrollIntoView();
             }}
           >
             {({ isSubmitting, setFieldValue, values, errors }) => (
@@ -94,25 +96,78 @@ export default function FormBuilder() {
                     Kontaktní formulář
                   </Typography>
 
-                  {activeStep !== 10 && (
-                    <Box
+                  <Box
+                    sx={{
+                      bgcolor: "#f5f3ee",
+                      mt: 4,
+                      pt: { xs: 2, sm: 4, md: 8 },
+                      pl: { xs: 2, sm: 4, md: 8 },
+                      pr: { xs: 2, sm: 4, md: 8 },
+                      pb: 4,
+                      borderRadius: 2,
+                      boxShadow: 4,
+                    }}
+                  >
+                    <Stepper
+                      activeStep={activeStep}
+                      alternativeLabel
                       sx={{
-                        bgcolor: "#f5f3ee",
-                        mt: 4,
-                        pt: { xs: 2, sm: 4, md: 8 },
-                        pl: { xs: 2, sm: 4, md: 8 },
-                        pr: { xs: 2, sm: 4, md: 8 },
-                        pb: 4,
-                        borderRadius: 2,
-                        boxShadow: 4,
+                        pb: { xs: 2, sm: 4, md: 8 },
                       }}
                     >
-                      {renderStepContent(activeStep, values, errors, setFieldValue, setActiveStep)}
-                      {progressBar ? <ProgressBarComponent /> : null}
-                    </Box>
-                  )}
+                      {formSteps.map((step, index) => (
+                        <Step
+                          sx={{
+                            "& .MuiStepLabel-labelContainer": {
+                              color: "white", // circle's text (DISABLED)
+                            },
+                            "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-root": {
+                              fill: "#3e3e3e", // circle's color (DISABLED)
+                            },
+                            "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text": {
+                              fill: "white", // circle's number (DISABLED)
+                            },
+                            "& .MuiStepLabel-root .Mui-disabled": {
+                              color: "#3e3e3e", // text color (DISABLED)
+                            },
+                            "& .MuiStepLabel-root .Mui-active": {
+                              color: "#028790", // circle color (ACTIVE)
+                            },
+                            "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
+                              fill: "white", // circle's text (ACTIVE)
+                            },
+                            "& .MuiStepLabel-root .Mui-completed": {
+                              color: "#028790", // circle color (COMPLETED)
+                            },
+                            "& .MuiSvgIcon-root": {
+                              fontSize: 25,
+                            },
+                            "& .MuiStepIcon-text": {
+                              fontSize: 18,
+                              fontWeight: "bold",
+                            },
+                            "& .MuiStepLabel-label": {
+                              fontSize: {
+                                xs: 0,
+                                sm: 0,
+                                md: 20,
+                              },
+                            },
+                            "& .MuiStepContent-root": {
+                              paddingLeft: 0,
+                            },
+                          }}
+                          key={step.label}
+                          active={activeStep === index}
+                        >
+                          <StepLabel>{step.label}</StepLabel>
+                        </Step>
+                      ))}
+                    </Stepper>
+                    {renderStepContent(activeStep, values, errors, setFieldValue, setActiveStep)}
+                    {progressBar ? <ProgressBarComponent /> : null}
+                  </Box>
                 </FormContainer>
-                {activeStep === 10 && <StepSuccess />}
               </Form>
             )}
           </Formik>
