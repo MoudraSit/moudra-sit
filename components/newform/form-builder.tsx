@@ -188,6 +188,8 @@ function renderStepContent(
           errors={errors}
         />
       );
+    case 6:
+      return <StepSuccess />;
     default:
       return <div>Not Found</div>;
   }
