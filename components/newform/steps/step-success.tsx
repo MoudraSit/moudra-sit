@@ -30,6 +30,7 @@ function StepSuccess() {
           bgcolor: "#D3215D !important",
           color: "secondary.contrastText",
           letterSpacing: 0.5,
+          fontSize: 20,
         }}
       >
         Zavřít a zpět na hlavní stránku

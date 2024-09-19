@@ -50,16 +50,21 @@ function base64ImageType(encoded: string): string {
   return result;
 }
 
-function placeOfHelp(props: IValues) {
+function placesOfHelp(props: IValues) {
+  const places = [];
   if (props.libraryCheckbox) {
-    return "V knihovně";
-  } else if (props.homeCheckbox) {
-    return "U mě doma";
-  } else if (props.publicPlaceCheckbox) {
-    return "Jinde";
-  } else {
-    return "Na dálku";
+    places.push("V knihovně");
   }
+  if (props.homeCheckbox) {
+    places.push("U mě doma");
+  }
+  if (props.publicPlaceCheckbox) {
+    places.push("Jinde");
+  }
+  if (props.virtualCheckbox) {
+    places.push("Na dálku");
+  }
+  return places;
 }
 
 // return the photo to upload in API format or null
@@ -89,7 +94,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
-          pozadovaneMistoPomoci: placeOfHelp(values),
+          pozadovaneMistoPomoci: [placesOfHelp(values)],
           fotka: isUploadedPhoto(values),
           iDSeniora: {
             id: idSenior,

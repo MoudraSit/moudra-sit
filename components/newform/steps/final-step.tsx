@@ -577,6 +577,7 @@ export default function FinalStep(props: {
               bgcolor: "#D3215D !important",
               color: "white",
               letterSpacing: 0.5,
+              fontSize: 20,
             }}
           >
             Odeslat formulář

@@ -64,6 +64,7 @@ export default function BirthStep(props: { values: IValues; errors: FormikErrors
             letterSpacing: 0.5,
             bgcolor: "#D3215D !important",
             color: "white",
+            fontSize: 20,
           }}
           endIcon={<KeyboardArrowRightIcon />}
         >

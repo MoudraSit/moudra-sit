@@ -31,6 +31,7 @@ export default function DescriptionStep(props: {
           mb: 2,
           color: "white",
           letterSpacing: 0.5,
+          fontSize: 20,
         }}
         startIcon={<KeyboardArrowLeftIcon />}
       >
@@ -118,6 +119,7 @@ export default function DescriptionStep(props: {
             letterSpacing: 0.5,
             bgcolor: "#D3215D !important",
             color: "white",
+            fontSize: 20,
           }}
           endIcon={<KeyboardArrowRightIcon />}
         >
