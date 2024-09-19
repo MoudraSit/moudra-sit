@@ -27,7 +27,7 @@ function InfoLine() {
         justifyContent: "center",
       }}
     >
-      <Link variant="h5" href="https://moudrasit.cz/mapa">
+      <Link variant="h4" href="https://moudrasit.cz/mapa">
         Upozornění - návštěvy digitálních asistentů fungují zatím pouze ve vybraných lokalitách. Pro
         zobrazení lokalit klikněte zde.
       </Link>
@@ -38,11 +38,9 @@ function InfoLine() {
         }}
         type="button"
         variant="outlined"
-        startIcon={<CloseIcon />}
+        endIcon={<CloseIcon />}
         onClick={() => setHideInfo("none")}
-      >
-        Zavřít
-      </Button>
+      ></Button>
     </Box>
   );
 }
