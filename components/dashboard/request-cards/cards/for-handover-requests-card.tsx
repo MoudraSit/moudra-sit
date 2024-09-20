@@ -16,7 +16,7 @@ async function ForHandoverRequestsCard() {
         href={`/dotazy?${FilterType.REQUEST_TYPE}=${SeniorRequestType.FOR_HANDOVER}`}
       >
         <CardContent>
-          <Typography variant="body2">
+          <Typography variant="body2" color={"#FF921D"}>
             Dotazy k předání ({requests.length})
           </Typography>
         </CardContent>
