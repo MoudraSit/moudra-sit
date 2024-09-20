@@ -16,7 +16,7 @@ async function MyRequestsCard() {
         href={`/dotazy?${FilterType.REQUEST_TYPE}=${SeniorRequestType.MINE}`}
       >
         <CardContent>
-          <Typography variant="body2" color={"#028790"}>
+          <Typography variant="body2" color={"#028790"} fontSize={"18px"} fontFamily={"roboto"}>
             Moje dotazy ({requests.length})
           </Typography>
         </CardContent>
