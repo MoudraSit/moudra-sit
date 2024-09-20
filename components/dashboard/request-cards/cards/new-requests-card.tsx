@@ -16,7 +16,7 @@ async function NewRequestsCard() {
         href={`/dotazy?${FilterType.REQUEST_TYPE}=${SeniorRequestType.NEW}`}
       >
         <CardContent>
-          <Typography variant="body2" color={"#D3215D"}>
+          <Typography variant="body2" color={"#D3215D"} fontSize={"18px"} fontFamily={"roboto"}>
             Nové dotazy ({requests.length})
           </Typography>
         </CardContent>
