@@ -21,6 +21,8 @@ export enum AssistantPagePaths {
   DASHBOARD = "/prehled",
   SENIOR_REQUESTS = "/dotazy",
   NEW_SENIOR_QUERY = "/dotazy/novy",
+  VISITS = "/navstevy",
+  NEW_VISIT = "/navstevy/nova",
 }
 
 export enum SeniorPagePaths {
