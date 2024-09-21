@@ -6,6 +6,8 @@ type Props = {
   href: string;
 };
 
+// TODO: real back button, this href adds it on top of the history stack
+
 function BackButton({ href }: Props) {
   return (
     <Button
