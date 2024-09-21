@@ -30,7 +30,7 @@ async function Page({ params }: Props) {
 
   return (
     <>
-      <BackButton href={AssistantPagePaths.SENIOR_REQUESTS} />
+      <BackButton />
       <Paper>
         <span>{seniorRequest.fields.popis}</span>
         <Button
