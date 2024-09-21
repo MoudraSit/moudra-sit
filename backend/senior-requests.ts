@@ -8,6 +8,7 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/auth";
 import { Visit } from "types/visit";
+import { NotFoundError } from "helper/exceptions";
 
 export class SeniorRequestsGetter {
   public static async getSeniorRequestsByUIFilters(
@@ -27,7 +28,7 @@ export class SeniorRequestsGetter {
     return await this._getSeniorRequestsByFilter(filters);
   }
 
-  public static async getSeniorRequestByID(requestId: string) {
+  public static async getSeniorRequestById(requestId: string) {
     const filters = [
       {
         field: "id",
@@ -37,7 +38,7 @@ export class SeniorRequestsGetter {
     ];
     const seniorRequests = await this._getSeniorRequestsByFilter(filters);
 
-    if (!seniorRequests.length) throw new Error("Dotaz nenalezen");
+    if (!seniorRequests.length) throw new NotFoundError("Dotaz nenalezen");
 
     return seniorRequests[0];
   }
