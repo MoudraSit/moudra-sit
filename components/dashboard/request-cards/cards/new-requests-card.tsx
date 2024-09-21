@@ -1,23 +1,23 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
-import { SeniorRequestsGetter } from "backend/senior-requests";
+import { SeniorQueriesGetter } from "backend/senior-requests";
 import Link from "next/link";
 import {
   AssistantPagePaths,
   FilterType,
-  SeniorRequestType,
+  SeniorRequestStatus,
 } from "helper/consts";
 
 async function NewRequestsCard() {
-  const requests = await SeniorRequestsGetter.getSeniorRequestsByUIFilters({
-    [FilterType.REQUEST_TYPE]: SeniorRequestType.NEW,
+  const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
+    [FilterType.QUERY_TYPE]: SeniorRequestStatus.NEW,
   });
 
   return (
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.REQUEST_TYPE}=${SeniorRequestType.NEW}`}
+        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_TYPE}=${SeniorRequestStatus.NEW}`}
       >
         <CardContent>
           <Typography variant="body2" color={"#D3215D"} fontSize={"18px"}>
