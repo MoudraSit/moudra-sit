@@ -1,52 +1,54 @@
-import { SeniorRequest } from "types/seniorRequest";
+import { SeniorRequest as SeniorQuery } from "types/seniorRequest";
 import { callTabidoo } from "./tabidoo";
 import {
   FilterType,
-  SeniorRequestStatus,
-  SeniorRequestType,
+  SeniorRequestStatus as SeniorQueryStatus,
 } from "helper/consts";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/auth";
 import { Visit } from "types/visit";
 import { NotFoundError } from "helper/exceptions";
 
-export class SeniorRequestsGetter {
-  public static async getSeniorRequestsByUIFilters(
-    uiFilters: Record<FilterType, any>
+export class SeniorQueriesGetter {
+  public static async getSeniorQueriesByUIFilters(
+    uiFilters: Partial<Record<FilterType, any>>
   ) {
     const filters = [];
 
-    if (!!uiFilters[FilterType.REQUEST_TYPE]) {
+    if (!!uiFilters[FilterType.QUERY_TYPE]) {
       filters.push(
-        await this._createSeniorRequestTypeFilter(
-          uiFilters[FilterType.REQUEST_TYPE]
+        await this._createSeniorQueryStatusFilter(
+          uiFilters[FilterType.QUERY_TYPE]
         )
       );
     }
+    if (!!uiFilters[FilterType.USER_ASSIGNED]) {
+      filters.push(await this._createSeniorQueryUserAssignedFilter());
+    }
     // TODO: other filter types
 
-    return await this._getSeniorRequestsByFilter(filters);
+    return await this._getSeniorQueriesByFilter(filters);
   }
 
-  public static async getSeniorRequestById(requestId: string) {
+  public static async getSeniorQueriesById(queryId: string) {
     const filters = [
       {
         field: "id",
         operator: "eq",
-        value: requestId,
+        value: queryId,
       },
     ];
-    const seniorRequests = await this._getSeniorRequestsByFilter(filters);
+    const seniorQueries = await this._getSeniorQueriesByFilter(filters);
 
-    if (!seniorRequests.length) throw new NotFoundError("Dotaz nenalezen");
+    if (!seniorQueries.length) throw new NotFoundError("Dotaz nenalezen");
 
-    return seniorRequests[0];
+    return seniorQueries[0];
   }
 
-  protected static async _getSeniorRequestsByFilter(
+  protected static async _getSeniorQueriesByFilter(
     filters: Array<Record<string, any>>
   ) {
-    const seniorRequests = await callTabidoo<Array<SeniorRequest>>(
+    const seniorQueries = await callTabidoo<Array<SeniorQuery>>(
       "/tables/dotaz/data/filter",
       {
         body: {
@@ -56,32 +58,31 @@ export class SeniorRequestsGetter {
       }
     );
 
-    return seniorRequests;
+    return seniorQueries;
   }
-  private static async _createSeniorRequestTypeFilter(
-    requestType: SeniorRequestType
+
+  private static async _createSeniorQueryStatusFilter(
+    queryStatus: SeniorQueryStatus
   ) {
-    switch (requestType) {
-      case SeniorRequestType.NEW:
+    switch (queryStatus) {
+      case SeniorQueryStatus.NEW:
         return {
           field: "stavDotazu",
           operator: "eq",
-          value: SeniorRequestStatus.NEW,
+          value: SeniorQueryStatus.NEW,
         };
-      case SeniorRequestType.FOR_HANDOVER:
+      case SeniorQueryStatus.FOR_HANDOVER:
         return {
           field: "stavDotazu",
           operator: "eq",
-          value: SeniorRequestStatus.FOR_HANDOVER,
+          value: SeniorQueryStatus.FOR_HANDOVER,
         };
-      case SeniorRequestType.MINE:
-        return await this._getSeniorRequestsIdPerAssistant();
       default:
-        throw new Error(`Unknown seniorRequestStatusType: "${requestType}"`);
+        throw new Error(`Unknown senior query status: "${queryStatus}"`);
     }
   }
 
-  protected static async _getSeniorRequestsIdPerAssistant() {
+  private static async _createSeniorQueryUserAssignedFilter() {
     const session = await getServerSession(authOptions);
 
     const filters = [
@@ -99,15 +100,15 @@ export class SeniorRequestsGetter {
       }
     );
 
-    const seniorRequestIDs = new Set();
+    const seniorQueryIDs = new Set();
 
     for (const visit of visits) {
-      if (!(visit.fields.dotaz.id in seniorRequestIDs)) {
-        seniorRequestIDs.add(visit.fields.dotaz.id);
+      if (!(visit.fields.dotaz.id in seniorQueryIDs)) {
+        seniorQueryIDs.add(visit.fields.dotaz.id);
       }
     }
 
-    const IDList = Array.from(seniorRequestIDs).join(", ");
+    const IDList = Array.from(seniorQueryIDs).join(", ");
 
     return {
       field: "id",

@@ -3,19 +3,19 @@ import { Typography } from "@mui/material";
 import BackButton from "components/buttons/back-button";
 import { AssistantPagePaths, FilterType } from "helper/consts";
 import RequestFilterPanel from "components/senior-requests/request-filter-panel";
-import { SeniorRequestsGetter } from "backend/senior-requests";
+import { SeniorQueriesGetter } from "backend/senior-requests";
 
 type Props = {
   searchParams?: {
-    typDotazu?: string;
+    [FilterType.QUERY_TYPE]?: string;
+    [FilterType.USER_ASSIGNED]?: string;
   };
 };
 
 async function Page({ searchParams }: Props) {
-  const requestsType = searchParams?.typDotazu || "";
-  const requests = await SeniorRequestsGetter.getSeniorRequestsByUIFilters({
-    [FilterType.REQUEST_TYPE]: requestsType,
-  });
+  const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters(
+    searchParams || {}
+  );
 
   return (
     <>
