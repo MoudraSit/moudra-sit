@@ -1,6 +1,5 @@
 import { Paper, Typography } from "@mui/material";
 import BackButton from "components/buttons/back-button";
-import { AssistantPagePaths } from "helper/consts";
 import { Visit } from "types/visit";
 import { getVisitById } from "backend/visits";
 import { redirect } from "next/navigation";
@@ -28,7 +27,7 @@ async function Page({ params }: Props) {
 
   return (
     <>
-      <BackButton href={AssistantPagePaths.SENIOR_REQUESTS} />
+      <BackButton/>
       <Paper>
         <span>{visit.id}</span>
       </Paper>
