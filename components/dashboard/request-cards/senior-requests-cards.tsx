@@ -4,6 +4,7 @@ import CardSkeleton from "components/skeletons/card-skeleton";
 import NewRequestsCard from "./cards/new-requests-card";
 import ForHandoverRequestsCard from "./cards/for-handover-requests-card";
 import MyRequestsCard from "./cards/my-requests-card";
+import NewQueryCard from "./cards/new-query-card";
 
 async function SeniorRequestsCards() {
   return (
@@ -17,6 +18,7 @@ async function SeniorRequestsCards() {
       <React.Suspense fallback={<CardSkeleton />}>
         <MyRequestsCard />
       </React.Suspense>
+      <NewQueryCard />
     </Stack>
   );
 }
