@@ -1,6 +1,5 @@
 import { Paper } from "@mui/material";
 import BackButton from "components/buttons/back-button";
-import { AssistantPagePaths } from "helper/consts";
 
 type Props = {
   searchParams: {
@@ -12,12 +11,12 @@ async function Page({ searchParams }: Props) {
   const { queryId } = searchParams;
 
   if (!queryId) {
-    throw new Error('Missing queryId for the visit to be assigned to')
+    throw new Error("Missing queryId for the visit to be assigned to");
   }
 
   return (
     <>
-      <BackButton href={AssistantPagePaths.SENIOR_REQUESTS} />
+      <BackButton />
       <Paper>TBD</Paper>
     </>
   );
