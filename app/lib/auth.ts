@@ -7,8 +7,8 @@ import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import { AssistantStatus, Role } from "helper/consts";
 import { callTabidoo } from "backend/tabidoo";
-import { AssistantResponse } from "types/assistant";
-import { SeniorResponse } from "types/senior";
+import { Assistant } from "types/assistant";
+import { Senior } from "types/senior";
 import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -19,6 +19,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       // Do not assign if the user attributes are null
+      if (user?.id) token.id = user.id;
       if (user?.role) token.role = user.role;
       if (user?.status) token.status = user.status;
 
@@ -26,6 +27,7 @@ export const authOptions: NextAuthOptions = {
     },
     session({ session, token }) {
       if (token && session.user) {
+        session.user.id = token.id;
         session.user.role = token.role;
         session.user.status = token.status;
       }
@@ -70,11 +72,11 @@ export const authOptions: NextAuthOptions = {
         };
 
         const [foundSeniors, foundAssistants] = await Promise.all([
-          callTabidoo<SeniorResponse[]>(
+          callTabidoo<Senior[]>(
             "/tables/senior/data/filter",
             tabidooRequestPayload
           ),
-          callTabidoo<AssistantResponse[]>(
+          callTabidoo<Assistant[]>(
             "/tables/uzivatel/data/filter",
             tabidooRequestPayload
           ),
@@ -98,7 +100,7 @@ export const authOptions: NextAuthOptions = {
         let status = undefined;
         if (role == Role.DA) {
           if (
-            (user as AssistantResponse).fields.administrativniStav === "🟢DONE"
+            (user as Assistant).fields.administrativniStav === "🟢DONE"
           )
             status = AssistantStatus.ACTIVE;
           else status = AssistantStatus.PENDING;

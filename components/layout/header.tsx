@@ -122,7 +122,7 @@ function ResponsiveAppBar() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <MenuItem
-                  href="/profile"
+                  href={isUserAssistant(data.user) ? "/asistent" : "/senior"}
                   sx={{ display: { xs: "flex", sm: "none" } }}
                 >
                   <ListItemIcon>

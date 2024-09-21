@@ -1,4 +1,4 @@
-import { SeniorResponse } from "types/senior";
+import { Senior } from "types/senior";
 import { IValues } from "../vertical-stepper";
 
 // check if name and surname start with capital letter
@@ -32,7 +32,7 @@ async function ApiRequestSenior(props: IValues) {
       },
     });
 
-    const jsonObject: { data: SeniorResponse } = await response.json();
+    const jsonObject: { data: Senior } = await response.json();
 
     return jsonObject.data.id;
   } catch (error) {

@@ -1,11 +1,11 @@
 import { callTabidoo } from "../tabidoo";
-import { AssistantResponse } from "../../types/assistant";
+import { Assistant } from "../../types/assistant";
 
 export const getAssistantBy = async (
   field: "email" | "telefon",
   value: string
 ) => {
-  return callTabidoo<AssistantResponse[]>("/tables/uzivatel/data/filter", {
+  return callTabidoo<Assistant[]>("/tables/uzivatel/data/filter", {
     method: "POST",
     body: {
       filter: [

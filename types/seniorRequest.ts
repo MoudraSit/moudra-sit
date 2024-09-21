@@ -1,6 +1,6 @@
-import { SeniorResponse } from "./senior";
+import { Senior } from "./senior";
 
-export interface ISeniorRequest {
+export interface SeniorRequest {
   id: string;
   created: string;
   modified: string;
@@ -9,6 +9,6 @@ export interface ISeniorRequest {
     popis: string;
     podrobnosti: string;
     // TODO: Navstevy object
-    iDSeniora: SeniorResponse;
+    iDSeniora: Senior;
   };
 }
