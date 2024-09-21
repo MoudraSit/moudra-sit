@@ -14,10 +14,13 @@ export enum SeniorRequestStatus {
   FOR_HANDOVER = "01. K předání",
 }
 
+// Include subpaths for easy referencing in the app
+// Query and dynamic path parameters (e.g., .../id/...) should not be here
 export enum AssistantPagePaths {
   ASSISTANT_PROFILE = "/asistent",
   DASHBOARD = "/prehled",
   SENIOR_REQUESTS = "/dotazy",
+  NEW_SENIOR_QUERY = "/dotazy/novy",
 }
 
 export enum SeniorPagePaths {

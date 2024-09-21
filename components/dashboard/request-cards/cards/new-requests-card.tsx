@@ -2,7 +2,11 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
 import { SeniorRequestsGetter } from "backend/senior-requests";
 import Link from "next/link";
-import { FilterType, SeniorRequestType } from "helper/consts";
+import {
+  AssistantPagePaths,
+  FilterType,
+  SeniorRequestType,
+} from "helper/consts";
 
 async function NewRequestsCard() {
   const requests = await SeniorRequestsGetter.getSeniorRequestsByUIFilters({
@@ -13,10 +17,10 @@ async function NewRequestsCard() {
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`/dotazy?${FilterType.REQUEST_TYPE}=${SeniorRequestType.NEW}`}
+        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.REQUEST_TYPE}=${SeniorRequestType.NEW}`}
       >
         <CardContent>
-          <Typography variant="body2" color={"#D3215D"} fontSize={"18px"} fontFamily={"roboto"}>
+          <Typography variant="body2" color={"#D3215D"} fontSize={"18px"}>
             Nové dotazy ({requests.length})
           </Typography>
         </CardContent>
