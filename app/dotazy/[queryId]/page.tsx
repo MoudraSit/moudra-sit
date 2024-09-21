@@ -1,7 +1,7 @@
 import { Button, Paper } from "@mui/material";
 import BackButton from "components/buttons/back-button";
 import { AssistantPagePaths } from "helper/consts";
-import { SeniorRequestsGetter } from "backend/senior-requests";
+import { SeniorQueriesGetter } from "backend/senior-requests";
 import Link from "next/link";
 import { NotFoundError } from "helper/exceptions";
 import { redirect } from "next/navigation";
@@ -17,7 +17,7 @@ async function Page({ params }: Props) {
   const seniorRequestId = params.queryId;
   let seniorRequest: SeniorRequest;
   try {
-    seniorRequest = await SeniorRequestsGetter.getSeniorRequestById(
+    seniorRequest = await SeniorQueriesGetter.getSeniorQueriesById(
       seniorRequestId
     );
   } catch (error) {

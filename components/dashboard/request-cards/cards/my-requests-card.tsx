@@ -1,23 +1,19 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
-import { SeniorRequestsGetter } from "backend/senior-requests";
+import { SeniorQueriesGetter } from "backend/senior-requests";
 import Link from "next/link";
-import {
-  AssistantPagePaths,
-  FilterType,
-  SeniorRequestType,
-} from "helper/consts";
+import { AssistantPagePaths, FilterType } from "helper/consts";
 
 async function MyRequestsCard() {
-  const requests = await SeniorRequestsGetter.getSeniorRequestsByUIFilters({
-    [FilterType.REQUEST_TYPE]: SeniorRequestType.MINE,
+  const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
+    [FilterType.USER_ASSIGNED]: true,
   });
 
   return (
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.REQUEST_TYPE}=${SeniorRequestType.MINE}`}
+        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.USER_ASSIGNED}=true`}
       >
         <CardContent>
           <Typography variant="body2" color={"#028790"} fontSize={"18px"}>
