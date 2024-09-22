@@ -16,6 +16,9 @@ import { FixedSizeList } from "react-window";
 export const REQUEST_CARD_HEIGHT = 160;
 const CARD_SPACING = "1rem";
 
+// TODO: add server-side pagination
+// TODO: reset pagination if filters change...
+
 type Props = {
   items: Array<Record<string, any>>;
 };
