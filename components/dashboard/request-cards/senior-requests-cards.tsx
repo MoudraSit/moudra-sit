@@ -6,6 +6,8 @@ import ForHandoverRequestsCard from "./cards/for-handover-requests-card";
 import MyRequestsCard from "./cards/my-requests-card";
 import NewQueryCard from "./cards/new-query-card";
 
+// TODO: get the count of queries with a separate request (because of lazy loading)
+
 async function SeniorRequestsCards() {
   return (
     <Stack spacing={2}>

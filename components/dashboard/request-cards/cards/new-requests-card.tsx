@@ -5,19 +5,19 @@ import Link from "next/link";
 import {
   AssistantPagePaths,
   FilterType,
-  SeniorRequestStatus,
+  QueryStatus,
 } from "helper/consts";
 
 async function NewRequestsCard() {
   const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.QUERY_TYPE]: SeniorRequestStatus.NEW,
+    [FilterType.QUERY_STATUS]: QueryStatus.NEW,
   });
 
   return (
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_TYPE}=${SeniorRequestStatus.NEW}`}
+        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_STATUS}=${QueryStatus.NEW}`}
       >
         <CardContent>
           <Typography variant="body2" color={"#D3215D"} fontSize={"18px"}>
