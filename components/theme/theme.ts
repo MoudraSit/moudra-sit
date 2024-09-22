@@ -56,3 +56,13 @@ appTheme = createTheme(appTheme, {
     },
   },
 });
+
+export const colors = {
+  primaryMain: appTheme.palette.primary.main,
+  primaryContrastText: appTheme.palette.primary.contrastText,
+  secondaryMain: appTheme.palette.secondary.main,
+  secondaryLight: appTheme.palette.secondary.light,
+  secondaryContrastText: appTheme.palette.secondary.contrastText,
+  warningMain: appTheme.palette.warning.main,
+  infoMain: appTheme.palette.info.main
+};
