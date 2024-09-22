@@ -1,9 +1,6 @@
 import { SeniorRequest as SeniorQuery } from "types/seniorRequest";
 import { callTabidoo } from "./tabidoo";
-import {
-  FilterType,
-  SeniorRequestStatus as SeniorQueryStatus,
-} from "helper/consts";
+import { FilterType } from "helper/consts";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/auth";
 import { Visit } from "types/visit";
@@ -15,16 +12,37 @@ export class SeniorQueriesGetter {
   ) {
     const filters = [];
 
-    if (!!uiFilters[FilterType.QUERY_TYPE]) {
+    if (!!uiFilters[FilterType.QUERY_STATUS])
       filters.push(
         await this._createSeniorQueryStatusFilter(
-          uiFilters[FilterType.QUERY_TYPE]
+          uiFilters[FilterType.QUERY_STATUS]
         )
       );
-    }
-    if (!!uiFilters[FilterType.USER_ASSIGNED]) {
+
+    if (!!uiFilters[FilterType.LOCATION])
+      filters.push(
+        await this._createSeniorQueryLocationFilter(
+          uiFilters[FilterType.LOCATION]
+        )
+      );
+
+    if (!!uiFilters[FilterType.DEVICE_CATEGORY])
+      filters.push(
+        await this._createSeniorQueryDeviceCategoryFilter(
+          uiFilters[FilterType.DEVICE_CATEGORY]
+        )
+      );
+
+    if (!!uiFilters[FilterType.SENIOR])
+      filters.push(
+        await this._createSeniorQuerySeniorNameFilter(
+          uiFilters[FilterType.SENIOR]
+        )
+      );
+
+    if (!!uiFilters[FilterType.USER_ASSIGNED])
       filters.push(await this._createSeniorQueryUserAssignedFilter());
-    }
+
     // TODO: other filter types
 
     return await this._getSeniorQueriesByFilter(filters);
@@ -61,25 +79,45 @@ export class SeniorQueriesGetter {
     return seniorQueries;
   }
 
-  private static async _createSeniorQueryStatusFilter(
-    queryStatus: SeniorQueryStatus
+  private static async _createSeniorQueryStatusFilter(queryStatus: string) {
+    return {
+      field: "stavDotazu",
+      operator: "in",
+      value: queryStatus,
+    };
+  }
+
+  private static async _createSeniorQueryLocationFilter(queryStatus: string) {
+    return {
+      field: "mesto",
+      operator: "contains",
+      value: queryStatus,
+    };
+  }
+
+  private static async _createSeniorQuerySeniorNameFilter(seniorName: string) {
+    return {
+      field: "jmenoPrijmenisenior",
+      operator: "contains",
+      value: seniorName,
+    };
+  }
+
+  private static async _createSeniorQueryDeviceCategoryFilter(
+    deviceCategory: string
   ) {
-    switch (queryStatus) {
-      case SeniorQueryStatus.NEW:
-        return {
-          field: "stavDotazu",
-          operator: "eq",
-          value: SeniorQueryStatus.NEW,
-        };
-      case SeniorQueryStatus.FOR_HANDOVER:
-        return {
-          field: "stavDotazu",
-          operator: "eq",
-          value: SeniorQueryStatus.FOR_HANDOVER,
-        };
-      default:
-        throw new Error(`Unknown senior query status: "${queryStatus}"`);
+    const categories = deviceCategory.split(",");
+    const filters: Array<Record<string, any>> = [];
+
+    for (const category of categories) {
+      filters.push({
+        field: "kategorieDotazu",
+        operator: "contains",
+        value: category,
+      });
     }
+
+    return { filter: filters, filterOperator: "and" };
   }
 
   private static async _createSeniorQueryUserAssignedFilter() {
@@ -102,11 +140,7 @@ export class SeniorQueriesGetter {
 
     const seniorQueryIDs = new Set();
 
-    for (const visit of visits) {
-      if (!(visit.fields.dotaz.id in seniorQueryIDs)) {
-        seniorQueryIDs.add(visit.fields.dotaz.id);
-      }
-    }
+    for (const visit of visits) seniorQueryIDs.add(visit.fields.dotaz.id);
 
     const IDList = Array.from(seniorQueryIDs).join(", ");
 

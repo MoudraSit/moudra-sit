@@ -7,13 +7,13 @@ import { SeniorQueriesGetter } from "backend/senior-requests";
 
 type Props = {
   searchParams?: {
-    [FilterType.QUERY_TYPE]?: string;
+    [FilterType.QUERY_STATUS]?: string;
     [FilterType.USER_ASSIGNED]?: string;
   };
 };
 
 async function Page({ searchParams }: Props) {
-  const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters(
+  const seniorQueries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters(
     searchParams || {}
   );
 
@@ -22,9 +22,9 @@ async function Page({ searchParams }: Props) {
       <BackButton href={AssistantPagePaths.DASHBOARD} />
       <RequestFilterPanel />
       <Typography variant="h5" sx={{ margin: "3px", fontWeight: "bold" }}>
-        Dotazy ({requests.length})
+        Dotazy ({seniorQueries.length})
       </Typography>
-      <NewRequestsList requests={requests} />
+      <NewRequestsList requests={seniorQueries} />
     </>
   );
 }
