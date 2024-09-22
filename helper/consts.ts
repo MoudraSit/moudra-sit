@@ -10,9 +10,14 @@ export enum AssistantStatus {
 }
 
 // The strings are horrible in the URL search params, but they are used in Tabidoo
-export enum SeniorRequestStatus {
+export enum QueryStatus {
   NEW = "00. Nový",
   FOR_HANDOVER = "01. K předání",
+  ACCEPTED = "02. Přijato",
+  IN_PROGRESS = "03. V řešení",
+  SOLVED = "04. Vyřešeno - ukončeno",
+  UNSOLVED = "05. Nevyřešeno - ukončeno",
+  POSTPONED = "06. Odloženo",
 }
 
 // Include subpaths for easy referencing in the app
@@ -31,6 +36,16 @@ export enum SeniorPagePaths {
 }
 
 export enum FilterType {
-  QUERY_TYPE = "typDotazu",
+  QUERY_STATUS = "stavDotazu",
+  LOCATION = "lokalita",
   USER_ASSIGNED = "jenMojeDotazy",
+  DEVICE_CATEGORY = "kategorieDotazu",
+  SENIOR = "senior",
+}
+
+export enum QueryDeviceCategory {
+  COMPUTER = "Počítač",
+  PHONE = "Mobil",
+  PRINTER = "Printer",
+  OTHER = "Jiné IT zařízení",
 }

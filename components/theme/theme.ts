@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { createTheme } from "@mui/material/styles";
 
@@ -75,3 +75,12 @@ export const colors = {
   warningMain: appTheme.palette.warning.main,
   infoMain: appTheme.palette.info.main
 };
+
+// TODO: might be necessary because white primary color requires a lot of manual overrides
+export const mobileAppTheme = createTheme(appTheme, {
+  palette: {
+    primary: {
+      main: "#D3215D",
+    },
+  },
+});
