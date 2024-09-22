@@ -5,19 +5,19 @@ import Link from "next/link";
 import {
   AssistantPagePaths,
   FilterType,
-  SeniorRequestStatus,
+  QueryStatus,
 } from "helper/consts";
 
 async function ForHandoverRequestsCard() {
   const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.QUERY_TYPE]: SeniorRequestStatus.FOR_HANDOVER,
+    [FilterType.QUERY_STATUS]: QueryStatus.FOR_HANDOVER,
   });
 
   return (
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_TYPE}=${SeniorRequestStatus.FOR_HANDOVER}`}
+        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_STATUS}=${QueryStatus.FOR_HANDOVER}`}
       >
         <CardContent>
           <Typography variant="body2" color={"#FF921D"} fontSize={"18px"}>
