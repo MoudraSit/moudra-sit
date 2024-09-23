@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 import Home from "public/images/form/meeting-places-checkboxes/home.svg";
 import Library from "public/images/form/meeting-places-checkboxes/library.svg";
 import PublicPlace from "public/images/form/meeting-places-checkboxes/public-place.svg";
-import Virtual from "public/images/form/meeting-places-checkboxes/virtual-black.svg";
+import Virtual from "public/images/form/meeting-places-checkboxes/virtual.svg";
 
 import { FormikErrors } from "formik";
 import HomeDefault from "public/images/form/meeting-places-checkboxes/home-black.svg";
@@ -29,7 +29,7 @@ export default function PlaceStep(props: {
   const anyButtonChecked = library || publicPlace || virtually || home;
 
   const handleClickBack = () => {
-    props.setActiveStep(3);
+    props.setActiveStep(2);
   };
 
   useEffect(() => {

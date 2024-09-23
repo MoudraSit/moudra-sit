@@ -1,4 +1,4 @@
-import { Container, Step, StepLabel, Stepper, styled, Typography } from "@mui/material";
+import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
 import TestInfoLine from "components/newform/test-info-line";
@@ -9,7 +9,7 @@ import { ImageType } from "react-images-uploading";
 import ProgressBarComponent from "../form/steps/progress-bar";
 import { defaultSchema } from "../newform/schemas/default-schema";
 import { appTheme } from "../theme/theme";
-import { formSteps, initialValues, IValues } from "./helpers/constants";
+import { FormContainer, formSteps, initialValues, IValues } from "./helpers/constants";
 import { scrollIntoView } from "./helpers/scroll-into-view";
 import BirthStep from "./steps/birth-step";
 import ContactStep from "./steps/contact-step";
@@ -178,19 +178,6 @@ export default function FormBuilder() {
   );
 }
 
-const FormContainer = styled(Container)`
-  .MuiInputBase-root {
-    background-color: white;
-  }
-
-  //autocomplete overrides
-  .MuiInputBase-input {
-    -webkit-text-fill-color: black;
-    box-shadow: 0 0 0 1000px white inset;
-    -webkit-box-shadow: 0 0 0 1000px white inset;
-  }
-`;
-
 // render step content based on form progress
 function renderStepContent(
   step: number,
@@ -224,10 +211,6 @@ function renderStepContent(
       );
     case 3:
       return (
-        <ContactStep values={values} setFieldValue={setFieldValue} setActiveStep={setActiveStep} />
-      );
-    case 4:
-      return (
         <PlaceStep
           values={values}
           setFieldValue={setFieldValue}
@@ -235,6 +218,11 @@ function renderStepContent(
           errors={errors}
         />
       );
+    case 4:
+      return (
+        <ContactStep values={values} setFieldValue={setFieldValue} setActiveStep={setActiveStep} />
+      );
+
     case 5:
       return (
         <FinalStep

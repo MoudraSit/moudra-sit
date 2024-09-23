@@ -75,28 +75,14 @@ export const defaultSchema = [
       .oneOf([true], "Označte prosím alespoň jedno zařízení"),
     requirmentName: yup.string().required("Prosím nazvěte Váš požadavek"),
     description: yup.string().required("Prosím popište textem Váš požadavek"),
-    name: yup
-      .string()
-      .matches(/^[A-Ža-ž ]*$/, "Prosím vložte jméno ve správném tvaru")
-      .max(40)
-      .required("Napište Vaše jméno"),
-    surname: yup
-      .string()
-      .matches(/^[A-Ža-ž ]*$/, "Prosím vložte příjmení ve správném tvaru")
-      .max(40)
-      .required("Napište Vaše příjmení"),
-    zipCode: yup
-      .string()
-      .matches(pscRegex, "Napište správný tvar PSČ (např. 60200)")
-      .required("Napište Vaše PSČ")
-      .typeError("Napište Vaše PSČ"),
-    city: yup.string().required("Napište název obce/města").typeError("Napište název obce/města"),
-    plusCode: yup.string().required("Napište správný tvar předvolby (např. +420)"),
-    phoneNumber: yup
-      .string()
-      .matches(phoneRegex, "Napište správný tvar telefonního čísla (např. 123456789)")
-      .required("Napište Váš kontaktní telefon (např. 123456789)"),
-    email: yup.string().email("Napište správně Váš kontaktní e-mail"),
+    homeCheckbox: yup.boolean(),
+    libraryCheckbox: yup.boolean(),
+    publicPlaceCheckbox: yup.boolean(),
+    virtualCheckbox: yup.boolean(),
+    place_selection: yup
+      .boolean()
+      .required()
+      .oneOf([true], "Označte prosím alespoň jedno preferované místo setkání"),
   }),
   yup.object().shape({
     year: yup

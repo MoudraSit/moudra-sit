@@ -23,7 +23,7 @@ export default function ContactStep(props: {
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
 }) {
   const handleClickBack = () => {
-    props.setActiveStep(2);
+    props.setActiveStep(3);
   };
 
   return (

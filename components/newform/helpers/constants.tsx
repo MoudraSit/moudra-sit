@@ -1,3 +1,6 @@
+import styled from "@emotion/styled";
+import { Container } from "@mui/material";
+
 export const formSteps = [
   {
     label: "Rok narození",
@@ -9,10 +12,10 @@ export const formSteps = [
     label: "Popis požadavku",
   },
   {
-    label: "Kontaktní údaje",
+    label: "Místo setkání",
   },
   {
-    label: "Místo setkání",
+    label: "Kontaktní údaje",
   },
   {
     label: "Shrnutí",
@@ -66,3 +69,16 @@ export const initialValues = {
   virtualCheckbox: false,
   place_selection: false,
 };
+
+export const FormContainer = styled(Container)`
+  .MuiInputBase-root {
+    background-color: white;
+  }
+
+  //autocomplete overrides
+  .MuiInputBase-input {
+    -webkit-text-fill-color: black;
+    box-shadow: 0 0 0 1000px white inset;
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
+`;
