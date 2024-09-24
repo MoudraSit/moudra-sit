@@ -36,25 +36,21 @@ export const CheckboxCard: React.FC<CheckboxCardProps> = ({
   >
     <Button
       sx={{
-        flex: 1,
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "stretch",
-        padding: 0,
+        marginTop: "auto",
+        p: 0,
         textTransform: "none",
         "&.MuiButtonBase-root:hover": {
           bgcolor: "transparent",
         },
         backgroundColor: checked ? "#D3215D !important" : "white",
         letterSpacing: 0.5,
-        width: "100%",
       }}
       onClick={() => {
         onClick();
         setFieldValue(checkboxName, !checked);
       }}
     >
-      <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+      <CardContent>
         <Typography
           gutterBottom
           variant="h3"
