@@ -31,14 +31,13 @@ export const CheckboxCard: React.FC<CheckboxCardProps> = ({
       flexDirection: "column",
       justifyContent: "space-between",
       border: 1,
-      backgroundColor: checked ? "#D3215D" : "white",
+      backgroundColor: checked ? "#D3215D !important" : "white",
     }}
   >
     <Button
       sx={{
         flex: 1,
         display: "flex",
-        flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "stretch",
         padding: 0,
@@ -46,7 +45,7 @@ export const CheckboxCard: React.FC<CheckboxCardProps> = ({
         "&.MuiButtonBase-root:hover": {
           bgcolor: "transparent",
         },
-        backgroundColor: checked ? "#D3215D" : "white",
+        backgroundColor: checked ? "#D3215D !important" : "white",
         letterSpacing: 0.5,
         width: "100%",
       }}
