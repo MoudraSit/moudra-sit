@@ -102,7 +102,7 @@ export default function FinalStep(props: {
         sx={{ pt: 4, pb: 4, fontWeight: "bold" }}
       >
         Nyní prosím zkontrolujte správnost vyplněných údajů (případně zde přímo upravte) a dole
-        klikněte na tlačítko „Odeslat požadavek“
+        klikněte na tlačítko „Odeslat požadavek“.
       </Typography>
       <Box
         sx={{
@@ -276,6 +276,44 @@ export default function FinalStep(props: {
                         props.setFieldValue("description", e.target.value);
                       }}
                     />
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
+                  <TableCell
+                    style={{ borderBottom: "none" }}
+                    sx={{
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                      display: { xs: "flex", sm: "table-cell" },
+                    }}
+                    align="left"
+                    component="th"
+                    scope="row"
+                  >
+                    Místo setkání *
+                  </TableCell>
+                  <TableCell
+                    style={{ borderBottom: "none" }}
+                    sx={{
+                      fontSize: "18px",
+                      display: { xs: "flex", sm: "table-cell" },
+                    }}
+                    align="left"
+                  >
+                    <Grid container alignItems="stretch" spacing={1.5}>
+                      {placeItems.map((item) => (
+                        <CardItem
+                          key={item.id}
+                          id={item.id}
+                          name={item.id}
+                          label={item.label}
+                          checked={item.value}
+                          onToggle={() => props.setFieldValue(item.id, !item.value)}
+                        />
+                      ))}
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow
@@ -480,67 +518,27 @@ export default function FinalStep(props: {
                     </Grid>
                   </TableCell>
                 </TableRow>
-                <TableRow
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
-                >
-                  <TableCell
-                    style={{ borderBottom: "none" }}
-                    sx={{
-                      fontSize: "18px",
-                      fontWeight: "bold",
-                      display: { xs: "flex", sm: "table-cell" },
-                    }}
-                    align="left"
-                    component="th"
-                    scope="row"
-                  >
-                    Místo setkání *
-                  </TableCell>
-                  <TableCell
-                    style={{ borderBottom: "none" }}
-                    sx={{
-                      fontSize: "18px",
-                      display: { xs: "flex", sm: "table-cell" },
-                    }}
-                    align="left"
-                  >
-                    <Grid container alignItems="stretch" spacing={1.5}>
-                      {placeItems.map((item) => (
-                        <CardItem
-                          key={item.id}
-                          id={item.id}
-                          name={item.id}
-                          label={item.label}
-                          checked={item.value}
-                          onToggle={() => props.setFieldValue(item.id, !item.value)}
-                        />
-                      ))}
-                    </Grid>
-                  </TableCell>
-                </TableRow>
               </TableBody>
             </Table>
           </Grid>
         </TableContainer>
       </Box>
 
-      <Link
-        sx={{ mt: 8 }}
-        color="#000000"
-        href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
-        rel="noopener"
-        target="_blank"
-        fontSize={24}
-        variant="h2"
-      >
-        Zpracování osobních údajů
-      </Link>
-
       <Typography sx={{ pt: 4, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
         {" "}
-        Kliknutím na „Odeslat požadavek“ souhlasíte se Zpracováním osobních údajů.
+        Kliknutím na „Odeslat požadavek“ souhlasíte se&nbsp;
+        <Link
+          sx={{ mt: 8, fontWeight: "bold" }}
+          color="#3e3e3e"
+          href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
+          rel="noopener"
+          target="_blank"
+          fontSize={24}
+          variant="h2"
+        >
+          Zpracováním osobních údajů.
+        </Link>
       </Typography>
-
       {/* Show error when occures */}
       {Object.values(props.errors)[0] != null ? (
         <Typography variant="h2" align="left" color="error" sx={{ pt: 8, fontStyle: "italic" }}>
