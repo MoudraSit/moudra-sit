@@ -46,6 +46,14 @@ export default function BirthStep(props: { values: IValues; errors: FormikErrors
           required
         />
       </Box>
+      <Typography
+        sx={{ fontWeight: "bold", pb: 4, pt: 4 }}
+        variant="h3"
+        align="left"
+        color="#3e3e3e"
+      >
+        Políčka označená * jsou povinná.
+      </Typography>
       <Box
         sx={{
           bgcolor: "#f5f3ee",

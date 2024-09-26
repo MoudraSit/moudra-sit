@@ -490,7 +490,7 @@ export default function FinalStep(props: {
                     component="th"
                     scope="row"
                   >
-                    Kontaktní email
+                    Kontaktní e-mail
                   </TableCell>
                   <TableCell
                     style={{ borderBottom: "none" }}
@@ -569,7 +569,7 @@ export default function FinalStep(props: {
               fontSize: 20,
             }}
           >
-            Odeslat formulář
+            Odeslat požadavek
           </Button>
         </Box>
       )}

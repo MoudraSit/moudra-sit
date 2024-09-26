@@ -17,7 +17,7 @@ function StepSuccess() {
       </Typography>
       <Typography variant="h2" align="left" color="#3e3e3e" sx={{ pb: 4 }}>
         Pokud jste zadali e-mail, poslali jsme Vám do něj souhrn Vašeho dotazu. Pokud ho tam
-        nevidíte, zkontrolujte si posím složku Spam.
+        nevidíte, zkontrolujte si prosím složku Spam.
       </Typography>
 
       <Button

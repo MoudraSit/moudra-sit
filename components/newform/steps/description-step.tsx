@@ -73,7 +73,7 @@ export default function DescriptionStep(props: {
             color="#3e3e3e"
             sx={{ fontWeight: "bold", pt: 12, pb: 4 }}
           >
-            Název požadavku (max. 6 slov, např. “nefunguje wifi”)
+            Název požadavku (max. 6 slov, např. „Nefunguje wifi”)
           </Typography>
         </Grid>
 

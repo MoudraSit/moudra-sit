@@ -58,16 +58,6 @@ export default function ContactStep(props: {
           zadaný e-mail Vám přijde potvrzení přijetí požadavku.
         </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <Typography
-          sx={{ fontWeight: "bold", pb: 4, pt: 4 }}
-          variant="h3"
-          align="left"
-          color="#3e3e3e"
-        >
-          Políčka označená * jsou povinná.
-        </Typography>
-      </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextFieldForm
