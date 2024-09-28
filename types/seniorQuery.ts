@@ -10,5 +10,10 @@ export interface SeniorQuery {
     podrobnosti: string;
     // TODO: Navstevy object
     iDSeniora: Senior;
+    datumVytvoreni: string;
+    resitelDotazu: string;
+    stavDotazu: string;
+    kategorieDotazu: string;
+    pozadovaneMistoPomoci: string;
   };
 }
