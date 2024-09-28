@@ -1,6 +1,6 @@
 import BackButton from "components/buttons/back-button";
 import { AssistantPagePaths, FilterType } from "helper/consts";
-import RequestFilterPanel from "components/senior-requests/request-filter-panel";
+import RequestFilterPanel from "components/senior-queries/request-filter-panel";
 import { SeniorQueriesGetter } from "backend/senior-requests";
 import DynamicList from "components/dynamic-list/dynamic-list";
 
