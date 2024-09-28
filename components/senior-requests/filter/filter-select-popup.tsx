@@ -25,6 +25,8 @@ type Option = {
   selected: boolean;
 };
 
+// TODO: all closing should have the values
+
 function prepareOptions(currentValue: string, options: Array<string>) {
   const currentValuesList = currentValue.split(",");
   return options.slice().map((option) => ({

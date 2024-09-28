@@ -1,6 +1,6 @@
 import { Senior } from "./senior";
 
-export interface SeniorRequest {
+export interface SeniorQuery {
   id: string;
   created: string;
   modified: string;
