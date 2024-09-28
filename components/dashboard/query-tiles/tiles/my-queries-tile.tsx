@@ -2,26 +2,22 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
 import { SeniorQueriesGetter } from "backend/senior-requests";
 import Link from "next/link";
-import {
-  AssistantPagePaths,
-  FilterType,
-  QueryStatus,
-} from "helper/consts";
+import { AssistantPagePaths, FilterType } from "helper/consts";
 
-async function NewRequestsCard() {
+async function MyQueriesTile() {
   const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.QUERY_STATUS]: QueryStatus.NEW,
+    [FilterType.USER_ASSIGNED]: true,
   });
 
   return (
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_STATUS}=${QueryStatus.NEW}`}
+        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.USER_ASSIGNED}=true`}
       >
         <CardContent>
-          <Typography variant="body2" color={"#D3215D"} fontSize={"18px"}>
-            Nové dotazy ({requests.length})
+          <Typography variant="body2" color={"#028790"} fontSize={"18px"}>
+            Moje dotazy ({requests.length})
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -29,4 +25,4 @@ async function NewRequestsCard() {
   );
 }
 
-export default NewRequestsCard;
+export default MyQueriesTile;

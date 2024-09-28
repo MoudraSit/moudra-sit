@@ -3,7 +3,7 @@ import * as React from "react";
 import Link from "next/link";
 import { AssistantPagePaths } from "helper/consts";
 
-function NewQueryCard() {
+function NewQueryTile() {
   return (
     <Card>
       <CardActionArea
@@ -20,4 +20,4 @@ function NewQueryCard() {
   );
 }
 
-export default NewQueryCard;
+export default NewQueryTile;

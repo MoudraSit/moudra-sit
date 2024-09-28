@@ -8,20 +8,20 @@ import {
   QueryStatus,
 } from "helper/consts";
 
-async function ForHandoverRequestsCard() {
+async function NewQueriesTile() {
   const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.QUERY_STATUS]: QueryStatus.FOR_HANDOVER,
+    [FilterType.QUERY_STATUS]: QueryStatus.NEW,
   });
 
   return (
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_STATUS}=${QueryStatus.FOR_HANDOVER}`}
+        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_STATUS}=${QueryStatus.NEW}`}
       >
         <CardContent>
-          <Typography variant="body2" color={"#FF921D"} fontSize={"18px"}>
-            Dotazy k předání ({requests.length})
+          <Typography variant="body2" color={"#D3215D"} fontSize={"18px"}>
+            Nové dotazy ({requests.length})
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -29,4 +29,4 @@ async function ForHandoverRequestsCard() {
   );
 }
 
-export default ForHandoverRequestsCard;
+export default NewQueriesTile;

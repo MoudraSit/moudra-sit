@@ -2,22 +2,26 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
 import { SeniorQueriesGetter } from "backend/senior-requests";
 import Link from "next/link";
-import { AssistantPagePaths, FilterType } from "helper/consts";
+import {
+  AssistantPagePaths,
+  FilterType,
+  QueryStatus,
+} from "helper/consts";
 
-async function MyRequestsCard() {
+async function ForHandoverRequestsTile() {
   const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.USER_ASSIGNED]: true,
+    [FilterType.QUERY_STATUS]: QueryStatus.FOR_HANDOVER,
   });
 
   return (
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.USER_ASSIGNED}=true`}
+        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_STATUS}=${QueryStatus.FOR_HANDOVER}`}
       >
         <CardContent>
-          <Typography variant="body2" color={"#028790"} fontSize={"18px"}>
-            Moje dotazy ({requests.length})
+          <Typography variant="body2" color={"#FF921D"} fontSize={"18px"}>
+            Dotazy k předání ({requests.length})
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -25,4 +29,4 @@ async function MyRequestsCard() {
   );
 }
 
-export default MyRequestsCard;
+export default ForHandoverRequestsTile;
