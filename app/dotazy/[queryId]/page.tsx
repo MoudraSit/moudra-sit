@@ -5,7 +5,7 @@ import { SeniorQueriesGetter } from "backend/senior-requests";
 import Link from "next/link";
 import { NotFoundError } from "helper/exceptions";
 import { redirect } from "next/navigation";
-import { SeniorQuery } from "types/seniorRequest";
+import { SeniorQuery } from "types/seniorQuery";
 
 type Props = {
   params: {
@@ -17,7 +17,7 @@ async function Page({ params }: Props) {
   const seniorRequestId = params.queryId;
   let seniorRequest: SeniorQuery;
   try {
-    seniorRequest = await SeniorQueriesGetter.getSeniorQueriesById(
+    seniorRequest = await SeniorQueriesGetter.getSeniorQueryById(
       seniorRequestId
     );
   } catch (error) {
