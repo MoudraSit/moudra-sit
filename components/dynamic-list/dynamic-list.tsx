@@ -1,6 +1,5 @@
 "use client";
 
-import { Typography } from "@mui/material";
 import CardSkeleton from "components/skeletons/card-skeleton";
 import { FilterType } from "helper/consts";
 import React from "react";
@@ -67,43 +66,37 @@ function DynamicList({ initialItems, searchParams }: Props) {
   }, [initialItems]);
 
   return (
-    <>
-      <Typography variant="h5" sx={{ margin: "3px", fontWeight: "bold" }}>
-        Dotazy ({items.length})
-      </Typography>
-
-      <InfiniteLoader
-        ref={infiniteLoaderRef}
-        isItemLoaded={isItemLoaded}
-        itemCount={itemCount}
-        loadMoreItems={loadMoreItems}
-      >
-        {({ onItemsRendered, ref }) => (
-          <AutoSizer>
-            {({ height, width }) => (
-              <FixedSizeList
-                className="LFist"
-                itemCount={items.length}
-                onItemsRendered={onItemsRendered}
-                ref={ref}
-                itemSize={QUERY_CARD_HEIGHT}
-                height={height}
-                width={width}
-              >
-                {({ index, style }) => {
-                  const item = items[index];
-                  return isItemLoaded(index) ? (
-                    <QueryCard style={style} item={item} />
-                  ) : (
-                    <CardSkeleton />
-                  );
-                }}
-              </FixedSizeList>
-            )}
-          </AutoSizer>
-        )}
-      </InfiniteLoader>
-    </>
+    <InfiniteLoader
+      ref={infiniteLoaderRef}
+      isItemLoaded={isItemLoaded}
+      itemCount={itemCount}
+      loadMoreItems={loadMoreItems}
+    >
+      {({ onItemsRendered, ref }) => (
+        <AutoSizer>
+          {({ height, width }) => (
+            <FixedSizeList
+              className="LFist"
+              itemCount={items.length}
+              onItemsRendered={onItemsRendered}
+              ref={ref}
+              itemSize={QUERY_CARD_HEIGHT}
+              height={height}
+              width={width}
+            >
+              {({ index, style }) => {
+                const item = items[index];
+                return isItemLoaded(index) ? (
+                  <QueryCard style={style} item={item} />
+                ) : (
+                  <CardSkeleton />
+                );
+              }}
+            </FixedSizeList>
+          )}
+        </AutoSizer>
+      )}
+    </InfiniteLoader>
   );
 }
 
