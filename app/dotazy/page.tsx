@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import BackButton from "components/buttons/back-button";
 import { AssistantPagePaths, FilterType } from "helper/consts";
 import RequestFilterPanel from "components/senior-requests/request-filter-panel";
@@ -19,9 +18,6 @@ async function Page({ searchParams }: Props) {
     <>
       <BackButton href={AssistantPagePaths.DASHBOARD} />
       <RequestFilterPanel />
-      <Typography variant="h5" sx={{ margin: "3px", fontWeight: "bold" }}>
-        Dotazy ({seniorQueries.length})
-      </Typography>
       {/* The div is required for list autosizing to work */}
       <div style={{ flex: "1 1 auto" }}>
         <DynamicList
