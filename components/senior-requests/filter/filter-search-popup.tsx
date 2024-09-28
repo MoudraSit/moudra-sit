@@ -26,14 +26,14 @@ function FilterSearchPopup({ title, open, handleClose, value }: Props) {
       sx={{ "& .MuiDialog-paper": { width: "80%", maxHeight: 435 } }}
       maxWidth="xs"
       open={open}
-      onClose={() => handleClose()}
+      onClose={() => handleClose(currentValue)}
     >
       <DialogTitle>
         <span>{title}</span>
         <IconButton
           size="small"
           sx={{ float: "right" }}
-          onClick={() => handleClose()}
+          onClick={() => handleClose(currentValue)}
         >
           <Close />
         </IconButton>
