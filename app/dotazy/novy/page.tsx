@@ -1,6 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 import BackButton from "components/buttons/back-button";
-import NewQueryForm from "components/senior-requests/new-query-form";
+import NewQueryForm from "components/senior-queries/new-query-form";
 
 // TODO: prefill URL param that will use the query ID to prefill fields
 

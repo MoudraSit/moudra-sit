@@ -1,27 +1,20 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import CardSkeleton from "components/skeletons/card-skeleton";
-import { AssistantPagePaths, FilterType } from "helper/consts";
-import Link from "next/link";
+import { FilterType } from "helper/consts";
 import React from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import { loadMoreQueries } from "./actions";
-
-// TODO: set max height and use this here
-export const REQUEST_CARD_HEIGHT = 160;
-const CARD_SPACING = "1rem";
+import QueryCard, {
+  QUERY_CARD_HEIGHT,
+} from "components/senior-queries/query-card";
+import { SeniorQuery } from "types/seniorQuery";
 
 type Props = {
-  initialItems: Array<Record<string, any>>;
+  initialItems: Array<SeniorQuery>;
   searchParams?: Partial<Record<FilterType, any>>;
 };
 
@@ -93,36 +86,14 @@ function DynamicList({ initialItems, searchParams }: Props) {
                 itemCount={items.length}
                 onItemsRendered={onItemsRendered}
                 ref={ref}
-                itemSize={REQUEST_CARD_HEIGHT}
+                itemSize={QUERY_CARD_HEIGHT}
                 height={height}
                 width={width}
               >
                 {({ index, style }) => {
                   const item = items[index];
                   return isItemLoaded(index) ? (
-                    // TODO: make into a separate component under senior-requests/
-                    <Card
-                      style={{
-                        ...style,
-                        height: `calc(${REQUEST_CARD_HEIGHT}px - ${CARD_SPACING})`,
-                        marginBottom: CARD_SPACING,
-                      }}
-                    >
-                      <CardContent>
-                        <Typography variant="body2">
-                          {item.fields.popis}
-                        </Typography>
-                        <CardActions>
-                          <Button
-                            LinkComponent={Link}
-                            href={`${AssistantPagePaths.SENIOR_REQUESTS}/${item.id}`}
-                            variant="contained"
-                          >
-                            Zobrazit Detail
-                          </Button>
-                        </CardActions>
-                      </CardContent>
-                    </Card>
+                    <QueryCard style={style} item={item} />
                   ) : (
                     <CardSkeleton />
                   );
