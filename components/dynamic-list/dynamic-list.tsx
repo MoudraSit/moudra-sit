@@ -20,9 +20,6 @@ import { loadMoreQueries } from "./actions";
 export const REQUEST_CARD_HEIGHT = 160;
 const CARD_SPACING = "1rem";
 
-
-// TODO: count must update (increase)
-
 type Props = {
   initialItems: Array<Record<string, any>>;
   searchParams?: Partial<Record<FilterType, any>>;
@@ -77,59 +74,65 @@ function DynamicList({ initialItems, searchParams }: Props) {
   }, [initialItems]);
 
   return (
-    <InfiniteLoader
-      ref={infiniteLoaderRef}
-      isItemLoaded={isItemLoaded}
-      itemCount={itemCount}
-      loadMoreItems={loadMoreItems}
-    >
-      {({ onItemsRendered, ref }) => (
-        <AutoSizer>
-          {({ height, width }) => (
-            <FixedSizeList
-              className="LFist"
-              itemCount={items.length}
-              onItemsRendered={onItemsRendered}
-              ref={ref}
-              itemSize={REQUEST_CARD_HEIGHT}
-              height={height}
-              width={width}
-            >
-              {({ index, style }) => {
-                const item = items[index];
-                return isItemLoaded(index) ? (
-                  // TODO: make into a separate component under senior-requests/
-                  <Card
-                    style={{
-                      ...style,
-                      height: `calc(${REQUEST_CARD_HEIGHT}px - ${CARD_SPACING})`,
-                      marginBottom: CARD_SPACING,
-                    }}
-                  >
-                    <CardContent>
-                      <Typography variant="body2">
-                        {item.fields.popis}
-                      </Typography>
-                      <CardActions>
-                        <Button
-                          LinkComponent={Link}
-                          href={`${AssistantPagePaths.SENIOR_REQUESTS}/${item.id}`}
-                          variant="contained"
-                        >
-                          Zobrazit Detail
-                        </Button>
-                      </CardActions>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <CardSkeleton />
-                );
-              }}
-            </FixedSizeList>
-          )}
-        </AutoSizer>
-      )}
-    </InfiniteLoader>
+    <>
+      <Typography variant="h5" sx={{ margin: "3px", fontWeight: "bold" }}>
+        Dotazy ({items.length})
+      </Typography>
+
+      <InfiniteLoader
+        ref={infiniteLoaderRef}
+        isItemLoaded={isItemLoaded}
+        itemCount={itemCount}
+        loadMoreItems={loadMoreItems}
+      >
+        {({ onItemsRendered, ref }) => (
+          <AutoSizer>
+            {({ height, width }) => (
+              <FixedSizeList
+                className="LFist"
+                itemCount={items.length}
+                onItemsRendered={onItemsRendered}
+                ref={ref}
+                itemSize={REQUEST_CARD_HEIGHT}
+                height={height}
+                width={width}
+              >
+                {({ index, style }) => {
+                  const item = items[index];
+                  return isItemLoaded(index) ? (
+                    // TODO: make into a separate component under senior-requests/
+                    <Card
+                      style={{
+                        ...style,
+                        height: `calc(${REQUEST_CARD_HEIGHT}px - ${CARD_SPACING})`,
+                        marginBottom: CARD_SPACING,
+                      }}
+                    >
+                      <CardContent>
+                        <Typography variant="body2">
+                          {item.fields.popis}
+                        </Typography>
+                        <CardActions>
+                          <Button
+                            LinkComponent={Link}
+                            href={`${AssistantPagePaths.SENIOR_REQUESTS}/${item.id}`}
+                            variant="contained"
+                          >
+                            Zobrazit Detail
+                          </Button>
+                        </CardActions>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <CardSkeleton />
+                  );
+                }}
+              </FixedSizeList>
+            )}
+          </AutoSizer>
+        )}
+      </InfiniteLoader>
+    </>
   );
 }
 
