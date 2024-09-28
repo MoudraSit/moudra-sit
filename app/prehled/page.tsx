@@ -1,4 +1,4 @@
-import SeniorRequestsCards from "components/dashboard/request-cards/senior-requests-cards";
+import SeniorQueriesTiles from "components/dashboard/query-tiles/senior-queries-tiles";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 function Page() {
   return (
     <>
-      <SeniorRequestsCards />
+      <SeniorQueriesTiles />
       {/* TODO: add senior request card/button */}
       {/* TODO: planned visits overview */}
     </>

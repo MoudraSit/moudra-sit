@@ -1,28 +1,28 @@
 import { Stack } from "@mui/material";
 import * as React from "react";
 import CardSkeleton from "components/skeletons/card-skeleton";
-import NewRequestsCard from "./cards/new-requests-card";
-import ForHandoverRequestsCard from "./cards/for-handover-requests-card";
-import MyRequestsCard from "./cards/my-requests-card";
-import NewQueryCard from "./cards/new-query-card";
+import NewQueriesTile from "./tiles/new-queries-tile";
+import ForHandoverRequestsTile from "./tiles/for-handover-requests-tile";
+import MyQueriesTile from "./tiles/my-queries-tile";
+import NewQueryTile from "./tiles/new-query-tile";
 
 // TODO: get the count of queries with a separate request (because of lazy loading)
 
-async function SeniorRequestsCards() {
+async function SeniorQueriesTiles() {
   return (
     <Stack spacing={2}>
       <React.Suspense fallback={<CardSkeleton />}>
-        <NewRequestsCard />
+        <NewQueriesTile />
       </React.Suspense>
       <React.Suspense fallback={<CardSkeleton />}>
-        <ForHandoverRequestsCard />
+        <ForHandoverRequestsTile />
       </React.Suspense>
       <React.Suspense fallback={<CardSkeleton />}>
-        <MyRequestsCard />
+        <MyQueriesTile />
       </React.Suspense>
-      <NewQueryCard />
+      <NewQueryTile />
     </Stack>
   );
 }
 
-export default SeniorRequestsCards;
+export default SeniorQueriesTiles;
