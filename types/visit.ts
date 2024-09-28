@@ -1,4 +1,4 @@
-import { SeniorRequest } from "./seniorRequest";
+import { SeniorQuery } from "./seniorQuery";
 
 export interface Visit {
   id: string;
@@ -7,6 +7,6 @@ export interface Visit {
   ver: number;
   fields: {
     // TODO: Navstevy object
-    dotaz: SeniorRequest;
+    dotaz: SeniorQuery;
   };
 }

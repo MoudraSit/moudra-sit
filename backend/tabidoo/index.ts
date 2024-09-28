@@ -8,7 +8,9 @@ export async function callTabidoo<T = unknown>(
   url: string,
   { method = "GET", urlParams = {}, body }: TabidooRequestParams
 ): Promise<T> {
-  const fullUrl = new URL(`https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}${url}`);
+  const fullUrl = new URL(
+    `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}${url}`
+  );
 
   for (const [key, value] of Object.entries(urlParams)) {
     fullUrl.searchParams.set(key, value);
@@ -42,7 +44,9 @@ export async function callTabidooTesting<T = unknown>(
   url: string,
   { method = "GET", urlParams = {}, body }: TabidooRequestParams
 ): Promise<T> {
-  const fullUrl = new URL(`https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME_TEST}${url}`);
+  const fullUrl = new URL(
+    `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME_TEST}${url}`
+  );
 
   for (const [key, value] of Object.entries(urlParams)) {
     fullUrl.searchParams.set(key, value);

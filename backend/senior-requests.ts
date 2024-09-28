@@ -1,4 +1,4 @@
-import { SeniorRequest as SeniorQuery } from "types/seniorRequest";
+import { SeniorQuery as SeniorQuery } from "types/seniorQuery";
 import { callTabidoo } from "./tabidoo";
 import { FilterType } from "helper/consts";
 import { getServerSession } from "next-auth";
@@ -6,9 +6,14 @@ import { authOptions } from "app/lib/auth";
 import { Visit } from "types/visit";
 import { NotFoundError } from "helper/exceptions";
 
+const QUERY_PAGE_SIZE = 25;
+
+type UIFilters = Partial<Record<FilterType, any>>;
+
 export class SeniorQueriesGetter {
   public static async getSeniorQueriesByUIFilters(
-    uiFilters: Partial<Record<FilterType, any>>
+    uiFilters: UIFilters,
+    page: number = 0
   ) {
     const filters = [];
 
@@ -45,7 +50,7 @@ export class SeniorQueriesGetter {
 
     // TODO: other filter types
 
-    return await this._getSeniorQueriesByFilter(filters);
+    return await this._getSeniorQueriesByFilter(filters, page);
   }
 
   public static async getSeniorQueriesById(queryId: string) {
@@ -64,10 +69,11 @@ export class SeniorQueriesGetter {
   }
 
   protected static async _getSeniorQueriesByFilter(
-    filters: Array<Record<string, any>>
+    filters: Array<Record<string, any>>,
+    page: number = 0
   ) {
     const seniorQueries = await callTabidoo<Array<SeniorQuery>>(
-      "/tables/dotaz/data/filter",
+      `/tables/dotaz/data/filter?skip=${QUERY_PAGE_SIZE * page}`,
       {
         body: {
           filter: filters,
