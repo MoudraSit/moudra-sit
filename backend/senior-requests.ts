@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/auth";
 import { Visit } from "types/visit";
 import { NotFoundError } from "helper/exceptions";
+import { JSObject } from "types/common";
 
 const QUERY_PAGE_SIZE = 25;
 
@@ -15,6 +16,44 @@ export class SeniorQueriesGetter {
     uiFilters: UIFilters,
     page: number = 0
   ) {
+    // TODO: other filter types
+    const filters = await this._createSeniorQueryFilters(uiFilters);
+
+    return await this._getSeniorQueriesByFilter(filters, page);
+  }
+
+  public static async getSeniorQueryById(queryId: string) {
+    const filters = [
+      {
+        field: "id",
+        operator: "eq",
+        value: queryId,
+      },
+    ];
+    const seniorQueries = await this._getSeniorQueriesByFilter(filters);
+
+    if (!seniorQueries.length) throw new NotFoundError("Dotaz nenalezen");
+
+    return seniorQueries[0];
+  }
+
+  public static async getSeniorQueryCountByUIFilters(uiFilters: UIFilters) {
+    const filters = await this._createSeniorQueryFilters(uiFilters);
+
+    const seniorQueriesCountResponse = await callTabidoo<JSObject>(
+      `/tables/dotaz/data/count/filter`,
+      {
+        body: {
+          filter: filters,
+        },
+        method: "POST",
+      }
+    );
+
+    return seniorQueriesCountResponse?.count ?? 0;
+  }
+
+  private static async _createSeniorQueryFilters(uiFilters: UIFilters) {
     const filters = [];
 
     if (!!uiFilters[FilterType.QUERY_STATUS])
@@ -48,27 +87,10 @@ export class SeniorQueriesGetter {
     if (!!uiFilters[FilterType.USER_ASSIGNED])
       filters.push(await this._createSeniorQueryUserAssignedFilter());
 
-    // TODO: other filter types
-
-    return await this._getSeniorQueriesByFilter(filters, page);
+    return filters;
   }
 
-  public static async getSeniorQueriesById(queryId: string) {
-    const filters = [
-      {
-        field: "id",
-        operator: "eq",
-        value: queryId,
-      },
-    ];
-    const seniorQueries = await this._getSeniorQueriesByFilter(filters);
-
-    if (!seniorQueries.length) throw new NotFoundError("Dotaz nenalezen");
-
-    return seniorQueries[0];
-  }
-
-  protected static async _getSeniorQueriesByFilter(
+  private static async _getSeniorQueriesByFilter(
     filters: Array<Record<string, any>>,
     page: number = 0
   ) {
