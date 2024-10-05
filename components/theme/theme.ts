@@ -19,7 +19,7 @@ export let appTheme = createTheme({
     tonalOffset: 0.2,
   },
   typography: {
-    fontFamily: "Roboto Condensed",
+    fontFamily: "Roboto",
     allVariants: {
       color: "#3E3E3E",
     },
@@ -64,7 +64,7 @@ export const colors = {
   secondaryLight: appTheme.palette.secondary.light,
   secondaryContrastText: appTheme.palette.secondary.contrastText,
   warningMain: appTheme.palette.warning.main,
-  infoMain: appTheme.palette.info.main
+  infoMain: appTheme.palette.info.main,
 };
 
 // TODO: might be necessary because white primary color requires a lot of manual overrides

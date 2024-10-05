@@ -1,6 +1,6 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
-import { SeniorQueriesGetter } from "backend/senior-requests";
+import { SeniorQueriesGetter } from "backend/senior-queries";
 import Link from "next/link";
 import { AssistantPagePaths, FilterType } from "helper/consts";
 
@@ -13,7 +13,7 @@ async function MyQueriesTile() {
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.USER_ASSIGNED}=true`}
+        href={`${AssistantPagePaths.SENIOR_QUERIES}?${FilterType.USER_ASSIGNED}=true`}
       >
         <CardContent>
           <Typography variant="body2" color={"#028790"} fontSize={"18px"}>

@@ -2,15 +2,22 @@ type TabidooRequestParams = {
   method?: string;
   body?: Record<string, unknown>;
   urlParams?: Record<string, string>;
+  fullUrlProvided?: boolean;
 };
 
 export async function callTabidoo<T = unknown>(
   url: string,
-  { method = "GET", urlParams = {}, body }: TabidooRequestParams
+  {
+    method = "GET",
+    urlParams = {},
+    body,
+    fullUrlProvided = false,
+  }: TabidooRequestParams
 ): Promise<T> {
-  const fullUrl = new URL(
+  let fullUrl = new URL(
     `https://app.tabidoo.cloud/api/v2/apps/${process.env.TABIDOO_APP_NAME}${url}`
   );
+  if (fullUrlProvided) fullUrl = new URL(url);
 
   for (const [key, value] of Object.entries(urlParams)) {
     fullUrl.searchParams.set(key, value);
@@ -27,6 +34,7 @@ export async function callTabidoo<T = unknown>(
 
   if (!apiResponse.ok) {
     console.error(await apiResponse.text());
+    console.error(apiResponse.statusText);
     throw new Error("Tabidoo API call failed");
   }
 

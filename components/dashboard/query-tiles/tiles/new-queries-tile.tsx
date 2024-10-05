@@ -1,6 +1,6 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
-import { SeniorQueriesGetter } from "backend/senior-requests";
+import { SeniorQueriesGetter } from "backend/senior-queries";
 import Link from "next/link";
 import {
   AssistantPagePaths,
@@ -17,7 +17,7 @@ async function NewQueriesTile() {
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_STATUS}=${QueryStatus.NEW}`}
+        href={`${AssistantPagePaths.SENIOR_QUERIES}?${FilterType.QUERY_STATUS}=${QueryStatus.NEW}`}
       >
         <CardContent>
           <Typography variant="body2" color={"#D3215D"} fontSize={"18px"}>
