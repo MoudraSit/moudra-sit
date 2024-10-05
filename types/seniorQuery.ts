@@ -1,5 +1,13 @@
 import { Senior } from "./senior";
 
+export interface QueryComment {
+  id: string;
+  author: string;
+  authorName: string;
+  created: string;
+  text: string;
+}
+
 export interface SeniorQuery {
   id: string;
   created: string;
@@ -8,12 +16,22 @@ export interface SeniorQuery {
   fields: {
     popis: string;
     podrobnosti: string;
-    // TODO: Navstevy object
     iDSeniora: Senior;
     datumVytvoreni: string;
     resitelDotazu: string;
     stavDotazu: string;
+    komentare?: {
+      lastChange: string;
+      messages: Array<QueryComment>;
+    };
+    navstevy?: {
+      count: number;
+      url: string;
+    };
     kategorieDotazu: string;
     pozadovaneMistoPomoci: string;
+    pocetHodinCelkem: number;
+    pocetNavstev: number;
+    prvniKontaktSeniora: string;
   };
 }

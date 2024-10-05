@@ -33,8 +33,9 @@ function QueryCard({ style, item }: Props) {
         <CardActions>
           <Button
             LinkComponent={Link}
-            href={`${AssistantPagePaths.SENIOR_REQUESTS}/${item.id}`}
-            variant="contained"
+            href={`${AssistantPagePaths.SENIOR_QUERIES}/${item.id}`}
+            variant="outlined"
+            color="info"
           >
             Zobrazit Detail
           </Button>

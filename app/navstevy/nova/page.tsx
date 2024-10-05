@@ -1,5 +1,6 @@
-import { Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import BackButton from "components/buttons/back-button";
+import NewVisitForm from "components/visits/new-visit-form";
 
 type Props = {
   searchParams: {
@@ -17,7 +18,13 @@ async function Page({ searchParams }: Props) {
   return (
     <>
       <BackButton />
-      <Paper>TBD</Paper>
+      <Paper sx={{ padding: "0.75rem", marginTop: "1rem" }}>
+        <Typography variant="h5" sx={{ margin: "3px" }}>
+          Přidat návštěvu
+        </Typography>
+        <hr />
+        <NewVisitForm queryId={queryId}/>
+      </Paper>
     </>
   );
 }

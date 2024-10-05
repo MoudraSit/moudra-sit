@@ -1,11 +1,11 @@
-import { Button, Paper } from "@mui/material";
 import BackButton from "components/buttons/back-button";
-import { AssistantPagePaths } from "helper/consts";
-import { SeniorQueriesGetter } from "backend/senior-requests";
-import Link from "next/link";
+
+import { SeniorQueriesGetter } from "backend/senior-queries";
+
 import { NotFoundError } from "helper/exceptions";
 import { redirect } from "next/navigation";
 import { SeniorQuery } from "types/seniorQuery";
+import QueryDetail from "components/senior-queries/detail/query-detail";
 
 type Props = {
   params: {
@@ -14,12 +14,11 @@ type Props = {
 };
 
 async function Page({ params }: Props) {
-  const seniorRequestId = params.queryId;
-  let seniorRequest: SeniorQuery;
+  const seniorQueryId = params.queryId;
+  let seniorQuery: SeniorQuery;
+  // Show not found instead of a generic server error
   try {
-    seniorRequest = await SeniorQueriesGetter.getSeniorQueryById(
-      seniorRequestId
-    );
+    seniorQuery = await SeniorQueriesGetter.getSeniorQueryById(seniorQueryId);
   } catch (error) {
     if (error instanceof NotFoundError) {
       redirect("/404");
@@ -28,25 +27,14 @@ async function Page({ params }: Props) {
     }
   }
 
+  const visits = await SeniorQueriesGetter.getVisitsForSeniorQuery(
+    seniorQuery.id
+  );
+
   return (
     <>
       <BackButton />
-      <Paper>
-        <span>{seniorRequest.fields.popis}</span>
-        <Button
-          LinkComponent={Link}
-          // @ts-ignore
-          href={{
-            pathname: AssistantPagePaths.NEW_VISIT,
-            query: { queryId: seniorRequestId },
-          }}
-          fullWidth
-          variant="contained"
-          color="warning"
-        >
-          + Přidat návštěvu
-        </Button>
-      </Paper>
+      <QueryDetail seniorQuery={seniorQuery} visits={visits} />
     </>
   );
 }

@@ -1,17 +1,21 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Box, Container, IconButton, InputAdornment, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  IconButton,
+  InputAdornment,
+  Typography,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { ThemeProvider } from "@mui/material/styles";
-import { registerSeniorSchema } from "./schema/register-senior-schema";
 import { registerAssistantSchema } from "./schema/register-assistant-schema";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import TextFieldForm from "components/form/model/input-form";
 import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
-import RegionForm from "components/form/model/region-form";
 import { appTheme } from "components/theme/theme";
 import { Form, Formik } from "formik";
 import Image from "next/image";
@@ -66,7 +70,11 @@ function RegisterAssistant() {
   return (
     <>
       <ThemeProvider theme={appTheme}>
-        <Container component="main" style={{ backgroundColor: "#ffffff" }} maxWidth="sm">
+        <Container
+          component="main"
+          style={{ backgroundColor: "#ffffff" }}
+          maxWidth="sm"
+        >
           <Box
             sx={{
               marginTop: 8,
@@ -312,7 +320,11 @@ function RegisterAssistant() {
                                   aria-label="toggle password visibility"
                                   onClick={handleClickShowPassword}
                                 >
-                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                  {showPassword ? (
+                                    <Visibility />
+                                  ) : (
+                                    <VisibilityOff />
+                                  )}
                                 </IconButton>
                               </InputAdornment>
                             ),
@@ -345,7 +357,11 @@ function RegisterAssistant() {
                                   aria-label="toggle password visibility"
                                   onClick={handleClickShowPassword}
                                 >
-                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                  {showPassword ? (
+                                    <Visibility />
+                                  ) : (
+                                    <VisibilityOff />
+                                  )}
                                 </IconButton>
                               </InputAdornment>
                             ),
@@ -412,10 +428,11 @@ function RegisterAssistant() {
                             <>{error.response.data.message}</>
                           ) : (
                             <>
-                              Omlouváme se, ale došlo k chybě. Zkontrolujte prosím internetové
-                              připojení a zkuste stisknout na tlačítko Registrovat se znovu. Pokud
-                              problémy nadále přetrvávají, zkuste prosím vyplnit registraci později.
-                              Děkujeme za pochopení.
+                              Omlouváme se, ale došlo k chybě. Zkontrolujte
+                              prosím internetové připojení a zkuste stisknout na
+                              tlačítko Registrovat se znovu. Pokud problémy
+                              nadále přetrvávají, zkuste prosím vyplnit
+                              registraci později. Děkujeme za pochopení.
                             </>
                           )}
                         </Typography>
@@ -423,7 +440,11 @@ function RegisterAssistant() {
                     )}
                     {isSuccess && (
                       <>
-                        <Link href="/prihlaseni" variant="body2" color="#028790">
+                        <Link
+                          href="/prihlaseni"
+                          variant="body2"
+                          color="#028790"
+                        >
                           <Typography
                             sx={{
                               pt: 5,
@@ -434,15 +455,19 @@ function RegisterAssistant() {
                             align="center"
                             color="#028790"
                           >
-                            Byl jste úspěšně registrován. Nyní se můžete přihlásit pod tlačítkem
-                            Přihlásit se.
+                            Byl jste úspěšně registrován. Nyní se můžete
+                            přihlásit pod tlačítkem Přihlásit se.
                           </Typography>
                         </Link>
                       </>
                     )}
                     <Grid container justifyContent="flex-end">
                       <Grid item>
-                        <Link href="/prihlaseni" variant="body2" color="#000000">
+                        <Link
+                          href="/prihlaseni"
+                          variant="body2"
+                          color="#000000"
+                        >
                           <Typography align="center" paragraph>
                             Již máte účet? Přihlaste se zde
                           </Typography>
