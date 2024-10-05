@@ -3,7 +3,7 @@
 import { FilterType, QueryDeviceCategory } from "helper/consts";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { QueryStatus } from "helper/consts";
-import FilterChip from "./filter/filter-chip";
+import FilterChip from "./filter-chip";
 import { FormControlLabel, Switch } from "@mui/material";
 
 type Props = {

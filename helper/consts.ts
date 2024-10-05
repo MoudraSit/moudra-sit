@@ -25,7 +25,7 @@ export enum QueryStatus {
 export enum AssistantPagePaths {
   ASSISTANT_PROFILE = "/asistent",
   DASHBOARD = "/prehled",
-  SENIOR_REQUESTS = "/dotazy",
+  SENIOR_QUERIES = "/dotazy",
   NEW_SENIOR_QUERY = "/dotazy/novy",
   VISITS = "/navstevy",
   NEW_VISIT = "/navstevy/nova",
@@ -48,4 +48,11 @@ export enum QueryDeviceCategory {
   PHONE = "Mobil",
   PRINTER = "Printer",
   OTHER = "Jiné IT zařízení",
+}
+
+export enum VisitMeetLocation {
+  AT_SENIOR = "U Seniora",
+  REMOTE = "Vzdáleně (online/telefonicky)",
+  LIBRARY = "Knihovna / klub",
+  OTHER = "Jiné místo",
 }

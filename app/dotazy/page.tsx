@@ -1,7 +1,7 @@
 import BackButton from "components/buttons/back-button";
 import { AssistantPagePaths, FilterType } from "helper/consts";
-import RequestFilterPanel from "components/senior-queries/request-filter-panel";
-import { SeniorQueriesGetter } from "backend/senior-requests";
+import RequestFilterPanel from "components/senior-queries/filter/request-filter-panel";
+import { SeniorQueriesGetter } from "backend/senior-queries";
 import DynamicList from "components/dynamic-list/dynamic-list";
 import { Typography } from "@mui/material";
 
