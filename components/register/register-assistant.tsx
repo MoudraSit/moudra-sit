@@ -18,7 +18,6 @@ import PhoneCodeFieldForm from "components/form/model/phone-code-form ";
 import { Form, Formik } from "formik";
 import { registerAssistantSchema } from "./schema/register-assistant-schema";
 import TextFieldForm from "components/form/model/input-form";
-import RegionForm from "components/form/model/region-form";
 import Image from "next/image";
 import * as yup from "yup";
 import axios, { AxiosError, AxiosResponse } from "axios";

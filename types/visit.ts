@@ -1,3 +1,4 @@
+import { Assistant } from "./assistant";
 import { SeniorQuery } from "./seniorQuery";
 
 export interface Visit {
@@ -6,7 +7,16 @@ export interface Visit {
   modified: string;
   ver: number;
   fields: {
-    // TODO: Navstevy object
+    delkaReseniHodiny: number;
+    delkaReseniDotazuMinuty: number;
+    stav: string;
+    osobnevzdalene: string;
+    vlozeniNavstevy: string;
+    datumUskutecneneNavstevy: string;
+    vlozeniZaznamu: string;
     dotaz: SeniorQuery;
+    mistoNavstevy: string;
+    poznamkaAsistentem: string;
+    iDUzivatele: Assistant;
   };
 }
