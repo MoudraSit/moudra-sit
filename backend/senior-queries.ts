@@ -37,6 +37,30 @@ export class SeniorQueriesGetter {
     return seniorQueries[0];
   }
 
+  public static async getVisitsForSeniorQuery(queryId: string) {
+    const filters = [
+      {
+        field: "id",
+        operator: "eq",
+        value: queryId,
+      },
+    ];
+    const seniorQueries = await this._getSeniorQueriesByFilter(filters);
+
+    if (!seniorQueries.length) throw new NotFoundError("Dotaz nenalezen");
+
+    if (!seniorQueries[0]?.fields.navstevy) {
+      return [];
+    }
+
+    const visitsResponse = await callTabidoo<Visit[]>(
+      seniorQueries[0].fields.navstevy.url,
+      { method: "GET", fullUrlProvided: true }
+    );
+
+    return visitsResponse;
+  }
+
   public static async getSeniorQueryCountByUIFilters(uiFilters: UIFilters) {
     const filters = await this._createSeniorQueryFilters(uiFilters);
 

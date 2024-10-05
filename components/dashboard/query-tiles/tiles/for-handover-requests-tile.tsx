@@ -1,6 +1,6 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
-import { SeniorQueriesGetter } from "backend/senior-requests";
+import { SeniorQueriesGetter } from "backend/senior-queries";
 import Link from "next/link";
 import {
   AssistantPagePaths,
@@ -17,7 +17,7 @@ async function ForHandoverRequestsTile() {
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_REQUESTS}?${FilterType.QUERY_STATUS}=${QueryStatus.FOR_HANDOVER}`}
+        href={`${AssistantPagePaths.SENIOR_QUERIES}?${FilterType.QUERY_STATUS}=${QueryStatus.FOR_HANDOVER}`}
       >
         <CardContent>
           <Typography variant="body2" color={"#FF921D"} fontSize={"18px"}>
