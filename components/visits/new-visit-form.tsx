@@ -22,14 +22,12 @@ type Props = {
   queryId: string;
 };
 
+
+// TODO: use renderFlatOptions()
 function NewVisitForm({ queryId }: Props) {
   const router = useRouter();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({
+  const { handleSubmit, control } = useForm({
     resolver: yupResolver(newVisitSchema),
     defaultValues: {
       queryStatus: QueryStatus.IN_PROGRESS,
@@ -37,15 +35,16 @@ function NewVisitForm({ queryId }: Props) {
     },
   });
 
-  const onSubmit = async (data: NewVisitValues) =>
+  const [isPending, setIsPending] = React.useState(false);
+
+  async function submit(data: NewVisitValues) {
+    setIsPending(true);
     await createQueryVisit(queryId, data);
-
-  //   const [isPending, setIsPending] = React.useState(false);
-
-  // TODO: reduce font size
+    setIsPending(false);
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(submit)}>
       <Stack spacing={2}>
         <FormInputDropdown
           name="queryStatus"
@@ -100,7 +99,7 @@ function NewVisitForm({ queryId }: Props) {
             fullWidth
             variant="contained"
             color="warning"
-            //   disabled={isPending}
+            disabled={isPending}
           >
             Uložit
           </Button>

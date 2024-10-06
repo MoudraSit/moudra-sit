@@ -56,3 +56,11 @@ export enum VisitMeetLocation {
   LIBRARY = "Knihovna / klub",
   OTHER = "Jiné místo",
 }
+
+export enum PhoneCountryCodes {
+  CZ = "+420",
+  SK = "+421",
+}
+
+export const phoneRegexWithCountryCode =
+  /^([+]\d{1,3})?[ ]?(\d{3}[ ]?\d{3}[ ]?\d{3})$/;

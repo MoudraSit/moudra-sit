@@ -1,6 +1,7 @@
 import { Controller } from "react-hook-form";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { FormInputProps } from "./FormInputProps";
+import { commonStyles } from "./form-input-styles";
 
 export const FormInputText = ({
   name,
@@ -15,11 +16,6 @@ export const FormInputText = ({
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TextField
           helperText={error ? error.message : null}
-          inputProps={{
-            style: {
-              fontSize: 16,
-            },
-          }}
           size="small"
           color="info"
           error={!!error}
@@ -29,6 +25,10 @@ export const FormInputText = ({
           label={label}
           variant="outlined"
           {...props}
+          sx={{
+            ...commonStyles,
+            ...props?.sx,
+          }}
         />
       )}
     />
