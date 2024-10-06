@@ -1,6 +1,7 @@
 "use client";
 
 import { createTheme } from "@mui/material/styles";
+import { THEME_COLORS } from "./colors";
 
 export let appTheme = createTheme({
   palette: {
@@ -13,7 +14,7 @@ export let appTheme = createTheme({
       main: "#037f87",
       contrastText: "#ffffff",
     },
-    warning: { main: "#D3215D" },
+    warning: { main: THEME_COLORS.primary },
     info: { main: "#000000" },
     contrastThreshold: 3,
     tonalOffset: 0.2,
@@ -66,15 +67,15 @@ appTheme = createTheme(appTheme, {
   },
 });
 
-export const colors = {
-  primaryMain: appTheme.palette.primary.main,
-  primaryContrastText: appTheme.palette.primary.contrastText,
-  secondaryMain: appTheme.palette.secondary.main,
-  secondaryLight: appTheme.palette.secondary.light,
-  secondaryContrastText: appTheme.palette.secondary.contrastText,
-  warningMain: appTheme.palette.warning.main,
-  infoMain: appTheme.palette.info.main,
-};
+// export const THEME_COLORS = {
+//   primaryMain: appTheme.palette.primary.main,
+//   primaryContrastText: appTheme.palette.primary.contrastText,
+//   secondaryMain: appTheme.palette.secondary.main,
+//   secondaryLight: appTheme.palette.secondary.light,
+//   secondaryContrastText: appTheme.palette.secondary.contrastText,
+//   warningMain: appTheme.palette.warning.main,
+//   infoMain: appTheme.palette.info.main,
+// };
 
 // TODO: might be necessary because white primary color requires a lot of manual overrides
 export const mobileAppTheme = createTheme(appTheme, {

@@ -26,3 +26,11 @@ export function createTabidooDateString(date: Date) {
   const now = dayjs().add(timeZoneOffsetHours, "hour");
   return now.toISOString();
 }
+
+export function capitalizeFirstLetter(name: string) {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+export function removeSpaces(str: string) {
+  return (str = str.replace(/\s/g, ""));
+}
