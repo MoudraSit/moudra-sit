@@ -20,6 +20,10 @@ export enum QueryStatus {
   POSTPONED = "06. Odloženo",
 }
 
+export enum QueryStatusColors {
+  NEW = "#FD6A40",
+}
+
 // Include subpaths for easy referencing in the app
 // Query and dynamic path parameters (e.g., .../id/...) should not be here
 export enum AssistantPagePaths {
