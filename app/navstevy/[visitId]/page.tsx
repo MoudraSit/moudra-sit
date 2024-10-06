@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { NotFoundError } from "helper/exceptions";
 import {
   ReadOnlyBox,
-} from "components/senior-queries/detail/tabs/helper-components";
+} from "components/senior-queries/detail/helper-components";
 import { formatDate } from "helper/utils";
 
 type Props = {
