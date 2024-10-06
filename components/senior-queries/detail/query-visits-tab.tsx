@@ -40,14 +40,16 @@ function QueryVisitsTab({ seniorQuery, visits }: Props) {
         <Typography
           sx={{ fontWeight: "bold", fontSize: "16px", marginBottom: "0.5rem" }}
         >
-          Historie návštěv
+          Přehled změn
         </Typography>
         <List>
           {visits.map((visit) => (
-            <NextLink key={visit.id} href={`${AssistantPagePaths.VISITS}/${visit.id}`}>
-              <ListItem sx={{ padding: "0.5rem" }} button component={Link}>
+            <NextLink
+              key={visit.id}
+              href={`${AssistantPagePaths.VISITS}/${visit.id}`}
+            >
+              <ListItem sx={{ padding: "0.5rem" }} component={Link}>
                 <ListItemContent>
-                  {/* <Box display="flex" flexGrow="1" flexDirection="column"> */}
                   <Typography>{visit.fields.stav}</Typography>
                   <Stack direction="row" justifyContent="space-between">
                     <Typography variant="caption">
@@ -57,10 +59,13 @@ function QueryVisitsTab({ seniorQuery, visits }: Props) {
                       {formatDate(visit.fields.vlozeniZaznamu)}
                     </Typography>
                   </Stack>
-                  {/* </Box> */}
                 </ListItemContent>
                 <ListItemAvatar
-                  sx={{ minWidth: "0.5rem", marginRight: "-0.5rem" }}
+                  sx={{
+                    minWidth: "0.5rem",
+                    marginRight: "-0.5rem",
+                    color: "black",
+                  }}
                 >
                   <ChevronRightIcon />
                 </ListItemAvatar>

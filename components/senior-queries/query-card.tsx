@@ -33,7 +33,7 @@ function QueryCard({ style, item }: Props) {
         <CardActions>
           <Button
             LinkComponent={Link}
-            href={`${AssistantPagePaths.SENIOR_QUERIES}/${item.id}`}
+            href={`${AssistantPagePaths.SENIOR_QUERIES}/${item.id}/detail`}
             variant="outlined"
             color="info"
           >

@@ -12,11 +12,11 @@ export function generateUID() {
 }
 
 export function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("cs-CZ");
+  return date ? new Date(date).toLocaleDateString("cs-CZ") : "";
 }
 
 export function formatDateTime(date: string) {
-  return new Date(date).toLocaleString();
+  return date ? new Date(date).toLocaleString(): "";
 }
 
 // Tabidoo BE has no timezone info and understands dates to be in the CET timezone

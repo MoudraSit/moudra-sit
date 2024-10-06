@@ -1,18 +1,9 @@
-import {
-  Box,
-  Button,
-  Chip,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { QueryComment, SeniorQuery } from "types/seniorQuery";
+import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
+import { SeniorQuery } from "types/seniorQuery";
 import { BORDER_COLOR, ReadOnlyBox, ReadOnlyField } from "./helper-components";
-import { formatDate, formatDateTime } from "helper/utils";
-import { createQueryComment } from "components/senior-queries/actions";
-import React from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { formatDate } from "helper/utils";
+import QueryCommentCard from "./comment-card";
+import NewCommentCard from "./new-comment-card";
 
 type Props = {
   seniorQuery: SeniorQuery;
@@ -126,79 +117,6 @@ function QueryDetailTab({ seniorQuery }: Props) {
         <NewCommentCard queryId={seniorQuery.id} />
       </Box>
     </>
-  );
-}
-
-function QueryCommentCard({ text, authorName, created }: QueryComment) {
-  return (
-    <Grid
-      container
-      alignItems={"center"}
-      sx={{
-        background: "#F1F1F1",
-        width: "100%",
-        margin: 0,
-        marginBottom: "0.5rem",
-        padding: "0.5rem",
-        borderRadius: "11px",
-      }}
-    >
-      <Grid item xs={1}>
-        <AccountCircleIcon />
-      </Grid>
-      <Grid item xs={11} sx={{ paddingLeft: "0.5rem" }}>
-        <Stack direction="row" justifyContent={"space-between"}>
-          <Typography variant="caption" sx={{ fontSize: "12px" }}>
-            {authorName}
-          </Typography>
-          <Typography
-            variant="caption"
-            sx={{ fontSize: "12px", color: "#9E9E9E" }}
-          >
-            {formatDateTime(created)}
-          </Typography>
-        </Stack>
-        <Typography>{text}</Typography>
-      </Grid>
-    </Grid>
-  );
-}
-
-function NewCommentCard({ queryId }: { queryId: string }) {
-  const [newComment, setNewComment] = React.useState("");
-  const [isPending, setIsPending] = React.useState(false);
-
-  async function handleNewComment() {
-    setIsPending(true);
-    await createQueryComment(queryId, newComment);
-    setNewComment("");
-    setIsPending(false);
-  }
-
-  return (
-    <Box>
-      <TextField
-        multiline
-        value={newComment}
-        onChange={(e) => setNewComment(e.target.value)}
-        fullWidth
-        color="info"
-        size="small"
-        placeholder="Nová poznámka"
-        minRows={3}
-        maxRows={6}
-        inputProps={{ style: { fontSize: "1rem" } }} // font size of input text
-      />
-      <Button
-        variant="text"
-        disabled={!newComment.length || isPending}
-        color="info"
-        onClick={handleNewComment}
-        sx={{ float: "right" }}
-      >
-        Přidat poznámku
-      </Button>
-    </Box>
   );
 }
 
