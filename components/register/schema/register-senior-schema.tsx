@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
+export const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
 const pscRegex = /^\d{3}[ ]?\d{2}$/;
 
 // schema for form validation

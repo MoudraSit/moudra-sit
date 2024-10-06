@@ -19,12 +19,12 @@ const options = [
   },
 ];
 
-export const FormInputMultiCheckbox: React.FC<FormInputProps> = ({
+export const FormInputMultiCheckbox = ({
   name,
   control,
   setValue,
   label,
-}) => {
+}: FormInputProps & { setValue: any }) => {
   const [selectedItems, setSelectedItems] = useState<any>([]);
   // we are handling the selection manually here
   const handleSelect = (value: any) => {
