@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import {
   Box,
   Button,
@@ -8,21 +9,18 @@ import {
   ThemeProvider,
   Typography,
   useMediaQuery,
-  FormHelperText,
 } from "@mui/material";
+import axios, { AxiosError } from "axios";
+import { RatingButton } from "components/rating/RatingButton";
 import { appTheme } from "components/theme/theme";
 import { useFormik } from "formik";
 import Image from "next/image";
-import { VisitDTO } from "../api/rating/getVisit";
 import { useRouter } from "next/router";
-import * as yup from "yup";
-import axios, { AxiosError } from "axios";
 import { useMutation, useQuery } from "react-query";
-import { RatingButton } from "components/rating/RatingButton";
-import { RatingNumber } from "components/rating/RatingNumber";
-import styled from "@emotion/styled";
+import * as yup from "yup";
+import { VisitDTO } from "../api/rating/getVisit";
 
-const ratingError = "Zvolte hodnocení 1-5";
+const ratingError = "Zvolte smajlíka";
 
 export const validationSchema = yup.object().shape({
   spokojenostSenior: yup.number().integer().min(1).max(5).required(),
@@ -114,12 +112,7 @@ function RatingPage() {
     <ThemeProvider theme={appTheme}>
       <Container maxWidth="md" component="form" onSubmit={formik.handleSubmit}>
         <Box mb="1rem" mt="3rem">
-          <Typography
-            variant="h6"
-            component="h6"
-            fontWeight="normal"
-            fontSize="1.5rem"
-          >
+          <Typography variant="h6" component="h6" fontWeight="normal" fontSize="1.5rem">
             Hodnocení návštěvy digitálního asistenta
           </Typography>
         </Box>
@@ -139,12 +132,7 @@ function RatingPage() {
                   <Typography variant="h4" component="h4" fontWeight="bold">
                     {visitDetails?.assistant.name}
                   </Typography>
-                  <Typography
-                    variant="h6"
-                    component="h6"
-                    fontSize={16}
-                    fontWeight="regular"
-                  >
+                  <Typography variant="h6" component="h6" fontSize={16} fontWeight="regular">
                     {visitDetails?.assistant.city}
                   </Typography>
                 </Grid>
@@ -182,12 +170,8 @@ function RatingPage() {
                 ].map((item) => (
                   <Grid item key={item.value}>
                     <RatingButton
-                      isSelected={
-                        formik.values.spokojenostSenior === item.value
-                      }
-                      onClick={() =>
-                        formik.setFieldValue("spokojenostSenior", item.value)
-                      }
+                      isSelected={formik.values.spokojenostSenior === item.value}
+                      onClick={() => formik.setFieldValue("spokojenostSenior", item.value)}
                     >
                       <Image
                         alt={item.image}
@@ -200,7 +184,9 @@ function RatingPage() {
                 ))}
               </Grid>
               {formik.errors.spokojenostSenior && (
-                <FormHelperText error>{ratingError}</FormHelperText>
+                <Typography variant="h6" component="h6" color="error">
+                  {ratingError}
+                </Typography>
               )}
             </Box>
           </Grid>
@@ -209,7 +195,7 @@ function RatingPage() {
               Podařilo se vyřešit dotaz?
             </Typography>
             <Typography variant="h6" component="h6">
-              Vyberte známku 1-5 jako ve škole.
+              Vyberte smajlíka.
             </Typography>
             <Box mt="1rem">
               <Grid
@@ -219,29 +205,32 @@ function RatingPage() {
                 justifyContent={isSmallScreen ? "center" : "flex-start"}
               >
                 {[
-                  { value: 1 },
-                  { value: 2 },
-                  { value: 3 },
-                  { value: 4 },
-                  { value: 5 },
+                  { image: "frown.png", value: 5 },
+                  { image: "meh.png", value: 4 },
+                  { image: "neutral.png", value: 3 },
+                  { image: "smile.png", value: 2 },
+                  { image: "love.png", value: 1 },
                 ].map((item) => (
                   <Grid item key={item.value}>
                     <RatingButton
-                      isSelected={
-                        formik.values.problemVyresenHodnoceni === item.value
-                      }
-                      onClick={() =>
-                        formik.setFieldValue(
-                          "problemVyresenHodnoceni",
-                          item.value
-                        )
-                      }
+                      isSelected={formik.values.problemVyresenHodnoceni === item.value}
+                      onClick={() => formik.setFieldValue("problemVyresenHodnoceni", item.value)}
                     >
-                      <RatingNumber>{item.value}</RatingNumber>
+                      <Image
+                        alt={item.image}
+                        src={`/images/smiles/${item.image}`}
+                        width={isSmallScreen ? 32 : 40}
+                        height={isSmallScreen ? 32 : 40}
+                      />
                     </RatingButton>
                   </Grid>
                 ))}
               </Grid>
+              {formik.errors.problemVyresenHodnoceni && (
+                <Typography variant="h6" component="h6" color="error">
+                  {ratingError}
+                </Typography>
+              )}
             </Box>
           </Grid>
         </Grid>
