@@ -21,7 +21,10 @@ export enum QueryStatus {
 }
 
 export enum QueryStatusColors {
-  NEW = "#FD6A40",
+  NEW = "#D3215D",
+  IN_PROGRESS = "#0063CC",
+  FOR_HANDOVER = "#FF921D",
+  SOLVED = "#188823"
 }
 
 // Include subpaths for easy referencing in the app
