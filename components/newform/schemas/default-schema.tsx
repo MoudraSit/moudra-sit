@@ -119,13 +119,17 @@ export const defaultSchema = [
       .matches(pscRegex, "Napište správný tvar PSČ (např. 60200)")
       .required("Napište Vaše PSČ")
       .typeError("Napište Vaše PSČ"),
-    city: yup.string().required("Napište název obce/města").typeError("Napište název obce/města"),
+    city: yup
+      .string()
+      .required("Vyberte název obce/města ze seznamu")
+      .typeError("Vyberte název obce/města ze seznamu"),
     plusCode: yup.string().required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
       .matches(phoneRegex, "Napište správný tvar telefonního čísla (např. 123456789)")
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email("Napište správně Váš kontaktní e-mail"),
+    zkratka: yup.string(),
     homeCheckbox: yup.boolean(),
     libraryCheckbox: yup.boolean(),
     publicPlaceCheckbox: yup.boolean(),
@@ -167,13 +171,17 @@ export const defaultSchema = [
       .matches(pscRegex, "Špatný tvar PSČ")
       .required("Napište Vaše PSČ")
       .typeError("Napište Vaše PSČ"),
-    city: yup.string().required("Napište název obce/města").typeError("Napište název obce/města"),
+    city: yup
+      .string()
+      .required("Vyberte název obce/města ze seznamu")
+      .typeError("Vyberte název obce/města ze seznamu"),
     plusCode: yup.string().required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
       .matches(phoneRegex, "Napište správný tvar telefonního čísla (např. 123456789)")
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email("Napište správně Váš kontaktní e-mail"),
+    zkratka: yup.string().required("Vyberte název obce/města ze seznamu"),
     homeCheckbox: yup.boolean(),
     libraryCheckbox: yup.boolean(),
     publicPlaceCheckbox: yup.boolean(),

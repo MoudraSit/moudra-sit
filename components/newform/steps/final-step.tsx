@@ -12,6 +12,8 @@ import {
 import { Box } from "@mui/system";
 import { FormikErrors } from "formik";
 import { useEffect } from "react";
+import CityAutosuggest from "../components/CityAutosuggest";
+import { PSCAutosuggest } from "../components/PSCAutosuggest";
 import { IValues } from "../helpers/constants";
 import { CardItem } from "../model/card-item";
 import TextFieldForm from "../model/input-form";
@@ -22,9 +24,9 @@ export default function FinalStep(props: {
   setActiveStep: (val: number) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
 }) {
-  const handleClickBack = () => {
-    props.setActiveStep(4);
-  };
+  // const handleClickBack = () => {
+  //   props.setActiveStep(4);
+  // };
 
   useEffect(() => {
     const anyDeviceChecked =
@@ -401,34 +403,13 @@ export default function FinalStep(props: {
                   >
                     <Grid container spacing={1}>
                       <Grid item xs={12} sm={12} md={4}>
-                        <TextFieldForm
-                          id="zipCode"
-                          name="zipCode"
-                          color="info"
-                          inputhelper=""
-                          variant="outlined"
-                          required
-                          fullWidth
-                          value={props.values.zipCode}
-                          onChange={(e) => {
-                            props.setFieldValue("zipCode", e.target.value);
-                          }}
-                        />
+                        <PSCAutosuggest defaultValue={props.values.zipCode} />
                       </Grid>
                       <Grid item xs={12} sm={12} md={4}>
-                        <TextFieldForm
-                          id="city"
-                          name="city"
-                          color="info"
-                          inputhelper=""
-                          variant="outlined"
-                          required
-                          fullWidth
-                          value={props.values.city}
-                          onChange={(e) => {
-                            props.setFieldValue("city", e.target.value);
-                          }}
-                        />
+                        <CityAutosuggest defaultValue={props.values.city} errors={props.errors} />
+                        {props.errors.zkratka != null && (
+                          <Typography color="error">{props.errors.zkratka}</Typography>
+                        )}
                       </Grid>
                     </Grid>
                   </TableCell>
@@ -559,7 +540,7 @@ export default function FinalStep(props: {
             type="submit"
             onClick={() => {
               console.log(props.errors);
-              console.log(props.values);
+              console.log("values", props.values);
             }}
             sx={{
               mr: 1,

@@ -36,6 +36,9 @@ export const PSCAutosuggest: React.FC<Props> = ({ defaultValue }) => {
           variant="outlined"
           color="info"
           required
+          onChange={(e) => {
+            setFieldValue("zipCode", e.target.value.replace(/\s/g, ""));
+          }}
           {...params}
           fullWidth
         />

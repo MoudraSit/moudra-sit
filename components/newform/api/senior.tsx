@@ -21,7 +21,7 @@ async function ApiRequestSenior(props: IValues) {
           prijmeni: capitalizeFirstLetter(props.surname),
           PSC: removeSpaces(props.zipCode),
           mesto: capitalizeFirstLetter(props.city),
-
+          mestoZkratka: props.zkratka,
           email: props.email,
           stat: "Česko",
           telefon: props.plusCode.concat(removeSpaces(props.phoneNumber)),

@@ -220,7 +220,12 @@ function renderStepContent(
       );
     case 4:
       return (
-        <ContactStep values={values} setFieldValue={setFieldValue} setActiveStep={setActiveStep} />
+        <ContactStep
+          values={values}
+          setFieldValue={setFieldValue}
+          setActiveStep={setActiveStep}
+          errors={errors}
+        />
       );
 
     case 5:

@@ -44,6 +44,7 @@ export interface IValues {
   publicPlaceCheckbox: boolean;
   virtualCheckbox: boolean;
   place_selection: boolean;
+  zkratka: string;
 }
 
 export const initialValues = {
@@ -68,6 +69,7 @@ export const initialValues = {
   publicPlaceCheckbox: false,
   virtualCheckbox: false,
   place_selection: false,
+  zkratka: "",
 };
 
 export const FormContainer = styled(Container)`

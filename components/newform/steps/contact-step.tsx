@@ -1,6 +1,7 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { FormikErrors } from "formik";
 import CityAutosuggest from "../components/CityAutosuggest";
 import { PSCAutosuggest } from "../components/PSCAutosuggest";
 import { IValues } from "../helpers/constants";
@@ -19,6 +20,7 @@ function setOpacity(values: IValues) {
 
 export default function ContactStep(props: {
   values: IValues;
+  errors: FormikErrors<IValues>;
   setActiveStep: (val: number) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
 }) {
@@ -97,7 +99,7 @@ export default function ContactStep(props: {
           <PSCAutosuggest defaultValue={props.values.zipCode} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CityAutosuggest defaultValue={props.values.city} />
+          <CityAutosuggest defaultValue={props.values.city} errors={props.errors} />
         </Grid>
         <Grid item xs={12} sm={4}>
           <PhoneCodeFieldForm
