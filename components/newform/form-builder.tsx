@@ -85,7 +85,7 @@ export default function FormBuilder() {
           >
             {({ isSubmitting, setFieldValue, values, errors }) => (
               <Form autoComplete="on">
-                <FormContainer maxWidth="xl">
+                <FormContainer maxWidth="xl" sx={{ p: 0 }}>
                   <Typography
                     sx={{ pl: { xs: 2, sm: 4, md: 8 } }}
                     variant="h1"
@@ -101,8 +101,8 @@ export default function FormBuilder() {
                       bgcolor: "#f5f3ee",
                       mt: 4,
                       pt: { xs: 2, sm: 4, md: 8 },
-                      pl: { xs: 2, sm: 4, md: 8 },
-                      pr: { xs: 2, sm: 4, md: 8 },
+                      pl: { xs: 4, sm: 4, md: 8 },
+                      pr: { xs: 4, sm: 4, md: 8 },
                       pb: 4,
                       borderRadius: 2,
                       boxShadow: 4,

@@ -129,7 +129,7 @@ export const defaultSchema = [
       .matches(phoneRegex, "Napište správný tvar telefonního čísla (např. 123456789)")
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email("Napište správně Váš kontaktní e-mail"),
-    zkratka: yup.string(),
+    zkratka: yup.string().required("Vyberte název obce/města ze seznamu"),
     homeCheckbox: yup.boolean(),
     libraryCheckbox: yup.boolean(),
     publicPlaceCheckbox: yup.boolean(),

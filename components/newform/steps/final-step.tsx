@@ -407,9 +407,6 @@ export default function FinalStep(props: {
                       </Grid>
                       <Grid item xs={12} sm={12} md={4}>
                         <CityAutosuggest defaultValue={props.values.city} errors={props.errors} />
-                        {props.errors.zkratka != null && (
-                          <Typography color="error">{props.errors.zkratka}</Typography>
-                        )}
                       </Grid>
                     </Grid>
                   </TableCell>

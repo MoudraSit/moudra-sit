@@ -1,10 +1,10 @@
 import { FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import axios from "axios";
-import { IValues } from "components/form/vertical-stepper";
 import { FormikErrors, useField, useFormikContext } from "formik";
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import { MunicipalityDto } from "../../../pages/api/address/get-cities";
+import { IValues } from "../helpers/constants";
 
 type Props = {
   defaultValue: string;
@@ -50,7 +50,7 @@ export default function CityAutosuggest({ defaultValue, errors }: Props) {
           color="info"
           variant="outlined"
           id="city-select"
-          error={errors != null && errors.zipCode == null && errors.city != null}
+          error={errors != null && errors.zipCode == null && errors.zkratka != null}
         >
           Město/obec
         </InputLabel>
@@ -64,7 +64,7 @@ export default function CityAutosuggest({ defaultValue, errors }: Props) {
           required
           value={city}
           onChange={(e) => setCity(e.target.value as string)}
-          error={errors != null && errors.zipCode == null && errors.city != null}
+          error={errors != null && errors.zipCode == null && errors.zkratka != null}
         >
           {isLoading && <MenuItem disabled>Počkejte prosím...</MenuItem>}
           {municipalities?.map((m) => (
@@ -74,8 +74,8 @@ export default function CityAutosuggest({ defaultValue, errors }: Props) {
           )) ?? []}
         </Select>
       </FormControl>
-      {errors != null && errors.zipCode == null && errors.city != null && (
-        <Typography color="error">{errors.city}</Typography>
+      {errors != null && errors.zipCode == null && errors.zkratka != null && (
+        <Typography color="error">{errors.zkratka}</Typography>
       )}
     </>
   );
