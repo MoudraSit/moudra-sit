@@ -50,7 +50,7 @@ function QueryCard({ style, item , device }: Props) {
         <Typography fontSize={"19px"} variant="body2">{item.fields.iDSeniora.fields.mesto}</Typography>
         <Typography fontSize={"19px"} variant="body2">Zařízení : {device}</Typography>
         <Typography fontSize={"19px"} fontWeight={"bold"} variant="body2">
-          Místo Pomoci : <span style={{fontWeight : "normal"}}>{item.fields.pozadovaneMistoPomoci}</span>
+          Místo Pomoci : <span style={{fontWeight : "normal"}}>{}</span>
         </Typography>
         {/* <Typography variant="body2">{item.fields.pozadovaneMistoPomoci}</Typography> */}
         <CardActions>
