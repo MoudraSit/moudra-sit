@@ -49,12 +49,11 @@ function QueryCard({ style, item , device }: Props) {
         <Typography fontFamily={"Roboto Condensed"} fontSize={"19px"} variant="body2">{item.fields.iDSeniora.fields.prijmeniJmeno}</Typography>
         <Typography fontFamily={"Roboto Condensed"} fontSize={"19px"} variant="body2">{item.fields.iDSeniora.fields.mesto}</Typography>
         <Typography fontFamily={"Roboto Condensed"} fontSize={"19px"} variant="body2" fontWeight={"bold"}>
-          Zařízení : <span style={{fontWeight : "normal"}}>{device}</span>
+          Zařízení : <span style={{fontWeight : "normal"}}>{item.fields.kategorieDotazu}</span>
         </Typography>
         <Typography fontFamily={"Roboto Condensed"} fontSize={"19px"} fontWeight={"bold"} variant="body2">
-          Místo Pomoci : <span style={{fontWeight : "normal",fontFamily : "Roboto Condensed"}}>{device}</span>
+          Místo Pomoci : <span style={{fontWeight : "normal",fontFamily : "Roboto Condensed",color : "#000"}}>{item.fields.pozadovaneMistoPomoci}</span>
         </Typography>
-        {/* <Typography variant="body2">{item.fields.pozadovaneMistoPomoci}</Typography> */}
         <CardActions>
           <Button
             LinkComponent={Link}
@@ -66,6 +65,7 @@ function QueryCard({ style, item , device }: Props) {
                 width : "100%",
                 fontFamily : "Roboto"
               }
+
             }
           >
             Zobrazit Detail
