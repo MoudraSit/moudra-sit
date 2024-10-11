@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { FormikErrors } from "formik";
 import CityAutosuggest from "../components/CityAutosuggest";
 import { PSCAutosuggest } from "../components/PSCAutosuggest";
@@ -22,25 +22,27 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
 
   return (
     <>
-      <Button
-        variant="contained"
-        onClick={handleClickBack}
-        color="secondary"
-        sx={{
-          mt: 1,
-          mr: 1,
-          mb: 2,
-          color: "white",
-          letterSpacing: 0.5,
-          fontSize: 20,
-        }}
-        startIcon={<KeyboardArrowLeftIcon />}
-      >
-        Zpět
-      </Button>
-      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-        Kontaktní údaje
-      </Typography>
+      <Stack direction="row" alignItems="center" gap={1}>
+        <Button
+          variant="contained"
+          onClick={handleClickBack}
+          color="secondary"
+          sx={{
+            mt: 1,
+            mr: 1,
+            mb: 2,
+            color: "white",
+            letterSpacing: 0.5,
+            fontSize: 20,
+          }}
+          startIcon={<KeyboardArrowLeftIcon />}
+        >
+          Zpět
+        </Button>
+        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+          Kontaktní údaje
+        </Typography>
+      </Stack>
       <Grid item xs={12}>
         <Typography
           sx={{ fontWeight: "bold", pb: 4, pt: 4 }}
@@ -132,6 +134,7 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
             variant="outlined"
             color="info"
             fullWidth
+            multiline
             InputLabelProps={{ style: { fontSize: 20 } }}
           />
         </Grid>

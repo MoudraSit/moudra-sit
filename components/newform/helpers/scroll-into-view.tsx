@@ -1,7 +1,7 @@
 export function scrollIntoView() {
   setTimeout(function () {
     window.scrollTo({
-      top: 0,
+      top: 200,
       left: 0,
       behavior: "smooth",
     });

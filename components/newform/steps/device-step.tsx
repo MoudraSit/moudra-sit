@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
 import { FormikErrors } from "formik/dist/types";
@@ -39,26 +39,27 @@ export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, set
 
   return (
     <>
-      <Button
-        variant="contained"
-        onClick={handleClickBack}
-        color="secondary"
-        sx={{
-          mt: 1,
-          mr: 1,
-          mb: 2,
-          color: "white",
-          letterSpacing: 0.5,
-          fontSize: 20,
-        }}
-        startIcon={<KeyboardArrowLeftIcon />}
-      >
-        Zpět
-      </Button>
-      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-        Výběr zařízení
-      </Typography>
-
+      <Stack direction="row" alignItems="center" gap={1}>
+        <Button
+          variant="contained"
+          onClick={handleClickBack}
+          color="secondary"
+          sx={{
+            mt: 1,
+            mr: 1,
+            mb: 2,
+            color: "white",
+            letterSpacing: 0.5,
+            fontSize: 20,
+          }}
+          startIcon={<KeyboardArrowLeftIcon />}
+        >
+          Zpět
+        </Button>
+        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+          Výběr zařízení
+        </Typography>
+      </Stack>
       <Box
         sx={{
           bgcolor: "#f5f3ee",

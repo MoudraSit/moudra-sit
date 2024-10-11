@@ -26,10 +26,6 @@ type Props = {
 };
 
 export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setFieldValue }) => {
-  // const handleClickBack = () => {
-  //   setActiveStep(4);
-  // };
-
   useEffect(() => {
     const anyDeviceChecked =
       values.phoneCheckbox || values.pcCheckbox || values.printerCheckbox || values.otherCheckbox;
