@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
 import TestInfoLine from "components/newform/test-info-line";
 import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
-import Cover from "public/images/form/background-net.svg";
 import * as React from "react";
 import { ImageType } from "react-images-uploading";
 import ProgressBarComponent from "../form/steps/progress-bar";
@@ -67,8 +66,7 @@ export default function FormBuilder() {
         <TestInfoLine></TestInfoLine>
         <Box
           sx={{
-            backgroundImage: `url(${Cover.src})`,
-            backgroundSize: "cover",
+            bgcolor: "#037f87",
             pt: 4,
             pb: 6,
           }}
