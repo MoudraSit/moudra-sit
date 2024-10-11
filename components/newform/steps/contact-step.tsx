@@ -4,28 +4,20 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { FormikErrors } from "formik";
 import CityAutosuggest from "../components/CityAutosuggest";
 import { PSCAutosuggest } from "../components/PSCAutosuggest";
-import { IValues } from "../helpers/constants";
+import { IValues } from "../model/constants";
 import TextFieldForm from "../model/input-form";
 import PhoneCodeFieldForm from "../model/phone-code-form ";
 
-function setOpacity(values: IValues) {
-  return values.name.length > 1 &&
-    values.surname.length > 1 &&
-    values.city.length > 1 &&
-    values.zipCode.length > 1 &&
-    values.phoneNumber.length == 9
-    ? 1
-    : 0;
-}
-
-export default function ContactStep(props: {
+type Props = {
   values: IValues;
   errors: FormikErrors<IValues>;
   setActiveStep: (val: number) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-}) {
+};
+
+export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, setFieldValue }) => {
   const handleClickBack = () => {
-    props.setActiveStep(3);
+    setActiveStep(3);
   };
 
   return (
@@ -96,10 +88,10 @@ export default function ContactStep(props: {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <PSCAutosuggest defaultValue={props.values.zipCode} />
+          <PSCAutosuggest defaultValue={values.zipCode} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CityAutosuggest defaultValue={props.values.city} errors={props.errors} />
+          <CityAutosuggest defaultValue={values.city} errors={errors} />
         </Grid>
         <Grid item xs={12} sm={4}>
           <PhoneCodeFieldForm
@@ -111,7 +103,7 @@ export default function ContactStep(props: {
             color="info"
             fullWidth
             required
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
 
@@ -149,7 +141,7 @@ export default function ContactStep(props: {
           bgcolor: "#f5f3ee",
           pt: 4,
           textAlign: "left",
-          opacity: setOpacity(props.values),
+          opacity: setOpacity(values),
           transition: "opacity 0.3s ease-in-out",
         }}
       >
@@ -171,4 +163,14 @@ export default function ContactStep(props: {
       </Box>
     </>
   );
+};
+
+function setOpacity(values: IValues) {
+  return values.name.length > 1 &&
+    values.surname.length > 1 &&
+    values.city.length > 1 &&
+    values.zipCode.length > 1 &&
+    values.phoneNumber.length == 9
+    ? 1
+    : 0;
 }

@@ -1,9 +1,9 @@
 import { FormikHelpers } from "formik";
-import ApiRequestCategory from "./api/category";
-import ApiGetRequestSenior from "./api/get-senior";
-import ApiRequestRequirment from "./api/requirment";
-import ApiRequestSenior from "./api/senior";
-import { IValues } from "./helpers/constants";
+import ApiRequestCategory from "../api/category";
+import ApiGetRequestSenior from "../api/get-senior";
+import ApiRequestRequirment from "../api/requirment";
+import ApiRequestSenior from "../api/senior";
+import { IValues } from "../model/constants";
 
 const pcCategory = "Počítač";
 const phoneCategory = "Mobil";

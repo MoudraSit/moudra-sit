@@ -12,30 +12,30 @@ import PhoneDef from "public/images/form/device-checkboxes/phone-black.svg";
 import Phone from "public/images/form/device-checkboxes/phone.svg";
 import PrinterDef from "public/images/form/device-checkboxes/printer-black.svg";
 import Printer from "public/images/form/device-checkboxes/printer.svg";
-import { IValues } from "../helpers/constants";
 import { CheckboxCard } from "../model/checkbox-card";
+import { IValues } from "../model/constants";
 
-export default function DeviceStep(props: {
+type Props = {
   values: IValues;
   errors: FormikErrors<IValues>;
   setActiveStep: (val: number) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-}) {
-  const [checkedPhone, setCheckedPhone] = React.useState(props.values.phoneCheckbox);
-  const [checkedPc, setCheckedPc] = React.useState(props.values.pcCheckbox);
-  const [checkedPrinter, setCheckedPrinter] = React.useState(props.values.printerCheckbox);
-  const [checkedOther, setCheckedOther] = React.useState(props.values.otherCheckbox);
+};
+
+export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, setFieldValue }) => {
+  const [checkedPhone, setCheckedPhone] = React.useState(values.phoneCheckbox);
+  const [checkedPc, setCheckedPc] = React.useState(values.pcCheckbox);
+  const [checkedPrinter, setCheckedPrinter] = React.useState(values.printerCheckbox);
+  const [checkedOther, setCheckedOther] = React.useState(values.otherCheckbox);
   const anyButtonChecked = checkedPhone || checkedPc || checkedPrinter || checkedOther;
 
   useEffect(() => {
-    checkboxValidation();
-  }, [checkedPhone, checkedPc, checkedPrinter, checkedOther]);
+    setFieldValue("checkbox_selection", anyButtonChecked);
+  }, [checkedPhone, checkedPc, checkedPrinter, checkedOther, anyButtonChecked, setFieldValue]);
 
   const handleClickBack = () => {
-    props.setActiveStep(0);
+    setActiveStep(0);
   };
-
-  const checkboxValidation = () => props.setFieldValue("checkbox_selection", anyButtonChecked);
 
   return (
     <>
@@ -80,7 +80,7 @@ export default function DeviceStep(props: {
             label="Mobilní telefon"
             checkboxName="phoneCheckbox"
             onClick={() => setCheckedPhone(!checkedPhone)}
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -92,7 +92,7 @@ export default function DeviceStep(props: {
             label="Počítač"
             checkboxName="pcCheckbox"
             onClick={() => setCheckedPc(!checkedPc)}
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -104,7 +104,7 @@ export default function DeviceStep(props: {
             label="Tiskárna"
             checkboxName="printerCheckbox"
             onClick={() => setCheckedPrinter(!checkedPrinter)}
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -116,7 +116,7 @@ export default function DeviceStep(props: {
             label="Jiné zařízení"
             checkboxName="otherCheckbox"
             onClick={() => setCheckedOther(!checkedOther)}
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
       </Grid>
@@ -149,4 +149,4 @@ export default function DeviceStep(props: {
       </Box>
     </>
   );
-}
+};

@@ -14,68 +14,67 @@ import { FormikErrors } from "formik";
 import { useEffect } from "react";
 import CityAutosuggest from "../components/CityAutosuggest";
 import { PSCAutosuggest } from "../components/PSCAutosuggest";
-import { IValues } from "../helpers/constants";
 import { CardItem } from "../model/card-item";
+import { IValues } from "../model/constants";
 import TextFieldForm from "../model/input-form";
 
-export default function FinalStep(props: {
+type Props = {
   errors: FormikErrors<IValues>;
   values: IValues;
   setActiveStep: (val: number) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-}) {
+};
+
+export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setFieldValue }) => {
   // const handleClickBack = () => {
-  //   props.setActiveStep(4);
+  //   setActiveStep(4);
   // };
 
   useEffect(() => {
     const anyDeviceChecked =
-      props.values.phoneCheckbox ||
-      props.values.pcCheckbox ||
-      props.values.printerCheckbox ||
-      props.values.otherCheckbox;
+      values.phoneCheckbox || values.pcCheckbox || values.printerCheckbox || values.otherCheckbox;
 
-    props.setFieldValue("checkbox_selection", anyDeviceChecked);
+    setFieldValue("checkbox_selection", anyDeviceChecked);
   }, [
-    props.values.phoneCheckbox,
-    props.values.pcCheckbox,
-    props.values.printerCheckbox,
-    props.values.otherCheckbox,
-    props.setFieldValue,
+    values.phoneCheckbox,
+    values.pcCheckbox,
+    values.printerCheckbox,
+    values.otherCheckbox,
+    setFieldValue,
   ]);
 
   useEffect(() => {
     const anyPlaceChecked =
-      props.values.homeCheckbox ||
-      props.values.libraryCheckbox ||
-      props.values.publicPlaceCheckbox ||
-      props.values.virtualCheckbox;
+      values.homeCheckbox ||
+      values.libraryCheckbox ||
+      values.publicPlaceCheckbox ||
+      values.virtualCheckbox;
 
-    props.setFieldValue("place_selection", anyPlaceChecked);
+    setFieldValue("place_selection", anyPlaceChecked);
   }, [
-    props.values.homeCheckbox,
-    props.values.libraryCheckbox,
-    props.values.publicPlaceCheckbox,
-    props.values.virtualCheckbox,
-    props.setFieldValue,
+    values.homeCheckbox,
+    values.libraryCheckbox,
+    values.publicPlaceCheckbox,
+    values.virtualCheckbox,
+    setFieldValue,
   ]);
 
   const deviceItems = [
-    { id: "phoneCheckbox", value: props.values.phoneCheckbox, label: "Mobilní telefon" },
-    { id: "pcCheckbox", value: props.values.pcCheckbox, label: "Počítač" },
-    { id: "printerCheckbox", value: props.values.printerCheckbox, label: "Tiskárna" },
-    { id: "otherCheckbox", value: props.values.otherCheckbox, label: "Jiné zařízení" },
+    { id: "phoneCheckbox", value: values.phoneCheckbox, label: "Mobilní telefon" },
+    { id: "pcCheckbox", value: values.pcCheckbox, label: "Počítač" },
+    { id: "printerCheckbox", value: values.printerCheckbox, label: "Tiskárna" },
+    { id: "otherCheckbox", value: values.otherCheckbox, label: "Jiné zařízení" },
   ];
 
   const placeItems = [
-    { id: "libraryCheckbox", value: props.values.libraryCheckbox, label: "V knihovně" },
+    { id: "libraryCheckbox", value: values.libraryCheckbox, label: "V knihovně" },
     {
       id: "publicPlaceCheckbox",
-      value: props.values.publicPlaceCheckbox,
+      value: values.publicPlaceCheckbox,
       label: "Na veřejném místě",
     },
-    { id: "virtualCheckbox", value: props.values.virtualCheckbox, label: "Na dálku" },
-    { id: "homeCheckbox", value: props.values.homeCheckbox, label: "U mě doma" },
+    { id: "virtualCheckbox", value: values.virtualCheckbox, label: "Na dálku" },
+    { id: "homeCheckbox", value: values.homeCheckbox, label: "U mě doma" },
   ];
 
   return (
@@ -153,9 +152,9 @@ export default function FinalStep(props: {
                           variant="outlined"
                           required
                           fullWidth
-                          value={props.values.year.toString()}
+                          value={values.year.toString()}
                           onChange={(e) => {
-                            props.setFieldValue("year", e.target.value);
+                            setFieldValue("year", e.target.value);
                           }}
                         />
                       </Grid>
@@ -194,7 +193,7 @@ export default function FinalStep(props: {
                           name={item.id}
                           label={item.label}
                           checked={item.value}
-                          onToggle={() => props.setFieldValue(item.id, !item.value)}
+                          onToggle={() => setFieldValue(item.id, !item.value)}
                         />
                       ))}
                     </Grid>
@@ -232,9 +231,9 @@ export default function FinalStep(props: {
                       variant="outlined"
                       required
                       fullWidth
-                      value={props.values.requirmentName}
+                      value={values.requirmentName}
                       onChange={(e) => {
-                        props.setFieldValue("requirmentName", e.target.value);
+                        setFieldValue("requirmentName", e.target.value);
                       }}
                     />
                   </TableCell>
@@ -273,9 +272,9 @@ export default function FinalStep(props: {
                       rows={3}
                       required
                       fullWidth
-                      value={props.values.description}
+                      value={values.description}
                       onChange={(e) => {
-                        props.setFieldValue("description", e.target.value);
+                        setFieldValue("description", e.target.value);
                       }}
                     />
                   </TableCell>
@@ -312,7 +311,7 @@ export default function FinalStep(props: {
                           name={item.id}
                           label={item.label}
                           checked={item.value}
-                          onToggle={() => props.setFieldValue(item.id, !item.value)}
+                          onToggle={() => setFieldValue(item.id, !item.value)}
                         />
                       ))}
                     </Grid>
@@ -352,9 +351,9 @@ export default function FinalStep(props: {
                           variant="outlined"
                           required
                           fullWidth
-                          value={props.values.name}
+                          value={values.name}
                           onChange={(e) => {
-                            props.setFieldValue("name", e.target.value);
+                            setFieldValue("name", e.target.value);
                           }}
                         />
                       </Grid>
@@ -367,9 +366,9 @@ export default function FinalStep(props: {
                           variant="outlined"
                           required
                           fullWidth
-                          value={props.values.surname}
+                          value={values.surname}
                           onChange={(e) => {
-                            props.setFieldValue("surname", e.target.value);
+                            setFieldValue("surname", e.target.value);
                           }}
                         />
                       </Grid>
@@ -403,10 +402,10 @@ export default function FinalStep(props: {
                   >
                     <Grid container spacing={1}>
                       <Grid item xs={12} sm={12} md={4}>
-                        <PSCAutosuggest defaultValue={props.values.zipCode} />
+                        <PSCAutosuggest defaultValue={values.zipCode} />
                       </Grid>
                       <Grid item xs={12} sm={12} md={4}>
-                        <CityAutosuggest defaultValue={props.values.city} errors={props.errors} />
+                        <CityAutosuggest defaultValue={values.city} errors={errors} />
                       </Grid>
                     </Grid>
                   </TableCell>
@@ -445,9 +444,9 @@ export default function FinalStep(props: {
                           variant="outlined"
                           required
                           fullWidth
-                          value={props.values.phoneNumber}
+                          value={values.phoneNumber}
                           onChange={(e) => {
-                            props.setFieldValue("phoneNumber", e.target.value);
+                            setFieldValue("phoneNumber", e.target.value);
                           }}
                         />
                       </Grid>
@@ -487,9 +486,9 @@ export default function FinalStep(props: {
                           inputhelper=""
                           variant="outlined"
                           fullWidth
-                          value={props.values.email}
+                          value={values.email}
                           onChange={(e) => {
-                            props.setFieldValue("email", e.target.value);
+                            setFieldValue("email", e.target.value);
                           }}
                         />
                       </Grid>
@@ -518,9 +517,9 @@ export default function FinalStep(props: {
         </Link>
       </Typography>
       {/* Show error when occures */}
-      {Object.values(props.errors)[0] != null ? (
+      {Object.values(errors)[0] != null ? (
         <Typography variant="h2" align="left" color="error" sx={{ pt: 8, fontStyle: "italic" }}>
-          {Object.values(props.errors)[0].toString()}
+          {Object.values(errors)[0].toString()}
         </Typography>
       ) : (
         <Box
@@ -528,7 +527,7 @@ export default function FinalStep(props: {
             bgcolor: "#f5f3ee",
             pt: 7,
             textAlign: "left",
-            opacity: Object.keys(props.errors).length === 0 ? 1 : 0,
+            opacity: Object.keys(errors).length === 0 ? 1 : 0,
             transition: "opacity 0.3s ease-in-out",
           }}
         >
@@ -536,8 +535,8 @@ export default function FinalStep(props: {
             variant="contained"
             type="submit"
             onClick={() => {
-              console.log(props.errors);
-              console.log("values", props.values);
+              console.log(errors);
+              console.log("values", values);
             }}
             sx={{
               mr: 1,
@@ -553,4 +552,4 @@ export default function FinalStep(props: {
       )}
     </>
   );
-}
+};

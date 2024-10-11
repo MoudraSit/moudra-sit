@@ -1,24 +1,24 @@
 import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
-import TestInfoLine from "components/newform/test-info-line";
 import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import * as React from "react";
 import { ImageType } from "react-images-uploading";
 import ProgressBarComponent from "../form/steps/progress-bar";
 import { defaultSchema } from "../newform/schemas/default-schema";
 import { appTheme } from "../theme/theme";
-import { FormContainer, formSteps, initialValues, IValues } from "./helpers/constants";
+import ErrorMessageComponent from "./components/error-message";
+import TestInfoLine from "./components/test-info-line";
 import { scrollIntoView } from "./helpers/scroll-into-view";
-import BirthStep from "./steps/birth-step";
-import ContactStep from "./steps/contact-step";
-import DescriptionStep from "./steps/description-step";
-import DeviceStep from "./steps/device-step";
-import ErrorMessageComponent from "./steps/error-message";
-import FinalStep from "./steps/final-step";
-import PlaceStep from "./steps/place-step";
+import submitHelperTest from "./helpers/submit-helper";
+import { FormContainer, formSteps, initialValues, IValues } from "./model/constants";
+import { BirthStep } from "./steps/birth-step";
+import { ContactStep } from "./steps/contact-step";
+import { DescriptionStep } from "./steps/description-step";
+import { DeviceStep } from "./steps/device-step";
+import { FinalStep } from "./steps/final-step";
+import { PlaceStep } from "./steps/place-step";
 import StepSuccess from "./steps/step-success";
-import submitHelperTest from "./submit-helper";
 
 export default function FormBuilder() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -189,7 +189,7 @@ function renderStepContent(
   };
   switch (step) {
     case 0:
-      return <BirthStep values={values} errors={errors} />;
+      return <BirthStep values={values} />;
     case 1:
       return (
         <DeviceStep

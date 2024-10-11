@@ -4,7 +4,7 @@ import { FormikErrors, useField, useFormikContext } from "formik";
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import { MunicipalityDto } from "../../../pages/api/address/get-cities";
-import { IValues } from "../helpers/constants";
+import { IValues } from "../model/constants";
 
 type Props = {
   defaultValue: string;

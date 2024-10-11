@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Script from "next/script";
 
 function SklikConversion() {
   const customScript = ` window.sznIVA.IS.updateIdentities({
@@ -13,10 +13,8 @@ function SklikConversion() {
   window.rc.conversionHit(conversionConf);`;
   return (
     <>
-      <Head>
-        <script type="text/javascript" src="https://c.seznam.cz/js/rc.js"></script>
-        <script>{customScript}</script>
-      </Head>
+      <Script type="text/javascript" src="https://c.seznam.cz/js/rc.js"></Script>
+      <Script id="sklik-conversion">{customScript}</Script>
     </>
   );
 }

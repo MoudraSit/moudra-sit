@@ -1,5 +1,5 @@
 import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
-import { IValues } from "../helpers/constants";
+import { IValues } from "../model/constants";
 
 // check if name and surname start with capital letter
 export function capitalizeFirstLetter(name: string) {

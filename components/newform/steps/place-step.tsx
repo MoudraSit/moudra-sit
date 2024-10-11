@@ -13,30 +13,30 @@ import HomeDefault from "public/images/form/meeting-places-checkboxes/home-black
 import LibraryDefault from "public/images/form/meeting-places-checkboxes/library-black.svg";
 import PublicPlaceDefault from "public/images/form/meeting-places-checkboxes/public-place-black.svg";
 import VirtualDefault from "public/images/form/meeting-places-checkboxes/virtual-black.svg";
-import { IValues } from "../helpers/constants";
 import { CheckboxCard } from "../model/checkbox-card";
+import { IValues } from "../model/constants";
 
-export default function PlaceStep(props: {
+type Props = {
   errors: FormikErrors<IValues>;
   values: IValues;
   setActiveStep: (val: number) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-}) {
-  const [library, setLibrary] = React.useState(props.values.libraryCheckbox);
-  const [publicPlace, setPublicPlace] = React.useState(props.values.publicPlaceCheckbox);
-  const [virtually, setVirtually] = React.useState(props.values.virtualCheckbox);
-  const [home, setHome] = React.useState(props.values.homeCheckbox);
+};
+
+export const PlaceStep: React.FC<Props> = ({ values, setActiveStep, setFieldValue }) => {
+  const [library, setLibrary] = React.useState(values.libraryCheckbox);
+  const [publicPlace, setPublicPlace] = React.useState(values.publicPlaceCheckbox);
+  const [virtually, setVirtually] = React.useState(values.virtualCheckbox);
+  const [home, setHome] = React.useState(values.homeCheckbox);
   const anyButtonChecked = library || publicPlace || virtually || home;
 
   const handleClickBack = () => {
-    props.setActiveStep(2);
+    setActiveStep(2);
   };
 
   useEffect(() => {
-    checkboxValidation();
-  }, [library, publicPlace, virtually, home]);
-
-  const checkboxValidation = () => props.setFieldValue("place_selection", anyButtonChecked);
+    setFieldValue("place_selection", anyButtonChecked);
+  }, [library, publicPlace, virtually, home, anyButtonChecked, setFieldValue]);
 
   return (
     <>
@@ -80,7 +80,7 @@ export default function PlaceStep(props: {
             label="V knihovně"
             checkboxName="libraryCheckbox"
             onClick={() => setLibrary(!library)}
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -92,7 +92,7 @@ export default function PlaceStep(props: {
             label="Na jiném veřejném místě"
             checkboxName="publicPlaceCheckbox"
             onClick={() => setPublicPlace(!publicPlace)}
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -104,7 +104,7 @@ export default function PlaceStep(props: {
             label="Na dálku"
             checkboxName="virtualCheckbox"
             onClick={() => setVirtually(!virtually)}
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -116,7 +116,7 @@ export default function PlaceStep(props: {
             label="U mě doma"
             checkboxName="homeCheckbox"
             onClick={() => setHome(!home)}
-            setFieldValue={props.setFieldValue}
+            setFieldValue={setFieldValue}
           />
         </Grid>
       </Grid>
@@ -147,4 +147,4 @@ export default function PlaceStep(props: {
       </Box>
     </>
   );
-}
+};

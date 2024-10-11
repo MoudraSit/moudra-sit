@@ -19,11 +19,6 @@ function Step2Form(props: any) {
   const [checkedPrinter, setCheckedPrinter] = React.useState(false);
   const [checkedOther, setCheckedOther] = React.useState(false);
 
-  useEffect(() => {
-    //console.log(checkedPhone);
-    checkboxValidation();
-  }, [checkedPhone, checkedPc, checkedPrinter, checkedOther]);
-
   const checkboxValidation = () => {
     if (checkedPhone || checkedPc || checkedPrinter || checkedOther) {
       props.setFieldValue("checkbox_selection", true);
@@ -33,6 +28,11 @@ function Step2Form(props: any) {
       //console.log("no");
     }
   };
+
+  useEffect(() => {
+    //console.log(checkedPhone);
+    checkboxValidation();
+  }, [checkedPhone, checkedPc, checkedPrinter, checkedOther]);
 
   return (
     <>

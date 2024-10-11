@@ -1,4 +1,5 @@
 import { Button, Typography } from "@mui/material";
+import Image from "next/image";
 import React, { useState } from "react";
 import ReactImageUploading, { ImageType } from "react-images-uploading";
 
@@ -90,15 +91,10 @@ function UploadPicture({ uploadedImage }: ImageType) {
       // get type of image
       const typeOfImage: string =
         "image." +
-        base64object.substring(
-          base64object.indexOf("/") + 1,
-          base64object.lastIndexOf(";")
-        );
+        base64object.substring(base64object.indexOf("/") + 1, base64object.lastIndexOf(";"));
 
       // create new URL for a file
-      const newUrl = URL.createObjectURL(
-        dataURLtoFile(imageList[0].data_url, typeOfImage)
-      );
+      const newUrl = URL.createObjectURL(dataURLtoFile(imageList[0].data_url, typeOfImage));
 
       // set image as selected
       setSelectedImage(newUrl);
@@ -178,8 +174,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                     align="left"
                     color="#D3215D"
                   >
-                    Vložená fotka je příliš velká. Prosím nahrajte nějakou
-                    jinou.
+                    Vložená fotka je příliš velká. Prosím nahrajte nějakou jinou.
                   </Typography>
                 )}
               </div>
@@ -187,7 +182,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
             {imageList.map((image, index) =>
               ({ selectedImage } ? (
                 <div key={index}>
-                  <img
+                  <Image
                     style={{ maxWidth: "100%", height: "auto" }}
                     id="input-image"
                     alt=""
@@ -203,9 +198,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                         bgcolor: "#D3215D !important",
                         color: "white",
                       }}
-                      onClick={() => (
-                        onImageRemove(index), setMaxSizeOverflow(false)
-                      )}
+                      onClick={() => (onImageRemove(index), setMaxSizeOverflow(false))}
                     >
                       Odstranit
                     </Button>
@@ -217,12 +210,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
         )}
       </ReactImageUploading>
       {maxSizeOverflow ? (
-        <Typography
-          sx={{ pt: 6, fontWeight: "bold" }}
-          variant="h5"
-          align="left"
-          color="#D3215D"
-        >
+        <Typography sx={{ pt: 6, fontWeight: "bold" }} variant="h5" align="left" color="#D3215D">
           Vložená fotka je příliš velká. Prosím nahrajte nějakou jinou.
         </Typography>
       ) : null}

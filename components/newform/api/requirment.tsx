@@ -1,4 +1,4 @@
-import { IValues } from "../helpers/constants";
+import { IValues } from "../model/constants";
 
 interface IRequirmentResponse {
   data: {

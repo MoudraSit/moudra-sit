@@ -1,14 +1,13 @@
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Box, Button, Typography } from "@mui/material";
-import { FormikErrors } from "formik";
-import { IValues } from "../helpers/constants";
+import { IValues } from "../model/constants";
 import TextFieldForm from "../model/input-form";
 
-function setOpacity(year: string) {
-  return year.length < 4 ? 0 : 1;
-}
+type Props = {
+  values: IValues;
+};
 
-export default function BirthStep(props: { values: IValues; errors: FormikErrors<IValues> }) {
+export const BirthStep: React.FC<Props> = ({ values }) => {
   return (
     <>
       <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
@@ -59,7 +58,7 @@ export default function BirthStep(props: { values: IValues; errors: FormikErrors
           bgcolor: "#f5f3ee",
           pt: 4,
           textAlign: "left",
-          opacity: setOpacity(props.values.year),
+          opacity: setOpacity(values.year),
           transition: "opacity 0.3s ease-in-out",
         }}
       >
@@ -81,4 +80,8 @@ export default function BirthStep(props: { values: IValues; errors: FormikErrors
       </Box>
     </>
   );
+};
+
+function setOpacity(year: string) {
+  return year.length < 4 ? 0 : 1;
 }

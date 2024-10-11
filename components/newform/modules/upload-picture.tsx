@@ -1,4 +1,5 @@
 import { Button, Typography } from "@mui/material";
+import Image from "next/image";
 import React, { useState } from "react";
 import ReactImageUploading, { ImageType } from "react-images-uploading";
 
@@ -180,7 +181,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
             {imageList.map((image, index) =>
               ({ selectedImage } ? (
                 <div key={index}>
-                  <img
+                  <Image
                     style={{ maxWidth: "100%", height: "auto" }}
                     id="input-image"
                     alt=""

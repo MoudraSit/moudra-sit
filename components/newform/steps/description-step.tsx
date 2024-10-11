@@ -2,21 +2,19 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { ImageType } from "react-images-uploading/dist/typings";
-import { IValues } from "../helpers/constants";
+import { IValues } from "../model/constants";
 import TextFieldForm from "../model/input-form";
 import UploadPicture from "../modules/upload-picture";
 
-function setOpacity(requiredName: string, description: string) {
-  return requiredName.length > 1 && description.length > 1 ? 1 : 0;
-}
-
-export default function DescriptionStep(props: {
+type Props = {
   values: IValues;
   uploadedImage: (image: ImageType) => void;
   setActiveStep: (val: number) => void;
-}) {
+};
+
+export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setActiveStep }) => {
   const handleClickBack = () => {
-    props.setActiveStep(1);
+    setActiveStep(1);
   };
 
   return (
@@ -98,7 +96,7 @@ export default function DescriptionStep(props: {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <UploadPicture uploadedImage={props.uploadedImage} />
+          <UploadPicture uploadedImage={uploadedImage} />
         </Grid>
       </Grid>
       <Box
@@ -106,7 +104,7 @@ export default function DescriptionStep(props: {
           bgcolor: "#f5f3ee",
           pt: 4,
           textAlign: "left",
-          opacity: setOpacity(props.values.requirmentName, props.values.description),
+          opacity: setOpacity(values.requirmentName, values.description),
           transition: "opacity 0.3s ease-in-out",
         }}
       >
@@ -128,4 +126,8 @@ export default function DescriptionStep(props: {
       </Box>
     </>
   );
+};
+
+function setOpacity(requiredName: string, description: string) {
+  return requiredName.length > 1 && description.length > 1 ? 1 : 0;
 }
