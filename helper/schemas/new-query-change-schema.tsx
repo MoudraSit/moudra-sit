@@ -35,5 +35,4 @@ export const newQueryChangeSchema = yup.object({}).shape({
     .min(1, "Zadejte hodnocení 1-5")
     .max(5, "Zadejte hodnocení 1-5")
     .typeError("Zadejte hodnocení 1-5"),
-  assistantScoreDescription: yup.string().optional(),
 });

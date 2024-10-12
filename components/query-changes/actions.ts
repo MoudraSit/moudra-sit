@@ -28,6 +28,7 @@ export async function createQueryChange(
       ? createTabidooDateString(visitValues.date)
       : null,
     mistoNavstevy: visitValues.address,
+    hodnoceniAsistent: visitValues.assistantScore,
   };
 
   await callTabidoo(`/tables/navsteva/data/`, {
