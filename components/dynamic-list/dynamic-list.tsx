@@ -8,7 +8,7 @@ import { FixedSizeList } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import { loadMoreQueries } from "./actions";
 import QueryCard, {
-  QUERY_CARD_HEIGHT,
+  MAX_QUERY_CARD_HEIGHT,
 } from "components/senior-queries/query-card";
 import { SeniorQuery } from "types/seniorQuery";
 
@@ -80,7 +80,7 @@ function DynamicList({ initialItems, searchParams }: Props) {
               itemCount={items.length}
               onItemsRendered={onItemsRendered}
               ref={ref}
-              itemSize={QUERY_CARD_HEIGHT}
+              itemSize={MAX_QUERY_CARD_HEIGHT}
               height={height}
               width={width}
             >
