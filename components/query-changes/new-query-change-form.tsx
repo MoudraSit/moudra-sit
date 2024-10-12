@@ -11,17 +11,18 @@ import { useRouter } from "next/navigation";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { FormInputDate } from "components/app-form-inputs/FormInputDate";
-import { FormInputText } from "components/app-form-inputs/FormInputText";
+import { FormInputDate } from "components/app-forms/inputs/FormInputDate";
+import { FormInputText } from "components/app-forms/inputs/FormInputText";
 import {
   FormInputDropdown,
   renderFlatOptions,
-} from "components/app-form-inputs/FormInputDropdown";
+} from "components/app-forms/inputs/FormInputDropdown";
 import { createQueryChange } from "./actions";
 import { SeniorQuery } from "types/seniorQuery";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
 import { Visit } from "types/visit";
 import dayjs from "dayjs";
+import FormHeadline from "components/app-forms/FormHeadline";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -114,33 +115,37 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           label="Délka řešení (minuty)"
         />
 
-        <FormInputText
-          name="summary"
-          control={control}
-          label="Poznámka digitálního asistenta"
-          multiline
-          minRows={3}
-          maxRows={6}
-        />
-
         {getValues("queryStatus") === QueryStatus.SOLVED ? (
           <>
+            <FormHeadline text="Hodnocení asistenta" />
+
             <FormInputText
               name="assistantScore"
               control={control}
-              label="Hodnocení asistentem (1-5 jako ve škole)"
+              label="Hodnocení (1-5 jako ve škole)"
             />
 
             <FormInputText
-              name="assistantScoreDescription"
+              name="summary"
               control={control}
-              label="Poznámka k hodnocení"
+              label="Poznámka asistenta"
               multiline
-              minRows={3}
-              maxRows={6}
+              minRows={6}
+              maxRows={10}
             />
           </>
-        ) : null}
+        ) : (
+          <>
+            <FormInputText
+              name="summary"
+              control={control}
+              label="Shrnutí setkání"
+              multiline
+              minRows={6}
+              maxRows={10}
+            />
+          </>
+        )}
 
         {isError ? (
           <Alert severity="error">
