@@ -51,9 +51,10 @@ function QueryChangesTab({ seniorQuery, visits }: Props) {
               <ListItem sx={{ padding: "0.5rem" }}>
                 <ListItemContent>
                   <Stack direction="column">
-                    <Typography variant="body2">
-                      <QueryStatusChip queryStatus={visit.fields.stav} />
-                    </Typography>
+                    <QueryStatusChip
+                      sx={{ alignSelf: "flex-start" }}
+                      queryStatus={visit.fields.stav}
+                    />
                     <Typography variant="body2">
                       Termín návštěvy:{" "}
                       {formatDate(visit.fields.datumUskutecneneNavstevy)}
