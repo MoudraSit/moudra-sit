@@ -20,12 +20,15 @@ export enum QueryStatus {
   POSTPONED = "06. Odloženo",
 }
 
-export enum QueryStatusColors {
-  NEW = "#D3215D",
-  IN_PROGRESS = "#0063CC",
-  FOR_HANDOVER = "#FF921D",
-  SOLVED = "#188823"
-}
+// Object allows dynamic key names
+export const QueryStatusColors = {
+  [QueryStatus.NEW]: "#FD6A40",
+  [QueryStatus.IN_PROGRESS]: "#2766FF",
+  [QueryStatus.FOR_HANDOVER]: "#FFC247",
+  [QueryStatus.SOLVED]: "#12BA55",
+  [QueryStatus.UNSOLVED]: "#08090C",
+  [QueryStatus.POSTPONED]: "#9800F5",
+};
 
 // Include subpaths for easy referencing in the app
 // Query and dynamic path parameters (e.g., .../id/...) should not be here
