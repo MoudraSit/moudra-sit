@@ -14,6 +14,7 @@ import { Visit } from "types/visit";
 import { ListItemContent } from "@mui/joy";
 import NextLink from "next/link";
 import { AssistantPagePaths } from "helper/consts";
+import QueryStatusChip from "../query-status-chip";
 
 type Props = {
   seniorQuery: SeniorQuery;
@@ -51,16 +52,23 @@ function QueryChangesTab({ seniorQuery, visits }: Props) {
                 <ListItemContent>
                   <Stack direction="column">
                     <Typography variant="body2">
-                      {/* TODO: chip */}
-                      Stav: {visit.fields.stav}
+                      <QueryStatusChip queryStatus={visit.fields.stav} />
                     </Typography>
                     <Typography variant="body2">
                       Termín návštěvy:{" "}
                       {formatDate(visit.fields.datumUskutecneneNavstevy)}
                     </Typography>
                   </Stack>
-                  {/* TODO: ellipsis on too long texts */}
-                  {visit.fields.poznamkaAsistentem}
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {visit.fields.poznamkaAsistentem}
+                  </Typography>
                   <Stack direction="row" justifyContent="space-between">
                     <Typography variant="caption">
                       {visit.fields.iDUzivatele?.fields.email}
