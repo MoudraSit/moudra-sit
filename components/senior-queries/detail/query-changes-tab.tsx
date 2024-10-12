@@ -63,7 +63,7 @@ function QueryChangesTab({ seniorQuery, visits }: Props) {
                   {visit.fields.poznamkaAsistentem}
                   <Stack direction="row" justifyContent="space-between">
                     <Typography variant="caption">
-                      {visit.fields.iDUzivatele.fields.email}
+                      {visit.fields.iDUzivatele?.fields.email}
                     </Typography>
                     <Typography variant="caption">
                       {formatDate(visit.fields.vlozeniZaznamu)}

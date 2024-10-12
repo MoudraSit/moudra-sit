@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, Chip, MenuItem, Stack } from "@mui/material";
+import { Alert, Button, MenuItem, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import { QueryStatus, VisitMeetLocation } from "helper/consts";
@@ -11,14 +11,15 @@ import { useRouter } from "next/navigation";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { FormInputDate } from "components/form-inputs/FormInputDate";
-import { FormInputText } from "components/form-inputs/FormInputText";
+import { FormInputDate } from "components/app-form-inputs/FormInputDate";
+import { FormInputText } from "components/app-form-inputs/FormInputText";
 import {
   FormInputDropdown,
   renderFlatOptions,
-} from "components/form-inputs/FormInputDropdown";
+} from "components/app-form-inputs/FormInputDropdown";
 import { createQueryChange } from "./actions";
 import { SeniorQuery } from "types/seniorQuery";
+import QueryStatusChip from "components/senior-queries/query-status-chip";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -76,7 +77,7 @@ function NewQueryChangeForm({ query }: Props) {
         >
           {QUERY_STATUSES_FOR_ASSISTANT.map((option) => (
             <MenuItem key={option} value={option} dense>
-              <Chip label={option} size="small" />
+              <QueryStatusChip queryStatus={option} />
             </MenuItem>
           ))}
         </FormInputDropdown>
