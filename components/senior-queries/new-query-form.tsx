@@ -17,11 +17,11 @@ import {
 } from "helper/schemas/new-query-schema";
 import { createQuery, searchSeniorsByPhoneNumber } from "./actions";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInputText } from "components/form-inputs/FormInputText";
+import { FormInputText } from "components/app-form-inputs/FormInputText";
 import {
   FormInputDropdown,
   renderFlatOptions,
-} from "components/form-inputs/FormInputDropdown";
+} from "components/app-form-inputs/FormInputDropdown";
 import {
   PhoneCountryCodes,
   phoneRegexWithCountryCode,
