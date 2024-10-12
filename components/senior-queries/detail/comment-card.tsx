@@ -27,7 +27,7 @@ function QueryCommentCard({ text, authorName, created }: QueryComment) {
           </Typography>
           <Typography
             variant="caption"
-            sx={{ fontSize: "12px", color: "#9E9E9E" }}
+            sx={{ fontSize: "12px", color: "#9E9E9E", textAlign: "right" }}
           >
             {formatDateTime(created)}
           </Typography>
