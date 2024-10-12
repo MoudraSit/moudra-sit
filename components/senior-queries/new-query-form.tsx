@@ -33,19 +33,17 @@ import { SeniorQuery } from "types/seniorQuery";
 
 function FormHeadline({ text }: { text: string }) {
   return (
-    <Grid item xs={12}>
-      <Typography
-        sx={{
-          background: "#F4F4F4",
-          padding: "0.5rem",
-          fontSize: "16px",
-          fontWeight: "bold",
-        }}
-        variant="h2"
-      >
-        {text}
-      </Typography>
-    </Grid>
+    <Typography
+      sx={{
+        background: "#F4F4F4",
+        padding: "0.5rem",
+        fontSize: "16px",
+        fontWeight: "bold",
+      }}
+      variant="h2"
+    >
+      {text}
+    </Typography>
   );
 }
 
@@ -158,6 +156,7 @@ function NewQueryForm({ prefilledQuery }: Props) {
       await createQuery(values);
       setIsPending(false);
     } catch (error) {
+      console.error(error);
       setIsPending(false);
       setIsError(true);
     }

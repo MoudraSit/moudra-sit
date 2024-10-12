@@ -1,11 +1,11 @@
 "use client";
 
 import { Tab, Tabs } from "@mui/material";
+import { QUERY_CHANGES_TAB, QUERY_DETAIL_TAB } from "helper/consts";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const QUERY_DETAIL_TAB = "detail";
-const QUERY_CHANGES_TAB = "zmeny";
+
 
 function QueryDetailLayoutTabs() {
   const pathname = usePathname();
