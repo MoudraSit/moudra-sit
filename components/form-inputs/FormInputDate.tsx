@@ -14,11 +14,13 @@ export const FormInputDate = ({
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value } }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <DatePicker
           closeOnSelect
           slotProps={{
             textField: {
+              error: !!error,
+              helperText: error ? error.message : null,
               size: "small",
               color: "info",
               style: {

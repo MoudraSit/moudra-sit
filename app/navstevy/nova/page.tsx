@@ -1,6 +1,9 @@
 import { Paper, Typography } from "@mui/material";
+import { SeniorQueriesGetter } from "backend/senior-queries";
 import BackButton from "components/buttons/back-button";
-import NewVisitForm from "components/visits/new-visit-form";
+import NewQueryChangeForm from "components/query-changes/new-query-change-form";
+import { THEME_COLORS } from "components/theme/colors";
+import { redirect } from "next/navigation";
 
 type Props = {
   searchParams: {
@@ -8,22 +11,24 @@ type Props = {
   };
 };
 async function Page({ searchParams }: Props) {
-  // TODO: find query for which the visit should be created
   const { queryId } = searchParams;
 
-  if (!queryId) {
-    throw new Error("Missing queryId for the visit to be assigned to");
-  }
+  if (!queryId) redirect("/404");
+
+  const query = await SeniorQueriesGetter.getSeniorQueryById(queryId);
 
   return (
     <>
       <BackButton />
       <Paper sx={{ padding: "0.75rem", marginTop: "1rem" }}>
-        <Typography variant="h5" sx={{ margin: "3px" }}>
-          Přidat návštěvu
+        <Typography
+          variant="h5"
+          sx={{ margin: "3px", color: THEME_COLORS.primary }}
+        >
+          Přidat změnu dotazu
         </Typography>
-        <hr />
-        <NewVisitForm queryId={queryId}/>
+        <hr style={{ borderColor: THEME_COLORS.primary }} />{" "}
+        <NewQueryChangeForm query={query} />
       </Paper>
     </>
   );

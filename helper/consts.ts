@@ -38,6 +38,9 @@ export enum AssistantPagePaths {
   NEW_VISIT = "/navstevy/nova",
 }
 
+export const QUERY_DETAIL_TAB = "detail";
+export const QUERY_CHANGES_TAB = "zmeny";
+
 export enum SeniorPagePaths {
   SENIOR_PROFILE = "/senior",
 }
