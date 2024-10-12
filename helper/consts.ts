@@ -64,7 +64,7 @@ export enum QueryDeviceCategory {
 }
 
 export enum VisitMeetLocation {
-  AT_SENIOR = "U Seniora",
+  AT_SENIOR = "U seniora",
   REMOTE = "Vzdáleně (online/telefonicky)",
   LIBRARY = "Knihovna / klub",
   OTHER = "Jiné místo",
