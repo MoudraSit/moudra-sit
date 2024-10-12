@@ -2,9 +2,8 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SeniorQuery } from "types/seniorQuery";
 import { BORDER_COLOR, ReadOnlyBox, ReadOnlyField } from "./helper-components";
 import { formatDate } from "helper/utils";
-import QueryCommentCard from "./comment-card";
-import NewCommentCard from "./new-comment-card";
 import QueryStatusChip from "../query-status-chip";
+import QueryDetailCommentsSection from "./query-detail-comments-section";
 
 type Props = {
   seniorQuery: SeniorQuery;
@@ -100,19 +99,10 @@ function QueryDetailTab({ seniorQuery }: Props) {
           {seniorQuery.fields.resitelDotazu}
         </ReadOnlyBox>
       </Stack>
-      <Box>
-        <Typography
-          sx={{ fontWeight: "bold", fontSize: "16px", marginBottom: "0.5rem" }}
-        >
-          Poznámka digitálního asistenta
-        </Typography>
-        <>
-          {sortedComments.map((comment) => (
-            <QueryCommentCard key={comment.id} {...comment} />
-          ))}
-        </>
-        <NewCommentCard queryId={seniorQuery.id} />
-      </Box>
+      <QueryDetailCommentsSection
+        queryId={seniorQuery.id}
+        comments={sortedComments}
+      />
     </>
   );
 }
