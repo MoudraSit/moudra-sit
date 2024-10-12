@@ -1,6 +1,6 @@
 import { SeniorQueriesGetter } from "backend/senior-queries";
 
-import QueryVisitsTab from "components/senior-queries/detail/query-visits-tab";
+import QueryChangesTab from "components/senior-queries/detail/query-changes-tab";
 
 type Props = {
   params: {
@@ -19,7 +19,7 @@ async function Page({ params }: Props) {
     seniorQuery.id
   );
 
-  return <QueryVisitsTab seniorQuery={seniorQuery} visits={visits} />;
+  return <QueryChangesTab seniorQuery={seniorQuery} visits={visits} />;
 }
 
 export default Page;

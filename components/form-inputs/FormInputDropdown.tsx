@@ -1,19 +1,16 @@
 import React from "react";
-import { MenuItem, TextField } from "@mui/material";
+import { MenuItem, TextField, TextFieldProps } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { FormInputProps } from "./FormInputProps";
 import { commonStyles } from "./form-input-styles";
 
 export function renderFlatOptions(options: Array<any>) {
   return options.map((option) => (
-    <MenuItem key={option} value={option}>
+    <MenuItem key={option} value={option} dense>
       {option}
     </MenuItem>
   ));
 }
-
-// TODO: fix MUI uncontrolled error
-// TODO: smaller menu options
 
 export function FormInputDropdown({
   name,
@@ -22,10 +19,11 @@ export function FormInputDropdown({
   children,
   multiple = false,
   ...props
-}: FormInputProps & {
-  children: React.ReactNode;
-  multiple?: boolean;
-}) {
+}: FormInputProps &
+  TextFieldProps & {
+    children: React.ReactNode;
+    multiple?: boolean;
+  }) {
   return (
     <Controller
       name={name}

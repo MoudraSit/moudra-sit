@@ -7,7 +7,7 @@ import { NotFoundError } from "helper/exceptions";
 import { redirect } from "next/navigation";
 import { SeniorQuery } from "types/seniorQuery";
 import Link from "next/link";
-import { AssistantPagePaths } from "helper/consts";
+import { AssistantPagePaths, QueryStatus } from "helper/consts";
 import QueryDetailLayoutTabs from "components/senior-queries/detail/query-detail-layout-tabs";
 
 type Props = {
@@ -46,15 +46,13 @@ async function Page({ params, children }: Props) {
               fullWidth
               color="warning"
             >
-              + Přidat návštěvu
+              {seniorQuery.fields.stavDotazu === QueryStatus.NEW
+                ? "+ Převzít dotaz"
+                : "Přidat změnu"}
             </Button>
             <Button
               LinkComponent={Link}
-              // @ts-ignore
-              href={{
-                pathname: AssistantPagePaths.NEW_SENIOR_QUERY,
-                query: { prefill: seniorQuery.id },
-              }}
+              href={`${AssistantPagePaths.NEW_SENIOR_QUERY}?prefill=${seniorQuery.id}`}
               fullWidth
               color="info"
               variant="outlined"
