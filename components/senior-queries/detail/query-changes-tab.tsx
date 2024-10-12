@@ -1,6 +1,5 @@
 import {
   Box,
-  Link,
   List,
   ListItem,
   ListItemAvatar,
@@ -21,7 +20,7 @@ type Props = {
   visits: Array<Visit>;
 };
 
-function QueryVisitsTab({ seniorQuery, visits }: Props) {
+function QueryChangesTab({ seniorQuery, visits }: Props) {
   return (
     <>
       <Stack spacing={2}>
@@ -48,9 +47,20 @@ function QueryVisitsTab({ seniorQuery, visits }: Props) {
               key={visit.id}
               href={`${AssistantPagePaths.VISITS}/${visit.id}`}
             >
-              <ListItem sx={{ padding: "0.5rem" }} component={Link}>
+              <ListItem sx={{ padding: "0.5rem" }}>
                 <ListItemContent>
-                  <Typography>{visit.fields.stav}</Typography>
+                  <Stack direction="column">
+                    <Typography variant="body2">
+                      {/* TODO: chip */}
+                      Stav: {visit.fields.stav}
+                    </Typography>
+                    <Typography variant="body2">
+                      Termín návštěvy:{" "}
+                      {formatDate(visit.fields.datumUskutecneneNavstevy)}
+                    </Typography>
+                  </Stack>
+                  {/* TODO: ellipsis on too long texts */}
+                  {visit.fields.poznamkaAsistentem}
                   <Stack direction="row" justifyContent="space-between">
                     <Typography variant="caption">
                       {visit.fields.iDUzivatele.fields.email}
@@ -78,4 +88,4 @@ function QueryVisitsTab({ seniorQuery, visits }: Props) {
   );
 }
 
-export default QueryVisitsTab;
+export default QueryChangesTab;
