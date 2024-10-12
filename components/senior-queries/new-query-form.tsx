@@ -6,7 +6,6 @@ import {
   Grid,
   MenuItem,
   Stack,
-  Typography,
 } from "@mui/material";
 import * as React from "react";
 import { useForm } from "react-hook-form";
@@ -17,11 +16,11 @@ import {
 } from "helper/schemas/new-query-schema";
 import { createQuery, searchSeniorsByPhoneNumber } from "./actions";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInputText } from "components/app-form-inputs/FormInputText";
+import { FormInputText } from "components/app-forms/inputs/FormInputText";
 import {
   FormInputDropdown,
   renderFlatOptions,
-} from "components/app-form-inputs/FormInputDropdown";
+} from "components/app-forms/inputs/FormInputDropdown";
 import {
   PhoneCountryCodes,
   phoneRegexWithCountryCode,
@@ -30,22 +29,9 @@ import {
 } from "helper/consts";
 import { THEME_COLORS } from "components/theme/colors";
 import { SeniorQuery } from "types/seniorQuery";
+import FormHeadline from "components/app-forms/FormHeadline";
 
-function FormHeadline({ text }: { text: string }) {
-  return (
-    <Typography
-      sx={{
-        background: "#F4F4F4",
-        padding: "0.5rem",
-        fontSize: "16px",
-        fontWeight: "bold",
-      }}
-      variant="h2"
-    >
-      {text}
-    </Typography>
-  );
-}
+
 
 const seniorInitialValues = {
   phoneCountryCode: PhoneCountryCodes.CZ as string,
