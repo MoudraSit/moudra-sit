@@ -3,9 +3,10 @@ import { QueryStatusColors } from "helper/consts";
 
 type Props = {
   queryStatus: string;
+  sx?: any;
 };
 
-function QueryStatusChip({ queryStatus }: Props) {
+function QueryStatusChip({ queryStatus, sx }: Props) {
   function selectChipColor(queryStatus: string) {
     if (queryStatus in QueryStatusColors)
       //@ts-ignore
@@ -20,6 +21,7 @@ function QueryStatusChip({ queryStatus }: Props) {
       sx={{
         backgroundColor: selectChipColor(queryStatus),
         color: "white",
+        ...sx,
       }}
     />
   );
