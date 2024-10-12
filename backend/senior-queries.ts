@@ -49,7 +49,10 @@ export class SeniorQueriesGetter {
 
     if (!seniorQueries.length) throw new NotFoundError("Dotaz nenalezen");
 
-    if (!seniorQueries[0]?.fields.navstevy) {
+    if (
+      !seniorQueries[0]?.fields.navstevy ||
+      seniorQueries[0]?.fields.navstevy.count == 0
+    ) {
       return [];
     }
 

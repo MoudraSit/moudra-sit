@@ -20,6 +20,8 @@ import {
 import { createQueryChange } from "./actions";
 import { SeniorQuery } from "types/seniorQuery";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
+import { Visit } from "types/visit";
+import dayjs from "dayjs";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -33,10 +35,10 @@ type NewVisitValues = yup.InferType<typeof newQueryChangeSchema>;
 
 type Props = {
   query: SeniorQuery;
+  lastVisit?: Visit;
 };
 
-// TODO: fetch last visit/change and prefill fields
-function NewQueryChangeForm({ query }: Props) {
+function NewQueryChangeForm({ query, lastVisit }: Props) {
   const router = useRouter();
 
   const { handleSubmit, control, getValues, watch } = useForm({
@@ -44,7 +46,15 @@ function NewQueryChangeForm({ query }: Props) {
     defaultValues: {
       isInitialChange: query.fields.stavDotazu == QueryStatus.NEW,
       queryStatus: QueryStatus.IN_PROGRESS,
-      meetLocationType: VisitMeetLocation.AT_SENIOR,
+      meetLocationType: lastVisit
+        ? lastVisit.fields?.osobnevzdalene ?? VisitMeetLocation.AT_SENIOR
+        : VisitMeetLocation.AT_SENIOR,
+      address: lastVisit ? lastVisit.fields?.mistoNavstevy ?? "" : "",
+      // Yup schema expects JS native Date, but the input works with dayjs
+      //@ts-ignore
+      date: lastVisit
+        ? dayjs(lastVisit.fields.datumUskutecneneNavstevy ?? "")
+        : undefined,
     },
   });
 
