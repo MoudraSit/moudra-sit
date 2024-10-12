@@ -1,13 +1,12 @@
-import { Chip, Paper, Stack } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import BackButton from "components/buttons/back-button";
 import { Visit } from "types/visit";
 import { getVisitById } from "backend/visits";
 import { redirect } from "next/navigation";
 import { NotFoundError } from "helper/exceptions";
-import {
-  ReadOnlyBox,
-} from "components/senior-queries/detail/helper-components";
+import { ReadOnlyBox } from "components/senior-queries/detail/helper-components";
 import { formatDate } from "helper/utils";
+import QueryStatusChip from "components/senior-queries/query-status-chip";
 
 type Props = {
   params: {
@@ -35,7 +34,7 @@ async function Page({ params }: Props) {
       <Paper>
         <Stack sx={{ padding: "0.5rem" }} spacing={2}>
           <ReadOnlyBox label="Stav dotazu">
-            <Chip size="small" label={visit.fields.stav} color="warning" />
+            <QueryStatusChip queryStatus={visit.fields.stav} />
           </ReadOnlyBox>
           <ReadOnlyBox label="Místo setkání">
             {visit.fields.osobnevzdalene}
