@@ -1,17 +1,10 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  Typography,
-  Chip,
-  Stack,
-  Box,
-} from "@mui/material";
+import { Button, Card, Typography, Stack, Box } from "@mui/material";
 import { AssistantPagePaths } from "helper/consts";
 import { formatDate } from "helper/utils";
 import Link from "next/link";
 import { JSObject } from "types/common";
 import { SeniorQuery } from "types/seniorQuery";
+import QueryStatusChip from "./query-status-chip";
 
 export const MAX_QUERY_CARD_HEIGHT = 245;
 export const MAX_QUERY_CARD_WIDTH = 500;
@@ -21,30 +14,6 @@ type Props = {
   style: JSObject;
   item: SeniorQuery;
 };
-
-// /* Náhled - se zařízením a místem setkání */
-
-// box-sizing: border-box;
-
-// /* Auto layout */
-// display: flex;
-// flex-direction: column;
-// align-items: flex-start;
-// padding: 10px;
-// gap: 8px;
-
-// width: 358px;
-// height: 275px;
-
-// background: #FFFFFF;
-// box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-// border-radius: 6px;
-
-// /* Inside auto layout */
-// flex: none;
-// order: 0;
-// align-self: stretch;
-// flex-grow: 0;
 
 function QueryCard({ style, item }: Props) {
   return (
@@ -68,20 +37,7 @@ function QueryCard({ style, item }: Props) {
         }}
       >
         <Stack direction="row" justifyContent="space-between">
-          <Chip
-            size="small"
-            label={item.fields.stavDotazu}
-            sx={{
-              //   backgroundColor: QueryStatusColors.NEW,
-              color: "white",
-              //   fontWeight: "bold",
-              //   fontSize: "1rem",
-              //   borderRadius: "16px",
-              //   paddingX: "12px",
-              //   paddingY: "6px",
-            }}
-          />
-
+          <QueryStatusChip queryStatus={item.fields.stavDotazu} />
           <Typography variant="body1">
             {formatDate(item.fields.datumVytvoreni)}
           </Typography>

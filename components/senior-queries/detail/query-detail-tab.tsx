@@ -1,9 +1,10 @@
-import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SeniorQuery } from "types/seniorQuery";
 import { BORDER_COLOR, ReadOnlyBox, ReadOnlyField } from "./helper-components";
 import { formatDate } from "helper/utils";
 import QueryCommentCard from "./comment-card";
 import NewCommentCard from "./new-comment-card";
+import QueryStatusChip from "../query-status-chip";
 
 type Props = {
   seniorQuery: SeniorQuery;
@@ -25,11 +26,7 @@ function QueryDetailTab({ seniorQuery }: Props) {
           </span>
         </Typography>
         <ReadOnlyBox label="Stav dotazu">
-          <Chip
-            size="small"
-            label={seniorQuery.fields.stavDotazu}
-            color="warning"
-          />
+          <QueryStatusChip queryStatus={seniorQuery.fields.stavDotazu} />
         </ReadOnlyBox>
 
         <Box>
