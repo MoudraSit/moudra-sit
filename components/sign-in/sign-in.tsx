@@ -1,4 +1,3 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,11 +7,13 @@ import Paper from "@mui/material/Paper";
 import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { appTheme } from "components/theme/theme";
-import { signIn, useSession } from "next-auth/react";
-import Image from "next/image";
 import * as React from "react";
-import logo from "public/images/logo/logo.png";
-import { useRouter } from "next/router";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
+import logo from "public/images/logo/logo.svg";
+import { useRouter, useSearchParams } from "next/navigation";
+import { AssistantPagePaths } from "helper/consts";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -20,25 +21,25 @@ function SignInSide() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const router = useRouter();
-  const session = useSession();
+  const searchParams = useSearchParams();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     const result = await signIn("credentials", {
-      redirect: true,
+      redirect: false,
       email: data.get("email"),
       password: data.get("password"),
     });
 
-    if (!result?.error) {
-      console.log(result);
-
-      // otherwise show error to user
-    } else {
-      console.log(result);
+    if (result?.error) {
+      console.error(result.error);
       setErrorMessage(result.error);
+    } else {
+      router.push(
+        searchParams?.get("callbackUrl") ?? AssistantPagePaths.ASSISTANT_PROFILE
+      );
     }
   }
 
@@ -59,6 +60,8 @@ function SignInSide() {
             style={{ objectFit: "cover" }}
             quality={75}
             fill
+            sizes="(min-width: 900px) 50vw"
+            priority
           />
         </Grid>
         <Grid
@@ -173,7 +176,11 @@ function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item xs={12} md={4}>
-                  <Link href="/obnova-hesla/poslat-email" variant="body2" color="#000000">
+                  <Link
+                    href="/obnova-hesla/poslat-email"
+                    variant="body2"
+                    color="#000000"
+                  >
                     <Typography align="left" paragraph>
                       Zapomněli jste heslo?
                     </Typography>
