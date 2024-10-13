@@ -35,7 +35,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/prihlaseni"
+    signIn: "/prihlaseni",
   },
   providers: [
     CredentialsProvider({
@@ -82,15 +82,15 @@ export const authOptions: NextAuthOptions = {
           ),
         ]);
 
-        const foundUsers = [...foundSeniors, ...foundAssistants];
+        const foundUsers = [...foundAssistants, ...foundSeniors];
 
-        if (foundUsers.length === 0) {
+        if (foundUsers.length != 1) {
           throw new Error(AUTH_ERROR_MESSAGE);
         }
 
         const user = foundUsers[0];
 
-        const isValid = await verifyPassword(password, user.fields.heslo);
+        const isValid = await verifyPassword(password, user.fields.heslo ?? "");
 
         if (!isValid) {
           throw Error(AUTH_ERROR_MESSAGE);
@@ -99,9 +99,7 @@ export const authOptions: NextAuthOptions = {
         const role = foundSeniors.length > 0 ? Role.SENIOR : Role.DA;
         let status = undefined;
         if (role == Role.DA) {
-          if (
-            (user as Assistant).fields.administrativniStav === "🟢DONE"
-          )
+          if ((user as Assistant).fields.administrativniStav === "🟢DONE")
             status = AssistantStatus.ACTIVE;
           else status = AssistantStatus.PENDING;
         }
