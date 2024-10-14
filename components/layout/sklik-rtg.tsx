@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 function SklikRtg() {
   const customScript = ` 
   window.sznIVA.IS.updateIdentities({
@@ -12,8 +14,8 @@ function SklikRtg() {
   window.rc.conversionHit(conversionConf);`;
   return (
     <>
-      <script type="text/javascript" src="https://c.seznam.cz/js/rc.js"></script>
-      <script>{customScript}</script>
+      <Script type="text/javascript" src="https://c.seznam.cz/js/rc.js"></Script>
+      <Script id="sklik-rtg">{customScript}</Script>
     </>
   );
 }
