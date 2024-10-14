@@ -28,9 +28,6 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
           onClick={handleClickBack}
           color="secondary"
           sx={{
-            mt: 1,
-            mr: 1,
-            mb: 2,
             color: "white",
             letterSpacing: 0.5,
             fontSize: 20,
@@ -45,7 +42,7 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
       </Stack>
       <Grid item xs={12}>
         <Typography
-          sx={{ fontWeight: "bold", pb: 4, pt: 4 }}
+          sx={{ fontWeight: "bold", pb: 3, pt: 3 }}
           variant="h2"
           align="left"
           color="#3e3e3e"
@@ -93,7 +90,11 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
           <PSCAutosuggest defaultValue={values.zipCode} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CityAutosuggest defaultValue={values.city} errors={errors} />
+          <CityAutosuggest
+            defaultValue={values.city}
+            errors={errors}
+            defaultZipCode={values.zipCode}
+          />
         </Grid>
         <Grid item xs={12} sm={4}>
           <PhoneCodeFieldForm
@@ -142,7 +143,7 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 3,
           textAlign: "left",
           opacity: setOpacity(values),
           transition: "opacity 0.3s ease-in-out",
@@ -169,8 +170,8 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
 };
 
 function setOpacity(values: IValues) {
-  return values.name.length > 1 &&
-    values.surname.length > 1 &&
+  return values.name.length > 0 &&
+    values.surname.length > 0 &&
     values.city.length > 1 &&
     values.zipCode.length > 1 &&
     values.phoneNumber.length == 9

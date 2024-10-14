@@ -61,7 +61,7 @@ export const CheckboxCard: React.FC<CheckboxCardProps> = ({
           variant="h3"
           align="center"
           sx={{
-            color: checked ? "white" : "black",
+            color: checked ? "white" : "#3e3e3e",
             fontWeight: "bold",
           }}
         >
@@ -78,6 +78,7 @@ export const CheckboxCard: React.FC<CheckboxCardProps> = ({
             alt={imageAlt}
             max-width="100px"
             max-height="100px"
+            unoptimized={true}
           />
         </Box>
       </CardContent>

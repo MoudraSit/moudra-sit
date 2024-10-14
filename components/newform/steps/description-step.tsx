@@ -20,14 +20,11 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
   return (
     <>
       <Stack direction="row" alignItems="center" gap={1}>
-        <Button
+        {/* <Button
           variant="contained"
           onClick={handleClickBack}
           color="secondary"
           sx={{
-            mt: 1,
-            mr: 1,
-            mb: 2,
             color: "white",
             letterSpacing: 0.5,
             fontSize: 20,
@@ -35,7 +32,7 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
           startIcon={<KeyboardArrowLeftIcon />}
         >
           Zpět
-        </Button>
+        </Button> */}
         <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
           Popis požadavku
         </Typography>
@@ -43,7 +40,7 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
 
       <Grid item xs={12}>
         <Typography
-          sx={{ pb: 4, pt: 4, fontWeight: "bold" }}
+          sx={{ pb: 2, pt: 2, fontWeight: "bold" }}
           variant="h2"
           align="left"
           color="#3e3e3e"
@@ -61,7 +58,7 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
             variant="outlined"
             color="info"
             multiline
-            rows={5}
+            rows={3}
             fullWidth
             required
           />
@@ -71,7 +68,7 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
             variant="h2"
             align="left"
             color="#3e3e3e"
-            sx={{ fontWeight: "bold", pt: 12, pb: 4 }}
+            sx={{ fontWeight: "bold", pt: 3, pb: 3 }}
           >
             Název požadavku (max. 6 slov, např. „Nefunguje wifi”)
           </Typography>
@@ -93,8 +90,8 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography sx={{ pt: 6, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
-            Máte fotografii, na které jde vidět, o co se jedná? (nepovinné)
+          <Typography sx={{ pt: 3, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
+            Máte fotografii, na které je vidět, o co se jedná? (nepovinné)
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -110,21 +107,34 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
           transition: "opacity 0.3s ease-in-out",
         }}
       >
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{
-            mt: 1,
-            mr: 1,
-            letterSpacing: 0.5,
-            bgcolor: "#D3215D !important",
-            color: "white",
-            fontSize: 20,
-          }}
-          endIcon={<KeyboardArrowRightIcon />}
-        >
-          Pokračovat
-        </Button>
+        <Stack direction="row" alignItems="center" gap={3}>
+          <Button
+            variant="contained"
+            onClick={handleClickBack}
+            color="secondary"
+            sx={{
+              color: "white",
+              letterSpacing: 0.5,
+              fontSize: 20,
+            }}
+            startIcon={<KeyboardArrowLeftIcon />}
+          >
+            Zpět
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{
+              letterSpacing: 0.5,
+              bgcolor: "#D3215D !important",
+              color: "white",
+              fontSize: 20,
+            }}
+            endIcon={<KeyboardArrowRightIcon />}
+          >
+            Pokračovat
+          </Button>
+        </Stack>
       </Box>
     </>
   );

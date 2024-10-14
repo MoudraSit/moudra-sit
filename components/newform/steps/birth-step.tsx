@@ -16,7 +16,7 @@ export const BirthStep: React.FC<Props> = ({ values }) => {
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 3,
           textAlign: "left",
         }}
       ></Box>
@@ -26,7 +26,7 @@ export const BirthStep: React.FC<Props> = ({ values }) => {
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 3,
           textAlign: "left",
         }}
       >
@@ -46,7 +46,7 @@ export const BirthStep: React.FC<Props> = ({ values }) => {
         />
       </Box>
       <Typography
-        sx={{ fontWeight: "bold", pb: 4, pt: 4 }}
+        sx={{ fontWeight: "bold", pb: 3, pt: 3 }}
         variant="h3"
         align="left"
         color="#3e3e3e"
@@ -56,7 +56,7 @@ export const BirthStep: React.FC<Props> = ({ values }) => {
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 3,
           textAlign: "left",
           opacity: setOpacity(values.year),
           transition: "opacity 0.3s ease-in-out",

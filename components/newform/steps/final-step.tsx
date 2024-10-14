@@ -96,7 +96,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
         variant="h2"
         align="left"
         color="#3e3e3e"
-        sx={{ pt: 4, pb: 4, fontWeight: "bold" }}
+        sx={{ pt: 3, pb: 3, fontWeight: "bold" }}
       >
         Nyní prosím zkontrolujte správnost vyplněných údajů (případně zde přímo upravte) a dole
         klikněte na tlačítko „Odeslat požadavek“.
@@ -401,7 +401,11 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                         <PSCAutosuggest defaultValue={values.zipCode} />
                       </Grid>
                       <Grid item xs={12} sm={12} md={4}>
-                        <CityAutosuggest defaultValue={values.city} errors={errors} />
+                        <CityAutosuggest
+                          defaultValue={values.city}
+                          errors={errors}
+                          defaultZipCode={values.zipCode}
+                        />
                       </Grid>
                     </Grid>
                   </TableCell>
@@ -497,7 +501,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
         </TableContainer>
       </Box>
 
-      <Typography sx={{ pt: 4, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
+      <Typography sx={{ fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
         {" "}
         Kliknutím na „Odeslat požadavek“ souhlasíte se&nbsp;
         <Link
@@ -521,7 +525,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
         <Box
           sx={{
             bgcolor: "#f5f3ee",
-            pt: 7,
+            pt: 4,
             textAlign: "left",
             opacity: Object.keys(errors).length === 0 ? 1 : 0,
             transition: "opacity 0.3s ease-in-out",

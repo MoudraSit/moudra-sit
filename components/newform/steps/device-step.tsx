@@ -45,9 +45,6 @@ export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, set
           onClick={handleClickBack}
           color="secondary"
           sx={{
-            mt: 1,
-            mr: 1,
-            mb: 2,
             color: "white",
             letterSpacing: 0.5,
             fontSize: 20,
@@ -63,11 +60,11 @@ export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, set
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 3,
           textAlign: "left",
         }}
       />
-      <Typography sx={{ pb: 6, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
+      <Typography sx={{ pb: 3, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
         S čím potřebujete pomoci? Můžete vybrat více možností.
       </Typography>
 
@@ -125,7 +122,7 @@ export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, set
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 3,
 
           textAlign: "left",
           opacity: anyButtonChecked ? 1 : 0,

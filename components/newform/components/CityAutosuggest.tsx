@@ -9,9 +9,10 @@ import { IValues } from "../model/constants";
 type Props = {
   defaultValue: string;
   errors: FormikErrors<IValues>;
+  defaultZipCode: string;
 };
 
-export default function CityAutosuggest({ defaultValue, errors }: Props) {
+export default function CityAutosuggest({ defaultValue, errors, defaultZipCode }: Props) {
   const { setFieldValue } = useFormikContext();
   const [{ value: zipCode }] = useField<string>({ name: "zipCode" });
 
@@ -74,8 +75,18 @@ export default function CityAutosuggest({ defaultValue, errors }: Props) {
           )) ?? []}
         </Select>
       </FormControl>
-      {errors != null && errors.zipCode == null && errors.zkratka != null && (
-        <Typography color="error">{errors.zkratka}</Typography>
+      {errors != null && errors.zipCode == null && errors.zkratka != null ? (
+        <Typography variant="h6" color="error" fontWeight="regular">
+          &nbsp;&nbsp;&nbsp;{errors.zkratka}
+        </Typography>
+      ) : errors != null && errors.zkratka != null ? (
+        <Typography variant="h6" color="error" fontWeight="regular">
+          &nbsp;&nbsp;&nbsp;Nejdříve prosím vyplňte PSČ
+        </Typography>
+      ) : (
+        <Typography variant="h6" fontWeight="regular">
+          &nbsp;&nbsp;&nbsp;Nejdříve prosím vyplňte PSČ
+        </Typography>
       )}
     </>
   );
