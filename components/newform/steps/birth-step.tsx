@@ -1,25 +1,22 @@
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Box, Button, Typography } from "@mui/material";
-import React from "react";
-import { IValues } from "../form-builder";
+import { IValues } from "../model/constants";
 import TextFieldForm from "../model/input-form";
 
-function Step1Form(props: { values: IValues }) {
-  const [buttonOpacity, setButtonOpacity] = React.useState(0);
+type Props = {
+  values: IValues;
+};
 
-  const handleClick = () => {
-    setButtonOpacity(1);
-  };
-
+export const BirthStep: React.FC<Props> = ({ values }) => {
   return (
     <>
-      <div id="section1" />
       <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
         Rok narození
       </Typography>
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 3,
           textAlign: "left",
         }}
       ></Box>
@@ -29,34 +26,39 @@ function Step1Form(props: { values: IValues }) {
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 2,
           textAlign: "left",
         }}
       >
-        <div onClick={handleClick}>
-          <TextFieldForm
-            id="year"
-            label="Rok narození"
-            name="year"
-            type="tel"
-            color="info"
-            variant="outlined"
-            inputhelper="Napište rok Vašeho narození"
-            inputProps={{
-              maxLength: 4,
-            }}
-            sx={{ maxWidth: 230 }}
-            required
-          />
-        </div>
+        <TextFieldForm
+          id="year"
+          label="Rok narození"
+          name="year"
+          type="tel"
+          color="info"
+          variant="outlined"
+          inputhelper="Kliknutím do pole vepište rok narození."
+          inputProps={{
+            maxLength: 4,
+          }}
+          sx={{ maxWidth: 250 }}
+          required
+        />
       </Box>
-
+      <Typography
+        sx={{ fontWeight: "bold", pb: 3, pt: 3 }}
+        variant="h3"
+        align="left"
+        color="#3e3e3e"
+      >
+        Políčka označená * jsou povinná.
+      </Typography>
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 8,
+          pt: 1,
           textAlign: "left",
-          opacity: props.values.year === "" ? buttonOpacity : 1,
+          opacity: setOpacity(values.year),
           transition: "opacity 0.3s ease-in-out",
         }}
       >
@@ -66,15 +68,20 @@ function Step1Form(props: { values: IValues }) {
           sx={{
             mt: 1,
             mr: 1,
+            letterSpacing: 0.5,
             bgcolor: "#D3215D !important",
             color: "white",
+            fontSize: 20,
           }}
+          endIcon={<KeyboardArrowRightIcon />}
         >
           Pokračovat
         </Button>
       </Box>
     </>
   );
-}
+};
 
-export default Step1Form;
+function setOpacity(year: string) {
+  return year.length < 4 ? 0 : 1;
+}

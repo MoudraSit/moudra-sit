@@ -1,16 +1,15 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { ThemeProvider } from "@mui/material/styles";
-import { appTheme } from "components/theme/theme";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import { ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import { appTheme } from "components/theme/theme";
 import Image from "next/image";
 import Link from "next/link";
 
-import logo from "public/images/logo/logo.svg";
+import logo from "public/images/logo/logo.png";
 
 function MainPage() {
   return (
@@ -31,7 +30,7 @@ function MainPage() {
               }}
             >
               <Link href="https://moudrasit.cz/">
-                <Image src={logo} alt={"Moudrá Síť logo"} height="50" />
+                <Image src={logo} alt={"Moudrá Síť logo"} height="35" />
               </Link>
             </Box>
             <Typography
@@ -53,27 +52,14 @@ function MainPage() {
               a správně ovládat techologie
             </Typography>
 
-            <Stack
-              sx={{ pt: 4, mb: 15 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
+            <Stack sx={{ pt: 4, mb: 15 }} direction="row" spacing={2} justifyContent="center">
               <Link href="https://moudrasit.cz/">
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  endIcon={<KeyboardArrowRightIcon />}
-                >
+                <Button color="secondary" variant="contained" endIcon={<KeyboardArrowRightIcon />}>
                   Přejít na náš web
                 </Button>
               </Link>
               <Link href="/form">
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  endIcon={<KeyboardArrowRightIcon />}
-                >
+                <Button color="secondary" variant="contained" endIcon={<KeyboardArrowRightIcon />}>
                   Vyplnit formulář
                 </Button>
               </Link>

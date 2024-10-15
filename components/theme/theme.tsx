@@ -29,9 +29,9 @@ export let appTheme = createTheme({
 appTheme = createTheme(appTheme, {
   typography: {
     h1: {
-      fontSize: "45px",
+      fontSize: "35px",
       [appTheme.breakpoints.down("sm")]: {
-        fontSize: "35px",
+        fontSize: "25px",
       },
     },
     h2: {
@@ -49,7 +49,20 @@ appTheme = createTheme(appTheme, {
     h4: {
       fontSize: "18px",
       [appTheme.breakpoints.down("sm")]: {
+        fontSize: "13px",
+      },
+    },
+    h5: {
+      fontSize: "16px",
+      [appTheme.breakpoints.down("sm")]: {
         fontSize: "12px",
+      },
+    },
+    h6: {
+      fontSize: "14px",
+
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "10px",
       },
     },
   },

@@ -14,7 +14,7 @@ import SklikRtg from "./sklik-rtg";
 import { Logout, Person } from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import logo from "public/images/logo/logo.svg";
+import logo from "public/images/logo/logo.png";
 import InformationLine from "./information-line";
 
 function ResponsiveAppBar() {
@@ -39,7 +39,7 @@ function ResponsiveAppBar() {
         <SklikRtg />
         <Toolbar disableGutters>
           <Link href="https://moudrasit.cz/">
-            <Image src={logo} alt={"Moudrá Síť logo"} height="40" />
+            <Image src={logo} alt={"Moudrá Síť logo"} height="35" />
           </Link>
           <Box
             sx={{

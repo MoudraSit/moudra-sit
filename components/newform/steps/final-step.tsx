@@ -1,8 +1,5 @@
 import {
   Button,
-  Card,
-  CardContent,
-  FormControlLabel,
   Grid,
   Link,
   Table,
@@ -13,78 +10,96 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
-import CheckboxForm from "../model/checkbox-form";
+import { FormikErrors } from "formik";
+import { useEffect } from "react";
+import CityAutosuggest from "../components/CityAutosuggest";
+import { PSCAutosuggest } from "../components/PSCAutosuggest";
+import { CardItem } from "../model/card-item";
+import { IValues } from "../model/constants";
 import TextFieldForm from "../model/input-form";
-import { IValues } from "../vertical-stepper";
 
-function createData(name: string, value: string, edit: string, id: string, required: boolean) {
-  return { name, value, edit, id, required };
-}
+type Props = {
+  errors: FormikErrors<IValues>;
+  values: IValues;
+  setActiveStep: (val: number) => void;
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
+};
 
-function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: any }) {
-  const [buttonOpacity, setButtonOpacity] = React.useState(0);
+export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setFieldValue }) => {
+  useEffect(() => {
+    const anyDeviceChecked =
+      values.phoneCheckbox || values.pcCheckbox || values.printerCheckbox || values.otherCheckbox;
 
-  const handleClick = () => {
-    setButtonOpacity(1);
-  };
+    setFieldValue("checkbox_selection", anyDeviceChecked);
+  }, [
+    values.phoneCheckbox,
+    values.pcCheckbox,
+    values.printerCheckbox,
+    values.otherCheckbox,
+    setFieldValue,
+  ]);
 
-  const handleClickBack = () => {
-    props.setActiveStep(3);
-  };
+  useEffect(() => {
+    const anyPlaceChecked =
+      values.homeCheckbox ||
+      values.libraryCheckbox ||
+      values.publicPlaceCheckbox ||
+      values.virtualCheckbox;
 
-  const rows = [
-    createData("Ročník narození *", props.values.year.toString(), "Upravit", "year", true),
-    createData(
-      "S čím je problém *",
-      (props.values.phoneCheckbox ? " Mobilní telefon " : "") +
-        (props.values.pcCheckbox ? " Počítač " : "") +
-        (props.values.printerCheckbox ? " Tiskárna" : "") +
-        (props.values.otherCheckbox ? " Jiné IT zařízení" : ""),
-      "Upravit",
-      "section2",
-      true
-    ),
-    createData("Název problému *", props.values.requirmentName, "Upravit", "requirmentName", true),
-    createData("Detaily problému *", props.values.description, "Upravit", "description", true),
-    createData("Jméno *", props.values.name, "Upravit", "name", true),
-    createData("Příjmení *", props.values.surname, "Upravit", "surname", true),
-    createData("PSČ *", props.values.zipCode, "Upravit", "zipCode", true),
-    createData("Obec/město *", props.values.city, "Upravit", "city", true),
-    createData("Předvolba", props.values.plusCode, "Upravit", "plusCode", false),
-    createData("Telefonní číslo *", props.values.phoneNumber, "Upravit", "phoneNumber", true),
-    createData("Kontaktní email", props.values.email, "Upravit", "email", false),
+    setFieldValue("place_selection", anyPlaceChecked);
+  }, [
+    values.homeCheckbox,
+    values.libraryCheckbox,
+    values.publicPlaceCheckbox,
+    values.virtualCheckbox,
+    setFieldValue,
+  ]);
+
+  const deviceItems = [
+    { id: "phoneCheckbox", value: values.phoneCheckbox, label: "Mobilní telefon" },
+    { id: "pcCheckbox", value: values.pcCheckbox, label: "Počítač" },
+    { id: "printerCheckbox", value: values.printerCheckbox, label: "Tiskárna" },
+    { id: "otherCheckbox", value: values.otherCheckbox, label: "Jiné zařízení" },
+  ];
+
+  const placeItems = [
+    { id: "libraryCheckbox", value: values.libraryCheckbox, label: "V knihovně" },
+    {
+      id: "publicPlaceCheckbox",
+      value: values.publicPlaceCheckbox,
+      label: "Na veřejném místě",
+    },
+    { id: "virtualCheckbox", value: values.virtualCheckbox, label: "Na dálku" },
+    { id: "homeCheckbox", value: values.homeCheckbox, label: "U mě doma" },
   ];
 
   return (
     <>
-      <div id="section5" />
-      <div style={{ display: "flex" }}>
-        <Button
-          variant="contained"
-          onClick={handleClickBack}
-          sx={{
-            mt: 1,
-            mr: 1,
-
-            bgcolor: "#D3215D !important",
-            color: "white",
-          }}
-        >
-          Zpět
-        </Button>
-        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-          Kontrola údajů
-        </Typography>
-      </div>
+      {/* <Button
+        variant="contained"
+        onClick={handleClickBack}
+        sx={{
+          mt: 1,
+          mr: 1,
+          mb: 2,
+          bgcolor: "#D3215D !important",
+          color: "white",
+          letterSpacing: 0.5,
+        }}
+      >
+        Zpět
+      </Button> */}
+      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+        Kontrola údajů
+      </Typography>
       <Typography
         variant="h2"
         align="left"
         color="#3e3e3e"
-        sx={{ pt: 4, pb: 4, fontWeight: "bold" }}
+        sx={{ pt: 3, pb: 3, fontWeight: "bold" }}
       >
-        Nyní prosím zkontrolujte správnost vyplněných údajů a níže klikněte na tlačítko “Odeslat
-        požadavek“.
+        Nyní prosím zkontrolujte správnost vyplněných údajů (případně zde přímo upravte) a dole
+        klikněte na tlačítko „Odeslat požadavek“.
       </Typography>
       <Box
         sx={{
@@ -92,13 +107,16 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
           bgcolor: "white",
           pt: 1,
           pb: 1,
+          mb: 8,
         }}
       >
         <TableContainer>
           <Grid container>
             <Table aria-label="shrnuti-dotazu">
               <TableBody>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
                   <TableCell
                     style={{ borderBottom: "none" }}
                     sx={{
@@ -120,22 +138,28 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     }}
                     align="left"
                   >
-                    <TextFieldForm
-                      id="year"
-                      name="Ročník narození *"
-                      color="info"
-                      inputhelper=""
-                      variant="outlined"
-                      required
-                      defaultValue={props.values.year.toString()}
-                      onChange={(e) => {
-                        props.setFieldValue("year", e.target.value);
-                        console.log(e.target.value);
-                      }}
-                    />
+                    <Grid container spacing={1}>
+                      <Grid item xs={12} sm={12} md={4}>
+                        <TextFieldForm
+                          id="year"
+                          name="year"
+                          color="info"
+                          inputhelper=""
+                          variant="outlined"
+                          required
+                          fullWidth
+                          value={values.year.toString()}
+                          onChange={(e) => {
+                            setFieldValue("year", e.target.value);
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
                   <TableCell
                     style={{ borderBottom: "none" }}
                     sx={{
@@ -158,252 +182,22 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     align="left"
                   >
                     <Grid container alignItems="stretch" spacing={1.5}>
-                      <Grid item xs={3} md={3}>
-                        <Card
-                          sx={{
-                            height: "70%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            border: 1,
-                            backgroundColor: props.values.phoneCheckbox
-                              ? "#D3215D !important"
-                              : "white",
-                          }}
-                        >
-                          <Button
-                            sx={{
-                              marginTop: "auto",
-                              p: 0,
-                              textTransform: "none",
-                              "&.MuiButtonBase-root:hover": {
-                                bgcolor: "transparent",
-                              },
-                              backgroundColor: props.values.phoneCheckbox
-                                ? "#D3215D !important"
-                                : "white",
-                            }}
-                            variant="contained"
-                            onClick={() => {
-                              props.setFieldValue("phoneCheckbox", !props.values.phoneCheckbox);
-                            }}
-                          >
-                            <CardContent>
-                              <Typography
-                                gutterBottom
-                                variant="h4"
-                                align="center"
-                                sx={{
-                                  color: props.values.phoneCheckbox ? "white" : "black",
-                                }}
-                              >
-                                Mobilní telefon
-                              </Typography>
-                            </CardContent>
-                          </Button>
-                          <CheckboxForm
-                            id="phoneCheckbox"
-                            name="phoneCheckbox"
-                            sx={{
-                              display: "none",
-                            }}
-                            checked={props.values.phoneCheckbox}
-                            color="secondary"
-                          />
-                        </Card>
-                      </Grid>
-
-                      <Grid item xs={3} md={3}>
-                        <Card
-                          sx={{
-                            height: "70%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            border: 1,
-                            backgroundColor: props.values.pcCheckbox
-                              ? "#D3215D !important"
-                              : "white",
-                          }}
-                        >
-                          <Button
-                            sx={{
-                              marginTop: "auto",
-                              p: 0,
-                              textTransform: "none",
-                              "&.MuiButtonBase-root:hover": {
-                                bgcolor: "transparent",
-                              },
-                              backgroundColor: props.values.pcCheckbox
-                                ? "#D3215D !important"
-                                : "white",
-                            }}
-                            variant="contained"
-                            onClick={() => {
-                              props.setFieldValue("pcCheckbox", !props.values.pcCheckbox);
-                            }}
-                          >
-                            <CardContent>
-                              <Typography
-                                gutterBottom
-                                variant="h4"
-                                align="center"
-                                sx={{
-                                  color: props.values.pcCheckbox ? "white" : "black",
-                                }}
-                              >
-                                Počítač
-                              </Typography>
-                            </CardContent>
-                          </Button>
-                          <CheckboxForm
-                            id="pcCheckbox"
-                            name="pcCheckbox"
-                            sx={{
-                              display: "none",
-                            }}
-                            checked={props.values.pcCheckbox}
-                            color="secondary"
-                          />
-                        </Card>
-                      </Grid>
-                      <Grid item xs={3} md={3}>
-                        <Card
-                          sx={{
-                            height: "70%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            border: 1,
-                            backgroundColor: props.values.printerCheckbox
-                              ? "#D3215D !important"
-                              : "white",
-                          }}
-                        >
-                          <Button
-                            sx={{
-                              marginTop: "auto",
-                              p: 0,
-                              textTransform: "none",
-                              "&.MuiButtonBase-root:hover": {
-                                bgcolor: "transparent",
-                              },
-                              backgroundColor: props.values.printerCheckbox
-                                ? "#D3215D !important"
-                                : "white",
-                            }}
-                            variant="contained"
-                            onClick={() => {
-                              props.setFieldValue("printerCheckbox", !props.values.printerCheckbox);
-                            }}
-                          >
-                            <CardContent>
-                              <Typography
-                                gutterBottom
-                                variant="h4"
-                                align="center"
-                                sx={{
-                                  color: props.values.printerCheckbox ? "white" : "black",
-                                }}
-                              >
-                                Tiskárna
-                              </Typography>
-                              <Box
-                                textAlign="center"
-                                sx={{
-                                  pt: 2,
-                                }}
-                              ></Box>
-                            </CardContent>
-                          </Button>
-                          <CheckboxForm
-                            id="printerCheckbox"
-                            name="printerCheckbox"
-                            sx={{
-                              display: "none",
-                            }}
-                            checked={props.values.printerCheckbox}
-                            color="secondary"
-                          />
-                        </Card>
-                      </Grid>
-                      <Grid item xs={3} md={3}>
-                        <Card
-                          sx={{
-                            height: "70%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            border: 1,
-                            backgroundColor: props.values.otherCheckbox
-                              ? "#D3215D !important"
-                              : "white",
-                          }}
-                        >
-                          <Button
-                            sx={{
-                              marginTop: "auto",
-                              p: 0,
-                              textTransform: "none",
-                              "&.MuiButtonBase-root:hover": {
-                                bgcolor: "transparent",
-                              },
-                              backgroundColor: props.values.otherCheckbox
-                                ? "#D3215D !important"
-                                : "white",
-                            }}
-                            variant="contained"
-                            onClick={() => {
-                              props.setFieldValue("otherCheckbox", !props.values.otherCheckbox);
-                            }}
-                          >
-                            <CardContent>
-                              <Typography
-                                gutterBottom
-                                variant="h4"
-                                align="center"
-                                sx={{
-                                  color: props.values.otherCheckbox ? "white" : "black",
-                                }}
-                              >
-                                Jiné zařízení
-                              </Typography>
-                            </CardContent>
-                          </Button>
-                          <CheckboxForm
-                            id="otherCheckbox"
-                            name="otherCheckbox"
-                            sx={{
-                              display: "none",
-                            }}
-                            checked={props.values.otherCheckbox}
-                            color="secondary"
-                          />
-                        </Card>
-                      </Grid>
+                      {deviceItems.map((item) => (
+                        <CardItem
+                          key={item.id}
+                          id={item.id}
+                          name={item.id}
+                          label={item.label}
+                          checked={item.value}
+                          onToggle={() => setFieldValue(item.id, !item.value)}
+                        />
+                      ))}
                     </Grid>
-                    {/* <TextFieldForm
-                      id="section2"
-                      name="S čím je problém *"
-                      color="info"
-                      inputhelper=""
-                      variant="outlined"
-                      required
-                      fullWidth
-                      defaultValue={
-                        (props.values.phoneCheckbox ? " Mobilní telefon " : "") +
-                        (props.values.pcCheckbox ? " Počítač " : "") +
-                        (props.values.printerCheckbox ? " Tiskárna" : "") +
-                        (props.values.otherCheckbox ? " Jiné IT zařízení" : "")
-                      }
-                      onChange={(e) => {
-                        props.setFieldValue("section2", e.target.value);
-                        console.log(e.target.value);
-                      }}
-                    /> */}
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
                   <TableCell
                     style={{ borderBottom: "none" }}
                     sx={{
@@ -415,7 +209,7 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     component="th"
                     scope="row"
                   >
-                    Název problému *
+                    Název požadavku *
                   </TableCell>
                   <TableCell
                     style={{ borderBottom: "none" }}
@@ -427,21 +221,22 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                   >
                     <TextFieldForm
                       id="requirmentName"
-                      name="Název problému *"
+                      name="requirmentName"
                       color="info"
                       inputhelper=""
                       variant="outlined"
                       required
                       fullWidth
-                      defaultValue={props.values.requirmentName}
+                      value={values.requirmentName}
                       onChange={(e) => {
-                        props.setFieldValue("requirmentName", e.target.value);
-                        console.log(e.target.value);
+                        setFieldValue("requirmentName", e.target.value);
                       }}
                     />
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
                   <TableCell
                     style={{ borderBottom: "none" }}
                     sx={{
@@ -453,7 +248,7 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     component="th"
                     scope="row"
                   >
-                    Detaily problému *
+                    Detaily požadavku *
                   </TableCell>
                   <TableCell
                     style={{ borderBottom: "none" }}
@@ -465,7 +260,7 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                   >
                     <TextFieldForm
                       id="description"
-                      name="Detaily problému *"
+                      name="description"
                       color="info"
                       inputhelper=""
                       variant="outlined"
@@ -473,15 +268,54 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                       rows={3}
                       required
                       fullWidth
-                      defaultValue={props.values.description}
+                      value={values.description}
                       onChange={(e) => {
-                        props.setFieldValue("description", e.target.value);
-                        console.log(e.target.value);
+                        setFieldValue("description", e.target.value);
                       }}
                     />
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
+                  <TableCell
+                    style={{ borderBottom: "none" }}
+                    sx={{
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                      display: { xs: "flex", sm: "table-cell" },
+                    }}
+                    align="left"
+                    component="th"
+                    scope="row"
+                  >
+                    Místo setkání *
+                  </TableCell>
+                  <TableCell
+                    style={{ borderBottom: "none" }}
+                    sx={{
+                      fontSize: "18px",
+                      display: { xs: "flex", sm: "table-cell" },
+                    }}
+                    align="left"
+                  >
+                    <Grid container alignItems="stretch" spacing={1.5}>
+                      {placeItems.map((item) => (
+                        <CardItem
+                          key={item.id}
+                          id={item.id}
+                          name={item.id}
+                          label={item.label}
+                          checked={item.value}
+                          onToggle={() => setFieldValue(item.id, !item.value)}
+                        />
+                      ))}
+                    </Grid>
+                  </TableCell>
+                </TableRow>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
                   <TableCell
                     style={{ borderBottom: "none" }}
                     sx={{
@@ -504,33 +338,33 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     align="left"
                   >
                     <Grid container spacing={1}>
-                      <Grid item sm={12} md={3}>
+                      <Grid item xs={12} sm={12} md={4}>
                         <TextFieldForm
                           id="name"
-                          name="Jméno *"
+                          name="name"
                           color="info"
                           inputhelper=""
                           variant="outlined"
                           required
-                          defaultValue={props.values.name}
+                          fullWidth
+                          value={values.name}
                           onChange={(e) => {
-                            props.setFieldValue("name", e.target.value);
-                            console.log(e.target.value);
+                            setFieldValue("name", e.target.value);
                           }}
                         />
                       </Grid>
-                      <Grid item sm={12} md={3}>
+                      <Grid item xs={12} sm={12} md={4}>
                         <TextFieldForm
                           id="surname"
-                          name="Příjmení *"
+                          name="surname"
                           color="info"
                           inputhelper=""
                           variant="outlined"
                           required
-                          defaultValue={props.values.surname}
+                          fullWidth
+                          value={values.surname}
                           onChange={(e) => {
-                            props.setFieldValue("surname", e.target.value);
-                            console.log(e.target.value);
+                            setFieldValue("surname", e.target.value);
                           }}
                         />
                       </Grid>
@@ -538,7 +372,9 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                   </TableCell>
                 </TableRow>
 
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
                   <TableCell
                     style={{ borderBottom: "none" }}
                     sx={{
@@ -561,40 +397,22 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     align="left"
                   >
                     <Grid container spacing={1}>
-                      <Grid item sm={12} md={3}>
-                        <TextFieldForm
-                          id="zipCode"
-                          name="PSČ *"
-                          color="info"
-                          inputhelper=""
-                          variant="outlined"
-                          required
-                          defaultValue={props.values.zipCode}
-                          onChange={(e) => {
-                            props.setFieldValue("zipCode", e.target.value);
-                            console.log(e.target.value);
-                          }}
-                        />
+                      <Grid item xs={12} sm={12} md={4}>
+                        <PSCAutosuggest defaultValue={values.zipCode} />
                       </Grid>
-                      <Grid item sm={12} md={3}>
-                        <TextFieldForm
-                          id="city"
-                          name="Obec/město *"
-                          color="info"
-                          inputhelper=""
-                          variant="outlined"
-                          required
-                          defaultValue={props.values.city}
-                          onChange={(e) => {
-                            props.setFieldValue("city", e.target.value);
-                            console.log(e.target.value);
-                          }}
+                      <Grid item xs={12} sm={12} md={4}>
+                        <CityAutosuggest
+                          defaultValue={values.city}
+                          errors={errors}
+                          defaultZipCode={values.zipCode}
                         />
                       </Grid>
                     </Grid>
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
                   <TableCell
                     style={{ borderBottom: "none" }}
                     sx={{
@@ -616,22 +434,28 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     }}
                     align="left"
                   >
-                    <TextFieldForm
-                      id="phoneNumber"
-                      name="Telefonní číslo *"
-                      color="info"
-                      inputhelper=""
-                      variant="outlined"
-                      required
-                      defaultValue={props.values.phoneNumber}
-                      onChange={(e) => {
-                        props.setFieldValue("phoneNumber", e.target.value);
-                        console.log(e.target.value);
-                      }}
-                    />
+                    <Grid container spacing={1}>
+                      <Grid item xs={12} sm={12} md={4}>
+                        <TextFieldForm
+                          id="phoneNumber"
+                          name="phoneNumber"
+                          color="info"
+                          inputhelper=""
+                          variant="outlined"
+                          required
+                          fullWidth
+                          value={values.phoneNumber}
+                          onChange={(e) => {
+                            setFieldValue("phoneNumber", e.target.value);
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, verticalAlign: "top" }}
+                >
                   <TableCell
                     style={{ borderBottom: "none" }}
                     sx={{
@@ -643,7 +467,7 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     component="th"
                     scope="row"
                   >
-                    Kontaktní email
+                    Kontaktní e-mail
                   </TableCell>
                   <TableCell
                     style={{ borderBottom: "none" }}
@@ -653,18 +477,22 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
                     }}
                     align="left"
                   >
-                    <TextFieldForm
-                      id="email"
-                      name="Kontaktní email"
-                      color="info"
-                      inputhelper=""
-                      variant="outlined"
-                      defaultValue={props.values.email}
-                      onChange={(e) => {
-                        props.setFieldValue("email", e.target.value);
-                        console.log(e.target.value);
-                      }}
-                    />
+                    <Grid container spacing={1}>
+                      <Grid item xs={12} sm={12} md={4}>
+                        <TextFieldForm
+                          id="email"
+                          name="email"
+                          color="info"
+                          inputhelper=""
+                          variant="outlined"
+                          fullWidth
+                          value={values.email}
+                          onChange={(e) => {
+                            setFieldValue("email", e.target.value);
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -672,68 +500,56 @@ function FinalStep(props: { values: IValues; setActiveStep: any; setFieldValue: 
           </Grid>
         </TableContainer>
       </Box>
-      <Typography sx={{ pt: 4, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
-        Pokud je vše správně, potvrďte prosím souhlas se zpracováním osobních údajů a klikněte na
-        tlačítko “Odeslat požadavek“.
+
+      <Typography sx={{ fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
+        {" "}
+        Kliknutím na „Odeslat požadavek“ souhlasíte se&nbsp;
+        <Link
+          sx={{ mt: 8, fontWeight: "bold" }}
+          color="#3e3e3e"
+          href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
+          rel="noopener"
+          target="_blank"
+          fontSize={24}
+          variant="h2"
+        >
+          Zpracováním osobních údajů.
+        </Link>
       </Typography>
-      <Grid item xs={12}>
-        <div onClick={handleClick}>
-          <FormControlLabel
-            sx={{ pt: 6 }}
-            control={
-              <CheckboxForm
-                id="agreement"
-                name="agreement"
-                required
-                sx={{
-                  color: "info.main",
-                  "&.Mui-checked": {
-                    color: "black",
-                  },
-                }}
-                onChange={(e: { target: { checked: any } }) =>
-                  props.setFieldValue("agreement", e.target.checked)
-                }
-              />
-            }
-            label={
-              <Link
-                color="#000000"
-                href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
-                rel="noopener"
-                target="_blank"
-                fontSize={24}
-              >
-                Souhlasím se zpracováním osobních údajů
-              </Link>
-            }
-          />
-        </div>
-      </Grid>
-      <Box
-        sx={{
-          bgcolor: "#f5f3ee",
-          pt: 8,
-          textAlign: "left",
-          opacity: buttonOpacity,
-          transition: "opacity 0.3s ease-in-out",
-        }}
-      >
-        <Button
-          variant="contained"
-          type="submit"
+      {/* Show error when occures */}
+      {Object.values(errors)[0] != null ? (
+        <Typography variant="h2" align="left" color="error" sx={{ pt: 8, fontStyle: "italic" }}>
+          {Object.values(errors)[0].toString()}
+        </Typography>
+      ) : (
+        <Box
           sx={{
-            mt: 1,
-            mr: 1,
-            bgcolor: "#D3215D !important",
-            color: "white",
+            bgcolor: "#f5f3ee",
+            pt: 4,
+            textAlign: "left",
+            opacity: Object.keys(errors).length === 0 ? 1 : 0,
+            transition: "opacity 0.3s ease-in-out",
           }}
         >
-          Odeslat formulář
-        </Button>
-      </Box>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={() => {
+              console.log(errors);
+              console.log("values", values);
+            }}
+            sx={{
+              mr: 1,
+              bgcolor: "#D3215D !important",
+              color: "white",
+              letterSpacing: 0.5,
+              fontSize: 20,
+            }}
+          >
+            Odeslat požadavek
+          </Button>
+        </Box>
+      )}
     </>
   );
-}
-
-export default FinalStep;
+};

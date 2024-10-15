@@ -1,20 +1,20 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
-import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import { ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
 import { appTheme } from "components/theme/theme";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
+import Image from "next/image";
+import * as React from "react";
 
-import logo from "public/images/logo/logo.svg";
-import { useRouter } from "next/router";
 import { Role } from "backend/role";
+import { useRouter } from "next/router";
+import logo from "public/images/logo/logo.png";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -73,15 +73,7 @@ function SignInSide() {
             fill
           />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={5}
-          component={Paper}
-          elevation={6}
-          square
-        >
+        <Grid item xs={12} sm={12} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
               my: 8,
@@ -91,16 +83,11 @@ function SignInSide() {
               alignItems: "center",
             }}
           >
-            <Image src={logo} alt={"Moudrá Síť logo"} height="30" />
+            <Image src={logo} alt={"Moudrá Síť logo"} height="35" />
             <Typography variant="h1" sx={{ mt: 3, mb: 3, fontWeight: "bold" }}>
               Přihlašování do účtu
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required

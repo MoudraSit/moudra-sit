@@ -8,14 +8,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import * as React from "react";
 import Grid from "@mui/material/Grid";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import Image from "next/image";
 
-import logo from "public/images/logo/logo.svg";
 import { useSession } from "next-auth/react";
+import logo from "public/images/logo/logo.png";
 
 function Profile() {
   const session = useSession();
@@ -276,7 +275,7 @@ function Profile() {
                 alignItems: "center",
               }}
             >
-              <Image src={logo} alt={""} height="30" />
+              <Image src={logo} alt={""} height="35" />
               <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 3 }}>
                 {session.data?.user?.name}
               </Typography>

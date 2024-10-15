@@ -1,4 +1,5 @@
 import { Button, Typography } from "@mui/material";
+import Image from "next/image";
 import React, { useState } from "react";
 import ReactImageUploading, { ImageType } from "react-images-uploading";
 
@@ -90,24 +91,16 @@ function UploadPicture({ uploadedImage }: ImageType) {
       // get type of image
       const typeOfImage: string =
         "image." +
-        base64object.substring(
-          base64object.indexOf("/") + 1,
-          base64object.lastIndexOf(";")
-        );
+        base64object.substring(base64object.indexOf("/") + 1, base64object.lastIndexOf(";"));
 
       // create new URL for a file
-      const newUrl = URL.createObjectURL(
-        dataURLtoFile(imageList[0].data_url, typeOfImage)
-      );
+      const newUrl = URL.createObjectURL(dataURLtoFile(imageList[0].data_url, typeOfImage));
 
       // set image as selected
       setSelectedImage(newUrl);
 
       // resize uploaded file to be smaller and able to send with API
       resizeImage(base64object).then((result: string) => {
-        // show compressed photo
-        // console.log(result);
-
         // set image to a form
         uploadedImage(result);
 
@@ -143,8 +136,10 @@ function UploadPicture({ uploadedImage }: ImageType) {
                 mt: 1,
                 mr: 1,
                 mb: 1,
-                bgcolor: "#028790 !important",
-                color: "white",
+                bgcolor: "#C5C5C6 !important",
+                color: "#3e3e3e",
+                letterSpacing: 0.5,
+                fontSize: 20,
               }}
             >
               Nahrát fotku
@@ -178,8 +173,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
                     align="left"
                     color="#D3215D"
                   >
-                    Vložená fotka je příliš velká. Prosím nahrajte nějakou
-                    jinou.
+                    Vložená fotka je příliš velká. Prosím nahrajte nějakou jinou.
                   </Typography>
                 )}
               </div>
@@ -187,8 +181,11 @@ function UploadPicture({ uploadedImage }: ImageType) {
             {imageList.map((image, index) =>
               ({ selectedImage } ? (
                 <div key={index}>
-                  <img
-                    style={{ maxWidth: "100%", height: "auto" }}
+                  <Image
+                    width={0}
+                    height={0}
+                    sizes="50vw"
+                    style={{ width: "50%", height: "auto" }}
                     id="input-image"
                     alt=""
                     src={selectedImage}
@@ -202,10 +199,10 @@ function UploadPicture({ uploadedImage }: ImageType) {
                         mb: 2,
                         bgcolor: "#D3215D !important",
                         color: "white",
+                        letterSpacing: 0.5,
+                        fontSize: 20,
                       }}
-                      onClick={() => (
-                        onImageRemove(index), setMaxSizeOverflow(false)
-                      )}
+                      onClick={() => (onImageRemove(index), setMaxSizeOverflow(false))}
                     >
                       Odstranit
                     </Button>
@@ -217,12 +214,7 @@ function UploadPicture({ uploadedImage }: ImageType) {
         )}
       </ReactImageUploading>
       {maxSizeOverflow ? (
-        <Typography
-          sx={{ pt: 6, fontWeight: "bold" }}
-          variant="h5"
-          align="left"
-          color="#D3215D"
-        >
+        <Typography sx={{ pt: 6, fontWeight: "bold" }} variant="h5" align="left" color="#D3215D">
           Vložená fotka je příliš velká. Prosím nahrajte nějakou jinou.
         </Typography>
       ) : null}

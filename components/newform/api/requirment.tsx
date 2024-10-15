@@ -1,4 +1,4 @@
-import { IValues } from "../vertical-stepper";
+import { IValues } from "../model/constants";
 
 interface IRequirmentResponse {
   data: {
@@ -50,6 +50,23 @@ function base64ImageType(encoded: string): string {
   return result;
 }
 
+function placesOfHelp(props: IValues) {
+  const places = [];
+  if (props.libraryCheckbox) {
+    places.push("V knihovně");
+  }
+  if (props.homeCheckbox) {
+    places.push("U mě doma");
+  }
+  if (props.publicPlaceCheckbox) {
+    places.push("Jinde");
+  }
+  if (props.virtualCheckbox) {
+    places.push("Na dálku");
+  }
+  return places;
+}
+
 // return the photo to upload in API format or null
 function isUploadedPhoto(values: IValues): [IImage] | null {
   // if image was uploaded
@@ -77,6 +94,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           popis: values.requirmentName,
           podrobnosti: values.description,
           datumVytvoreni: currentDate,
+          pozadovaneMistoPomoci: placesOfHelp(values),
           fotka: isUploadedPhoto(values),
           iDSeniora: {
             id: idSenior,
