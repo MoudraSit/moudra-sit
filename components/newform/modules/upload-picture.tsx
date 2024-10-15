@@ -136,8 +136,8 @@ function UploadPicture({ uploadedImage }: ImageType) {
                 mt: 1,
                 mr: 1,
                 mb: 1,
-                bgcolor: "#028790 !important",
-                color: "white",
+                bgcolor: "#C5C5C6 !important",
+                color: "#3e3e3e",
                 letterSpacing: 0.5,
                 fontSize: 20,
               }}
@@ -182,7 +182,10 @@ function UploadPicture({ uploadedImage }: ImageType) {
               ({ selectedImage } ? (
                 <div key={index}>
                   <Image
-                    style={{ maxWidth: "100%", height: "auto" }}
+                    width={0}
+                    height={0}
+                    sizes="50vw"
+                    style={{ width: "50%", height: "auto" }}
                     id="input-image"
                     alt=""
                     src={selectedImage}

@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
 import Home from "public/images/form/meeting-places-checkboxes/home.svg";
@@ -40,35 +40,17 @@ export const PlaceStep: React.FC<Props> = ({ values, setActiveStep, setFieldValu
 
   return (
     <>
-      <Stack direction="row" alignItems="center" gap={1}>
-        <Button
-          variant="contained"
-          onClick={handleClickBack}
-          color="secondary"
-          sx={{
-            mt: 1,
-            mr: 1,
-            mb: 2,
-            color: "white",
-            letterSpacing: 0.5,
-            fontSize: 20,
-          }}
-          startIcon={<KeyboardArrowLeftIcon />}
-        >
-          Zpět
-        </Button>
-        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-          Místo setkání
-        </Typography>
-      </Stack>
+      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+        Místo setkání
+      </Typography>
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 4,
+          pt: 3,
           textAlign: "left",
         }}
       ></Box>
-      <Typography sx={{ pb: 6, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
+      <Typography sx={{ pb: 2, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
         Jaké místo setkání byste preferovali? Můžete vybrat více možností.
       </Typography>
       <Grid container alignItems="stretch" spacing={1.5}>
@@ -146,6 +128,22 @@ export const PlaceStep: React.FC<Props> = ({ values, setActiveStep, setFieldValu
           Pokračovat
         </Button>
       </Box>
+      <Button
+        style={{ textTransform: "none" }}
+        variant="text"
+        onClick={handleClickBack}
+        color="secondary"
+        sx={{
+          mt: 2,
+          color: "#3e3e3e",
+          letterSpacing: 0.5,
+          fontSize: 20,
+          textDecoration: "underline",
+        }}
+        startIcon={<KeyboardArrowLeftIcon />}
+      >
+        Zpět na popis požadavku
+      </Button>
     </>
   );
 };

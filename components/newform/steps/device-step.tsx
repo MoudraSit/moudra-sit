@@ -40,19 +40,6 @@ export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, set
   return (
     <>
       <Stack direction="row" alignItems="center" gap={1}>
-        <Button
-          variant="contained"
-          onClick={handleClickBack}
-          color="secondary"
-          sx={{
-            color: "white",
-            letterSpacing: 0.5,
-            fontSize: 20,
-          }}
-          startIcon={<KeyboardArrowLeftIcon />}
-        >
-          Zpět
-        </Button>
         <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
           Výběr zařízení
         </Typography>
@@ -64,7 +51,7 @@ export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, set
           textAlign: "left",
         }}
       />
-      <Typography sx={{ pb: 3, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
+      <Typography sx={{ pb: 2, fontWeight: "bold" }} variant="h2" align="left" color="#3e3e3e">
         S čím potřebujete pomoci? Můžete vybrat více možností.
       </Typography>
 
@@ -145,6 +132,22 @@ export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, set
           Pokračovat
         </Button>
       </Box>
+      <Button
+        style={{ textTransform: "none" }}
+        variant="text"
+        onClick={handleClickBack}
+        color="secondary"
+        sx={{
+          mt: 2,
+          color: "#3e3e3e",
+          letterSpacing: 0.5,
+          fontSize: 20,
+          textDecoration: "underline",
+        }}
+        startIcon={<KeyboardArrowLeftIcon />}
+      >
+        Zpět na rok narození
+      </Button>
     </>
   );
 };

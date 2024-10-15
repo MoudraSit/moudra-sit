@@ -68,7 +68,7 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
             variant="h2"
             align="left"
             color="#3e3e3e"
-            sx={{ fontWeight: "bold", pt: 3, pb: 3 }}
+            sx={{ fontWeight: "bold", pt: 2, pb: 1 }}
           >
             Název požadavku (max. 6 slov, např. „Nefunguje wifi”)
           </Typography>
@@ -107,35 +107,36 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
           transition: "opacity 0.3s ease-in-out",
         }}
       >
-        <Stack direction="row" alignItems="center" gap={3}>
-          <Button
-            variant="contained"
-            onClick={handleClickBack}
-            color="secondary"
-            sx={{
-              color: "white",
-              letterSpacing: 0.5,
-              fontSize: 20,
-            }}
-            startIcon={<KeyboardArrowLeftIcon />}
-          >
-            Zpět
-          </Button>
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{
-              letterSpacing: 0.5,
-              bgcolor: "#D3215D !important",
-              color: "white",
-              fontSize: 20,
-            }}
-            endIcon={<KeyboardArrowRightIcon />}
-          >
-            Pokračovat
-          </Button>
-        </Stack>
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{
+            letterSpacing: 0.5,
+            bgcolor: "#D3215D !important",
+            color: "white",
+            fontSize: 20,
+          }}
+          endIcon={<KeyboardArrowRightIcon />}
+        >
+          Pokračovat
+        </Button>
       </Box>
+      <Button
+        style={{ textTransform: "none" }}
+        variant="text"
+        onClick={handleClickBack}
+        color="secondary"
+        sx={{
+          mt: 2,
+          color: "#3e3e3e",
+          letterSpacing: 0.5,
+          fontSize: 20,
+          textDecoration: "underline",
+        }}
+        startIcon={<KeyboardArrowLeftIcon />}
+      >
+        Zpět na výběr zařízení
+      </Button>
     </>
   );
 };

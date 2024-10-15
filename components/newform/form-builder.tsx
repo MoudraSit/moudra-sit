@@ -111,6 +111,7 @@ export default function FormBuilder() {
                       alternativeLabel
                       sx={{
                         pb: { xs: 2, sm: 4, md: 8 },
+                        bgcolor: "#f5f3ee",
                       }}
                     >
                       {formSteps.map((step, index) => (
@@ -120,22 +121,22 @@ export default function FormBuilder() {
                               color: "white", // circle's text (DISABLED)
                             },
                             "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-root": {
-                              fill: "#3e3e3e", // circle's color (DISABLED)
+                              fill: "#C5C5C6", // circle's color (DISABLED)
                             },
                             "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text": {
                               fill: "white", // circle's number (DISABLED)
                             },
                             "& .MuiStepLabel-root .Mui-disabled": {
-                              color: "#3e3e3e", // text color (DISABLED)
+                              color: "#C5C5C6", // text color (DISABLED)
                             },
                             "& .MuiStepLabel-root .Mui-active": {
-                              color: "#028790", // circle color (ACTIVE)
+                              color: "#D3215D", // circle color (ACTIVE)
                             },
                             "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
                               fill: "white", // circle's text (ACTIVE)
                             },
                             "& .MuiStepLabel-root .Mui-completed": {
-                              color: "#028790", // circle color (COMPLETED)
+                              color: "#D3215D", // circle color (COMPLETED)
                             },
                             "& .MuiSvgIcon-root": {
                               fontSize: 25,

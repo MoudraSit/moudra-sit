@@ -26,7 +26,7 @@ export const BirthStep: React.FC<Props> = ({ values }) => {
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 3,
+          pt: 2,
           textAlign: "left",
         }}
       >
@@ -56,7 +56,7 @@ export const BirthStep: React.FC<Props> = ({ values }) => {
       <Box
         sx={{
           bgcolor: "#f5f3ee",
-          pt: 3,
+          pt: 1,
           textAlign: "left",
           opacity: setOpacity(values.year),
           transition: "opacity 0.3s ease-in-out",

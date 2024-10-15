@@ -55,7 +55,9 @@ export const CheckboxCard: React.FC<CheckboxCardProps> = ({
         setFieldValue(checkboxName, !checked);
       }}
     >
-      <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+      <CardContent
+        sx={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}
+      >
         <Typography
           gutterBottom
           variant="h3"
@@ -78,7 +80,6 @@ export const CheckboxCard: React.FC<CheckboxCardProps> = ({
             alt={imageAlt}
             max-width="100px"
             max-height="100px"
-            unoptimized={true}
           />
         </Box>
       </CardContent>

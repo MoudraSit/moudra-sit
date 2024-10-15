@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { FormikErrors } from "formik";
 import CityAutosuggest from "../components/CityAutosuggest";
 import { PSCAutosuggest } from "../components/PSCAutosuggest";
@@ -22,27 +22,13 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
 
   return (
     <>
-      <Stack direction="row" alignItems="center" gap={1}>
-        <Button
-          variant="contained"
-          onClick={handleClickBack}
-          color="secondary"
-          sx={{
-            color: "white",
-            letterSpacing: 0.5,
-            fontSize: 20,
-          }}
-          startIcon={<KeyboardArrowLeftIcon />}
-        >
-          Zpět
-        </Button>
-        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-          Kontaktní údaje
-        </Typography>
-      </Stack>
+      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+        Kontaktní údaje
+      </Typography>
+
       <Grid item xs={12}>
         <Typography
-          sx={{ fontWeight: "bold", pb: 3, pt: 3 }}
+          sx={{ fontWeight: "bold", pb: 2, pt: 3 }}
           variant="h2"
           align="left"
           color="#3e3e3e"
@@ -165,6 +151,22 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
           Pokračovat
         </Button>
       </Box>
+      <Button
+        style={{ textTransform: "none" }}
+        variant="text"
+        onClick={handleClickBack}
+        color="secondary"
+        sx={{
+          mt: 2,
+          color: "#3e3e3e",
+          letterSpacing: 0.5,
+          fontSize: 20,
+          textDecoration: "underline",
+        }}
+        startIcon={<KeyboardArrowLeftIcon />}
+      >
+        Zpět na místo setkání
+      </Button>
     </>
   );
 };
