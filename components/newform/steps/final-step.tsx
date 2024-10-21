@@ -75,20 +75,6 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
 
   return (
     <>
-      {/* <Button
-        variant="contained"
-        onClick={handleClickBack}
-        sx={{
-          mt: 1,
-          mr: 1,
-          mb: 2,
-          bgcolor: "#D3215D !important",
-          color: "white",
-          letterSpacing: 0.5,
-        }}
-      >
-        Zpět
-      </Button> */}
       <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
         Kontrola údajů
       </Typography>
@@ -123,6 +109,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"
@@ -166,6 +153,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"
@@ -204,6 +192,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"
@@ -243,6 +232,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"
@@ -284,6 +274,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"
@@ -322,6 +313,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"
@@ -381,6 +373,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"
@@ -419,6 +412,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"
@@ -462,6 +456,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                       fontSize: "18px",
                       fontWeight: "bold",
                       display: { xs: "flex", sm: "table-cell" },
+                      pb: { xs: 0, sm: 2 },
                     }}
                     align="left"
                     component="th"

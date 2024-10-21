@@ -33,7 +33,7 @@ function StepSuccess() {
           fontSize: 20,
         }}
       >
-        Zavřít a zpět na hlavní stránku
+        Zpět na hlavní stránku
       </Button>
     </>
   );

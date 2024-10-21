@@ -14,7 +14,6 @@ export const CardItem: React.FC<CardItemProps> = ({ id, name, label, checked, on
   const textColor = checked ? "white" : "black";
 
   return (
-    // align items to the center
     <Grid item xs={12} md={3}>
       <Card
         sx={{
@@ -40,7 +39,7 @@ export const CardItem: React.FC<CardItemProps> = ({ id, name, label, checked, on
           onClick={onToggle}
         >
           <CardContent>
-            <Typography gutterBottom variant="h4" align="center" sx={{ color: textColor }}>
+            <Typography gutterBottom variant="h3" align="center" sx={{ color: textColor }}>
               {label}
             </Typography>
           </CardContent>

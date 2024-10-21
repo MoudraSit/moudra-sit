@@ -9,7 +9,7 @@ import { defaultSchema } from "../newform/schemas/default-schema";
 import { appTheme } from "../theme/theme";
 import ErrorMessageComponent from "./components/error-message";
 import TestInfoLine from "./components/test-info-line";
-import { scrollIntoView } from "./helpers/scroll-into-view";
+import { scrollIntoView, scrollToTop } from "./helpers/scroll-into-view";
 import submitHelperTest from "./helpers/submit-helper";
 import { FormContainer, formSteps, initialValues, IValues } from "./model/constants";
 import { BirthStep } from "./steps/birth-step";
@@ -77,7 +77,8 @@ export default function FormBuilder() {
             onSubmit={(values: IValues, actions) => {
               handleSendToDevTabidoo(activeStep, values, actions);
               if (activeStep !== formSteps.length - 1) {
-                scrollIntoView();
+                if (window.matchMedia("(max-width: 600px)").matches) scrollToTop();
+                else scrollIntoView();
               }
             }}
           >
@@ -98,7 +99,7 @@ export default function FormBuilder() {
                     sx={{
                       bgcolor: "#f5f3ee",
                       mt: 4,
-                      pt: { xs: 2, sm: 4, md: 8 },
+                      pt: { xs: 4, sm: 4, md: 8 },
                       pl: { xs: 4, sm: 4, md: 8 },
                       pr: { xs: 4, sm: 4, md: 8 },
                       pb: 4,

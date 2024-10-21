@@ -10,7 +10,7 @@ function TestInfoLine() {
         justifyContent: "center",
       }}
     >
-      <Typography variant="h6" align="center" color="white">
+      <Typography variant="h4" align="center" color="white">
         FORM 2.0
       </Typography>
     </Box>

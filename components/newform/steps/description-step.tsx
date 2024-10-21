@@ -40,7 +40,7 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
 
       <Grid item xs={12}>
         <Typography
-          sx={{ pb: 2, pt: 2, fontWeight: "bold" }}
+          sx={{ pb: 2, pt: 3, fontWeight: "bold" }}
           variant="h2"
           align="left"
           color="#3e3e3e"
@@ -68,7 +68,7 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
             variant="h2"
             align="left"
             color="#3e3e3e"
-            sx={{ fontWeight: "bold", pt: 2, pb: 1 }}
+            sx={{ fontWeight: "bold", pt: 3, pb: 1 }}
           >
             Název požadavku (max. 6 slov, např. „Nefunguje wifi”)
           </Typography>

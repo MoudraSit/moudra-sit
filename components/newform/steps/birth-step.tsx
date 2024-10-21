@@ -68,6 +68,7 @@ export const BirthStep: React.FC<Props> = ({ values }) => {
           sx={{
             mt: 1,
             mr: 1,
+            mb: { xs: 2, sm: 0 },
             letterSpacing: 0.5,
             bgcolor: "#D3215D !important",
             color: "white",
