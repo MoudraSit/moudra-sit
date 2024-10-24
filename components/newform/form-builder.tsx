@@ -94,16 +94,15 @@ export default function FormBuilder() {
                   >
                     Kontaktní formulář
                   </Typography>
-
                   <Box
                     sx={{
-                      bgcolor: "#f5f3ee",
+                      bgcolor: "#ffffff",
                       mt: 4,
                       pt: { xs: 4, sm: 4, md: 8 },
                       pl: { xs: 4, sm: 4, md: 8 },
                       pr: { xs: 4, sm: 4, md: 8 },
-                      pb: 4,
-                      borderRadius: 2,
+                      borderTopLeftRadius: 8,
+                      borderTopRightRadius: 8,
                       boxShadow: 4,
                     }}
                   >
@@ -111,8 +110,7 @@ export default function FormBuilder() {
                       activeStep={activeStep}
                       alternativeLabel
                       sx={{
-                        pb: { xs: 2, sm: 4, md: 8 },
-                        bgcolor: "#f5f3ee",
+                        pb: { xs: 2, sm: 2, md: 4 },
                       }}
                     >
                       {formSteps.map((step, index) => (
@@ -164,6 +162,19 @@ export default function FormBuilder() {
                         </Step>
                       ))}
                     </Stepper>
+                  </Box>
+                  <Box
+                    sx={{
+                      bgcolor: "#f5f3ee",
+                      pt: { xs: 2, sm: 2, md: 4 },
+                      pl: { xs: 4, sm: 4, md: 8 },
+                      pr: { xs: 4, sm: 4, md: 8 },
+                      pb: 4,
+                      borderBottomLeftRadius: 8,
+                      borderBottomRightRadius: 8,
+                      boxShadow: 4,
+                    }}
+                  >
                     {renderStepContent(activeStep, values, errors, setFieldValue, setActiveStep)}
                     {progressBar ? <ProgressBarComponent /> : null}
                     {errorMessage ? <ErrorMessageComponent /> : null}
