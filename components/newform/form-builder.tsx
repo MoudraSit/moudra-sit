@@ -172,7 +172,7 @@ export default function FormBuilder() {
                       pb: 4,
                       borderBottomLeftRadius: 8,
                       borderBottomRightRadius: 8,
-                      boxShadow: 4,
+                      boxShadow: "4 4 0 4",
                     }}
                   >
                     {renderStepContent(activeStep, values, errors, setFieldValue, setActiveStep)}
