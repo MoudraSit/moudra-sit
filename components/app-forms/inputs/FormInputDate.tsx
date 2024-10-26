@@ -1,14 +1,15 @@
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { Controller } from "react-hook-form";
 import { FormInputProps } from "./FormInputProps";
 import { commonStyles } from "./form-input-styles";
+import { Dayjs } from "dayjs";
 
 export const FormInputDate = ({
   name,
   control,
   label,
   ...props
-}: FormInputProps) => {
+}: FormInputProps & DatePickerProps<Dayjs>) => {
   return (
     // <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Controller

@@ -4,9 +4,11 @@ export const BORDER_COLOR = "#F5F3EE";
 
 export function ReadOnlyBox({
   label,
+  sublabel,
   children,
 }: {
   label: string;
+  sublabel?: string;
   children: React.ReactElement | string | number;
 }) {
   return (
@@ -14,6 +16,12 @@ export function ReadOnlyBox({
       <Typography sx={{ fontWeight: "bold", fontSize: "16px" }}>
         {label}
       </Typography>
+      {sublabel ? (
+        <Typography variant="caption" sx={{ color: "#A5A5A5" }}>
+          {sublabel}
+        </Typography>
+      ) : null}
+
       <div
         style={{
           border: `1px ${BORDER_COLOR} solid`,

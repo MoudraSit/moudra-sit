@@ -2,7 +2,7 @@ import BackButton from "components/buttons/back-button";
 import { AssistantPagePaths, FilterType } from "helper/consts";
 import RequestFilterPanel from "components/senior-queries/filter/request-filter-panel";
 import { SeniorQueriesGetter } from "backend/senior-queries";
-import DynamicList from "components/dynamic-list/dynamic-list";
+import QueryCardDynamicList from "components/dynamic-list/query-card-dynamic-list";
 import { Typography } from "@mui/material";
 
 type Props = {
@@ -30,7 +30,10 @@ async function Page({ searchParams }: Props) {
 
       {/* The div is required for list autosizing to work */}
       <div style={{ flex: "1 1 auto" }}>
-        <DynamicList initialItems={seniorQueries} searchParams={searchParams} />
+        <QueryCardDynamicList
+          initialItems={seniorQueries}
+          searchParams={searchParams}
+        />
       </div>
     </>
   );
