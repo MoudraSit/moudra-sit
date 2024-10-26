@@ -5,7 +5,7 @@ import type {
 } from "next";
 import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
-import { AssistantStatus, Role } from "helper/consts";
+import { AssistantAuthStatus, Role } from "helper/consts";
 import { callTabidoo } from "backend/tabidoo";
 import { Assistant } from "types/assistant";
 import { Senior } from "types/senior";
@@ -100,8 +100,8 @@ export const authOptions: NextAuthOptions = {
         let status = undefined;
         if (role == Role.DA) {
           if ((user as Assistant).fields.administrativniStav === "🟢DONE")
-            status = AssistantStatus.ACTIVE;
-          else status = AssistantStatus.PENDING;
+            status = AssistantAuthStatus.ACTIVE;
+          else status = AssistantAuthStatus.PENDING;
         }
 
         return {

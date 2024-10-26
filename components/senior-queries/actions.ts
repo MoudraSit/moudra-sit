@@ -31,7 +31,7 @@ export async function createQuery(formData: Record<string, any>) {
     },
     popis: values.title,
     podrobnosti: values.description,
-    datumVytovreni: new Date(),
+    datumVytvoreni: new Date(),
     pozadovaneMistoPomoci: values.meetLocationType,
   };
 

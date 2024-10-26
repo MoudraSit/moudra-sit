@@ -33,7 +33,7 @@ async function Page({ params, children }: Props) {
 
   return (
     <>
-      <BackButton href={AssistantPagePaths.SENIOR_QUERIES} />
+      <BackButton />
       <Paper>
         <QueryDetailLayoutTabs />
         <Stack sx={{ padding: "0.5rem" }} spacing={3}>
