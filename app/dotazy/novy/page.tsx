@@ -1,6 +1,7 @@
-import { Paper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import BackButton from "components/buttons/back-button";
+import BasePaper from "components/layout/base-paper";
 import NewQueryForm from "components/senior-queries/new-query-form";
 import { THEME_COLORS } from "components/theme/colors";
 
@@ -16,7 +17,7 @@ async function Page({ searchParams }: Props) {
   return (
     <>
       <BackButton />
-      <Paper sx={{ padding: "0.75rem", marginTop: "1rem" }}>
+      <BasePaper>
         <Typography
           variant="h5"
           sx={{ margin: "3px", color: THEME_COLORS.primary }}
@@ -25,7 +26,7 @@ async function Page({ searchParams }: Props) {
         </Typography>
         <hr style={{ borderColor: THEME_COLORS.primary }} />
         <NewQueryForm prefilledQuery={prefilledQuery} />
-      </Paper>
+      </BasePaper>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import {
   AssistantPagePaths,
-  AssistantStatus,
+  AssistantAuthStatus,
   Role,
   SeniorPagePaths,
 } from "helper/consts";
@@ -12,7 +12,7 @@ export default withAuth(
     const { token } = req.nextauth;
 
     // Newly created users that were not admin-approved in Tabidoo should have access only to their detail page
-    if (token?.role === Role.DA && token?.status === AssistantStatus.PENDING) {
+    if (token?.role === Role.DA && token?.status === AssistantAuthStatus.PENDING) {
       // Prevent inifinite redirection
       if (req.nextUrl.pathname == AssistantPagePaths.ASSISTANT_PROFILE) return;
       else

@@ -16,7 +16,13 @@ export function formatDate(date: string) {
 }
 
 export function formatDateTime(date: string) {
-  return date ? new Date(date).toLocaleString('cs-CZ'): "";
+  return date ? new Date(date).toLocaleString("cs-CZ") : "";
+}
+
+export function formatMonth(month: string | number) {
+  month = Number(month);
+
+  return new Date(2000, month, 1).toLocaleString("cs-CZ", { month: "long" });
 }
 
 // Tabidoo BE has no timezone info and understands dates to be in the CET timezone

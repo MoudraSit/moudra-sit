@@ -3,5 +3,6 @@ export interface FormInputProps {
   control: any;
   label?: string;
   setValue?: any;
+  submitOnChange?: any;
   sx?: any;
 }

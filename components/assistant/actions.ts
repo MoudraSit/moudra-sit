@@ -1,0 +1,74 @@
+"use server";
+
+import { AssistantAPI } from "backend/assistant";
+import { callTabidoo } from "backend/tabidoo";
+import { AssistantPagePaths } from "helper/consts";
+import { assistantDetailsSchema } from "helper/schemas/assistant-details-schema";
+import { assistantSettingsSchema } from "helper/schemas/assistant-settings-schema";
+import { removeSpaces } from "helper/utils";
+import { revalidatePath } from "next/cache";
+import { District } from "types/assistant";
+import { JSObject } from "types/common";
+
+export async function saveAssistantDetails(
+  assistantId: string,
+  details: Record<string, any>
+) {
+  const detailValues = await assistantDetailsSchema.validate(details);
+
+  const payload = {
+    titul: detailValues.title,
+    statusAsistenta: detailValues.assistantStatus,
+    telefon: detailValues.phone
+      ? detailValues.phoneCountryCode.concat(removeSpaces(detailValues.phone))
+      : "",
+    email: detailValues.email,
+  };
+
+  await callTabidoo(`/tables/uzivatel/data/${assistantId}`, {
+    method: "PATCH",
+    body: { fields: payload },
+  });
+
+  revalidatePath(
+    `${AssistantPagePaths.ASSISTANT_PROFILE_PERSONAL_INFORMATION}`
+  );
+}
+
+export async function saveAssistantSettings(
+  assistantId: string,
+  details: Record<string, any>
+) {
+  const settingsValues = await assistantSettingsSchema.validate(details);
+
+  const payload: JSObject = {};
+
+  // Because this is a boolean flag
+  if ("sendScoreEmailNotification" in settingsValues)
+    payload.noveHodnoceniOdSenioraEmail =
+      settingsValues.sendScoreEmailNotification;
+
+  if (settingsValues.mainArea)
+    payload.hlavniMistoPusobeni = { id: settingsValues.mainArea };
+
+  if (settingsValues.notificationDistricts) {
+    const assistant = await AssistantAPI.getAssistantDetails(assistantId);
+    let previousNotificationDistricts: Array<District> = [];
+    if (assistant.fields.okresyProOdesilaniNotifikaci?.url)
+      previousNotificationDistricts = await AssistantAPI.getAssistantDistricts(
+        assistant.fields.okresyProOdesilaniNotifikaci?.url
+      );
+    payload.okresyProOdesilaniNotifikaci = {
+      remove: previousNotificationDistricts,
+      add: settingsValues.notificationDistricts,
+    };
+  }
+
+  await callTabidoo(`/tables/uzivatel/data/${assistantId}`, {
+    method: "PATCH",
+    body: { fields: payload },
+  });
+
+  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_MY_SCORE}`);
+  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_SETTINGS}`);
+}

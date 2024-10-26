@@ -1,4 +1,3 @@
-import { Paper, Stack } from "@mui/material";
 import BackButton from "components/buttons/back-button";
 import { Visit } from "types/visit";
 import { getVisitById } from "backend/visits";
@@ -7,6 +6,8 @@ import { NotFoundError } from "helper/exceptions";
 import { ReadOnlyBox } from "components/senior-queries/detail/helper-components";
 import { formatDate } from "helper/utils";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
+import BasePaper from "components/layout/base-paper";
+import { Stack } from "@mui/material";
 
 type Props = {
   params: {
@@ -31,8 +32,8 @@ async function Page({ params }: Props) {
   return (
     <>
       <BackButton />
-      <Paper>
-        <Stack sx={{ padding: "0.5rem" }} spacing={2}>
+      <BasePaper>
+        <Stack spacing={2}>
           <ReadOnlyBox label="Stav dotazu">
             <QueryStatusChip queryStatus={visit.fields.stav} />
           </ReadOnlyBox>
@@ -52,7 +53,7 @@ async function Page({ params }: Props) {
             {visit.fields.poznamkaAsistentem}
           </ReadOnlyBox>
         </Stack>
-      </Paper>
+      </BasePaper>
     </>
   );
 }

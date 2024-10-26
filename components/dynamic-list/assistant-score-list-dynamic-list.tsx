@@ -1,23 +1,21 @@
 "use client";
 
-import CardSkeleton from "components/skeletons/card-skeleton";
-import { FilterType } from "helper/consts";
+import { FilterType, MAX_LIST_ITEM_HEIGHT } from "helper/consts";
 import React from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import { loadMoreQueries } from "./actions";
-import QueryCard, {
-  MAX_QUERY_CARD_HEIGHT,
-} from "components/senior-queries/query-card";
 import { SeniorQuery } from "types/seniorQuery";
+import AssistantScoreListItem from "components/assistant/assistant-score-list-item";
+import ListItemSkeleton from "components/skeletons/list-item-skeleton";
 
 type Props = {
   initialItems: Array<SeniorQuery>;
   searchParams?: Partial<Record<FilterType, any>>;
 };
 
-function DynamicList({ initialItems, searchParams }: Props) {
+function AssistantScoreListDynamicList({ initialItems, searchParams }: Props) {
   // We create a reference for the InfiniteLoader
   const infiniteLoaderRef = React.useRef(null);
   const hasMountedRef = React.useRef(false);
@@ -80,16 +78,16 @@ function DynamicList({ initialItems, searchParams }: Props) {
               itemCount={items.length}
               onItemsRendered={onItemsRendered}
               ref={ref}
-              itemSize={MAX_QUERY_CARD_HEIGHT}
+              itemSize={MAX_LIST_ITEM_HEIGHT}
               height={height}
               width={width}
             >
               {({ index, style }) => {
                 const item = items[index];
                 return isItemLoaded(index) ? (
-                  <QueryCard style={style} item={item} />
+                  <AssistantScoreListItem style={style} item={item} />
                 ) : (
-                  <CardSkeleton />
+                  <ListItemSkeleton />
                 );
               }}
             </FixedSizeList>
@@ -100,4 +98,4 @@ function DynamicList({ initialItems, searchParams }: Props) {
   );
 }
 
-export default DynamicList;
+export default AssistantScoreListDynamicList;
