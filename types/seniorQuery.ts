@@ -27,6 +27,13 @@ export interface SeniorQuery {
     navstevy?: {
       count: number;
       url: string;
+      // Only fields related to the query which are on the "navsteva" object
+      // Mostly the senior and assistant score
+      fields: {
+        poznamkaSenioremAPI: { _$$list: Array<string> };
+        spokojenostSenior: { _$$max: number };
+        problemVyresenHodnoceni: { _$$max: number };
+      };
     };
     kategorieDotazu: string;
     pozadovaneMistoPomoci: string;

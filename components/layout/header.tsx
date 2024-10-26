@@ -12,17 +12,22 @@ import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link";
 import * as React from "react";
 
-import { Logout, Person } from "@mui/icons-material";
 import GoogleBodyScript from "components/scripts/google-body";
+import { ArrowDropDown, Logout, Person } from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import logo from "public/images/logo/logo.png";
 import InformationLine from "./information-line";
 import { isUserAssistant, isUserSenior } from "helper/auth";
+import { AssistantPagePaths, SeniorPagePaths } from "helper/consts";
+import { useRouter } from "next/navigation";
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const router = useRouter();
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -34,6 +39,13 @@ function ResponsiveAppBar() {
 
   function logoutHandler() {
     signOut();
+  }
+
+  function routeToProfile() {
+    const route = isUserAssistant(data?.user)
+      ? AssistantPagePaths.ASSISTANT_PROFILE
+      : SeniorPagePaths.SENIOR_PROFILE;
+    router.push(route);
   }
 
   return (
@@ -66,7 +78,12 @@ function ResponsiveAppBar() {
                   sx={{ display: { xs: "none", sm: "flex" } }}
                   variant="text"
                   color="secondary"
-                  href={isUserAssistant(data.user) ? "/asistent" : "/senior"}
+                  LinkComponent={Link}
+                  href={
+                    isUserAssistant(data.user)
+                      ? AssistantPagePaths.ASSISTANT_PROFILE
+                      : SeniorPagePaths.SENIOR_PROFILE
+                  }
                 >
                   <Person style={{ marginRight: 6 }} /> {data.user?.name}
                 </Button>
@@ -82,6 +99,7 @@ function ResponsiveAppBar() {
                     <Avatar sx={{ width: 32, height: 32 }}>
                       {data.user?.name?.charAt(0) ?? "M"}
                     </Avatar>
+                    <ArrowDropDown />
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -122,7 +140,7 @@ function ResponsiveAppBar() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <MenuItem
-                  href={isUserAssistant(data.user) ? "/asistent" : "/senior"}
+                  onClick={routeToProfile}
                   sx={{ display: { xs: "flex", sm: "none" } }}
                 >
                   <ListItemIcon>

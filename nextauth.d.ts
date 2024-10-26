@@ -3,7 +3,7 @@ import { DefaultSession, DefaultUser } from "next-auth";
 
 interface IUser extends DefaultUser {
   role?: Role;
-  status: AssistantStatus
+  status: AssistantAuthStatus
 }
 
 declare module "next-auth" {

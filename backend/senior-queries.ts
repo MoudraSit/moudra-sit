@@ -1,4 +1,4 @@
-import { SeniorQuery as SeniorQuery } from "types/seniorQuery";
+import { SeniorQuery } from "types/seniorQuery";
 import { callTabidoo } from "./tabidoo";
 import { FilterType } from "helper/consts";
 import { getServerSession } from "next-auth";
@@ -7,7 +7,7 @@ import { Visit } from "types/visit";
 import { NotFoundError } from "helper/exceptions";
 import { JSObject } from "types/common";
 
-const QUERY_PAGE_SIZE = 25;
+const QUERY_PAGE_SIZE = 12;
 
 type UIFilters = Partial<Record<FilterType, any>>;
 
@@ -16,7 +16,7 @@ export class SeniorQueriesGetter {
     uiFilters: UIFilters,
     page: number = 0
   ) {
-    // TODO: other filter types
+    // TODO: multi value filtering (e.g., multiple statuses)
     const filters = await this._createSeniorQueryFilters(uiFilters);
 
     return await this._getSeniorQueriesByFilter(filters, page);

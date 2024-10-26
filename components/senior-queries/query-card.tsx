@@ -1,13 +1,14 @@
-import { Button, Card, Typography, Stack, Box } from "@mui/material";
-import { AssistantPagePaths } from "helper/consts";
+import { Card, Typography, Stack, Box } from "@mui/material";
+import {
+  MAX_QUERY_CARD_HEIGHT,
+  MAX_QUERY_CARD_WIDTH,
+} from "helper/consts";
 import { formatDate } from "helper/utils";
-import Link from "next/link";
 import { JSObject } from "types/common";
 import { SeniorQuery } from "types/seniorQuery";
 import QueryStatusChip from "./query-status-chip";
+import QueryDetailButton from "components/buttons/query-detail-button";
 
-export const MAX_QUERY_CARD_HEIGHT = 245;
-export const MAX_QUERY_CARD_WIDTH = 500;
 const CARD_SPACING = "1rem";
 
 type Props = {
@@ -48,10 +49,10 @@ function QueryCard({ style, item }: Props) {
             {item.fields.popis}
           </Typography>
           <Typography variant="body1">
-            {item.fields.iDSeniora.fields.prijmeniJmeno}
+            {item.fields.iDSeniora?.fields.prijmeniJmeno}
           </Typography>
           <Typography variant="body1">
-            {item.fields.iDSeniora.fields.mesto}
+            {item.fields.iDSeniora?.fields.mesto}
           </Typography>
           <Typography variant="body1" fontWeight="600">
             Zařízení:{" "}
@@ -67,15 +68,7 @@ function QueryCard({ style, item }: Props) {
           </Typography>
         </Box>
 
-        <Button
-          LinkComponent={Link}
-          href={`${AssistantPagePaths.SENIOR_QUERIES}/${item.id}/detail`}
-          variant="outlined"
-          color="info"
-          fullWidth
-        >
-          Zobrazit Detail
-        </Button>
+        <QueryDetailButton item={item} />
       </Stack>
     </Card>
   );

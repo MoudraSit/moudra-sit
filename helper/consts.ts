@@ -4,7 +4,7 @@ export enum Role {
   DA = "digitalni-asistent",
 }
 
-export enum AssistantStatus {
+export enum AssistantAuthStatus {
   PENDING = "PENDING",
   ACTIVE = "ACTIVE",
 }
@@ -34,6 +34,10 @@ export const QueryStatusColors = {
 // Query and dynamic path parameters (e.g., .../id/...) should not be here
 export enum AssistantPagePaths {
   ASSISTANT_PROFILE = "/asistent",
+  ASSISTANT_PROFILE_PERSONAL_INFORMATION = "/asistent/osobni-udaje",
+  ASSISTANT_PROFILE_MY_SCORE = "/asistent/moje-hodnoceni",
+  ASSISTANT_PROFILE_ATTENDANCE = "/asistent/dochazka",
+  ASSISTANT_PROFILE_SETTINGS = "/asistent/nastaveni",
   DASHBOARD = "/prehled",
   SENIOR_QUERIES = "/dotazy",
   NEW_SENIOR_QUERY = "/dotazy/novy",
@@ -77,3 +81,23 @@ export enum PhoneCountryCodes {
 
 export const phoneRegexWithCountryCode =
   /^([+]\d{1,3})?[ ]?(\d{3}[ ]?\d{3}[ ]?\d{3})$/;
+
+export const MAX_QUERY_CARD_HEIGHT = 245;
+export const MAX_QUERY_CARD_WIDTH = 500;
+
+export const MAX_LIST_ITEM_HEIGHT = 70;
+
+export enum AssistantStatus {
+  AVAILABLE = "K dispozici",
+  UNAVAILABLE = "Dočasně není k dispozici",
+  TERMINATED = "Ukončená činnost",
+  PENDING = "Čeká na schválení",
+}
+
+// Object allows dynamic key names
+export const AssistantStatusColors = {
+  [AssistantStatus.AVAILABLE]: "#12BA55",
+  [AssistantStatus.UNAVAILABLE]: "#FD6A40",
+  [AssistantStatus.TERMINATED]: "rgb(110, 34, 37)",
+  [AssistantStatus.PENDING]: "#FFC247",
+};
