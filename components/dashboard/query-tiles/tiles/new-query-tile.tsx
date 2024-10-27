@@ -11,7 +11,10 @@ function NewQueryTile() {
         href={AssistantPagePaths.NEW_SENIOR_QUERY}
       >
         <CardContent>
-          <Typography variant="body2" fontSize={"18px"}>
+          <Typography
+            variant="body2"
+            sx={{ fontSize: "18px", fontWeight: "500", textAlign: "center" }}
+          >
             + Nový Dotaz
           </Typography>
         </CardContent>

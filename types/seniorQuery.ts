@@ -33,6 +33,7 @@ export interface SeniorQuery {
         poznamkaSenioremAPI: { _$$list: Array<string> };
         spokojenostSenior: { _$$max: number };
         problemVyresenHodnoceni: { _$$max: number };
+        datumPlanovanaNavsteva: { _$$max: string };
       };
     };
     kategorieDotazu: string;
