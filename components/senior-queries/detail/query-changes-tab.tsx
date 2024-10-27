@@ -13,7 +13,7 @@ import { formatDate } from "helper/utils";
 import { Visit } from "types/visit";
 import { ListItemContent } from "@mui/joy";
 import NextLink from "next/link";
-import { AssistantPagePaths } from "helper/consts";
+import { AssistantPagePaths, QueryStatus } from "helper/consts";
 import QueryStatusChip from "../query-status-chip";
 
 type Props = {
@@ -57,7 +57,11 @@ function QueryChangesTab({ seniorQuery, visits }: Props) {
                     />
                     <Typography variant="body2">
                       Termín návštěvy:{" "}
-                      {formatDate(visit.fields.datumUskutecneneNavstevy)}
+                      {formatDate(
+                        visit.fields.stav === QueryStatus.IN_PROGRESS
+                          ? visit.fields.datumPlanovanaNavsteva
+                          : visit.fields.datumUskutecneneNavstevy
+                      )}
                     </Typography>
                   </Stack>
                   <Typography

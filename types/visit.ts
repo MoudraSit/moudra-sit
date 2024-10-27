@@ -12,6 +12,7 @@ export interface Visit {
     stav: string;
     osobnevzdalene: string;
     vlozeniNavstevy: string;
+    datumPlanovanaNavsteva: string;
     datumUskutecneneNavstevy: string;
     vlozeniZaznamu: string;
     dotaz: SeniorQuery;
