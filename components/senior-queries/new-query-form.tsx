@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Alert,
-  Button,
-  Grid,
-  MenuItem,
-  Stack,
-} from "@mui/material";
+import { Alert, Button, Grid, MenuItem, Stack } from "@mui/material";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 
@@ -30,8 +24,6 @@ import {
 import { THEME_COLORS } from "components/theme/colors";
 import { SeniorQuery } from "types/seniorQuery";
 import FormHeadline from "components/app-forms/FormHeadline";
-
-
 
 const seniorInitialValues = {
   phoneCountryCode: PhoneCountryCodes.CZ as string,
@@ -58,9 +50,6 @@ function parsePrefilledQuery(prefilledQuery?: SeniorQuery): NewQueryValues {
     meetLocationType: VisitMeetLocation.AT_SENIOR,
     title: "",
     description: "",
-    queryCreatorType: "",
-    queryCreatorName: "",
-    queryCreatorNote: "",
   };
 
   if (!prefilledQuery) return initialValues;
@@ -257,32 +246,6 @@ function NewQueryForm({ prefilledQuery }: Props) {
             {renderFlatOptions(Object.values(VisitMeetLocation))}
           </FormInputDropdown>
         </Stack>
-
-        <Stack spacing={3}>
-          <FormHeadline text="Zadavatel dotazu" />
-          {/* TODO: queryCreatorType??? */}
-          {/* <FormInputDropdown
-            name="meetLocationType"
-            control={control}
-            label="Místo setkání"
-          >
-            {renderFlatOptions(Object.values(VisitMeetLocation))}
-          </FormInputDropdown> */}
-          {/* <FormInputText
-            name="queryCreatorName"
-            control={control}
-            label="Jméno zadavatele dotazu"
-          /> */}
-          <FormInputText
-            name="queryCreatorNote"
-            control={control}
-            multiline
-            minRows={6}
-            maxRows={10}
-            label="Poznámka zadavatele"
-          />
-        </Stack>
-
         {isError ? (
           <Alert severity="error">
             Při vytváření dotazu nastala chyba, opakujte prosím akci později.

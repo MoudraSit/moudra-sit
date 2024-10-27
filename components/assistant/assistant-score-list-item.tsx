@@ -1,5 +1,5 @@
 import { ListItemContent } from "@mui/joy";
-import { ListItem, Typography, Stack, ListItemAvatar } from "@mui/material";
+import { ListItem, Typography, Stack } from "@mui/material";
 import { AssistantPagePaths } from "helper/consts";
 import { formatDate } from "helper/utils";
 import NextLink from "next/link";
@@ -22,6 +22,7 @@ function AssistantScoreListItem({ item: query, style }: Props) {
         sx={{
           ...style,
           padding: "0.5rem",
+          borderBottom: "1px solid #DADADA ",
         }}
       >
         <ListItemContent>

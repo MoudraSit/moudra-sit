@@ -3,6 +3,15 @@ import * as yup from "yup";
 
 // schema for form validation
 export const assistantDetailsSchema = yup.object({}).shape({
+  currentPhotoId: yup.string(),
+  deleteCurrentPhoto: yup.boolean().default(false),
+  photoFileBase64: yup
+    .string()
+    .test("length", "Fotka je přílíš velká (max 4 MB)", (value) =>
+      value?.length ? value.length < 4 * (4_000_000 / 3) : true
+    ),
+  photoFileName: yup.string(),
+  photoFileType: yup.string(),
   title: yup.string(),
   firstName: yup.string(),
   lastName: yup.string(),

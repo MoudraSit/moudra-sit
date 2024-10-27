@@ -1,9 +1,7 @@
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { SeniorQuery } from "types/seniorQuery";
 import {
-  BORDER_COLOR,
   ReadOnlyBox,
-  ReadOnlyField,
 } from "components/senior-queries/detail/helper-components";
 import QueryDetailButton from "components/buttons/query-detail-button";
 import { formatDate } from "helper/utils";

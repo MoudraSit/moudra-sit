@@ -12,11 +12,11 @@ import { JSObject } from "types/common";
 
 export async function saveAssistantDetails(
   assistantId: string,
-  details: Record<string, any>
+  details: JSObject
 ) {
   const detailValues = await assistantDetailsSchema.validate(details);
 
-  const payload = {
+  const payload: JSObject = {
     titul: detailValues.title,
     statusAsistenta: detailValues.assistantStatus,
     telefon: detailValues.phone
@@ -24,6 +24,23 @@ export async function saveAssistantDetails(
       : "",
     email: detailValues.email,
   };
+
+  if (detailValues.photoFileBase64) {
+    payload.fotografie = {
+      remove: detailValues.currentPhotoId ? [detailValues.currentPhotoId] : [],
+      add: [
+        {
+          filename: detailValues.photoFileName,
+          mimetype: detailValues.photoFileType,
+          filedata: detailValues.photoFileBase64,
+        },
+      ],
+    };
+  } else if (detailValues.deleteCurrentPhoto) {
+    payload.fotografie = {
+      remove: detailValues.currentPhotoId ? [detailValues.currentPhotoId] : [],
+    };
+  }
 
   await callTabidoo(`/tables/uzivatel/data/${assistantId}`, {
     method: "PATCH",

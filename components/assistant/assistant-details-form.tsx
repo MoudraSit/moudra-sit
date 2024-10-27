@@ -4,9 +4,13 @@ import {
   Alert,
   Avatar,
   Badge,
+  Box,
   Button,
   Grid,
+  IconButton,
   MenuItem,
+  SpeedDial,
+  SpeedDialAction,
   Stack,
   Typography,
 } from "@mui/material";
@@ -33,8 +37,9 @@ import { Assistant } from "types/assistant";
 import { assistantDetailsSchema } from "helper/schemas/assistant-details-schema";
 import AssistantStatusChip from "./assistant-status-chip";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { THEME_COLORS } from "components/theme/colors";
 import { saveAssistantDetails } from "./actions";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 function getInitials(assistant: Assistant) {
   return (
@@ -56,9 +61,18 @@ function AssistantDetailsForm({ assistant }: Props) {
     phoneRegexWithCountryCode
   ) as string[];
 
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    setValue,
+    control,
+    getValues,
+    watch,
+    trigger,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(assistantDetailsSchema),
     defaultValues: {
+      currentPhotoId: assistant.fields?.fotografie?.[0]?.fileId ?? "",
       title: assistant.fields.titul ?? "",
       firstName: assistant.fields.jmeno,
       lastName: assistant.fields.prijmeni,
@@ -74,12 +88,20 @@ function AssistantDetailsForm({ assistant }: Props) {
       assistantStatus:
         assistant.fields.statusAsistenta ?? AssistantStatus.AVAILABLE,
       email: assistant.fields.email ?? "",
-      city: assistant.fields.mesto ?? "",
+      city: assistant.fields.trvaleBydliste?.fields?.mestoObec ?? "",
       address: assistant.fields.ulice ?? "",
       organization: assistant.fields.organizace?.fields.nazev ?? "",
     },
   });
 
+  // Rerenders the form in case device types changed
+  // This allows showing the new profile photo as a preview
+  // eslint-disable-next-line no-unused-vars
+  const watchDeletePhoto = watch("deleteCurrentPhoto");
+  // eslint-disable-next-line no-unused-vars
+  const watchNewPhoto = watch("photoFileBase64");
+
+  const [isDialOpen, setIsDialOpen] = React.useState(false);
   const [isPending, setIsPending] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
@@ -96,40 +118,99 @@ function AssistantDetailsForm({ assistant }: Props) {
     }
   }
 
+  function getProfilePhotoUrl() {
+    if (getValues("deleteCurrentPhoto")) return "";
+
+    const newPhotoData = getValues("photoFileBase64");
+    if (newPhotoData)
+      return `data:${getValues("photoFileType")};base64, ${newPhotoData}`;
+
+    const currentPhotoUrl =
+      assistant.fields.fotografie && assistant.fields.fotografie.length
+        ? assistant.fields.fotografie[0].thumbnailUrl
+        : "";
+    return currentPhotoUrl;
+  }
+
   return (
     <form onSubmit={handleSubmit(submit)}>
       <Stack spacing={3} sx={{ marginTop: "1rem" }}>
-        <div>
+        <Box>
           <Typography variant="h6" sx={{ fontSize: "1rem" }}>
             Profilová fotka
           </Typography>
-          <Badge
-            badgeContent={
-              <CameraAltIcon
-                sx={{
-                  background: THEME_COLORS.primary,
-                  borderRadius: "50%",
-                  color: "white",
-                  padding: "0.25rem",
-                  fontSize: "1.5rem",
-                }}
-              />
-            }
-            overlap="circular"
-          >
-            <Avatar
-              sx={{ width: 64, height: 64 }}
-              src={
-                assistant.fields.fotografie &&
-                assistant.fields.fotografie.length
-                  ? assistant.fields.fotografie[0].thumbnailUrl
-                  : ""
+          <Stack direction="row" alignItems="center">
+            <Badge
+              badgeContent={
+                <SpeedDial
+                  open={isDialOpen}
+                  onClick={() => setIsDialOpen(true)}
+                  onClose={() => setIsDialOpen(false)}
+                  direction="right"
+                  ariaLabel="SpeedDial"
+                  FabProps={{
+                    size: "small",
+                    color: "warning",
+                    sx: {
+                      width: "1.5rem",
+                      height: "1.5rem",
+                      minHeight: "unset",
+                    },
+                  }}
+                  sx={{
+                    position: "absolute",
+                    left: 0,
+                  }}
+                  icon={<EditIcon sx={{ fontSize: "1rem" }} />}
+                >
+                  <SpeedDialAction
+                    icon={
+                      <IconButton component="label" color="warning">
+                        <input
+                          onChange={async (e) => {
+                            if (e.target.files?.length) {
+                              const bytes =
+                                await e.target.files?.[0].arrayBuffer();
+                              const buffer =
+                                Buffer.from(bytes).toString("base64");
+                              setValue("photoFileBase64", buffer);
+                              trigger("photoFileBase64");
+                              setValue("photoFileName", e.target.files[0].name);
+                              setValue("photoFileType", e.target.files[0].type);
+                            }
+                          }}
+                          type="file"
+                          hidden
+                          accept="image/*"
+                        />
+                        <CameraAltIcon />
+                      </IconButton>
+                    }
+                    tooltipTitle={"Smazat fotku"}
+                  ></SpeedDialAction>
+                  <SpeedDialAction
+                    icon={<DeleteIcon />}
+                    onClick={() => {
+                      setValue("deleteCurrentPhoto", true);
+                      setIsDialOpen(false);
+                    }}
+                    tooltipTitle={"Smazat fotku"}
+                  />
+                </SpeedDial>
               }
+              overlap="circular"
             >
-              {getInitials(assistant)}
-            </Avatar>
-          </Badge>
-        </div>
+              <Avatar sx={{ width: 64, height: 64 }} src={getProfilePhotoUrl()}>
+                {getInitials(assistant)}
+              </Avatar>
+            </Badge>
+            {errors.photoFileBase64 ? (
+              <Typography sx={{ marginLeft: "1rem", color: "red" }}>
+                {errors.photoFileBase64.message}
+              </Typography>
+            ) : null}
+          </Stack>
+        </Box>
 
         <FormInputText name="title" control={control} label="Titul" />
         <FormInputText
