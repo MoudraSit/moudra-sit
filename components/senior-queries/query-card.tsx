@@ -1,9 +1,6 @@
 import { Card, Typography, Stack, Box } from "@mui/material";
-import {
-  MAX_QUERY_CARD_HEIGHT,
-  MAX_QUERY_CARD_WIDTH,
-} from "helper/consts";
-import { formatDate } from "helper/utils";
+import { MAX_QUERY_CARD_HEIGHT, MAX_QUERY_CARD_WIDTH } from "helper/consts";
+import { formatDate, formatDateTime } from "helper/utils";
 import { JSObject } from "types/common";
 import { SeniorQuery } from "types/seniorQuery";
 import QueryStatusChip from "./query-status-chip";
@@ -12,11 +9,12 @@ import QueryDetailButton from "components/buttons/query-detail-button";
 const CARD_SPACING = "1rem";
 
 type Props = {
-  style: JSObject;
+  style?: JSObject;
   item: SeniorQuery;
+  showVisitInfo?: boolean;
 };
 
-function QueryCard({ style, item }: Props) {
+function QueryCard({ style, item, showVisitInfo = false }: Props) {
   return (
     <Card
       style={{
@@ -66,6 +64,19 @@ function QueryCard({ style, item }: Props) {
               {item.fields.pozadovaneMistoPomoci}
             </span>
           </Typography>
+          {showVisitInfo ? (
+            <>
+              <Typography fontWeight="600" variant="body1">
+                Datum a čas setkání:{" "}
+                <span style={{ fontWeight: "normal" }}>
+                  {formatDateTime(
+                    item.fields.navstevy?.fields?.datumPlanovanaNavsteva
+                      ?._$$max ?? ""
+                  )}
+                </span>
+              </Typography>
+            </>
+          ) : null}
         </Box>
 
         <QueryDetailButton item={item} />
