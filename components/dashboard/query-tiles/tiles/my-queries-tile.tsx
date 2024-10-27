@@ -16,7 +16,11 @@ async function MyQueriesTile() {
         href={`${AssistantPagePaths.SENIOR_QUERIES}?${FilterType.USER_ASSIGNED}=true`}
       >
         <CardContent>
-          <Typography variant="body2" color={"#028790"} fontSize={"18px"}>
+          <Typography
+            variant="body2"
+            color={"#028790"}
+            sx={{ fontSize: "18px", fontWeight: "500", textAlign: "center" }}
+          >
             Moje dotazy ({requests.length})
           </Typography>
         </CardContent>
