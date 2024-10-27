@@ -9,7 +9,7 @@ export function ReadOnlyBox({
 }: {
   label: string;
   sublabel?: string;
-  children: React.ReactElement | string | number;
+  children: React.ReactElement | string | number | undefined;
 }) {
   return (
     <Box>
