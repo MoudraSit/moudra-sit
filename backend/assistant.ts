@@ -41,33 +41,37 @@ export class AssistantAPI {
   }
 
   public static async getDistricts() {
-    const result = await callTabidoo<Array<District>>(
-      `/tables/okresy/data?limit=100`,
+    // const result = await callTabidoo<Array<District>>(
+    //   `/tables/okresy/data?limit=100`,
+    //   {
+    //     method: "GET",
+    //   }
+    // );
+
+    // return result;
+    // TODO: replace one the table of districts is filled in Tabidoo
+    const results = await callTabidoo<Array<District>>(
+      `/tables/mestaaobcecr/data`,
       {
         method: "GET",
       }
     );
 
-    return result;
+    return results
   }
 
-  public static async getCities() {
-    let cities: Array<City> = [];
-    let page = 0;
-    let lastResult = true;
-    const PAGE_SIZE = 500;
-    while (lastResult) {
-      const result = await callTabidoo<Array<City>>(
-        `/tables/mestaaobcecr/data?limit=${PAGE_SIZE}&skip=${PAGE_SIZE * page}`,
-        {
-          method: "GET",
-        }
-      );
-      cities = [...cities, ...result];
-      page += 1;
-      if (!result.length) lastResult = false;
-    }
-
-    return cities;
+  public static async getCitiesByName(cityName: string) {
+    return await callTabidoo<Array<City>>(`/tables/mestaaobcecr/data/filter`, {
+      method: "POST",
+      body: {
+        filter: [
+          {
+            field: "mestoObec",
+            operator: "contains",
+            value: cityName,
+          },
+        ],
+      },
+    });
   }
 }

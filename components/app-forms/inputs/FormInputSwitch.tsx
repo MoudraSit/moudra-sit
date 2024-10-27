@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, FormLabel, Switch } from "@mui/material";
+import { Box, FormLabel, Switch, SwitchProps } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { FormInputProps } from "./FormInputProps";
 
@@ -8,7 +8,7 @@ export const FormInputSwitch = ({
   control,
   label,
   submitOnChange,
-}: FormInputProps) => {
+}: FormInputProps & SwitchProps) => {
   return (
     <Box
       sx={{
