@@ -61,6 +61,8 @@ export interface Assistant {
       count: number;
     };
     noveHodnoceniOdSenioraEmail: boolean;
+    trvaleBydliste: City;
+    // Should not be used, not sure why it exists in Tabidoo
     mesto: string;
     stat: string;
     ulice?: string;
