@@ -49,7 +49,7 @@ export async function saveAssistantSettings(
       settingsValues.sendScoreEmailNotification;
 
   if (settingsValues.mainArea)
-    payload.hlavniMistoPusobeni = { id: settingsValues.mainArea };
+    payload.hlavniMistoPusobeni = { id: settingsValues.mainArea.id };
 
   if (settingsValues.notificationDistricts) {
     const assistant = await AssistantAPI.getAssistantDetails(assistantId);
@@ -60,7 +60,7 @@ export async function saveAssistantSettings(
       );
     payload.okresyProOdesilaniNotifikaci = {
       remove: previousNotificationDistricts,
-      add: settingsValues.notificationDistricts,
+      add: settingsValues.notificationDistricts.map((district) => district.id),
     };
   }
 
@@ -71,4 +71,8 @@ export async function saveAssistantSettings(
 
   revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_MY_SCORE}`);
   revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_SETTINGS}`);
+}
+
+export async function fetchAutocompleteCities(inputValue: string) {
+  return await AssistantAPI.getCitiesByName(inputValue);
 }
