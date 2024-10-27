@@ -3,6 +3,9 @@ export const commonStyles = {
     fontSize: "16px !important",
     padding: 0,
   },
+  "& .MuiInputBase-root.Mui-disabled": {
+    background: "#F5F3EE",
+  },
   "& .Mui-disabled": {
     "& .MuiOutlinedInput-notchedOutline": {
       border: "0",

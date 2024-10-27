@@ -14,9 +14,8 @@ export const metadata: Metadata = {
 };
 
 async function Page() {
-  const [assistant, cities, districts] = await Promise.all([
+  const [assistant, districts] = await Promise.all([
     AssistantAPI.getAssistantDetails(),
-    AssistantAPI.getCities(),
     AssistantAPI.getDistricts(),
   ]);
 
@@ -40,7 +39,6 @@ async function Page() {
         <AssistantSettingsForm
           assistant={assistant}
           assistantDistricts={notificationDistricts}
-          cities={cities}
           districts={districts}
         />
       </BasePaper>
