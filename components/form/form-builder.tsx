@@ -35,15 +35,15 @@ export default function FormBuilder() {
   ) {
     if (index === formSteps.length - 1) {
       // is recpatcha check ready
-      // if (!executeRecaptcha) {
-      //   console.log("Execute recaptcha not yet available");
-      //   return;
-      // }
+      if (!executeRecaptcha) {
+        console.log("Execute recaptcha not yet available");
+        return;
+      }
 
       try {
         // show progress bar
         setProgressbBar(true);
-        await submitHelper(values);
+        await submitHelper(values, executeRecaptcha);
         // switch off progress bar
         setProgressbBar(false);
         // fold steps

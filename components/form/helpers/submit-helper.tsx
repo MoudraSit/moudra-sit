@@ -1,5 +1,6 @@
 import ApiRequestCategory from "../api/category";
 import ApiGetRequestSenior from "../api/get-senior";
+import ApiRecaptcha from "../api/recaptcha";
 import ApiRequestRequirment from "../api/requirment";
 import ApiRequestSenior from "../api/senior";
 import { IValues } from "../model/constants";
@@ -9,17 +10,20 @@ const phoneCategory = "Mobil";
 const printerCategory = "Tiskárna";
 const otherCategory = "Jiné IT zařízení";
 
-async function submitHelper(values: IValues) {
+async function submitHelper(
+  values: IValues,
+  executeRecaptcha: (action?: string) => Promise<string>
+) {
   // get recaptcha token
-  //const gReCaptchaToken: string = await executeRecaptcha("enquiryFormSubmit");
+  const gReCaptchaToken: string = await executeRecaptcha("enquiryFormSubmit");
 
-  // recaptcha v3 validation check - score based validation
-  // try {
-  //   await ApiRecaptcha(gReCaptchaToken);
-  //   console.log("Recaptcha - OK");
-  // } catch (error) {
-  //   throw new Error("Recaptcha - you are not a human");
-  // }
+  //recaptcha v3 validation check - score based validation
+  try {
+    await ApiRecaptcha(gReCaptchaToken);
+    console.log("Recaptcha - OK");
+  } catch (error) {
+    throw new Error("Recaptcha - you are not a human");
+  }
 
   let idRequirment = null;
 
