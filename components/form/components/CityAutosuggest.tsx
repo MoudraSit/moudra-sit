@@ -37,8 +37,6 @@ export default function CityAutosuggest({ defaultValue, errors }: Props) {
       const selectedMunicipality = municipalities?.find((m) => m.name === city);
       setFieldValue("city", city);
       setFieldValue("zkratka", selectedMunicipality?.zkratka);
-      console.log("city", city);
-      console.log("zkratka", selectedMunicipality?.zkratka);
     }
   }, [city, municipalities, setFieldValue, errors]);
 
