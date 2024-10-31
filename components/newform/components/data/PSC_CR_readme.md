@@ -1,1 +1,0 @@
-PSC copied as a unique set of PSC numbers from https://data.cesko.digital/obce/1/obce.json

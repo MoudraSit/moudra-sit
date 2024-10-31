@@ -1,5 +1,6 @@
 import { SeniorGetId, SeniorGetNoId } from "backend/tabidoo/interfaces/senior";
-import { IValues } from "../vertical-stepper";
+
+import { IValues } from "../model/constants";
 import { removeSpaces } from "./senior";
 
 async function ApiGetRequestSenior(values: IValues) {

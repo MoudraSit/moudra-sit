@@ -12,8 +12,8 @@ export const defaultSchema = [
         new Date().getFullYear() - 60,
         "Služba je určena pouze pro seniory s věkem 60 let a více"
       )
-      .required("Napište rok Vašeho narození")
-      .typeError("Napište rok Vašeho narození"),
+      .required("Kliknutím do pole vepište rok narození.")
+      .typeError("Kliknutím do pole vepište rok narození."),
   }),
   yup.object().shape({
     year: yup
@@ -23,8 +23,8 @@ export const defaultSchema = [
         new Date().getFullYear() - 60,
         "Služba je určena pouze pro seniory s věkem 60 let a více"
       )
-      .required("Napište rok Vašeho narození")
-      .typeError("Napište rok Vašeho narození"),
+      .required("Kliknutím do pole vepište rok narození.")
+      .typeError("Kliknutím do pole vepište rok narození."),
     phoneCheckbox: yup.boolean(),
     pcCheckbox: yup.boolean(),
     printerCheckbox: yup.boolean(),
@@ -42,8 +42,8 @@ export const defaultSchema = [
         new Date().getFullYear() - 60,
         "Služba je určena pouze pro seniory s věkem 60 let a více"
       )
-      .required("Napište rok Vašeho narození")
-      .typeError("Napište rok Vašeho narození"),
+      .required("Kliknutím do pole vepište rok narození.")
+      .typeError("Kliknutím do pole vepište rok narození."),
     phoneCheckbox: yup.boolean(),
     pcCheckbox: yup.boolean(),
     printerCheckbox: yup.boolean(),
@@ -52,8 +52,8 @@ export const defaultSchema = [
       .boolean()
       .required()
       .oneOf([true], "Označte prosím alespoň jedno zařízení"),
-    requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
-    description: yup.string().required("Prosím popište textem Váš problém"),
+    requirmentName: yup.string().required("Prosím nazvěte Váš požadavek"),
+    description: yup.string().required("Prosím popište textem Váš požadavek"),
   }),
   yup.object().shape({
     year: yup
@@ -63,8 +63,8 @@ export const defaultSchema = [
         new Date().getFullYear() - 60,
         "Služba je určena pouze pro seniory s věkem 60 let a více"
       )
-      .required("Napište rok Vašeho narození")
-      .typeError("Napište rok Vašeho narození"),
+      .required("Kliknutím do pole vepište rok narození.")
+      .typeError("Kliknutím do pole vepište rok narození."),
     phoneCheckbox: yup.boolean(),
     pcCheckbox: yup.boolean(),
     printerCheckbox: yup.boolean(),
@@ -73,8 +73,37 @@ export const defaultSchema = [
       .boolean()
       .required()
       .oneOf([true], "Označte prosím alespoň jedno zařízení"),
-    requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
-    description: yup.string().required("Prosím popište textem Váš problém"),
+    requirmentName: yup.string().required("Prosím nazvěte Váš požadavek"),
+    description: yup.string().required("Prosím popište textem Váš požadavek"),
+    homeCheckbox: yup.boolean(),
+    libraryCheckbox: yup.boolean(),
+    publicPlaceCheckbox: yup.boolean(),
+    virtualCheckbox: yup.boolean(),
+    place_selection: yup
+      .boolean()
+      .required()
+      .oneOf([true], "Označte prosím alespoň jedno preferované místo setkání"),
+  }),
+  yup.object().shape({
+    year: yup
+      .number()
+      .min(1900, "Napište správný rok Vašeho narození")
+      .max(
+        new Date().getFullYear() - 60,
+        "Služba je určena pouze pro seniory s věkem 60 let a více"
+      )
+      .required("Kliknutím do pole vepište rok narození.")
+      .typeError("Kliknutím do pole vepište rok narození."),
+    phoneCheckbox: yup.boolean(),
+    pcCheckbox: yup.boolean(),
+    printerCheckbox: yup.boolean(),
+    otherCheckbox: yup.boolean(),
+    checkbox_selection: yup
+      .boolean()
+      .required()
+      .oneOf([true], "Označte prosím alespoň jedno zařízení"),
+    requirmentName: yup.string().required("Prosím nazvěte Váš požadavek"),
+    description: yup.string().required("Prosím popište textem Váš požadavek"),
     name: yup
       .string()
       .matches(/^[A-Ža-ž ]*$/, "Prosím vložte jméno ve správném tvaru")
@@ -92,19 +121,23 @@ export const defaultSchema = [
       .typeError("Napište Vaše PSČ"),
     city: yup
       .string()
-      .required("Napište název obce/města")
-      .typeError("Napište název obce/města"),
-    plusCode: yup
-      .string()
-      .required("Napište správný tvar předvolby (např. +420)"),
+      .required("Vyberte název obce/města ze seznamu")
+      .typeError("Vyberte název obce/města ze seznamu"),
+    plusCode: yup.string().required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
-      .matches(
-        phoneRegex,
-        "Napište správný tvar telefonního čísla (např. 123456789)"
-      )
+      .matches(phoneRegex, "Napište správný tvar telefonního čísla (např. 123456789)")
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email("Napište správně Váš kontaktní e-mail"),
+    zkratka: yup.string().required("Vyberte název obce/města ze seznamu"),
+    homeCheckbox: yup.boolean(),
+    libraryCheckbox: yup.boolean(),
+    publicPlaceCheckbox: yup.boolean(),
+    virtualCheckbox: yup.boolean(),
+    place_selection: yup
+      .boolean()
+      .required()
+      .oneOf([true], "Označte prosím alespoň jedno preferované místo setkání"),
   }),
   yup.object().shape({
     year: yup
@@ -114,17 +147,15 @@ export const defaultSchema = [
         new Date().getFullYear() - 60,
         "Služba je určena pouze pro seniory s věkem 60 let a více"
       )
-      .required("Napište rok Vašeho narození")
-      .typeError("Napište rok Vašeho narození"),
+      .required("Kliknutím do pole vepište rok narození.")
+      .typeError("Kliknutím do pole vepište rok narození."),
     phoneCheckbox: yup.boolean(),
     pcCheckbox: yup.boolean(),
     printerCheckbox: yup.boolean(),
     otherCheckbox: yup.boolean(),
-    checkbox_selection: yup
-      .boolean()
-      .oneOf([true], "Označte prosím alespoň jedno zařízení"),
-    requirmentName: yup.string().required("Prosím nazvěte Váš problém"),
-    description: yup.string().required("Prosím popište textem Váš problém"),
+    checkbox_selection: yup.boolean().oneOf([true], "Označte prosím alespoň jedno zařízení"),
+    requirmentName: yup.string().required("Prosím nazvěte Váš požadavek"),
+    description: yup.string().required("Prosím popište textem Váš požadavek"),
     name: yup
       .string()
       .matches(/^[A-Ža-ž ]*$/, "Prosím vložte jméno ve správném tvaru")
@@ -142,21 +173,22 @@ export const defaultSchema = [
       .typeError("Napište Vaše PSČ"),
     city: yup
       .string()
-      .required("Napište název obce/města")
-      .typeError("Napište název obce/města"),
-    plusCode: yup
-      .string()
-      .required("Napište správný tvar předvolby (např. +420)"),
+      .required("Vyberte název obce/města ze seznamu")
+      .typeError("Vyberte název obce/města ze seznamu"),
+    plusCode: yup.string().required("Napište správný tvar předvolby (např. +420)"),
     phoneNumber: yup
       .string()
-      .matches(
-        phoneRegex,
-        "Napište správný tvar telefonního čísla (např. 123456789)"
-      )
+      .matches(phoneRegex, "Napište správný tvar telefonního čísla (např. 123456789)")
       .required("Napište Váš kontaktní telefon (např. 123456789)"),
     email: yup.string().email("Napište správně Váš kontaktní e-mail"),
-    agreement: yup
+    zkratka: yup.string().required("Vyberte název obce/města ze seznamu"),
+    homeCheckbox: yup.boolean(),
+    libraryCheckbox: yup.boolean(),
+    publicPlaceCheckbox: yup.boolean(),
+    virtualCheckbox: yup.boolean(),
+    place_selection: yup
       .boolean()
-      .oneOf([true], "Prosím potvrďte souhlas se zpracováním osobních údajů"),
+      .required()
+      .oneOf([true], "Označte prosím alespoň jedno preferované místo setkání"),
   }),
 ];

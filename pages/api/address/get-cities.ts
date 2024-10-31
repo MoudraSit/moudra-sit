@@ -1,9 +1,10 @@
+import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import * as yup from "yup";
-import axios from "axios";
 
 type Municipality = {
   hezkyNazev: string;
+  zkratka: string;
   souradnice: [number, number];
   adresaUradu: {
     PSC: string;
@@ -13,6 +14,7 @@ type Municipality = {
 const serializer = (mun: Municipality) => {
   return {
     name: mun.hezkyNazev,
+    zkratka: mun.zkratka,
     zipCode: mun.adresaUradu.PSC,
     coordinates: mun.souradnice,
   };
