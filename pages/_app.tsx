@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@mui/material";
 import GoogleHeadScript from "components/scripts/google-head";
+import SklikRtg from "components/scripts/sklik-rtg";
 import { appTheme } from "components/theme/theme";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <SessionProvider session={pageProps.session}>
           <ThemeProvider theme={appTheme}>
             <GoogleHeadScript />
+            <SklikRtg />
             <Component {...pageProps} />
           </ThemeProvider>
         </SessionProvider>
