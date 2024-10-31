@@ -1,5 +1,5 @@
 import { Button, Typography } from "@mui/material";
-import SklikConversion from "./sklik-conversion";
+import SklikConversion from "../../scripts/sklik-conversion";
 
 function StepSuccess() {
   return (
