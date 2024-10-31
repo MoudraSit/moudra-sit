@@ -2,16 +2,16 @@ import Script from "next/script";
 
 function SklikRtg() {
   const customScript = ` 
-  window.sznIVA.IS.updateIdentities({
+   window.sznIVA.IS.updateIdentities({
     eid: null
   });
 
-  var conversionConf = {
-    id: 100210649,
-    value: null,
-    consent: null
+  var retargetingConf = {
+    rtgId: 1524717,
+    consent: 0
   };
-  window.rc.conversionHit(conversionConf);`;
+  window.rc.retargetingHit(retargetingConf);
+  `;
   return (
     <>
       <Script type="text/javascript" src="https://c.seznam.cz/js/rc.js"></Script>

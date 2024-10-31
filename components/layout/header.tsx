@@ -9,9 +9,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link";
 import * as React from "react";
-import SklikRtg from "./sklik-rtg";
 
 import { Logout, Person } from "@mui/icons-material";
+import GoogleBodyScript from "components/scripts/google-body";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import logo from "public/images/logo/logo.png";
@@ -36,7 +36,7 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="sticky" color="primary" sx={{ zIndex: 100 }}>
       <Container maxWidth="xl">
-        <SklikRtg />
+        <GoogleBodyScript />
         <Toolbar disableGutters>
           <Link href="https://moudrasit.cz/">
             <Image src={logo} alt={"Moudrá Síť logo"} height="35" />

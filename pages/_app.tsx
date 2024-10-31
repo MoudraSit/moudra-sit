@@ -1,10 +1,11 @@
-import "styles/globals.css";
-import type { AppProps } from "next/app";
 import { ThemeProvider } from "@mui/material";
+import GoogleHeadScript from "components/scripts/google-head";
 import { appTheme } from "components/theme/theme";
 import { SessionProvider } from "next-auth/react";
+import type { AppProps } from "next/app";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { QueryClient, QueryClientProvider } from "react-query";
+import "styles/globals.css";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <SessionProvider session={pageProps.session}>
           <ThemeProvider theme={appTheme}>
+            <GoogleHeadScript />
             <Component {...pageProps} />
           </ThemeProvider>
         </SessionProvider>
