@@ -1,8 +1,10 @@
 import { Button, Typography } from "@mui/material";
+import SklikConversion from "./sklik-conversion";
 
 function StepSuccess() {
   return (
     <>
+      <SklikConversion />
       <Typography
         sx={{ fontWeight: "bold", pb: 4 }}
         variant="h1"

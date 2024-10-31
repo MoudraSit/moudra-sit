@@ -4,7 +4,6 @@ import {
   Button,
   CircularProgress,
   Container,
-  FormHelperText,
   Grid,
   TextField,
   ThemeProvider,
@@ -13,7 +12,6 @@ import {
 } from "@mui/material";
 import axios, { AxiosError } from "axios";
 import { RatingButton } from "components/rating/RatingButton";
-import { RatingNumber } from "components/rating/RatingNumber";
 import { appTheme } from "components/theme/theme";
 import { useFormik } from "formik";
 import Image from "next/image";
@@ -22,7 +20,7 @@ import { useMutation, useQuery } from "react-query";
 import * as yup from "yup";
 import { VisitDTO } from "../api/rating/getVisit";
 
-const ratingError = "Zvolte hodnocení 1-5";
+const ratingError = "Zvolte smajlíka";
 
 export const validationSchema = yup.object().shape({
   spokojenostSenior: yup.number().integer().min(1).max(5).required(),
@@ -186,7 +184,9 @@ function RatingPage() {
                 ))}
               </Grid>
               {formik.errors.spokojenostSenior && (
-                <FormHelperText error>{ratingError}</FormHelperText>
+                <Typography variant="h6" component="h6" color="error">
+                  {ratingError}
+                </Typography>
               )}
             </Box>
           </Grid>
@@ -195,7 +195,7 @@ function RatingPage() {
               Podařilo se vyřešit dotaz?
             </Typography>
             <Typography variant="h6" component="h6">
-              Vyberte známku 1-5 jako ve škole.
+              Vyberte smajlíka.
             </Typography>
             <Box mt="1rem">
               <Grid
@@ -204,19 +204,33 @@ function RatingPage() {
                 spacing="8px"
                 justifyContent={isSmallScreen ? "center" : "flex-start"}
               >
-                {[{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }].map(
-                  (item) => (
-                    <Grid item key={item.value}>
-                      <RatingButton
-                        isSelected={formik.values.problemVyresenHodnoceni === item.value}
-                        onClick={() => formik.setFieldValue("problemVyresenHodnoceni", item.value)}
-                      >
-                        <RatingNumber>{item.value}</RatingNumber>
-                      </RatingButton>
-                    </Grid>
-                  )
-                )}
+                {[
+                  { image: "frown.png", value: 5 },
+                  { image: "meh.png", value: 4 },
+                  { image: "neutral.png", value: 3 },
+                  { image: "smile.png", value: 2 },
+                  { image: "love.png", value: 1 },
+                ].map((item) => (
+                  <Grid item key={item.value}>
+                    <RatingButton
+                      isSelected={formik.values.problemVyresenHodnoceni === item.value}
+                      onClick={() => formik.setFieldValue("problemVyresenHodnoceni", item.value)}
+                    >
+                      <Image
+                        alt={item.image}
+                        src={`/images/smiles/${item.image}`}
+                        width={isSmallScreen ? 32 : 40}
+                        height={isSmallScreen ? 32 : 40}
+                      />
+                    </RatingButton>
+                  </Grid>
+                ))}
               </Grid>
+              {formik.errors.problemVyresenHodnoceni && (
+                <Typography variant="h6" component="h6" color="error">
+                  {ratingError}
+                </Typography>
+              )}
             </Box>
           </Grid>
         </Grid>
