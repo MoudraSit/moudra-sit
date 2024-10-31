@@ -394,11 +394,7 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                         <PSCAutosuggest defaultValue={values.zipCode} />
                       </Grid>
                       <Grid item xs={12} sm={12} md={4}>
-                        <CityAutosuggest
-                          defaultValue={values.city}
-                          errors={errors}
-                          defaultZipCode={values.zipCode}
-                        />
+                        <CityAutosuggest defaultValue={values.city} errors={errors} />
                       </Grid>
                     </Grid>
                   </TableCell>

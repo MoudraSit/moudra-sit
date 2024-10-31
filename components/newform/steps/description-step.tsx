@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { ImageType } from "react-images-uploading/dist/typings";
 import { IValues } from "../model/constants";
 import TextFieldForm from "../model/input-form";
@@ -19,25 +19,9 @@ export const DescriptionStep: React.FC<Props> = ({ values, uploadedImage, setAct
 
   return (
     <>
-      <Stack direction="row" alignItems="center" gap={1}>
-        {/* <Button
-          variant="contained"
-          onClick={handleClickBack}
-          color="secondary"
-          sx={{
-            color: "white",
-            letterSpacing: 0.5,
-            fontSize: 20,
-          }}
-          startIcon={<KeyboardArrowLeftIcon />}
-        >
-          Zpět
-        </Button> */}
-        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-          Popis požadavku
-        </Typography>
-      </Stack>
-
+      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+        Popis požadavku
+      </Typography>
       <Grid item xs={12}>
         <Typography
           sx={{ pb: 2, pt: 3, fontWeight: "bold" }}

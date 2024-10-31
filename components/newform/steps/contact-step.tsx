@@ -25,7 +25,6 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
       <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
         Kontaktní údaje
       </Typography>
-
       <Grid item xs={12}>
         <Typography
           sx={{ fontWeight: "bold", pb: 2, pt: 3 }}
@@ -76,11 +75,7 @@ export const ContactStep: React.FC<Props> = ({ values, errors, setActiveStep, se
           <PSCAutosuggest defaultValue={values.zipCode} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CityAutosuggest
-            defaultValue={values.city}
-            errors={errors}
-            defaultZipCode={values.zipCode}
-          />
+          <CityAutosuggest defaultValue={values.city} errors={errors} />
         </Grid>
         <Grid item xs={12} sm={4}>
           <PhoneCodeFieldForm

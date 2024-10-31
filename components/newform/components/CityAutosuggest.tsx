@@ -9,10 +9,9 @@ import { IValues } from "../model/constants";
 type Props = {
   defaultValue: string;
   errors: FormikErrors<IValues>;
-  defaultZipCode: string;
 };
 
-export default function CityAutosuggest({ defaultValue, errors, defaultZipCode }: Props) {
+export default function CityAutosuggest({ defaultValue, errors }: Props) {
   const { setFieldValue } = useFormikContext();
   const [{ value: zipCode }] = useField<string>({ name: "zipCode" });
 

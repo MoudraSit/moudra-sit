@@ -3,14 +3,14 @@ import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
 import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import * as React from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { ImageType } from "react-images-uploading";
 import ProgressBarComponent from "../form/steps/progress-bar";
 import { defaultSchema } from "../newform/schemas/default-schema";
 import { appTheme } from "../theme/theme";
 import ErrorMessageComponent from "./components/error-message";
-import TestInfoLine from "./components/test-info-line";
 import { scrollIntoView, scrollToTop } from "./helpers/scroll-into-view";
-import submitHelperTest from "./helpers/submit-helper";
+import submitHelper from "./helpers/submit-helper";
 import { FormContainer, formSteps, initialValues, IValues } from "./model/constants";
 import { BirthStep } from "./steps/birth-step";
 import { ContactStep } from "./steps/contact-step";
@@ -25,6 +25,7 @@ export default function FormBuilder() {
   const [progressBar, setProgressbBar] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(false);
   const currentValidationSchema = defaultSchema[activeStep];
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   // onSubmit handler function
   async function handleSendToDevTabidoo(
@@ -33,10 +34,16 @@ export default function FormBuilder() {
     actions: FormikHelpers<IValues>
   ) {
     if (index === formSteps.length - 1) {
+      // is recpatcha check ready
+      if (!executeRecaptcha) {
+        console.log("Execute recaptcha not yet available");
+        return;
+      }
+
       try {
         // show progress bar
         setProgressbBar(true);
-        await submitHelperTest(index, values, actions);
+        await submitHelper(values, executeRecaptcha);
         // switch off progress bar
         setProgressbBar(false);
         // fold steps
@@ -63,7 +70,6 @@ export default function FormBuilder() {
   return (
     <>
       <ThemeProvider theme={appTheme}>
-        <TestInfoLine></TestInfoLine>
         <Box
           sx={{
             bgcolor: "#037f87",
@@ -82,7 +88,7 @@ export default function FormBuilder() {
               }
             }}
           >
-            {({ isSubmitting, setFieldValue, values, errors }) => (
+            {({ setFieldValue, values, errors }) => (
               <Form autoComplete="on">
                 <FormContainer maxWidth="xl" sx={{ p: 0 }}>
                   <Typography

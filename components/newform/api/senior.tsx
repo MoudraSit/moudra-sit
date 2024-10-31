@@ -13,7 +13,7 @@ export function removeSpaces(str: string) {
 
 async function ApiRequestSenior(props: IValues) {
   try {
-    const response = await fetch("/api/formtest/senior", {
+    const response = await fetch("/api/form/senior", {
       method: "POST",
       body: JSON.stringify({
         fields: {

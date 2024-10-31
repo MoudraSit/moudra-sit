@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
 import { FormikErrors } from "formik/dist/types";
@@ -39,11 +39,9 @@ export const DeviceStep: React.FC<Props> = ({ values, errors, setActiveStep, set
 
   return (
     <>
-      <Stack direction="row" alignItems="center" gap={1}>
-        <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
-          Výběr zařízení
-        </Typography>
-      </Stack>
+      <Typography variant="h1" align="left" color="#3e3e3e" fontWeight="bold">
+        Výběr zařízení
+      </Typography>
       <Box
         sx={{
           bgcolor: "#f5f3ee",

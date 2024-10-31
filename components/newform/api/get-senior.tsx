@@ -8,7 +8,7 @@ async function ApiGetRequestSenior(values: IValues) {
     values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
 
   try {
-    const response = await fetch("/api/formtest/get-senior", {
+    const response = await fetch("/api/form/get-senior", {
       method: "POST",
       body: JSON.stringify({
         filter: {
