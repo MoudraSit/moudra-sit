@@ -101,9 +101,6 @@ function UploadPicture({ uploadedImage }: ImageType) {
 
       // resize uploaded file to be smaller and able to send with API
       resizeImage(base64object).then((result: string) => {
-        // show compressed photo
-        // console.log(result);
-
         // set image to a form
         uploadedImage(result);
 
@@ -139,8 +136,10 @@ function UploadPicture({ uploadedImage }: ImageType) {
                 mt: 1,
                 mr: 1,
                 mb: 1,
-                bgcolor: "#028790 !important",
-                color: "white",
+                bgcolor: "#C5C5C6 !important",
+                color: "#3e3e3e",
+                letterSpacing: 0.5,
+                fontSize: 20,
               }}
             >
               Nahrát fotku
@@ -183,7 +182,10 @@ function UploadPicture({ uploadedImage }: ImageType) {
               ({ selectedImage } ? (
                 <div key={index}>
                   <Image
-                    style={{ maxWidth: "100%", height: "auto" }}
+                    width={0}
+                    height={0}
+                    sizes="50vw"
+                    style={{ width: "50%", height: "auto" }}
                     id="input-image"
                     alt=""
                     src={selectedImage}
@@ -197,6 +199,8 @@ function UploadPicture({ uploadedImage }: ImageType) {
                         mb: 2,
                         bgcolor: "#D3215D !important",
                         color: "white",
+                        letterSpacing: 0.5,
+                        fontSize: 20,
                       }}
                       onClick={() => (onImageRemove(index), setMaxSizeOverflow(false))}
                     >

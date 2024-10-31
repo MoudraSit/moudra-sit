@@ -1,57 +1,40 @@
-import { Box, Button, Container, Typography } from "@mui/material";
-import SklikConversion from "./sklik-conversion";
+import { Button, Typography } from "@mui/material";
 
 function StepSuccess() {
   return (
     <>
-      <Container maxWidth="md">
-        <SklikConversion />
-        <Box
-          sx={{
-            bgcolor: "#f5f3ee",
-            pt: 6,
-            pb: 6,
-            borderRadius: 2,
-            textAlign: "center",
-          }}
-        >
-          <Container maxWidth="md">
-            <Typography
-              sx={{ fontWeight: "bold" }}
-              variant="h1"
-              align="center"
-              color="#3e3e3e"
-              gutterBottom
-            >
-              Děkujeme
-            </Typography>
-            <Typography
-              variant="h2"
-              align="center"
-              color="#3e3e3e"
-              sx={{ fontWeight: "bold", pb: 2 }}
-            >
-              Váš dotaz jsme přijali ke zpracování. Do 5 dnů Vás bude telefonicky kontaktovat
-              digitální asistent, který Vám pomůže situaci vyřešit. Společně se domluvíte, zda bude
-              potřeba osobní návštěva, nebo to zvládnete po telefonu. Do e-mailu Vám přišel souhrn
-              Vašeho dotazu. Pokud ho tam nevidíte, zkontrolujte si prosím složku Spam.
-            </Typography>
-            <Button
-              href="http://moudrasit.cz/"
-              type="submit"
-              variant="contained"
-              sx={{
-                mt: 1,
-                mr: 1,
-                bgcolor: "#D3215D !important",
-                color: "secondary.contrastText",
-              }}
-            >
-              Zavřít a zpět na hlavní stránku
-            </Button>
-          </Container>
-        </Box>
-      </Container>
+      <Typography
+        sx={{ fontWeight: "bold", pb: 4 }}
+        variant="h1"
+        align="left"
+        color="#3e3e3e"
+        gutterBottom
+      >
+        Děkujeme!
+      </Typography>
+      <Typography variant="h2" align="left" color="#3e3e3e" sx={{ fontWeight: "bold", pb: 2 }}>
+        Váš dotaz jsme přijali ke zpracování. Do 5 dnů Vás budeme telefonicky kontaktovat.
+      </Typography>
+      <Typography variant="h2" align="left" color="#3e3e3e" sx={{ pb: 4 }}>
+        Pokud jste zadali e-mail, poslali jsme Vám do něj souhrn Vašeho dotazu. Pokud ho tam
+        nevidíte, zkontrolujte si prosím složku Spam.
+      </Typography>
+
+      <Button
+        href="http://moudrasit.cz/"
+        type="submit"
+        variant="contained"
+        sx={{
+          mt: 1,
+          mr: 1,
+          bgcolor: "#D3215D !important",
+          color: "secondary.contrastText",
+          letterSpacing: 0.5,
+          fontSize: 20,
+        }}
+      >
+        Zpět na hlavní stránku
+      </Button>
     </>
   );
 }

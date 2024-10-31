@@ -525,10 +525,6 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
           <Button
             variant="contained"
             type="submit"
-            onClick={() => {
-              console.log(errors);
-              console.log("values", values);
-            }}
             sx={{
               mr: 1,
               bgcolor: "#D3215D !important",

@@ -5,13 +5,13 @@ import { Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import * as React from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { ImageType } from "react-images-uploading";
-import ProgressBarComponent from "../form/steps/progress-bar";
-import { defaultSchema } from "../newform/schemas/default-schema";
 import { appTheme } from "../theme/theme";
 import ErrorMessageComponent from "./components/error-message";
+import ProgressBarComponent from "./components/progress-bar";
 import { scrollIntoView, scrollToTop } from "./helpers/scroll-into-view";
 import submitHelper from "./helpers/submit-helper";
 import { FormContainer, formSteps, initialValues, IValues } from "./model/constants";
+import { defaultSchema } from "./schemas/default-schema";
 import { BirthStep } from "./steps/birth-step";
 import { ContactStep } from "./steps/contact-step";
 import { DescriptionStep } from "./steps/description-step";
@@ -35,15 +35,15 @@ export default function FormBuilder() {
   ) {
     if (index === formSteps.length - 1) {
       // is recpatcha check ready
-      if (!executeRecaptcha) {
-        console.log("Execute recaptcha not yet available");
-        return;
-      }
+      // if (!executeRecaptcha) {
+      //   console.log("Execute recaptcha not yet available");
+      //   return;
+      // }
 
       try {
         // show progress bar
         setProgressbBar(true);
-        await submitHelper(values, executeRecaptcha);
+        await submitHelper(values);
         // switch off progress bar
         setProgressbBar(false);
         // fold steps

@@ -1,35 +1,25 @@
-import { FormikHelpers } from "formik";
-import { IValues } from "./vertical-stepper";
-import ApiRequestSenior from "./api/senior";
-import ApiRequestRequirment from "./api/requirment";
-import ApiRequestCategory from "./api/category";
-import ApiGetRequestSenior from "./api/get-senior";
-import ApiRecaptcha from "./api/recaptcha";
+import ApiRequestCategory from "../api/category";
+import ApiGetRequestSenior from "../api/get-senior";
+import ApiRequestRequirment from "../api/requirment";
+import ApiRequestSenior from "../api/senior";
+import { IValues } from "../model/constants";
 
 const pcCategory = "Počítač";
 const phoneCategory = "Mobil";
 const printerCategory = "Tiskárna";
 const otherCategory = "Jiné IT zařízení";
 
-async function submitHelper(
-  index: number,
-  values: IValues,
-  actions: FormikHelpers<IValues>,
-  executeRecaptcha: {
-    (action?: string | undefined): Promise<string>;
-    (arg0: string): string | PromiseLike<string>;
-  }
-) {
+async function submitHelper(values: IValues) {
   // get recaptcha token
-  const gReCaptchaToken: string = await executeRecaptcha("enquiryFormSubmit");
+  //const gReCaptchaToken: string = await executeRecaptcha("enquiryFormSubmit");
 
   // recaptcha v3 validation check - score based validation
-  try {
-    await ApiRecaptcha(gReCaptchaToken);
-    console.log("Recaptcha - OK");
-  } catch (error) {
-    throw new Error("Recaptcha - you are not a human");
-  }
+  // try {
+  //   await ApiRecaptcha(gReCaptchaToken);
+  //   console.log("Recaptcha - OK");
+  // } catch (error) {
+  //   throw new Error("Recaptcha - you are not a human");
+  // }
 
   let idRequirment = null;
 
