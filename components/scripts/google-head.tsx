@@ -9,7 +9,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   return (
     <>
       {/* Google Tag Manager */}
-      <Script id="google-head-script">{customScript}</Script>
+      <Script id="google-head-script" strategy="beforeInteractive">
+        {customScript}
+      </Script>
       {/* End Google Tag Manager */}
     </>
   );
