@@ -19,7 +19,7 @@ async function Page({ params }: Props) {
   return (
     <>
       <BackButton />
-      <BasePaper>
+      <BasePaper elevation={0}>
         <AssistantScoreDetail seniorQuery={seniorQuery} />
       </BasePaper>
     </>

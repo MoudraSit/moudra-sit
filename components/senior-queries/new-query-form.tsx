@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, Grid, MenuItem, Stack } from "@mui/material";
+import { Alert, Grid, MenuItem, Stack } from "@mui/material";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 
@@ -24,6 +24,7 @@ import {
 import { THEME_COLORS } from "components/theme/colors";
 import { SeniorQuery } from "types/seniorQuery";
 import FormHeadline from "components/app-forms/FormHeadline";
+import SubmitButton from "components/buttons/submit-button";
 
 const seniorInitialValues = {
   phoneCountryCode: PhoneCountryCodes.CZ as string,
@@ -254,20 +255,7 @@ function NewQueryForm({ prefilledQuery }: Props) {
           </Alert>
         ) : null}
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          disabled={isPending}
-          sx={{
-            mt: 3,
-            mb: 3,
-            bgcolor: "#D3215D !important",
-            color: "white",
-          }}
-        >
-          Uložit
-        </Button>
+        <SubmitButton disabled={isPending} />
       </Stack>
     </form>
   );
