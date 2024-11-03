@@ -1,50 +1,93 @@
 "use client";
 
 import React from "react";
-import { Chip } from "@mui/material";
-import FilterSelectPopup from "./filter-select-popup";
-import FilterSearchPopup from "./filter-search-popup";
+import { Chip, Stack } from "@mui/material";
+import FilterSelectMenu from "./filter-select-menu";
+import FilterSearchMenu from "./filter-search-menu";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import FilterAutocompleteMenu from "./filter-autocomplete-menu";
+import { District } from "types/assistant";
 
 type Props = {
   title: string;
-  options?: Array<string>;
+  options?: Array<any>;
+  useAutocomplete?: boolean;
   value: string;
   setValue: Function;
 };
 
-function FilterChip({ title, options, value, setValue: setValues }: Props) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
+function FilterChip({
+  title,
+  options,
+  value,
+  setValue,
+  useAutocomplete,
+}: Props) {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  const handleClose = (newValue?: string) => {
-    setOpen(false);
-    setValues(newValue);
+  const createChipLabel = () => {
+    if (!value.length) return title;
+
+    // For 1-2 values, just display them
+    if (value.split(",").length < 3) return value.replaceAll(",", ", ");
+
+    const splitValues = value.split(",");
+
+    return splitValues.slice(0, 2).join(", ") + ` + ${splitValues.length - 2}`;
   };
 
   return (
     <>
       <Chip
+        sx={{
+          margin: "6px 2px",
+          background: "white",
+          fontWeight: "bold",
+          fontSize: "0.75rem",
+        }}
         onClick={handleOpen}
         variant="outlined"
-        label={value.length ? value.replaceAll(",", ", ") : title}
+        label={
+          <Stack direction="row" alignItems="center">
+            {createChipLabel()} <ArrowDropDownIcon />
+          </Stack>
+        }
       />
+
       {options && options.length ? (
-        <FilterSelectPopup
-          title={title}
-          open={open}
-          handleClose={handleClose}
-          options={options}
-          value={value}
-        />
+        useAutocomplete ? (
+          <FilterAutocompleteMenu
+            anchorEl={anchorEl}
+            open={open}
+            handleClose={handleClose}
+            handleSave={setValue}
+            options={options.map((option: District) => option.fields.okres)}
+            value={value}
+          />
+        ) : (
+          <FilterSelectMenu
+            anchorEl={anchorEl}
+            open={open}
+            handleClose={handleClose}
+            handleSave={setValue}
+            options={options}
+            value={value}
+          />
+        )
       ) : (
-        <FilterSearchPopup
+        <FilterSearchMenu
+          anchorEl={anchorEl}
           open={open}
           handleClose={handleClose}
+          handleSave={setValue}
           value={value}
-          title={title}
         />
       )}
     </>

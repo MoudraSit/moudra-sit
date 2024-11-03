@@ -5,17 +5,20 @@ import Link from "next/link";
 import { AssistantPagePaths, FilterType, QueryStatus } from "helper/consts";
 
 async function NewQueriesTile() {
+  const selectedQueryStatuses = [
+    QueryStatus.NEW,
+    QueryStatus.FOR_HANDOVER,
+    QueryStatus.POSTPONED,
+  ].join(",");
   const queries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.QUERY_STATUS]: QueryStatus.NEW,
+    [FilterType.QUERY_STATUS]: selectedQueryStatuses,
   });
 
-
-  // TODO: addd queries for handover once multistatus is supported
   return (
     <Card>
       <CardActionArea
         LinkComponent={Link}
-        href={`${AssistantPagePaths.SENIOR_QUERIES}?${FilterType.QUERY_STATUS}=${QueryStatus.NEW}`}
+        href={`${AssistantPagePaths.SENIOR_QUERIES}?${FilterType.QUERY_STATUS}=${selectedQueryStatuses}`}
       >
         <CardContent>
           <Typography
