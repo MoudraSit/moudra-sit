@@ -22,6 +22,15 @@ async function PlannedVisitsList() {
     return new Date(nextPlannedVisit) > new Date();
   });
 
+  for (const plannedQuery of plannedQueries) {
+    const visits = await SeniorQueriesGetter.getVisitsForSeniorQuery(
+      plannedQuery.id
+    );
+    const lastVisit = visits.at(0);
+    plannedQuery.fields.navstevy!.fields.poznamkaAsistentem =
+      lastVisit?.fields.poznamkaAsistentem;
+  }
+
   return (
     <Stack spacing={1}>
       <Typography sx={{ fontWeight: "bold", fontSize: "16px" }}>

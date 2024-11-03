@@ -40,3 +40,8 @@ export function capitalizeFirstLetter(name: string) {
 export function removeSpaces(str: string) {
   return (str = str.replace(/\s/g, ""));
 }
+
+export function removeHTMLTags(value: string) {
+  const regex = /(<([^>]+)>)/gi; 
+  return value.replace(regex, "");
+}
