@@ -45,7 +45,7 @@ function NewCommentCard({ queryId, isOpen, handleClose }: Props) {
             fullWidth
             color="info"
             size="small"
-            placeholder="Nová poznámka"
+            placeholder="Nový komentář"
             minRows={6}
             maxRows={10}
             inputProps={{ style: { fontSize: "1rem" } }} // font size of input text
@@ -58,7 +58,7 @@ function NewCommentCard({ queryId, isOpen, handleClose }: Props) {
           color="info"
           onClick={handleNewComment}
         >
-          Přidat poznámku
+          Přidat komentář
         </Button>
       </Stack>
     </Drawer>

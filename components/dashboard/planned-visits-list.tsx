@@ -27,7 +27,7 @@ async function PlannedVisitsList() {
       plannedQuery.id
     );
     const lastVisit = visits.at(0);
-    plannedQuery.fields.navstevy!.fields.poznamkaAsistentem =
+    plannedQuery.fields.navstevy!.fields.posledniPoznamkaAsistent =
       lastVisit?.fields.poznamkaAsistentem;
   }
 

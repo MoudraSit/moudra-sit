@@ -8,6 +8,12 @@ import { formatDate } from "helper/utils";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
 import BasePaper from "components/layout/base-paper";
 import { Stack } from "@mui/material";
+import {
+  FINISHED_STATUSES,
+  QueryStatus,
+  VisitMeetLocation,
+} from "helper/consts";
+import QueryDetailScoreSection from "components/senior-queries/detail/query-detail-score-section";
 
 type Props = {
   params: {
@@ -29,6 +35,13 @@ async function Page({ params }: Props) {
     }
   }
 
+  const isQueryFinished = FINISHED_STATUSES.includes(
+    visit.fields.stav as QueryStatus
+  );
+
+  const isMeetInOrganization =
+    visit.fields.osobnevzdalene === VisitMeetLocation.LIBRARY;
+
   return (
     <>
       <BackButton />
@@ -40,19 +53,27 @@ async function Page({ params }: Props) {
           <ReadOnlyBox label="Místo setkání">
             {visit.fields.osobnevzdalene}
           </ReadOnlyBox>
+          {isMeetInOrganization ? (
+            <ReadOnlyBox label="Spolupracující organizace">
+              {visit.fields?.spolupraceSOrganizaci?.fields.nazev}
+            </ReadOnlyBox>
+          ) : null}
           <ReadOnlyBox label="Adresa návštěvy">
             {visit.fields.mistoNavstevy}
           </ReadOnlyBox>
           <ReadOnlyBox label="Datum návštěvy">
             {formatDate(visit.fields.datumUskutecneneNavstevy)}
           </ReadOnlyBox>
-          <ReadOnlyBox label="Délka řešení dotazu (minuty)">
-            {visit.fields.delkaReseniDotazuMinuty}
-          </ReadOnlyBox>
-          <ReadOnlyBox label="Shrnutí návštěvy">
+          {isQueryFinished ? (
+            <ReadOnlyBox label="Délka řešení dotazu (minuty)">
+              {visit.fields.delkaReseniDotazuMinuty}
+            </ReadOnlyBox>
+          ) : null}
+          <ReadOnlyBox label="Poznámka k setkání">
             {visit.fields.poznamkaAsistentem}
           </ReadOnlyBox>
         </Stack>
+        {isQueryFinished ? <QueryDetailScoreSection lastVisit={visit} /> : null}
       </BasePaper>
     </>
   );

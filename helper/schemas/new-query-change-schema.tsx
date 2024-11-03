@@ -1,4 +1,5 @@
 import { VisitMeetLocation } from "helper/consts";
+import { Organization } from "types/assistant";
 import * as yup from "yup";
 
 // schema for form validation
@@ -6,6 +7,7 @@ export const newQueryChangeSchema = yup.object({}).shape({
   isInitialChange: yup.boolean(),
   queryStatus: yup.string().required("Zadejete stav dotazu"),
   meetLocationType: yup.string().required("Zadejete místo setkání"),
+  organization: new yup.ObjectSchema<Organization>(),
   address: yup.string().when("meetLocationType", {
     is: (val: string) =>
       val === VisitMeetLocation.AT_SENIOR || val === VisitMeetLocation.OTHER,

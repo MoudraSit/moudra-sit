@@ -30,11 +30,13 @@ export interface SeniorQuery {
       // Only fields related to the query which are on the "navsteva" object
       // Mostly the senior and assistant score
       fields: {
-        poznamkaSenioremAPI: { _$$list: Array<string> };
+        poznamkaSenioremAPI?: { _$$list: Array<string> };
+        // Fetched in a different API call than the query itself
+        posledniPoznamkaAsistent?: string;
         spokojenostSenior: { _$$max: number };
         problemVyresenHodnoceni: { _$$max: number };
         datumPlanovanaNavsteva: { _$$max: string };
-        poznamkaAsistentem?: string;
+        hodnoceniAsistent?: { _$$max: number };
       };
     };
     kategorieDotazu: string;

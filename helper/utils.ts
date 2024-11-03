@@ -11,7 +11,7 @@ export function generateUID() {
   );
 }
 
-export function formatDate(date: string) {
+export function formatDate(date?: string) {
   return date ? new Date(date).toLocaleDateString("cs-CZ") : "";
 }
 
@@ -41,7 +41,8 @@ export function removeSpaces(str: string) {
   return (str = str.replace(/\s/g, ""));
 }
 
-export function removeHTMLTags(value: string) {
-  const regex = /(<([^>]+)>)/gi; 
+export function removeHTMLTags(value?: string) {
+  if (!value) return "";
+  const regex = /(<([^>]+)>)/gi;
   return value.replace(regex, "");
 }

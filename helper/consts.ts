@@ -20,6 +20,8 @@ export enum QueryStatus {
   POSTPONED = "06. Odloženo",
 }
 
+export const FINISHED_STATUSES = [QueryStatus.SOLVED, QueryStatus.UNSOLVED];
+
 // Object allows dynamic key names
 export const QueryStatusColors = {
   [QueryStatus.NEW]: "#FD6A40",

@@ -1,4 +1,4 @@
-import { Assistant } from "./assistant";
+import { Assistant, Organization } from "./assistant";
 import { SeniorQuery } from "./seniorQuery";
 
 export interface Visit {
@@ -12,11 +12,16 @@ export interface Visit {
     stav: string;
     osobnevzdalene: string;
     vlozeniNavstevy: string;
+    hodnoceniAsistent: number;
+    problemVyresenHodnoceni: number;
+    spokojenostSenior: number;
     datumPlanovanaNavsteva: string;
     datumUskutecneneNavstevy: string;
     vlozeniZaznamu: string;
+    spolupraceSOrganizaci: Organization;
     dotaz: SeniorQuery;
     mistoNavstevy: string;
+    poznamkaSeniorem: string;
     poznamkaAsistentem: string;
     iDUzivatele: Assistant;
   };
