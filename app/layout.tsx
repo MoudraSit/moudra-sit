@@ -6,7 +6,6 @@ import { SessionProviderWrapper } from "components/session-provider-wrapper/sess
 import ResponsiveAppBar from "components/layout/header";
 
 import type { Metadata } from "next";
-import { Box } from "@mui/material";
 
 export const metadata: Metadata = {
   title: {
@@ -27,17 +26,7 @@ export default function RootLayout({
           <ThemeProvider theme={appTheme}>
             <SessionProviderWrapper>
               <ResponsiveAppBar />
-              <Box
-                sx={{
-                  bgcolor: "#F5F3EE",
-                  padding: { xs: "1rem", md: "2rem" },
-                  flexGrow: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                {children}
-              </Box>
+              {children}
             </SessionProviderWrapper>
           </ThemeProvider>
         </AppRouterCacheProvider>

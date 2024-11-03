@@ -21,6 +21,7 @@ import { TimesheetsGetter } from "backend/timesheets";
 import { Timesheet } from "types/timesheet";
 import { formatMonth } from "helper/utils";
 import { AssistantAPI } from "backend/assistant";
+import { auth } from "app/lib/auth";
 
 export const metadata: Metadata = {
   title: "Docházka",
@@ -42,13 +43,11 @@ function groupTimesheetsByYearAndMonth(timesheets: Array<Timesheet>) {
 }
 
 async function Page() {
-  const assistant = await AssistantAPI.getAssistantDetails(
-    "3866ea2c-bd52-4e72-ba62-dd8d6a86a7f3"
-  );
+  const session = await auth();
+  const assistant = await AssistantAPI.getAssistantDetails(session?.user?.id);
 
-  // TODO: replace with user session
   const timesheets = await TimesheetsGetter.getTimesheetsForUser(
-    "3866ea2c-bd52-4e72-ba62-dd8d6a86a7f3"
+    session?.user?.id
   );
 
   const years = groupTimesheetsByYearAndMonth(timesheets);
@@ -56,15 +55,17 @@ async function Page() {
   return (
     <>
       <BackButton />
-      <BasePaper>
+      <BasePaper elevation={0}>
         <Typography
           variant="h5"
-          sx={{ margin: "3px", color: THEME_COLORS.primary }}
+          sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
         >
           Docházka
         </Typography>
-        <hr style={{ borderColor: THEME_COLORS.primary }} />
-        <Stack sx={{ padding: "0.5rem" }} spacing={3}>
+        <hr
+          style={{ borderColor: THEME_COLORS.primary, marginBottom: "1rem" }}
+        />
+        <Stack spacing={3}>
           <ReadOnlyBox label="Počet odpracovaných hodin">
             {assistant.fields.hodinCelkem ?? 0}
           </ReadOnlyBox>
@@ -97,7 +98,7 @@ async function Page() {
                       justifyContent="space-between"
                     >
                       <div>{formatMonth(Number(month) - 1)}</div>
-                      <div>{time as number}h</div>
+                      <div>{time as number} h</div>
                     </Stack>
                   ))}
                 </AccordionDetails>

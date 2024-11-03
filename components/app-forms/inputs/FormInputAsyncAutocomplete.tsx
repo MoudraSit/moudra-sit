@@ -86,7 +86,7 @@ export function FormInputAsyncAutocomplete<OPTION>({
           onChange={(event, newValue) => {
             if (newValue) {
               onChange(newValue);
-              submitOnChange(name);
+              if (submitOnChange) submitOnChange(name);
             }
           }}
           onInputChange={(event, newInputValue) => {
