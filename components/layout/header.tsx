@@ -1,6 +1,6 @@
 "use client";
 
-import { ListItemIcon, Tooltip } from "@mui/material";
+import { ListItemIcon, Stack, Tooltip } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -54,107 +54,112 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <SklikRtg />
         <Toolbar disableGutters>
-          <Link href="https://moudrasit.cz/">
-            <Image src={logo} alt={"Moudrá Síť logo"} height="40" />
-          </Link>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          ></Box>
-          {status === "authenticated" && (
-            <>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                <Button
-                  style={{ alignItems: "center" }}
-                  sx={{ display: { xs: "none", sm: "flex" } }}
-                  variant="text"
-                  color="secondary"
-                  LinkComponent={Link}
-                  href={
-                    isUserAssistant(data.user)
-                      ? AssistantPagePaths.ASSISTANT_PROFILE
-                      : SeniorPagePaths.SENIOR_PROFILE
-                  }
-                >
-                  <Person style={{ marginRight: 6 }} /> {data.user?.name}
-                </Button>
-                <Tooltip title="Account settings">
-                  <IconButton
-                    onClick={handleClick}
-                    size="small"
-                    sx={{ ml: 2 }}
-                    aria-controls={open ? "account-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                  >
-                    <AccountCircleIcon fontSize="large" />
-                  </IconButton>
-                </Tooltip>
-              </Box>
+          <Stack
+            flexGrow={1}
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Link href="https://moudrasit.cz/">
+              <Image
+                src={logo}
+                alt={"Moudrá Síť logo"}
+                height="32"
+                style={{ marginTop: "6px" }}
+              />
+            </Link>
 
-              <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={open}
-                onClose={handleClose}
-                onClick={handleClose}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
-                    "&:before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      top: 0,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
-                  },
-                }}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-              >
-                <MenuItem
-                  onClick={routeToProfile}
-                  sx={{ display: { xs: "flex", sm: "none" } }}
+            {status === "authenticated" && (
+              <>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
                 >
-                  <ListItemIcon>
-                    <Person fontSize="small" />
-                  </ListItemIcon>
-                  {data.user?.name}
-                </MenuItem>
-                <MenuItem onClick={logoutHandler}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  Odhlásit se
-                </MenuItem>
-              </Menu>
-            </>
-          )}
+                  <Button
+                    style={{ alignItems: "center" }}
+                    sx={{ display: { xs: "none", sm: "flex" } }}
+                    variant="text"
+                    color="secondary"
+                    LinkComponent={Link}
+                    href={
+                      isUserAssistant(data.user)
+                        ? AssistantPagePaths.ASSISTANT_PROFILE
+                        : SeniorPagePaths.SENIOR_PROFILE
+                    }
+                  >
+                    <Person style={{ marginRight: 6 }} /> {data.user?.name}
+                  </Button>
+                  <Tooltip title="Account settings">
+                    <IconButton
+                      onClick={handleClick}
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-controls={open ? "account-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                    >
+                      <AccountCircleIcon fontSize="large" />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+
+                <Menu
+                  anchorEl={anchorEl}
+                  id="account-menu"
+                  open={open}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      "&:before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0,
+                      },
+                    },
+                  }}
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                >
+                  <MenuItem
+                    onClick={routeToProfile}
+                    sx={{ display: { xs: "flex", sm: "none" } }}
+                  >
+                    <ListItemIcon>
+                      <Person fontSize="small" />
+                    </ListItemIcon>
+                    {data.user?.name}
+                  </MenuItem>
+                  <MenuItem onClick={logoutHandler}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Odhlásit se
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
+          </Stack>
         </Toolbar>
       </Container>
       {isUserSenior(data?.user) ? <InformationLine /> : null}
