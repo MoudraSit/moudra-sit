@@ -1,6 +1,6 @@
 import { Card, Typography, Stack, Box } from "@mui/material";
 import { MAX_QUERY_CARD_HEIGHT, MAX_QUERY_CARD_WIDTH } from "helper/consts";
-import { formatDate, formatDateTime } from "helper/utils";
+import { formatDate, formatDateTime, removeHTMLTags } from "helper/utils";
 import { JSObject } from "types/common";
 import { SeniorQuery } from "types/seniorQuery";
 import QueryStatusChip from "./query-status-chip";
@@ -75,6 +75,16 @@ function QueryCard({ style, item, showVisitInfo = false }: Props) {
                   )}
                 </span>
               </Typography>
+              {item.fields.navstevy?.fields?.poznamkaAsistentem ? (
+                <Typography fontWeight="600" variant="body1">
+                  Poznámka k setkání:{" "}
+                  <span style={{ fontWeight: "normal" }}>
+                    {removeHTMLTags(
+                      item.fields.navstevy?.fields?.poznamkaAsistentem
+                    )}
+                  </span>
+                </Typography>
+              ) : null}
             </>
           ) : null}
         </Box>
