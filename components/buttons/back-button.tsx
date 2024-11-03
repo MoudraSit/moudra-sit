@@ -29,7 +29,7 @@ function BackButton({ href, fallback }: Props) {
       size="small"
       onClick={handleBack}
       startIcon={<ArrowBackIosIcon />}
-      sx={{ color: "black", width: "64px" }}
+      sx={{ color: "black", width: "64px", marginBottom: "0.5rem" }}
     >
       Zpět
     </Button>
