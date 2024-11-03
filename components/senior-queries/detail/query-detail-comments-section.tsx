@@ -24,7 +24,7 @@ function QueryDetailCommentsSection({ queryId, comments }: Props) {
             fontSize: "16px",
           }}
         >
-          Poznámka digitálního asistenta
+          Komentáře
         </Typography>
         <IconButton onClick={() => setDrawerOpen(true)}>
           <AddBox color="warning" />

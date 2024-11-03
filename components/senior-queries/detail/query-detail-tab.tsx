@@ -1,22 +1,66 @@
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Link, Stack, Typography } from "@mui/material";
 import { SeniorQuery } from "types/seniorQuery";
 import { BORDER_COLOR, ReadOnlyBox, ReadOnlyField } from "./helper-components";
 import { formatDate } from "helper/utils";
 import QueryStatusChip from "../query-status-chip";
 import QueryDetailCommentsSection from "./query-detail-comments-section";
+import {
+  AssistantPagePaths,
+  FINISHED_STATUSES,
+  QueryStatus,
+} from "helper/consts";
+import { THEME_COLORS } from "components/theme/colors";
+import QueryDetailScoreSection from "./query-detail-score-section";
+import { SeniorQueriesGetter } from "backend/senior-queries";
+import QueryDetailVisitSection from "./query-detail-visit-section";
 
 type Props = {
   seniorQuery: SeniorQuery;
 };
 
-function QueryDetailTab({ seniorQuery }: Props) {
+async function QueryDetailTab({ seniorQuery }: Props) {
   const comments = seniorQuery.fields?.komentare?.messages;
   const sortedComments = [...(comments ?? [])].sort((a, b) =>
     new Date(a.created) < new Date(b.created) ? 1 : -1
   );
 
+  const visits = await SeniorQueriesGetter.getVisitsForSeniorQuery(
+    seniorQuery.id
+  );
+  // Visits are returned from the newest on top
+  const lastVisit = visits.at(0);
+
+  const isQueryFinished = FINISHED_STATUSES.includes(
+    seniorQuery.fields.stavDotazu as QueryStatus
+  );
+
   return (
     <>
+      <Box>
+        {isQueryFinished ? null : (
+          <Button
+            LinkComponent={Link}
+            href={`${AssistantPagePaths.NEW_VISIT}?queryId=${seniorQuery.id}`}
+            variant="contained"
+            sx={{ marginBottom: "0.5rem" }}
+            fullWidth
+            color="warning"
+          >
+            {seniorQuery.fields.stavDotazu === QueryStatus.NEW
+              ? "+ Převzít dotaz"
+              : "Přidat změnu"}
+          </Button>
+        )}
+        <Button
+          LinkComponent={Link}
+          href={`${AssistantPagePaths.NEW_SENIOR_QUERY}?prefill=${seniorQuery.id}`}
+          fullWidth
+          color="info"
+          variant="outlined"
+        >
+          + Předvyplnit další dotaz
+        </Button>
+      </Box>
       <Stack spacing={2}>
         <Typography sx={{ fontWeight: "bold", fontSize: "16px" }}>
           Datum vložení:
@@ -67,10 +111,23 @@ function QueryDetailTab({ seniorQuery }: Props) {
               />
             </Grid>
             <Grid item xs={6}>
-              <ReadOnlyField
-                label="Telefon"
-                value={seniorQuery.fields.iDSeniora.fields.telefon}
-              />
+              <Typography
+                variant="caption"
+                sx={{ color: "#A5A5A5", overflowWrap: "break-word" }}
+              >
+                Telefon
+              </Typography>
+              <Typography
+                sx={{
+                  overflowWrap: "break-word",
+                  color: THEME_COLORS.primary,
+                  textDecoration: "underline",
+                }}
+              >
+                <a href={`tel:${seniorQuery.fields.iDSeniora.fields.telefon}`}>
+                  {seniorQuery.fields.iDSeniora.fields.telefon}
+                </a>
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <ReadOnlyField
@@ -82,23 +139,43 @@ function QueryDetailTab({ seniorQuery }: Props) {
               />
             </Grid>
             <Grid item xs={6}>
-              <ReadOnlyField
-                label="E-mail"
-                value={seniorQuery.fields.iDSeniora.fields.email}
-              />
+              <Typography
+                variant="caption"
+                sx={{ color: "#A5A5A5", overflowWrap: "break-word" }}
+              >
+                E-mail
+              </Typography>
+              <Typography
+                sx={{
+                  overflowWrap: "break-word",
+                  textDecoration: "underline",
+                }}
+              >
+                <a href={`mailto:${seniorQuery.fields.iDSeniora.fields.email}`}>
+                  {seniorQuery.fields.iDSeniora.fields.email}
+                </a>
+              </Typography>
             </Grid>
           </Grid>
         </Box>
         <ReadOnlyBox label="Zařízení">
           {seniorQuery.fields.kategorieDotazu}
         </ReadOnlyBox>
-        <ReadOnlyBox label="Preferované místo setkání">
-          {seniorQuery.fields.pozadovaneMistoPomoci}
-        </ReadOnlyBox>
+        {!isQueryFinished ? (
+          <ReadOnlyBox label="Preferované místo setkání">
+            {seniorQuery.fields.pozadovaneMistoPomoci}
+          </ReadOnlyBox>
+        ) : null}
         <ReadOnlyBox label="Řešitel dotazu">
           {seniorQuery.fields.resitelDotazu}
         </ReadOnlyBox>
+        {isQueryFinished ? (
+          <QueryDetailVisitSection lastVisit={lastVisit} />
+        ) : null}
       </Stack>
+      {isQueryFinished ? (
+        <QueryDetailScoreSection lastVisit={lastVisit!} />
+      ) : null}
       <QueryDetailCommentsSection
         queryId={seniorQuery.id}
         comments={sortedComments}

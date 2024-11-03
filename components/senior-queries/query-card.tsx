@@ -75,12 +75,12 @@ function QueryCard({ style, item, showVisitInfo = false }: Props) {
                   )}
                 </span>
               </Typography>
-              {item.fields.navstevy?.fields?.poznamkaAsistentem ? (
+              {item.fields.navstevy?.fields?.posledniPoznamkaAsistent ? (
                 <Typography fontWeight="600" variant="body1">
                   Poznámka k setkání:{" "}
                   <span style={{ fontWeight: "normal" }}>
                     {removeHTMLTags(
-                      item.fields.navstevy?.fields?.poznamkaAsistentem
+                      item.fields.navstevy?.fields?.posledniPoznamkaAsistent
                     )}
                   </span>
                 </Typography>

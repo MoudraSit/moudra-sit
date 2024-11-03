@@ -17,11 +17,13 @@ export function FormInputAsyncAutocomplete<OPTION>({
   getOptionLabel,
   isOptionEqualToValue,
   multiple,
+  handleChange,
   renderOption,
   ...props
 }: {
   multiple?: boolean;
   getValues: Function;
+  handleChange?: Function;
   fetchOptions: Function;
   renderOption: Function;
   getOptionLabel: Function;
@@ -86,6 +88,7 @@ export function FormInputAsyncAutocomplete<OPTION>({
           onChange={(event, newValue) => {
             if (newValue) {
               onChange(newValue);
+              if (handleChange) handleChange(newValue);
               if (submitOnChange) submitOnChange(name);
             }
           }}
