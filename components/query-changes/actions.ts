@@ -1,6 +1,7 @@
 "use server";
 
 import { authOptions } from "app/lib/auth";
+import { AssistantAPI } from "backend/assistant";
 import { callTabidoo } from "backend/tabidoo";
 import { AssistantPagePaths, QUERY_CHANGES_TAB } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
@@ -8,6 +9,10 @@ import { createTabidooDateString } from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+
+export async function fetchAutocompleteOrganizations(inputValue: string) {
+  return await AssistantAPI.getOrganizationsByName(inputValue);
+}
 
 export async function createQueryChange(
   queryId: string,
@@ -22,7 +27,8 @@ export async function createQueryChange(
     iDUzivatele: { id: session?.user?.id },
     stav: visitValues.queryStatus,
     poznamkaAsistentem: visitValues.summary,
-    osobneVzdalene: visitValues.meetLocationType,
+    osobnevzdalene: visitValues.meetLocationType,
+    spolupraceSOrganizaci: { id: visitValues.organization.id },
     delkaReseniDotazuMinuty: visitValues.duration,
     datumUskutecneneNavstevy: visitValues.date
       ? createTabidooDateString(visitValues.date)

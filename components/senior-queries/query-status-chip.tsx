@@ -21,6 +21,7 @@ function QueryStatusChip({ queryStatus, sx }: Props) {
       sx={{
         backgroundColor: selectChipColor(queryStatus),
         color: "white",
+        height: "18px",
         ...sx,
       }}
     />

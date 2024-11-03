@@ -11,15 +11,12 @@ type Props = {
 async function Page({ params }: Props) {
   const seniorQueryId = params.queryId;
   // Error handling is in the common layout, no need to repeat it here
-  const seniorQuery = await SeniorQueriesGetter.getSeniorQueryById(
+
+  const visits = await SeniorQueriesGetter.getVisitsForSeniorQuery(
     seniorQueryId
   );
 
-  const visits = await SeniorQueriesGetter.getVisitsForSeniorQuery(
-    seniorQuery.id
-  );
-
-  return <QueryChangesTab seniorQuery={seniorQuery} visits={visits} />;
+  return <QueryChangesTab visits={visits} />;
 }
 
 export default Page;

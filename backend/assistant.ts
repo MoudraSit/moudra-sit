@@ -1,7 +1,7 @@
 import { callTabidoo } from "./tabidoo";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/auth";
-import { Assistant, City, District } from "types/assistant";
+import { Assistant, City, District, Organization } from "types/assistant";
 import { NotFoundError } from "helper/exceptions";
 
 export class AssistantAPI {
@@ -57,7 +57,7 @@ export class AssistantAPI {
       }
     );
 
-    return results
+    return results;
   }
 
   public static async getCitiesByName(cityName: string) {
@@ -73,5 +73,23 @@ export class AssistantAPI {
         ],
       },
     });
+  }
+
+  public static async getOrganizationsByName(organizationName: string) {
+    return await callTabidoo<Array<Organization>>(
+      `/tables/organizace/data/filter`,
+      {
+        method: "POST",
+        body: {
+          filter: [
+            {
+              field: "nazev",
+              operator: "contains",
+              value: organizationName,
+            },
+          ],
+        },
+      }
+    );
   }
 }
