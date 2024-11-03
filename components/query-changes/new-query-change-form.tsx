@@ -8,7 +8,7 @@ import {
   FINISHED_STATUSES,
   QUERY_CHANGES_TAB,
   QueryStatus,
-  VisitMeetLocation,
+  VisitMeetLocationType,
 } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
 import * as React from "react";
@@ -59,8 +59,8 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           ? QueryStatus.SOLVED
           : QueryStatus.IN_PROGRESS,
       meetLocationType: lastVisit
-        ? lastVisit.fields?.osobnevzdalene ?? VisitMeetLocation.AT_SENIOR
-        : VisitMeetLocation.AT_SENIOR,
+        ? lastVisit.fields?.osobnevzdalene ?? VisitMeetLocationType.AT_SENIOR
+        : VisitMeetLocationType.AT_SENIOR,
       address: lastVisit ? lastVisit.fields?.mistoNavstevy ?? "" : "",
       // Yup schema expects JS native Date, but the input works with dayjs
       organization: lastVisit?.fields?.spolupraceSOrganizaci ?? null,
@@ -83,7 +83,7 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
     // Reset the address, it will not be the same when the input changes
     setValue("address", "");
     // Reset the org input if other type of visit was selected
-    if (getValues("meetLocationType") != VisitMeetLocation.LIBRARY) {
+    if (getValues("meetLocationType") != VisitMeetLocationType.LIBRARY) {
       //@ts-ignore
       setValue("organization", { id: "" });
     }
@@ -118,10 +118,10 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
   }
 
   const isMeetInOrganization =
-    getValues("meetLocationType") === VisitMeetLocation.LIBRARY;
+    getValues("meetLocationType") === VisitMeetLocationType.LIBRARY;
 
   const isMeetRemote =
-    getValues("meetLocationType") === VisitMeetLocation.REMOTE;
+    getValues("meetLocationType") === VisitMeetLocationType.REMOTE;
 
   const isQueryFinished = FINISHED_STATUSES.includes(
     getValues("queryStatus") as QueryStatus
@@ -147,7 +147,7 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           control={control}
           label="Místo setkání"
         >
-          {renderFlatOptions(Object.values(VisitMeetLocation))}
+          {renderFlatOptions(Object.values(VisitMeetLocationType))}
         </FormInputDropdown>
 
         {isMeetInOrganization ? (

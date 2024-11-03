@@ -16,7 +16,6 @@ export class SeniorQueriesGetter {
     uiFilters: UIFilters,
     page: number = 0
   ) {
-    // TODO: multi value filtering (e.g., multiple statuses)
     const filters = await this._createSeniorQueryFilters(uiFilters);
 
     return await this._getSeniorQueriesByFilter(filters, page);
@@ -142,11 +141,11 @@ export class SeniorQueriesGetter {
     };
   }
 
-  private static async _createSeniorQueryLocationFilter(queryStatus: string) {
+  private static async _createSeniorQueryLocationFilter(location: string) {
     return {
-      field: "mesto",
-      operator: "contains",
-      value: queryStatus,
+      field: "lokalita",
+      operator: "in",
+      value: location,
     };
   }
 
