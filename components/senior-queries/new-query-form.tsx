@@ -21,7 +21,7 @@ import {
   phoneRegexWithCountryCode,
   QUERY_DETAIL_TAB,
   QueryDeviceCategory,
-  VisitMeetLocation,
+  VisitMeetLocationType,
 } from "helper/consts";
 import { SeniorQuery } from "types/seniorQuery";
 import FormHeadline from "components/app-forms/FormHeadline";
@@ -243,7 +243,7 @@ function NewQueryForm({ prefilledQuery }: Props) {
             multiline
           >
             {renderFlatOptions(
-              Object.values(VisitMeetLocation),
+              Object.values(VisitMeetLocationType),
               (option: string) =>
                 highlightOption(
                   option,

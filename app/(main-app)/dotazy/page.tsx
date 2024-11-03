@@ -4,26 +4,25 @@ import RequestFilterPanel from "components/senior-queries/filter/request-filter-
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import QueryCardDynamicList from "components/dynamic-list/query-card-dynamic-list";
 import { Typography } from "@mui/material";
+import { AssistantAPI } from "backend/assistant";
 
 type Props = {
   searchParams?: Partial<Record<FilterType, string>>;
 };
 
 async function Page({ searchParams }: Props) {
-  const seniorQueries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters(
-    searchParams || {},
-    0
+  const [seniorQueries, seniorQueriesTotalCount, districts] = await Promise.all(
+    [
+      SeniorQueriesGetter.getSeniorQueriesByUIFilters(searchParams || {}, 0),
+      SeniorQueriesGetter.getSeniorQueryCountByUIFilters(searchParams || {}),
+      AssistantAPI.getDistricts(),
+    ]
   );
-
-  const seniorQueriesTotalCount =
-    await SeniorQueriesGetter.getSeniorQueryCountByUIFilters(
-      searchParams || {}
-    );
 
   return (
     <>
       <BackButton href={AssistantPagePaths.DASHBOARD} />
-      <RequestFilterPanel />
+      <RequestFilterPanel districts={districts} />
       <Typography variant="caption" sx={{ margin: "3px" }}>
         Výsledky: {seniorQueriesTotalCount}
       </Typography>
