@@ -34,6 +34,7 @@ export interface SeniorQuery {
         spokojenostSenior: { _$$max: number };
         problemVyresenHodnoceni: { _$$max: number };
         datumPlanovanaNavsteva: { _$$max: string };
+        poznamkaAsistentem?: string;
       };
     };
     kategorieDotazu: string;
