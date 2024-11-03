@@ -260,7 +260,7 @@ function AssistantDetailsForm({ assistant }: Props) {
             <FormInputText name="phone" control={control} label="Telefon" />
           </Grid>
         </Grid>
-        <FormInputText name="email" control={control} label="E-mail" />
+        <FormInputText name="email" disabled control={control} label="E-mail" />
 
         <FormInputText
           name="city"

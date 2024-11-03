@@ -61,6 +61,7 @@ export enum FilterType {
   LOCATION = "lokalita",
   USER_ASSIGNED = "jenMojeDotazy",
   DEVICE_CATEGORY = "kategorieMultichoice",
+  MEET_LOCATION_TYPES = "mistoSetkani",
   SENIOR = "senior",
 }
 
@@ -71,7 +72,7 @@ export enum QueryDeviceCategory {
   OTHER = "Jiné IT zařízení",
 }
 
-export enum VisitMeetLocation {
+export enum VisitMeetLocationType {
   AT_SENIOR = "U seniora",
   REMOTE = "Vzdáleně (online/telefonicky)",
   LIBRARY = "Knihovna / klub",

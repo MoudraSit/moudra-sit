@@ -35,7 +35,7 @@ function AssistantScoreListDynamicList({ initialItems, searchParams }: Props) {
     : async () => {
         setPage(page + 1);
         setIsNextPageLoading(true);
-        const newQueries = await loadMoreQueries(searchParams, page + 1);
+        const newQueries = await loadMoreQueries(page + 1, searchParams);
         setIsNextPageLoading(false);
         if (!newQueries.length) setHasNextPage(false);
         setItems((items) => [...items, ...newQueries]);
