@@ -4,11 +4,12 @@ import { JSObject } from "types/common";
 type Props = {
   children: React.ReactNode;
   sx?: JSObject;
+  elevation?: number;
 };
 
-function BasePaper({ sx, children }: Props) {
+function BasePaper({ sx, children, elevation }: Props) {
   return (
-    <Paper sx={{ padding: "0.75rem", marginTop: "1rem", ...sx }}>
+    <Paper elevation={elevation} sx={{ padding: "0.75rem", marginTop: "1rem", ...sx }}>
       {children}
     </Paper>
   );

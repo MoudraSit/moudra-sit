@@ -40,6 +40,7 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { saveAssistantDetails } from "./actions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import SubmitButton from "components/buttons/submit-button";
 
 function getInitials(assistant: Assistant) {
   return (
@@ -289,17 +290,7 @@ function AssistantDetailsForm({ assistant }: Props) {
           </Alert>
         ) : null}
 
-        <Stack spacing={1}>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="warning"
-            disabled={isPending}
-          >
-            Uložit
-          </Button>
-        </Stack>
+        <SubmitButton disabled={isPending} />
       </Stack>
     </form>
   );

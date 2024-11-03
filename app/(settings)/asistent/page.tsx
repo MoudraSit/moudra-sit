@@ -1,13 +1,5 @@
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { List, ListItemText, Stack, Typography } from "@mui/material";
 import type { Metadata } from "next";
-import { auth } from "app/lib/auth";
 import NextLink from "next/link";
 
 import BackButton from "components/buttons/back-button";
@@ -16,7 +8,6 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { AssistantPagePaths } from "helper/consts";
 import { THEME_COLORS } from "components/theme/colors";
 import SignOutButton from "components/assistant/sign-out-button";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BasePaper from "components/layout/base-paper";
 
 const SETTINGS_OPTIONS = [
@@ -40,46 +31,33 @@ export const metadata: Metadata = {
 };
 
 async function Page() {
-  const session = await auth();
-
   return (
     <>
       <BackButton />
-      <BasePaper>
+      <BasePaper elevation={0}>
         <Typography
           variant="h5"
-          sx={{ margin: "3px", color: THEME_COLORS.primary }}
+          sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
         >
           Můj profil
         </Typography>
         <hr style={{ borderColor: THEME_COLORS.primary }} />
-        <Stack sx={{ padding: "0.5rem" }} spacing={3}>
+        <Stack
+          sx={{ padding: "0.5rem", paddingTop: 0, marginTop: "-1rem" }}
+          spacing={3}
+        >
           <List>
-            <ListItem sx={{ paddingLeft: "0.25rem" }}>
-              <ListItemIcon sx={{ minWidth: "2rem" }}>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <span
-                  style={{
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    display: "block",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {session?.user?.email}
-                </span>
-              </ListItemText>
-            </ListItem>
             {SETTINGS_OPTIONS.map((settings) => (
               <NextLink key={settings.label} href={settings.path}>
-                <ListItem
-                  sx={{ paddingLeft: "0.25rem" }}
-                  secondaryAction={<ChevronRightIcon />}
+                <Stack
+                  sx={{ padding: "6px" }}
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="center"
                 >
                   <ListItemText>{settings.label}</ListItemText>
-                </ListItem>
+                  <ChevronRightIcon />
+                </Stack>
               </NextLink>
             ))}
             <SignOutButton />

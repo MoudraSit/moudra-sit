@@ -23,6 +23,7 @@ import QueryStatusChip from "components/senior-queries/query-status-chip";
 import { Visit } from "types/visit";
 import dayjs from "dayjs";
 import FormHeadline from "components/app-forms/FormHeadline";
+import SubmitButton from "components/buttons/submit-button";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -156,15 +157,7 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
         ) : null}
 
         <Stack spacing={1}>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="warning"
-            disabled={isPending}
-          >
-            Uložit
-          </Button>
+          <SubmitButton disabled={isPending} />
           <Button
             fullWidth
             variant="outlined"

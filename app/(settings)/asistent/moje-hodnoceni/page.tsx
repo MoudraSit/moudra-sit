@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 
 async function Page() {
   // TODO: add other "finished" statuses
-  // TODO: save switch changes to tabidoo
   const searchParams = {
     [FilterType.USER_ASSIGNED]: true,
     [FilterType.QUERY_STATUS]: QueryStatus.SOLVED,
@@ -31,21 +30,30 @@ async function Page() {
     <>
       <BackButton />
       <BasePaper
+        elevation={0}
         sx={{
           display: "flex",
           flexDirection: "column",
           flexGrow: "1",
         }}
       >
-        <Box sx={{ marginBottom: "1rem" }}>
-          <Typography
-            variant="h5"
-            sx={{ margin: "3px", color: THEME_COLORS.primary }}
-          >
-            Moje hodnocení
-          </Typography>
-          <hr style={{ width: "100%", borderColor: THEME_COLORS.primary }} />
-        </Box>
+        <Typography
+          variant="h5"
+          sx={{
+            fontSize: "20px",
+            margin: "3px",
+            color: THEME_COLORS.primary,
+          }}
+        >
+          Moje hodnocení
+        </Typography>
+        <hr
+          style={{
+            width: "100%",
+            borderColor: THEME_COLORS.primary,
+            marginBottom: "1rem",
+          }}
+        />
         <Box sx={{ marginBottom: "1rem" }}>
           <AssistantScoreForm assistant={assistant} />
         </Box>

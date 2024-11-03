@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, ListItemIcon, Tooltip } from "@mui/material";
+import { ListItemIcon, Tooltip } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,7 +13,8 @@ import Link from "next/link";
 import * as React from "react";
 
 import GoogleBodyScript from "components/scripts/google-body";
-import { ArrowDropDown, Logout, Person } from "@mui/icons-material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Logout, Person } from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import logo from "public/images/logo/logo.png";
@@ -96,10 +97,7 @@ function ResponsiveAppBar() {
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
-                    <Avatar sx={{ width: 32, height: 32 }}>
-                      {data.user?.name?.charAt(0) ?? "M"}
-                    </Avatar>
-                    <ArrowDropDown />
+                    <AccountCircleIcon fontSize="large" />
                   </IconButton>
                 </Tooltip>
               </Box>

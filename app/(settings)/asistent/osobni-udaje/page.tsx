@@ -18,14 +18,16 @@ async function Page() {
   return (
     <>
       <BackButton />
-      <BasePaper>
+      <BasePaper elevation={0}>
         <Typography
           variant="h5"
-          sx={{ margin: "3px", color: THEME_COLORS.primary }}
+          sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
         >
           Osobní údaje
         </Typography>
-        <hr style={{ borderColor: THEME_COLORS.primary }} />
+        <hr
+          style={{ borderColor: THEME_COLORS.primary, marginBottom: "1rem" }}
+        />
         <AssistantDetailsForm assistant={assistant} />
       </BasePaper>
     </>
