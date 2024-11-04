@@ -435,6 +435,9 @@ export const FinalStep: React.FC<Props> = ({ values, errors, setActiveStep, setF
                           required
                           fullWidth
                           value={values.phoneNumber}
+                          inputProps={{
+                            maxLength: 11,
+                          }}
                           onChange={(e) => {
                             setFieldValue("phoneNumber", e.target.value);
                           }}

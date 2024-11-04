@@ -171,7 +171,7 @@ function setOpacity(values: IValues) {
     values.surname.length > 0 &&
     values.city.length > 1 &&
     values.zipCode.length > 1 &&
-    values.phoneNumber.length == 9
+    values.phoneNumber.length >= 9
     ? 1
     : 0;
 }
