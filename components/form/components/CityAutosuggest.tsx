@@ -19,7 +19,7 @@ export default function CityAutosuggest({ defaultValue, errors }: Props) {
 
   const { data: municipalities, isLoading } = useQuery({
     queryKey: ["form/city-autosuggest", zipCode],
-    enabled: zipCode?.length === 5,
+    enabled: zipCode?.length >= 5,
     queryFn: () =>
       axios
         .get<MunicipalityDto[]>(`/api/address/get-cities`, {

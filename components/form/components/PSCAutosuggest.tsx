@@ -40,6 +40,10 @@ export const PSCAutosuggest: React.FC<Props> = ({ defaultValue }) => {
             setFieldValue("zipCode", e.target.value.replace(/\s/g, ""));
           }}
           {...params}
+          inputProps={{
+            ...params.inputProps,
+            maxLength: 6,
+          }}
           fullWidth
         />
       )}
