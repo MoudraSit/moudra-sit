@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Grid, MenuItem, Stack } from "@mui/material";
+import { Alert, Grid, Stack } from "@mui/material";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 
@@ -16,15 +16,18 @@ import {
   renderFlatOptions,
 } from "components/app-forms/inputs/FormInputDropdown";
 import {
+  AssistantPagePaths,
   PhoneCountryCodes,
   phoneRegexWithCountryCode,
+  QUERY_DETAIL_TAB,
   QueryDeviceCategory,
   VisitMeetLocation,
 } from "helper/consts";
-import { THEME_COLORS } from "components/theme/colors";
 import { SeniorQuery } from "types/seniorQuery";
 import FormHeadline from "components/app-forms/FormHeadline";
 import SubmitButton from "components/buttons/submit-button";
+import { useRouter } from "next/navigation";
+import { FormInputCity } from "components/app-forms/inputs/FormInputCity";
 
 const seniorInitialValues = {
   phoneCountryCode: PhoneCountryCodes.CZ as string,
@@ -33,22 +36,18 @@ const seniorInitialValues = {
   surname: "",
   year: 1950,
   email: "",
-  city: "",
+  city: null,
 };
 
 function highlightOption(option: string, values?: Array<string>) {
-  if (!values || !values.includes(option)) return {};
-
-  return {
-    color: THEME_COLORS.primary,
-  };
+  return values && values.includes(option);
 }
 
 function parsePrefilledQuery(prefilledQuery?: SeniorQuery): NewQueryValues {
   const initialValues = {
     senior: seniorInitialValues,
     deviceTypes: [],
-    meetLocationType: VisitMeetLocation.AT_SENIOR,
+    preferredMeetLocations: [],
     title: "",
     description: "",
   };
@@ -75,7 +74,7 @@ function parsePrefilledQuery(prefilledQuery?: SeniorQuery): NewQueryValues {
       surname: prefilledQuery.fields.iDSeniora.fields.prijmeni,
       year: prefilledQuery.fields.iDSeniora.fields.rokNarozeni,
       email: prefilledQuery.fields.iDSeniora.fields.email,
-      city: prefilledQuery.fields.iDSeniora.fields.mesto,
+      city: prefilledQuery.fields.iDSeniora.fields?.mestoLink ?? null,
     },
   };
 }
@@ -86,6 +85,8 @@ type Props = {
 
 // TODO (nice-to-have): loading for the senior form part (for preexisting)
 function NewQueryForm({ prefilledQuery }: Props) {
+  const router = useRouter();
+
   const { handleSubmit, watch, getValues, setValue, control } = useForm({
     resolver: yupResolver(newQuerySchema),
     defaultValues: {
@@ -97,6 +98,8 @@ function NewQueryForm({ prefilledQuery }: Props) {
   // This allows applying the right styles to the selected and unselected options
   // eslint-disable-next-line no-unused-vars
   const watchDeviceTypes = watch("deviceTypes");
+  // eslint-disable-next-line no-unused-vars
+  const watchPreferredMeetLocations = watch("preferredMeetLocations");
   // eslint-disable-next-line no-unused-vars
   const watchPreexistingSenior = watch("preexistingSeniorId");
 
@@ -122,7 +125,7 @@ function NewQueryForm({ prefilledQuery }: Props) {
     setValue("senior.surname", seniorsWithSamePhone[0].fields.prijmeni);
     setValue("senior.year", seniorsWithSamePhone[0].fields.rokNarozeni);
     setValue("senior.email", seniorsWithSamePhone[0].fields.email);
-    setValue("senior.city", seniorsWithSamePhone[0].fields.mesto);
+    setValue("senior.city", seniorsWithSamePhone[0].fields?.mestoLink ?? null);
   };
 
   const [isPending, setIsPending] = React.useState(false);
@@ -132,8 +135,11 @@ function NewQueryForm({ prefilledQuery }: Props) {
     try {
       setIsError(false);
       setIsPending(true);
-      await createQuery(values);
+      const newQueryId = await createQuery(values);
       setIsPending(false);
+      router.replace(
+        `${AssistantPagePaths.SENIOR_QUERIES}/${newQueryId}/${QUERY_DETAIL_TAB}`
+      );
     } catch (error) {
       console.error(error);
       setIsPending(false);
@@ -195,16 +201,16 @@ function NewQueryForm({ prefilledQuery }: Props) {
             label="E-mail"
             disabled={!!getValues("preexistingSeniorId")}
           />
-          {/* TODO: Should be selected from a list eventually */}
-          {/* TODO: If not, zip code needs to be added */}
-          <FormInputText
+
+          <FormInputCity
             name="senior.city"
             control={control}
-            label="Obec/město"
+            getValues={getValues}
+            isPending={isPending}
             disabled={!!getValues("preexistingSeniorId")}
           />
         </Stack>
-        <Stack spacing={3} sx={{ marginBottom: "3rem" }}>
+        <Stack spacing={3}>
           <FormHeadline text="Dotaz" />
           <FormInputText name="title" control={control} label="Název dotazu" />
           <FormInputText
@@ -222,29 +228,28 @@ function NewQueryForm({ prefilledQuery }: Props) {
             label="Zařízení"
             multiple
           >
-            {Object.values(QueryDeviceCategory).map((option) => (
-              <MenuItem
-                key={option}
-                value={option}
-                sx={{
-                  ...highlightOption(
-                    option,
-                    getValues("deviceTypes") as string[]
-                  ),
-                }}
-              >
-                {option}
-              </MenuItem>
-            ))}
+            {renderFlatOptions(
+              Object.values(QueryDeviceCategory),
+              (option: string) =>
+                highlightOption(option, getValues("deviceTypes") as string[])
+            )}
           </FormInputDropdown>
 
-          {/* TODO: Should have multiple options eventually */}
           <FormInputDropdown
-            name="meetLocationType"
+            name="preferredMeetLocations"
             control={control}
-            label="Místo setkání"
+            label="Preferovaná místa setkání"
+            multiple
+            multiline
           >
-            {renderFlatOptions(Object.values(VisitMeetLocation))}
+            {renderFlatOptions(
+              Object.values(VisitMeetLocation),
+              (option: string) =>
+                highlightOption(
+                  option,
+                  getValues("preferredMeetLocations") as string[]
+                )
+            )}
           </FormInputDropdown>
         </Stack>
         {isError ? (

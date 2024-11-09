@@ -12,14 +12,22 @@ type Props = {
   style?: JSObject;
   item: SeniorQuery;
   showVisitInfo?: boolean;
+  dynamicList?: boolean;
 };
 
-function QueryCard({ style, item, showVisitInfo = false }: Props) {
+function QueryCard({
+  style,
+  item,
+  dynamicList = true,
+  showVisitInfo = false,
+}: Props) {
   return (
     <Card
       style={{
         ...style,
-        height: `calc(${MAX_QUERY_CARD_HEIGHT}px - ${CARD_SPACING})`,
+        maxHeight: dynamicList
+          ? `calc(${MAX_QUERY_CARD_HEIGHT}px - ${CARD_SPACING})`
+          : "unset",
         maxWidth: MAX_QUERY_CARD_WIDTH,
         marginBottom: CARD_SPACING,
         display: "flex",
@@ -35,14 +43,18 @@ function QueryCard({ style, item, showVisitInfo = false }: Props) {
           padding: "0.5rem",
         }}
       >
-        <Stack direction="row" justifyContent="space-between">
-          <QueryStatusChip queryStatus={item.fields.stavDotazu} />
-          <Typography variant="body1">
-            {formatDate(item.fields.datumVytvoreni)}
-          </Typography>
-        </Stack>
-
         <Box>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <QueryStatusChip queryStatus={item.fields.stavDotazu} />
+            <Typography variant="body1">
+              {formatDate(item.fields.datumVytvoreni)}
+            </Typography>
+          </Stack>
+
           <Typography variant="h2" fontWeight={"bold"}>
             {item.fields.popis}
           </Typography>
@@ -55,13 +67,16 @@ function QueryCard({ style, item, showVisitInfo = false }: Props) {
           <Typography variant="body1" fontWeight="600">
             Zařízení:{" "}
             <span style={{ fontWeight: "normal" }}>
-              {item.fields.kategorieDotazu}
+              {item.fields?.kategorieMultichoice?.join(", ")}
             </span>
           </Typography>
           <Typography fontWeight="600" variant="body1">
             Místo setkání:{" "}
             <span style={{ fontWeight: "normal" }}>
-              {item.fields.pozadovaneMistoPomoci}
+              {/* This field used to be a string historically */}
+              {typeof item.fields?.pozadovaneMistoPomoci === "object"
+                ? item.fields?.pozadovaneMistoPomoci?.join(", ")
+                : item.fields?.pozadovaneMistoPomoci}
             </span>
           </Typography>
           {showVisitInfo ? (
