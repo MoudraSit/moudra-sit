@@ -46,6 +46,7 @@ export interface Assistant {
     titul?: string;
     jmeno: string;
     prijmeni: string;
+    prijmeniAJmeno: string;
     denNarozeni: string;
     fotografie?: Array<{
       fileId: string;

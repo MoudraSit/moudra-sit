@@ -1,4 +1,4 @@
-import { VisitMeetLocation } from "helper/consts";
+import { QueryStatus, VisitMeetLocation } from "helper/consts";
 import { Organization } from "types/assistant";
 import * as yup from "yup";
 
@@ -7,7 +7,12 @@ export const newQueryChangeSchema = yup.object({}).shape({
   isInitialChange: yup.boolean(),
   queryStatus: yup.string().required("Zadejete stav dotazu"),
   meetLocationType: yup.string().required("Zadejete místo setkání"),
-  organization: new yup.ObjectSchema<Organization>(),
+  organization: new yup.ObjectSchema<Organization>()
+    .when("meetLocationType", {
+      is: (val: string) => val === VisitMeetLocation.LIBRARY,
+      then: (schema) => schema.required("Zadejte organizaci"),
+    })
+    .nullable(),
   address: yup.string().when("meetLocationType", {
     is: (val: string) =>
       val === VisitMeetLocation.AT_SENIOR || val === VisitMeetLocation.OTHER,
@@ -32,9 +37,13 @@ export const newQueryChangeSchema = yup.object({}).shape({
   summary: yup.string().required("Zadejte poznámku ke změně"),
   assistantScore: yup
     .number()
-    .optional()
     .integer()
     .min(1, "Zadejte hodnocení 1-5")
     .max(5, "Zadejte hodnocení 1-5")
-    .typeError("Zadejte hodnocení 1-5"),
+    .typeError("Zadejte hodnocení 1-5")
+    .when("queryStatus", {
+      is: (val: string) =>
+        val === QueryStatus.SOLVED || val === QueryStatus.UNSOLVED,
+      then: (schema) => schema.required("Zadejte hodnocení"),
+    }),
 });

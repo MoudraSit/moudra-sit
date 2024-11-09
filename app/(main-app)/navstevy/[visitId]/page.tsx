@@ -4,7 +4,7 @@ import { getVisitById } from "backend/visits";
 import { redirect } from "next/navigation";
 import { NotFoundError } from "helper/exceptions";
 import { ReadOnlyBox } from "components/senior-queries/detail/helper-components";
-import { formatDate } from "helper/utils";
+import { formatDate, removeHTMLTags } from "helper/utils";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
 import BasePaper from "components/layout/base-paper";
 import { Stack } from "@mui/material";
@@ -46,7 +46,7 @@ async function Page({ params }: Props) {
     <>
       <BackButton />
       <BasePaper>
-        <Stack spacing={2}>
+        <Stack spacing={3} sx={{ marginBottom: "3rem" }}>
           <ReadOnlyBox label="Stav dotazu">
             <QueryStatusChip queryStatus={visit.fields.stav} />
           </ReadOnlyBox>
@@ -70,7 +70,7 @@ async function Page({ params }: Props) {
             </ReadOnlyBox>
           ) : null}
           <ReadOnlyBox label="Poznámka k setkání">
-            {visit.fields.poznamkaAsistentem}
+            {removeHTMLTags(visit.fields.poznamkaAsistentem)}
           </ReadOnlyBox>
         </Stack>
         {isQueryFinished ? <QueryDetailScoreSection lastVisit={visit} /> : null}

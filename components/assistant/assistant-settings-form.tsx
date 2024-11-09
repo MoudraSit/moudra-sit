@@ -10,11 +10,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Assistant, City, District } from "types/assistant";
 import { assistantSettingsSchema } from "helper/schemas/assistant-settings-schema";
-import { fetchAutocompleteCities, saveAssistantSettings } from "./actions";
-import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInputAsyncAutocomplete";
+import { saveAssistantSettings } from "./actions";
 import { FormInputAutocomplete } from "components/app-forms/inputs/FormInputAutocomplete";
 import SubmitButton from "components/buttons/submit-button";
 import ErrorAlert from "components/alerts/error-alert";
+import { FormInputCity } from "components/app-forms/inputs/FormInputCity";
 
 type SettingsValues = yup.InferType<typeof assistantSettingsSchema>;
 
@@ -33,7 +33,7 @@ function AssistantSettingsForm({
     resolver: yupResolver(assistantSettingsSchema),
     defaultValues: {
       sendScoreEmailNotification: assistant.fields.noveHodnoceniOdSenioraEmail,
-      mainArea: assistant.fields?.hlavniMistoPusobeni,
+      mainArea: assistant.fields?.hlavniMistoPusobeni ?? null,
       notificationDistricts: assistantDistricts,
     },
   });
@@ -61,10 +61,6 @@ function AssistantSettingsForm({
     return option.id === value.id;
   }
 
-  function getCityLabel(option: City) {
-    return `${option?.fields?.mestoObec} (${option?.fields?.okres})`;
-  }
-
   function getDistrictLabel(option: District) {
     return option?.fields?.okres;
   }
@@ -72,25 +68,12 @@ function AssistantSettingsForm({
   return (
     <form onSubmit={handleSubmit(submit)}>
       <Stack spacing={3} sx={{ marginTop: "2rem" }}>
-        <FormInputAsyncAutocomplete<City>
+        <FormInputCity
           name="mainArea"
           control={control}
           getValues={getValues}
-          disabled={isPending}
+          isPending={isPending}
           label="Hlavní místo působení"
-          fetchOptions={fetchAutocompleteCities}
-          getOptionLabel={getCityLabel}
-          isOptionEqualToValue={isCityOrDistrictEqual}
-          renderOption={(props: any, option: City) => {
-            // Do not use the inbuilt key
-            // eslint-disable-next-line no-unused-vars
-            const { key, ...optionProps } = props;
-            return (
-              <MenuItem key={option.id} {...optionProps} value={option} dense>
-                {getCityLabel(option)}
-              </MenuItem>
-            );
-          }}
         />
         <FormInputAutocomplete<District>
           name="notificationDistricts"

@@ -1,3 +1,5 @@
+export const WEB_APP_NAME = "Mobilní aplikace MS";
+
 /* eslint-disable no-unused-vars */
 export enum Role {
   SENIOR = "senior",
@@ -58,14 +60,14 @@ export enum FilterType {
   QUERY_STATUS = "stavDotazu",
   LOCATION = "lokalita",
   USER_ASSIGNED = "jenMojeDotazy",
-  DEVICE_CATEGORY = "kategorieDotazu",
+  DEVICE_CATEGORY = "kategorieMultichoice",
   SENIOR = "senior",
 }
 
 export enum QueryDeviceCategory {
   COMPUTER = "Počítač",
   PHONE = "Mobil",
-  PRINTER = "Printer",
+  PRINTER = "Tiskárna",
   OTHER = "Jiné IT zařízení",
 }
 
