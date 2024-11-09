@@ -177,31 +177,10 @@ export class SeniorQueriesGetter {
   private static async _createSeniorQueryUserAssignedFilter() {
     const session = await getServerSession(authOptions);
 
-    const filters = [
-      {
-        field: "iDUzivatele.id",
-        operator: "eq",
-        value: session?.user?.id,
-      },
-    ];
-    const visits = await callTabidoo<Array<Visit>>(
-      "/tables/navsteva/data/filter",
-      {
-        body: { filter: filters },
-        method: "POST",
-      }
-    );
-
-    const seniorQueryIDs = new Set();
-
-    for (const visit of visits) seniorQueryIDs.add(visit.fields.dotaz.id);
-
-    const IDList = Array.from(seniorQueryIDs).join(", ");
-
     return {
-      field: "id",
-      operator: "in",
-      value: IDList,
+      field: "resitelLink.id",
+      operator: "eq",
+      value: session?.user?.id,
     };
   }
 }
