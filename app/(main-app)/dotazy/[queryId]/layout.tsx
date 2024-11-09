@@ -3,6 +3,11 @@ import BackButton from "components/buttons/back-button";
 import { Paper, Stack } from "@mui/material";
 
 import QueryDetailLayoutTabs from "components/senior-queries/detail/query-detail-layout-tabs";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dotaz",
+};
 
 type Props = {
   children: React.ReactNode;
