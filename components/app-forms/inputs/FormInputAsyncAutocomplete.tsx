@@ -37,14 +37,10 @@ export function FormInputAsyncAutocomplete<OPTION>({
   const fetch = React.useMemo(
     () =>
       debounce(async (inputValue: string) => {
-        // if (currentValue && inputValue === getOptionLabel(currentValue)) {
-        //   setOptions([currentValue]);
-        //   return;
-        // } else if (!currentValue) return;
-
         const results = await fetchOptions(inputValue);
 
-        setOptions([getValues(name), ...results]);
+        if (getValues(name)) setOptions([getValues(name), ...results]);
+        else setOptions(results);
       }, 400),
     []
   );
@@ -68,16 +64,14 @@ export function FormInputAsyncAutocomplete<OPTION>({
       control={control}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <Autocomplete
-          getOptionLabel={(option) => {
-            return getOptionLabel(option);
-          }}
+          getOptionLabel={(option) => getOptionLabel(option)}
           isOptionEqualToValue={(option, value) =>
             isOptionEqualToValue(option, value)
           }
           filterOptions={(x) => x}
           options={options}
           autoComplete
-          noOptionsText="Začněte psát název obce"
+          noOptionsText="Začněte psát název"
           autoSelect
           multiple={multiple}
           disabled={disabled}
@@ -95,7 +89,6 @@ export function FormInputAsyncAutocomplete<OPTION>({
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);
           }}
-          // @ts-ignore
           renderOption={(props, option) => renderOption(props, option)}
           renderInput={(params) => (
             <TextField

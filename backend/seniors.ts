@@ -7,11 +7,12 @@ export async function createSenior(seniorValues: NewSeniorValues) {
   const response = await callTabidoo<Senior>("/tables/senior/data", {
     method: "POST",
     body: {
+      useUpsert: true,
       fields: {
         jmeno: capitalizeFirstLetter(seniorValues.name),
         prijmeni: capitalizeFirstLetter(seniorValues.surname),
-        //   PSC: removeSpaces(seniorValues.zipCode),
-        mesto: capitalizeFirstLetter(seniorValues.city),
+        mestoLink: { id: seniorValues.city?.id },
+        mesto: seniorValues.city.fields.mestoObec,
         email: seniorValues.email,
         stat: "Česko",
         telefon: seniorValues.phoneCountryCode.concat(

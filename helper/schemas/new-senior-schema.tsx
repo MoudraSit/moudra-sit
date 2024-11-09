@@ -1,4 +1,5 @@
 import { phoneRegexWithCountryCode } from "helper/consts";
+import { City } from "types/assistant";
 import * as yup from "yup";
 
 // schema for form validation
@@ -37,10 +38,7 @@ export const newSeniorSchema = yup.object({
       "Napište správný tvar telefonního čísla (např. 123456789)"
     )
     .required("Napište seniorův kontaktní telefon (např. 123456789)"),
-  city: yup
-    .string()
-    .matches(/^[A-Ža-ž]*$/, "Prosím napište správně název obce/města")
-    .required("Napište název obce/města"),
+  city: new yup.ObjectSchema<City>().nullable().required("Zadejte město"),
 });
 
 export type NewSeniorValues = yup.InferType<typeof newSeniorSchema>;

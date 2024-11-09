@@ -5,6 +5,15 @@ import { Controller } from "react-hook-form";
 import { FormInputProps } from "./FormInputProps";
 import { commonStyles } from "./form-input-styles";
 
+type AutocompleteProps<OPTION> = {
+  multiple?: boolean;
+  options: OPTION[];
+  getOptionLabel: Function;
+  isOptionEqualToValue: Function;
+  renderOption: Function;
+} & FormInputProps &
+  TextFieldProps;
+
 export function FormInputAutocomplete<OPTION>({
   name,
   control,
@@ -17,15 +26,7 @@ export function FormInputAutocomplete<OPTION>({
   renderOption,
   options,
   ...props
-}: {
-  multiple?: boolean;
-  options: OPTION[];
-  getOptionLabel: Function;
-  isOptionEqualToValue: Function;
-  renderOption: Function;
-} & FormInputProps &
-  TextFieldProps) {
-  // const [value, setValue] = React.useState<OPTION | null>(null);
+}: AutocompleteProps<OPTION>) {
   const [inputValue, setInputValue] = React.useState("");
 
   return (
@@ -44,13 +45,10 @@ export function FormInputAutocomplete<OPTION>({
           autoComplete
           disabled={disabled}
           multiple={multiple}
-          noOptionsText="Začněte psát název obce"
+          noOptionsText="Začněte psát název"
           autoSelect
           selectOnFocus
           includeInputInList
-          // renderTags={(value) => {
-          //   return value.map((el) => el.fields.okres).join(", ");
-          // }}
           filterSelectedOptions
           value={value}
           onChange={(event, newValue) => {

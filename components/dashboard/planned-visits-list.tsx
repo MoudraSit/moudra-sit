@@ -38,7 +38,12 @@ async function PlannedVisitsList() {
       </Typography>
       {plannedQueries.length > 0 ? (
         plannedQueries.map((query) => (
-          <QueryCard key={query.id} item={query} showVisitInfo />
+          <QueryCard
+            key={query.id}
+            item={query}
+            showVisitInfo
+            dynamicList={false}
+          />
         ))
       ) : (
         <>

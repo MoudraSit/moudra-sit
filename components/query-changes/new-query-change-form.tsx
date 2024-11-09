@@ -4,7 +4,9 @@ import { Alert, Button, MenuItem, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import {
+  AssistantPagePaths,
   FINISHED_STATUSES,
+  QUERY_CHANGES_TAB,
   QueryStatus,
   VisitMeetLocation,
 } from "helper/consts";
@@ -36,7 +38,6 @@ const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.FOR_HANDOVER,
   QueryStatus.SOLVED,
   QueryStatus.UNSOLVED,
-  QueryStatus.POSTPONED,
 ];
 
 type NewVisitValues = yup.InferType<typeof newQueryChangeSchema>;
@@ -62,9 +63,7 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
         : VisitMeetLocation.AT_SENIOR,
       address: lastVisit ? lastVisit.fields?.mistoNavstevy ?? "" : "",
       // Yup schema expects JS native Date, but the input works with dayjs
-      organization: lastVisit
-        ? lastVisit.fields?.spolupraceSOrganizaci ?? {}
-        : {},
+      organization: lastVisit?.fields?.spolupraceSOrganizaci ?? null,
       //@ts-ignore
       date: lastVisit
         ? dayjs(lastVisit.fields.datumUskutecneneNavstevy ?? "")
@@ -77,6 +76,20 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
   // eslint-disable-next-line no-unused-vars
   const meetLocationTypeWatch = watch("meetLocationType");
 
+  React.useEffect(() => {
+    // Skip the initial render
+    if (getValues("meetLocationType") === lastVisit?.fields.osobnevzdalene)
+      return;
+    // Reset the address, it will not be the same when the input changes
+    setValue("address", "");
+    // Reset the org input if other type of visit was selected
+    if (getValues("meetLocationType") != VisitMeetLocation.LIBRARY) {
+      //@ts-ignore
+      setValue("organization", { id: "" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [meetLocationTypeWatch]);
+
   const [isPending, setIsPending] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
@@ -86,6 +99,9 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
       setIsPending(true);
       await createQueryChange(query.id, data);
       setIsPending(false);
+      router.replace(
+        `${AssistantPagePaths.SENIOR_QUERIES}/${query.id}/${QUERY_CHANGES_TAB}`
+      );
     } catch (error) {
       console.error(error);
       setIsPending(false);
@@ -98,11 +114,14 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
   }
 
   function isOrganizationEqual(option: Organization, value: Organization) {
-    return option.id === value.id;
+    return option?.id === value?.id;
   }
 
   const isMeetInOrganization =
     getValues("meetLocationType") === VisitMeetLocation.LIBRARY;
+
+  const isMeetRemote =
+    getValues("meetLocationType") === VisitMeetLocation.REMOTE;
 
   const isQueryFinished = FINISHED_STATUSES.includes(
     getValues("queryStatus") as QueryStatus
@@ -110,7 +129,7 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <Stack spacing={2} sx={{ marginTop: "1rem" }}>
+      <Stack spacing={3} sx={{ marginTop: "1rem" }}>
         <FormInputDropdown
           name="queryStatus"
           control={control}
@@ -157,12 +176,14 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           />
         ) : null}
 
-        <FormInputText
-          name="address"
-          control={control}
-          label="Adresa návštěvy"
-          disabled={isMeetInOrganization}
-        />
+        {isMeetRemote ? null : (
+          <FormInputText
+            name="address"
+            control={control}
+            label="Adresa návštěvy"
+            disabled={isMeetInOrganization}
+          />
+        )}
 
         <FormInputDate name="date" control={control} label="Datum návštěvy" />
 
@@ -174,8 +195,17 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           />
         ) : null}
 
+        <FormInputText
+          name="summary"
+          control={control}
+          label="Poznámka k setkání"
+          multiline
+          minRows={6}
+          maxRows={10}
+        />
+
         {getValues("queryStatus") === QueryStatus.SOLVED ? (
-          <>
+          <Stack spacing={3} sx={{ marginBottom: "3rem" }}>
             <FormHeadline text="Hodnocení asistenta" />
 
             <FormInputText
@@ -183,28 +213,8 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
               control={control}
               label="Hodnocení (1-5 jako ve škole)"
             />
-
-            <FormInputText
-              name="summary"
-              control={control}
-              label="Poznámka asistenta"
-              multiline
-              minRows={6}
-              maxRows={10}
-            />
-          </>
-        ) : (
-          <>
-            <FormInputText
-              name="summary"
-              control={control}
-              label="Poznámka k setkání"
-              multiline
-              minRows={6}
-              maxRows={10}
-            />
-          </>
-        )}
+          </Stack>
+        ) : null}
 
         {isError ? (
           <Alert severity="error">
