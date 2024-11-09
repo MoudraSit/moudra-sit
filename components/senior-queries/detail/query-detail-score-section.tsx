@@ -2,7 +2,6 @@ import { ReadOnlyBox } from "./helper-components";
 import FormHeadline from "components/app-forms/FormHeadline";
 import { Stack } from "@mui/material";
 import { Visit } from "types/visit";
-import { removeHTMLTags } from "helper/utils";
 
 type Props = {
   lastVisit: Visit;
@@ -18,10 +17,6 @@ function QueryDetailScoreSection({ lastVisit }: Props) {
           sublabel="(jako ve škole, 1 nejlepší, 5 nejhorší)"
         >
           {lastVisit?.fields.hodnoceniAsistent}
-        </ReadOnlyBox>
-
-        <ReadOnlyBox label="Poznámka asistenta">
-          {removeHTMLTags(lastVisit?.fields.poznamkaAsistentem)}
         </ReadOnlyBox>
       </Stack>
       <Stack spacing={3} sx={{ marginBottom: "3rem" }}>

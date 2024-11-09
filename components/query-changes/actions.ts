@@ -8,7 +8,6 @@ import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
 import { createTabidooDateString } from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function fetchAutocompleteOrganizations(inputValue: string) {
   return await AssistantAPI.getOrganizationsByName(inputValue);
@@ -28,7 +27,9 @@ export async function createQueryChange(
     stav: visitValues.queryStatus,
     poznamkaAsistentem: visitValues.summary,
     osobnevzdalene: visitValues.meetLocationType,
-    spolupraceSOrganizaci: { id: visitValues.organization.id },
+    spolupraceSOrganizaci: visitValues.organization?.id
+      ? { id: visitValues.organization.id }
+      : undefined,
     delkaReseniDotazuMinuty: visitValues.duration,
     datumUskutecneneNavstevy: visitValues.date
       ? createTabidooDateString(visitValues.date)
@@ -47,14 +48,12 @@ export async function createQueryChange(
     body: {
       fields: {
         stavDotazu: visitValues.queryStatus,
+        resitelLink: { id: session?.user?.id },
       },
     },
   });
 
   revalidatePath(
-    `${AssistantPagePaths.SENIOR_QUERIES}/${queryId}/${QUERY_CHANGES_TAB}`
-  );
-  redirect(
     `${AssistantPagePaths.SENIOR_QUERIES}/${queryId}/${QUERY_CHANGES_TAB}`
   );
 }

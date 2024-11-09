@@ -1,8 +1,11 @@
+import { City } from "./assistant";
+
 export interface Senior {
   created: string;
   fields: {
     email: string;
     heslo: string;
+    mestoLink?: City;
     PSC: string;
     mesto: string;
     stat: string;

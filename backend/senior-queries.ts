@@ -166,7 +166,7 @@ export class SeniorQueriesGetter {
 
     for (const category of categories) {
       filters.push({
-        field: "kategorieDotazu",
+        field: "kategorieMultichoice",
         operator: "contains",
         value: category,
       });

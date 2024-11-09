@@ -1,3 +1,4 @@
+import { Assistant } from "./assistant";
 import { Senior } from "./senior";
 
 export interface QueryComment {
@@ -19,6 +20,7 @@ export interface SeniorQuery {
     iDSeniora: Senior;
     datumVytvoreni: string;
     resitelDotazu: string;
+    resitelLink: Assistant;
     stavDotazu: string;
     komentare?: {
       lastChange: string;
@@ -39,8 +41,8 @@ export interface SeniorQuery {
         hodnoceniAsistent?: { _$$max: number };
       };
     };
-    kategorieDotazu: string;
-    pozadovaneMistoPomoci: string;
+    kategorieMultichoice?: Array<string>;
+    pozadovaneMistoPomoci?: Array<string>;
     pocetHodinCelkem: number;
     pocetNavstev: number;
     prvniKontaktSeniora: string;

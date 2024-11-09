@@ -1,13 +1,25 @@
 import React from "react";
-import { MenuItem, TextField, TextFieldProps } from "@mui/material";
+import {
+  Checkbox,
+  ListItemText,
+  MenuItem,
+  TextField,
+  TextFieldProps,
+} from "@mui/material";
 import { Controller } from "react-hook-form";
 import { FormInputProps } from "./FormInputProps";
 import { commonStyles } from "./form-input-styles";
 
-export function renderFlatOptions(options: Array<any>) {
+export function renderFlatOptions(
+  options: Array<any>,
+  isValueSelected?: Function
+) {
   return options.map((option) => (
     <MenuItem key={option} value={option} dense>
-      {option}
+      {isValueSelected ? (
+        <Checkbox color="warning" checked={isValueSelected(option)} />
+      ) : null}
+      <ListItemText primary={option} />
     </MenuItem>
   ));
 }
@@ -50,6 +62,8 @@ export function FormInputDropdown({
           }}
           SelectProps={{
             multiple,
+            renderValue: (selected: any) =>
+              multiple ? selected.join(", ") : selected,
           }}
         >
           {children}

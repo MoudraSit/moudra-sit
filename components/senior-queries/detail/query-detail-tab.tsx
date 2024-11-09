@@ -159,15 +159,18 @@ async function QueryDetailTab({ seniorQuery }: Props) {
           </Grid>
         </Box>
         <ReadOnlyBox label="Zařízení">
-          {seniorQuery.fields.kategorieDotazu}
+          {seniorQuery.fields.kategorieMultichoice?.join(", ")}
         </ReadOnlyBox>
         {!isQueryFinished ? (
           <ReadOnlyBox label="Preferované místo setkání">
-            {seniorQuery.fields.pozadovaneMistoPomoci}
+            {/* This field used to be a string historically */}
+            {typeof seniorQuery.fields?.pozadovaneMistoPomoci === "object"
+              ? seniorQuery.fields?.pozadovaneMistoPomoci?.join(", ")
+              : seniorQuery.fields?.pozadovaneMistoPomoci}
           </ReadOnlyBox>
         ) : null}
         <ReadOnlyBox label="Řešitel dotazu">
-          {seniorQuery.fields.resitelDotazu}
+          {seniorQuery.fields.resitelLink?.fields.prijmeniAJmeno}
         </ReadOnlyBox>
         {isQueryFinished ? (
           <QueryDetailVisitSection lastVisit={lastVisit} />
