@@ -50,13 +50,19 @@ function FilterChip({
           margin: "6px 2px",
           background: "white",
           fontWeight: "bold",
+
           fontSize: "0.75rem",
+          "& .MuiChip-label": {
+            paddingLeft: "0.5rem",
+            paddingRight: "0.5rem",
+          },
         }}
         onClick={handleOpen}
         variant="outlined"
         label={
           <Stack direction="row" alignItems="center">
-            {createChipLabel()} <ArrowDropDownIcon />
+            {createChipLabel()}{" "}
+            <ArrowDropDownIcon sx={{ fontSize: "1.25rem" }} />
           </Stack>
         }
       />
