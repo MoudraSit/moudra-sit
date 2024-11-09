@@ -143,7 +143,7 @@ export class SeniorQueriesGetter {
 
   private static async _createSeniorQueryLocationFilter(location: string) {
     return {
-      field: "lokalita",
+      field: "mestoLink.okres",
       operator: "in",
       value: location,
     };

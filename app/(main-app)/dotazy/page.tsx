@@ -5,6 +5,11 @@ import { SeniorQueriesGetter } from "backend/senior-queries";
 import QueryCardDynamicList from "components/dynamic-list/query-card-dynamic-list";
 import { Typography } from "@mui/material";
 import { AssistantAPI } from "backend/assistant";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dotazy",
+};
 
 type Props = {
   searchParams?: Partial<Record<FilterType, string>>;
