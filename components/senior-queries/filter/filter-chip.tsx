@@ -6,11 +6,12 @@ import FilterSelectMenu from "./filter-select-menu";
 import FilterSearchMenu from "./filter-search-menu";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import FilterAutocompleteMenu from "./filter-autocomplete-menu";
-import { District } from "types/assistant";
+import { JSObject } from "types/common";
 
 type Props = {
   title: string;
   options?: Array<any>;
+  labels?: JSObject;
   useAutocomplete?: boolean;
   value: string;
   setValue: Function;
@@ -19,6 +20,7 @@ type Props = {
 function FilterChip({
   title,
   options,
+  labels,
   value,
   setValue,
   useAutocomplete,
@@ -35,12 +37,18 @@ function FilterChip({
   const createChipLabel = () => {
     if (!value.length) return title;
 
-    // For 1-2 values, just display them
-    if (value.split(",").length < 3) return value.replaceAll(",", ", ");
-
     const splitValues = value.split(",");
+    // For 1 value, just display it
+    if (splitValues.length < 2) {
+      return splitValues.map((value) => labels?.[value] ?? value).join(", ");
+    }
 
-    return splitValues.slice(0, 2).join(", ") + ` + ${splitValues.length - 2}`;
+    return (
+      splitValues
+        .slice(0, 1)
+        .map((value) => labels?.[value] ?? value)
+        .join(", ") + ` + ${splitValues.length - 1}`
+    );
   };
 
   return (
@@ -74,7 +82,7 @@ function FilterChip({
             open={open}
             handleClose={handleClose}
             handleSave={setValue}
-            options={options.map((option: District) => option.fields.okres)}
+            options={options}
             value={value}
           />
         ) : (
@@ -84,6 +92,7 @@ function FilterChip({
             handleClose={handleClose}
             handleSave={setValue}
             options={options}
+            labels={labels}
             value={value}
           />
         )

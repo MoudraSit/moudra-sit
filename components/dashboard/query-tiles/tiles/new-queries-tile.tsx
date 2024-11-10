@@ -2,14 +2,14 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import * as React from "react";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import Link from "next/link";
-import { AssistantPagePaths, FilterType, QueryStatus } from "helper/consts";
+import {
+  AssistantPagePaths,
+  FilterType,
+  WITHOUT_SOLVER_STATUSES,
+} from "helper/consts";
 
 async function NewQueriesTile() {
-  const selectedQueryStatuses = [
-    QueryStatus.NEW,
-    QueryStatus.FOR_HANDOVER,
-    QueryStatus.POSTPONED,
-  ].join(",");
+  const selectedQueryStatuses = WITHOUT_SOLVER_STATUSES.join(",");
   const queries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
     [FilterType.QUERY_STATUS]: selectedQueryStatuses,
   });

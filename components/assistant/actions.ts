@@ -85,9 +85,6 @@ export async function saveAssistantSettings(
     method: "PATCH",
     body: { fields: payload },
   });
-
-  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_MY_SCORE}`);
-  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_SETTINGS}`);
 }
 
 export async function fetchAutocompleteCities(inputValue: string) {

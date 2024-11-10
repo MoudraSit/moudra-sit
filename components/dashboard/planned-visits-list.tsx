@@ -2,12 +2,11 @@ import { Stack, Typography } from "@mui/material";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import QueryCard from "components/senior-queries/query-card";
 import { THEME_COLORS } from "components/theme/colors";
-import { FilterType, QueryStatus } from "helper/consts";
+import { FilterType, WITHOUT_SOLVER_STATUSES } from "helper/consts";
 
 async function PlannedVisitsList() {
-  // TODO: addd queries for handover once multistatus is supported
   const newQueries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.QUERY_STATUS]: QueryStatus.NEW,
+    [FilterType.QUERY_STATUS]: WITHOUT_SOLVER_STATUSES.join(","),
   });
 
   const myQueries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
