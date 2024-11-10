@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Link, Stack, Typography } from "@mui/material";
 import { SeniorQuery } from "types/seniorQuery";
 import { BORDER_COLOR, ReadOnlyBox, ReadOnlyField } from "./helper-components";
-import { formatDate } from "helper/utils";
+import { formatDate, labelVisitLocationTypes } from "helper/utils";
 import QueryStatusChip from "../query-status-chip";
 import QueryDetailCommentsSection from "./query-detail-comments-section";
 import {
@@ -69,7 +69,9 @@ async function QueryDetailTab({ seniorQuery }: Props) {
           </span>
         </Typography>
         <ReadOnlyBox label="Stav dotazu">
-          <QueryStatusChip queryStatus={seniorQuery.fields.stavDotazu} />
+          <QueryStatusChip
+            queryStatus={seniorQuery.fields.stavDotazu as QueryStatus}
+          />
         </ReadOnlyBox>
 
         <Box>
@@ -164,9 +166,7 @@ async function QueryDetailTab({ seniorQuery }: Props) {
         {!isQueryFinished ? (
           <ReadOnlyBox label="Preferované místo setkání">
             {/* This field used to be a string historically */}
-            {typeof seniorQuery.fields?.pozadovaneMistoPomoci === "object"
-              ? seniorQuery.fields?.pozadovaneMistoPomoci?.join(", ")
-              : seniorQuery.fields?.pozadovaneMistoPomoci}
+            {labelVisitLocationTypes(seniorQuery.fields?.pozadovaneMistoPomoci)}
           </ReadOnlyBox>
         ) : null}
         <ReadOnlyBox label="Řešitel dotazu">

@@ -1,4 +1,9 @@
 import dayjs from "dayjs";
+import {
+  QUERY_OLD_DAYS,
+  VisitMeetLocationType,
+  VisitMeetLocationTypeLabels,
+} from "./consts";
 
 export function generateUID() {
   // I generate the UID from two parts here
@@ -27,7 +32,8 @@ export function formatMonth(month: string | number) {
 
 // Tabidoo BE has no timezone info and understands dates to be in the CET timezone
 // Using toISOString() returns UTC time (-1 or -2 hours), which needs to be compensated for
-export function createTabidooDateString(date: Date) {
+export function createTabidooDateString(date?: Date) {
+  if (!date) return undefined;
   const timeZoneOffsetHours = date.getTimezoneOffset() / 60;
   const now = dayjs().add(timeZoneOffsetHours, "hour");
   return now.toISOString();
@@ -45,4 +51,22 @@ export function removeHTMLTags(value?: string) {
   if (!value) return "";
   const regex = /(<([^>]+)>)/gi;
   return value.replace(regex, "");
+}
+
+export function labelVisitLocationTypes(locations: any) {
+  /* This field used to be a string historically */
+  return typeof locations === "object"
+    ? locations
+        .map(
+          (loc: VisitMeetLocationType) =>
+            VisitMeetLocationTypeLabels[loc] ?? loc
+        )
+        .join(", ")
+    : locations;
+}
+
+export function checkIfQueryTooOld(queryCreated: string) {
+  const queryCreatedDate = dayjs(queryCreated);
+  const now = dayjs();
+  return queryCreatedDate.add(QUERY_OLD_DAYS, "day") < now;
 }

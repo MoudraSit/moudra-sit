@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import { THEME_COLORS } from "components/theme/colors";
+import { JSObject } from "types/common";
 
 type Props = {
   open: boolean;
@@ -20,6 +21,7 @@ type Props = {
   handleClose: Function;
   handleSave: Function;
   options: Array<string>;
+  labels?: JSObject;
   value: string;
 };
 
@@ -35,6 +37,7 @@ function FilterAutocompleteMenu({
   handleClose,
   handleSave,
   options,
+  labels,
   value,
 }: Props) {
   const [filteredValue, setFilteredValue] = React.useState("");
@@ -145,7 +148,7 @@ function FilterAutocompleteMenu({
               <MenuItem key={option.value} sx={{ padding: "0 0.5rem" }}>
                 <FormControlLabel
                   sx={{ marginRight: 0 }}
-                  label={option.value}
+                  label={labels?.[option.value] ?? option.value}
                   control={
                     <Checkbox
                       sx={{ padding: "0.25rem" }}

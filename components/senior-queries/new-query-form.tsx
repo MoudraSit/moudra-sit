@@ -22,12 +22,14 @@ import {
   QUERY_DETAIL_TAB,
   QueryDeviceCategory,
   VisitMeetLocationType,
+  VisitMeetLocationTypeLabels,
 } from "helper/consts";
-import { SeniorQuery } from "types/seniorQuery";
 import FormHeadline from "components/app-forms/FormHeadline";
 import SubmitButton from "components/buttons/submit-button";
 import { useRouter } from "next/navigation";
 import { FormInputCity } from "components/app-forms/inputs/FormInputCity";
+import { Senior } from "types/senior";
+import { NewSeniorValues } from "helper/schemas/new-senior-schema";
 
 const seniorInitialValues = {
   phoneCountryCode: PhoneCountryCodes.CZ as string,
@@ -43,54 +45,47 @@ function highlightOption(option: string, values?: Array<string>) {
   return values && values.includes(option);
 }
 
-function parsePrefilledQuery(prefilledQuery?: SeniorQuery): NewQueryValues {
-  const initialValues = {
-    senior: seniorInitialValues,
-    deviceTypes: [],
-    preferredMeetLocations: [],
-    title: "",
-    description: "",
-  };
-
-  if (!prefilledQuery) return initialValues;
+function prefillSenior(prefilledSenior?: Senior): NewSeniorValues {
+  if (!prefilledSenior) return seniorInitialValues;
 
   // eslint-disable-next-line no-unused-vars
-  const [_, countryCode, phoneNumber] =
-    prefilledQuery.fields.iDSeniora.fields.telefon.match(
-      phoneRegexWithCountryCode
-    ) as string[];
+  const [_, countryCode, phoneNumber] = prefilledSenior.fields.telefon.match(
+    phoneRegexWithCountryCode
+  ) as string[];
 
   return {
-    ...initialValues,
-    preexistingSeniorId: prefilledQuery.fields.iDSeniora.id,
-    senior: {
-      phoneCountryCode: Object.values(PhoneCountryCodes).includes(
-        countryCode as PhoneCountryCodes
-      )
-        ? countryCode
-        : PhoneCountryCodes.CZ,
-      phone: phoneNumber,
-      name: prefilledQuery.fields.iDSeniora.fields.jmeno,
-      surname: prefilledQuery.fields.iDSeniora.fields.prijmeni,
-      year: prefilledQuery.fields.iDSeniora.fields.rokNarozeni,
-      email: prefilledQuery.fields.iDSeniora.fields.email,
-      city: prefilledQuery.fields.iDSeniora.fields?.mestoLink ?? null,
-    },
+    ...seniorInitialValues,
+    phoneCountryCode: Object.values(PhoneCountryCodes).includes(
+      countryCode as PhoneCountryCodes
+    )
+      ? countryCode
+      : PhoneCountryCodes.CZ,
+    phone: phoneNumber,
+    name: prefilledSenior.fields.jmeno,
+    surname: prefilledSenior.fields.prijmeni,
+    year: prefilledSenior.fields.rokNarozeni,
+    email: prefilledSenior.fields.email,
+    city: prefilledSenior.fields?.mestoLink ?? null,
   };
 }
 
 type Props = {
-  prefilledQuery?: SeniorQuery;
+  prefilledSenior?: Senior;
 };
 
 // TODO (nice-to-have): loading for the senior form part (for preexisting)
-function NewQueryForm({ prefilledQuery }: Props) {
+function NewQueryForm({ prefilledSenior }: Props) {
   const router = useRouter();
 
   const { handleSubmit, watch, getValues, setValue, control } = useForm({
     resolver: yupResolver(newQuerySchema),
     defaultValues: {
-      ...parsePrefilledQuery(prefilledQuery),
+      preexistingSeniorId: prefilledSenior?.id,
+      senior: prefillSenior(prefilledSenior),
+      deviceTypes: [],
+      preferredMeetLocations: [],
+      title: "",
+      description: "",
     },
   });
 
@@ -102,8 +97,6 @@ function NewQueryForm({ prefilledQuery }: Props) {
   const watchPreferredMeetLocations = watch("preferredMeetLocations");
   // eslint-disable-next-line no-unused-vars
   const watchPreexistingSenior = watch("preexistingSeniorId");
-
-  // const [seniorFound, setIsSeniorFound] = React.useState(false);
 
   const handlePhoneBlur = async () => {
     const seniorsWithSamePhone = await searchSeniorsByPhoneNumber(
@@ -230,6 +223,7 @@ function NewQueryForm({ prefilledQuery }: Props) {
           >
             {renderFlatOptions(
               Object.values(QueryDeviceCategory),
+              {},
               (option: string) =>
                 highlightOption(option, getValues("deviceTypes") as string[])
             )}
@@ -241,9 +235,15 @@ function NewQueryForm({ prefilledQuery }: Props) {
             label="Preferovaná místa setkání"
             multiple
             multiline
+            renderValue={(vals: Array<VisitMeetLocationType>) =>
+              vals
+                .map((val) => VisitMeetLocationTypeLabels[val] ?? val)
+                .join(", ")
+            }
           >
             {renderFlatOptions(
               Object.values(VisitMeetLocationType),
+              VisitMeetLocationTypeLabels,
               (option: string) =>
                 highlightOption(
                   option,

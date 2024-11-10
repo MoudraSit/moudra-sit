@@ -8,6 +8,7 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/material";
+import { JSObject } from "types/common";
 
 type Props = {
   open: boolean;
@@ -15,6 +16,7 @@ type Props = {
   handleClose: Function;
   handleSave: Function;
   options: Array<string>;
+  labels?: JSObject;
   value: string;
 };
 
@@ -37,6 +39,7 @@ function FilterSelectMenu({
   handleClose,
   handleSave,
   options,
+  labels,
   value,
 }: Props) {
   const [selectedOptions, setSelectedOptions] = React.useState<Array<Option>>(
@@ -80,7 +83,7 @@ function FilterSelectMenu({
             <MenuItem key={option.value} sx={{ padding: "0 0.5rem" }}>
               <FormControlLabel
                 sx={{ marginRight: 0 }}
-                label={option.value}
+                label={labels?.[option.value] ?? option.value}
                 control={
                   <Checkbox
                     sx={{ padding: "0.25rem" }}
