@@ -32,7 +32,7 @@ export async function createQuery(formData: Record<string, any>) {
       id: values.preexistingSeniorId,
     },
     resitelLink: { id: session?.user?.id },
-    mestoLink: { id: values.senior.city.id },
+    mestoLink: { id: values.senior.city!.id },
     popis: values.title,
     podrobnosti: values.description,
     kategorieMultichoice: values.deviceTypes,
@@ -48,7 +48,7 @@ export async function createQuery(formData: Record<string, any>) {
 
   // Artifical wait so that Tabidoo creates all the calculated fields before showing the new query detail
   await new Promise((resolve) => setTimeout(resolve, 500));
-  revalidatePath(AssistantPagePaths.DASHBOARD);
+  revalidatePath("/", "layout");
   return newQuery.id;
 }
 

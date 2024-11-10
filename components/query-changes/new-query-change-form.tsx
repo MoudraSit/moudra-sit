@@ -9,6 +9,7 @@ import {
   QUERY_CHANGES_TAB,
   QueryStatus,
   VisitMeetLocationType,
+  VisitMeetLocationTypeLabels,
 } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
 import * as React from "react";
@@ -66,7 +67,11 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
       organization: lastVisit?.fields?.spolupraceSOrganizaci ?? null,
       //@ts-ignore
       date: lastVisit
-        ? dayjs(lastVisit.fields.datumUskutecneneNavstevy ?? "")
+        ? dayjs(
+            lastVisit.fields.datumPlanovanaNavsteva ??
+              lastVisit.fields.datumUskutecneneNavstevy ??
+              ""
+          )
         : undefined,
     },
   });
@@ -134,6 +139,9 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           name="queryStatus"
           control={control}
           label="Stavu dotazu"
+          renderValue={(status: QueryStatus) => (
+            <QueryStatusChip queryStatus={status} />
+          )}
         >
           {QUERY_STATUSES_FOR_ASSISTANT.map((option) => (
             <MenuItem key={option} value={option} dense>
@@ -146,8 +154,14 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           name="meetLocationType"
           control={control}
           label="Místo setkání"
+          renderValue={(val: VisitMeetLocationType) =>
+            VisitMeetLocationTypeLabels[val] ?? val
+          }
         >
-          {renderFlatOptions(Object.values(VisitMeetLocationType))}
+          {renderFlatOptions(
+            Object.values(VisitMeetLocationType),
+            VisitMeetLocationTypeLabels
+          )}
         </FormInputDropdown>
 
         {isMeetInOrganization ? (

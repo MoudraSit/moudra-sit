@@ -11,7 +11,7 @@ import { Stack } from "@mui/material";
 import {
   FINISHED_STATUSES,
   QueryStatus,
-  VisitMeetLocation,
+  VisitMeetLocationType,
 } from "helper/consts";
 import QueryDetailScoreSection from "components/senior-queries/detail/query-detail-score-section";
 
@@ -40,7 +40,7 @@ async function Page({ params }: Props) {
   );
 
   const isMeetInOrganization =
-    visit.fields.osobnevzdalene === VisitMeetLocation.LIBRARY;
+    visit.fields.osobnevzdalene === VisitMeetLocationType.LIBRARY;
 
   return (
     <>
@@ -48,7 +48,7 @@ async function Page({ params }: Props) {
       <BasePaper>
         <Stack spacing={3} sx={{ marginBottom: "3rem" }}>
           <ReadOnlyBox label="Stav dotazu">
-            <QueryStatusChip queryStatus={visit.fields.stav} />
+            <QueryStatusChip queryStatus={visit.fields.stav as QueryStatus} />
           </ReadOnlyBox>
           <ReadOnlyBox label="Místo setkání">
             {visit.fields.osobnevzdalene}

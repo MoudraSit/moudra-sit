@@ -1,5 +1,7 @@
 export const WEB_APP_NAME = "Mobilní aplikace MS";
 
+export const QUERY_OLD_DAYS = 5;
+
 /* eslint-disable no-unused-vars */
 export enum Role {
   SENIOR = "senior",
@@ -23,10 +25,25 @@ export enum QueryStatus {
 }
 
 export const FINISHED_STATUSES = [QueryStatus.SOLVED, QueryStatus.UNSOLVED];
+export const WITHOUT_SOLVER_STATUSES = [
+  QueryStatus.NEW,
+  QueryStatus.FOR_HANDOVER,
+  QueryStatus.POSTPONED,
+];
+
+export const QueryStatusLabels = {
+  [QueryStatus.NEW]: "Nový",
+  [QueryStatus.FOR_HANDOVER]: "K předání",
+  [QueryStatus.ACCEPTED]: "Přijato",
+  [QueryStatus.IN_PROGRESS]: "V řešení",
+  [QueryStatus.SOLVED]: "Vyřešeno - ukončeno",
+  [QueryStatus.UNSOLVED]: "Nevyřešeno - ukončeno",
+  [QueryStatus.POSTPONED]: "Odloženo",
+};
 
 // Object allows dynamic key names
 export const QueryStatusColors = {
-  [QueryStatus.NEW]: "#FD6A40",
+  [QueryStatus.NEW]: "#7BD7BE",
   [QueryStatus.IN_PROGRESS]: "#2766FF",
   [QueryStatus.FOR_HANDOVER]: "#FFC247",
   [QueryStatus.SOLVED]: "#12BA55",
@@ -73,11 +90,18 @@ export enum QueryDeviceCategory {
 }
 
 export enum VisitMeetLocationType {
-  AT_SENIOR = "U seniora",
-  REMOTE = "Vzdáleně (online/telefonicky)",
-  LIBRARY = "Knihovna / klub",
-  OTHER = "Jiné místo",
+  AT_SENIOR = "U mě doma",
+  REMOTE = "Na dálku",
+  LIBRARY = "V knihovně",
+  OTHER = "Jinde",
 }
+
+export const VisitMeetLocationTypeLabels = {
+  [VisitMeetLocationType.AT_SENIOR]: "U seniora doma",
+  [VisitMeetLocationType.REMOTE]: "Vzdáleně (online/telefonicky)",
+  [VisitMeetLocationType.LIBRARY]: "Knihovna / klub",
+  [VisitMeetLocationType.OTHER]: "Jiné místo",
+};
 
 export enum PhoneCountryCodes {
   CZ = "+420",
@@ -87,7 +111,7 @@ export enum PhoneCountryCodes {
 export const phoneRegexWithCountryCode =
   /^([+]\d{1,3})?[ ]?(\d{3}[ ]?\d{3}[ ]?\d{3})$/;
 
-export const MAX_QUERY_CARD_HEIGHT = 245;
+export const MAX_QUERY_CARD_HEIGHT = 255;
 export const MAX_QUERY_CARD_WIDTH = 500;
 
 export const MAX_LIST_ITEM_HEIGHT = 70;

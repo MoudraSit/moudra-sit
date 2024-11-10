@@ -38,7 +38,11 @@ export const newSeniorSchema = yup.object({
       "Napište správný tvar telefonního čísla (např. 123456789)"
     )
     .required("Napište seniorův kontaktní telefon (např. 123456789)"),
-  city: new yup.ObjectSchema<City>().nullable().required("Zadejte město"),
+  // The required check is made conditional to allow both being initially null and validated upon submitting at the same time
+  city: new yup.ObjectSchema<City>().nullable().when("phone", {
+    is: (val: string) => val,
+    then: (schema) => schema.required("Zadejte město"),
+  }),
 });
 
 export type NewSeniorValues = yup.InferType<typeof newSeniorSchema>;
