@@ -1,8 +1,12 @@
 import { Chip } from "@mui/material";
-import { QueryStatusColors } from "helper/consts";
+import {
+  QueryStatus,
+  QueryStatusColors,
+  QueryStatusLabels,
+} from "helper/consts";
 
 type Props = {
-  queryStatus: string;
+  queryStatus: QueryStatus;
   sx?: any;
 };
 
@@ -17,7 +21,7 @@ function QueryStatusChip({ queryStatus, sx }: Props) {
   return (
     <Chip
       size="small"
-      label={queryStatus}
+      label={QueryStatusLabels[queryStatus] ?? queryStatus}
       sx={{
         backgroundColor: selectChipColor(queryStatus),
         color: "white",

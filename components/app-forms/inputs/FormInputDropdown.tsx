@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   Checkbox,
   ListItemText,
@@ -9,9 +9,11 @@ import {
 import { Controller } from "react-hook-form";
 import { FormInputProps } from "./FormInputProps";
 import { commonStyles } from "./form-input-styles";
+import { JSObject } from "types/common";
 
 export function renderFlatOptions(
   options: Array<any>,
+  labels?: JSObject,
   isValueSelected?: Function
 ) {
   return options.map((option) => (
@@ -19,7 +21,7 @@ export function renderFlatOptions(
       {isValueSelected ? (
         <Checkbox color="warning" checked={isValueSelected(option)} />
       ) : null}
-      <ListItemText primary={option} />
+      <ListItemText primary={labels?.[option] ?? option} />
     </MenuItem>
   ));
 }
@@ -30,11 +32,13 @@ export function FormInputDropdown({
   label,
   children,
   multiple = false,
+  renderValue,
   ...props
 }: FormInputProps &
   TextFieldProps & {
     children: React.ReactNode;
     multiple?: boolean;
+    renderValue?: Function;
   }) {
   return (
     <Controller
@@ -62,8 +66,9 @@ export function FormInputDropdown({
           }}
           SelectProps={{
             multiple,
-            renderValue: (selected: any) =>
-              multiple ? selected.join(", ") : selected,
+            renderValue: renderValue
+              ? (renderValue as () => ReactNode)
+              : (selected: any) => (multiple ? selected.join(", ") : selected),
           }}
         >
           {children}

@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { SeniorQueriesGetter } from "backend/senior-queries";
+import { getSeniorById } from "backend/seniors";
 import BackButton from "components/buttons/back-button";
 import BasePaper from "components/layout/base-paper";
 import NewQueryForm from "components/senior-queries/new-query-form";
@@ -14,6 +15,10 @@ async function Page({ searchParams }: Props) {
     ? await SeniorQueriesGetter.getSeniorQueryById(searchParams.prefill)
     : undefined;
 
+  const seniorId = prefilledQuery?.fields.iDSeniora.id;
+  let prefilledSenior = undefined;
+  if (seniorId) prefilledSenior = await getSeniorById(seniorId);
+
   return (
     <>
       <BackButton />
@@ -25,7 +30,7 @@ async function Page({ searchParams }: Props) {
           Nový dotaz
         </Typography>
         <hr style={{ borderColor: THEME_COLORS.primary }} />
-        <NewQueryForm prefilledQuery={prefilledQuery} />
+        <NewQueryForm prefilledSenior={prefilledSenior} />
       </BasePaper>
     </>
   );

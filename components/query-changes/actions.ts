@@ -3,7 +3,7 @@
 import { authOptions } from "app/lib/auth";
 import { AssistantAPI } from "backend/assistant";
 import { callTabidoo } from "backend/tabidoo";
-import { AssistantPagePaths, QUERY_CHANGES_TAB } from "helper/consts";
+import { FINISHED_STATUSES, QueryStatus } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
 import { createTabidooDateString } from "helper/utils";
 import { getServerSession } from "next-auth";
@@ -31,7 +31,14 @@ export async function createQueryChange(
       ? { id: visitValues.organization.id }
       : undefined,
     delkaReseniDotazuMinuty: visitValues.duration,
-    datumUskutecneneNavstevy: visitValues.date
+    datumUskutecneneNavstevy: FINISHED_STATUSES.includes(
+      visitValues.queryStatus as QueryStatus
+    )
+      ? createTabidooDateString(visitValues.date)
+      : null,
+    datumPlanovanaNavsteva: !FINISHED_STATUSES.includes(
+      visitValues.queryStatus as QueryStatus
+    )
       ? createTabidooDateString(visitValues.date)
       : null,
     mistoNavstevy: visitValues.address,
@@ -53,7 +60,6 @@ export async function createQueryChange(
     },
   });
 
-  revalidatePath(
-    `${AssistantPagePaths.SENIOR_QUERIES}/${queryId}/${QUERY_CHANGES_TAB}`
-  );
+  // Ineffective, but revalidate does not work with dynamic paths reliably
+  revalidatePath(`/`, "layout");
 }

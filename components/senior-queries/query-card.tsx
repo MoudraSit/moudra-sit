@@ -1,10 +1,21 @@
 import { Card, Typography, Stack, Box } from "@mui/material";
-import { MAX_QUERY_CARD_HEIGHT, MAX_QUERY_CARD_WIDTH } from "helper/consts";
-import { formatDate, formatDateTime, removeHTMLTags } from "helper/utils";
+import {
+  MAX_QUERY_CARD_HEIGHT,
+  MAX_QUERY_CARD_WIDTH,
+  QueryStatus,
+} from "helper/consts";
+import {
+  checkIfQueryTooOld,
+  formatDate,
+  formatDateTime,
+  labelVisitLocationTypes,
+  removeHTMLTags,
+} from "helper/utils";
 import { JSObject } from "types/common";
 import { SeniorQuery } from "types/seniorQuery";
 import QueryStatusChip from "./query-status-chip";
 import QueryDetailButton from "components/buttons/query-detail-button";
+import OldQueryChip from "./old-query-chip";
 
 const CARD_SPACING = "1rem";
 
@@ -35,9 +46,10 @@ function QueryCard({
     >
       <Stack
         gap={1}
-        justifyContent="space-between"
         flexGrow={1}
+        justifyContent="space-between"
         sx={{
+          minWidth: 0,
           borderRadius: "6px",
           paddingBottom: "0.5rem !important",
           padding: "0.5rem",
@@ -49,11 +61,17 @@ function QueryCard({
             justifyContent="space-between"
             alignItems="center"
           >
-            <QueryStatusChip queryStatus={item.fields.stavDotazu} />
+            <QueryStatusChip
+              queryStatus={item.fields.stavDotazu as QueryStatus}
+            />
             <Typography variant="body1">
               {formatDate(item.fields.datumVytvoreni)}
             </Typography>
           </Stack>
+
+          {checkIfQueryTooOld(item.fields.datumVytvoreni) ? (
+            <OldQueryChip />
+          ) : null}
 
           <Typography variant="h2" fontWeight={"bold"}>
             {item.fields.popis}
@@ -64,19 +82,33 @@ function QueryCard({
           <Typography variant="body1">
             {item.fields.iDSeniora?.fields.mesto}
           </Typography>
-          <Typography variant="body1" fontWeight="600">
+          <Typography
+            variant="body1"
+            fontWeight="600"
+            sx={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
             Zařízení:{" "}
             <span style={{ fontWeight: "normal" }}>
               {item.fields?.kategorieMultichoice?.join(", ")}
             </span>
           </Typography>
-          <Typography fontWeight="600" variant="body1">
+          <Typography
+            fontWeight="600"
+            variant="body1"
+            sx={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
             Místo setkání:{" "}
             <span style={{ fontWeight: "normal" }}>
               {/* This field used to be a string historically */}
-              {typeof item.fields?.pozadovaneMistoPomoci === "object"
-                ? item.fields?.pozadovaneMistoPomoci?.join(", ")
-                : item.fields?.pozadovaneMistoPomoci}
+              {labelVisitLocationTypes(item.fields?.pozadovaneMistoPomoci)}
             </span>
           </Typography>
           {showVisitInfo ? (

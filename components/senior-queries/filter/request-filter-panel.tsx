@@ -3,7 +3,9 @@
 import {
   FilterType,
   QueryDeviceCategory,
+  QueryStatusLabels,
   VisitMeetLocationType,
+  VisitMeetLocationTypeLabels,
 } from "helper/consts";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { QueryStatus } from "helper/consts";
@@ -84,6 +86,7 @@ function RequestFilterPanel({ districts }: Props) {
           title="Stav dotazu"
           options={Object.values(QueryStatus)}
           value={queryStatuses}
+          labels={QueryStatusLabels}
           setValue={(newValue: string) =>
             handleFilter({ [FilterType.QUERY_STATUS]: newValue })
           }
@@ -92,7 +95,7 @@ function RequestFilterPanel({ districts }: Props) {
           title="Lokalita"
           value={locations}
           useAutocomplete
-          options={districts}
+          options={districts.map((option: District) => option.fields.okres)}
           setValue={(newValue: string) =>
             handleFilter({ [FilterType.LOCATION]: newValue })
           }
@@ -108,6 +111,7 @@ function RequestFilterPanel({ districts }: Props) {
         <FilterChip
           title="Místo setkání"
           options={Object.values(VisitMeetLocationType)}
+          labels={VisitMeetLocationTypeLabels}
           value={meetLocationTypes}
           setValue={(newValue: string) =>
             handleFilter({ [FilterType.MEET_LOCATION_TYPES]: newValue })

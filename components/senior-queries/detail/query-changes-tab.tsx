@@ -4,7 +4,7 @@ import { formatDate, removeHTMLTags } from "helper/utils";
 import { Visit } from "types/visit";
 import { ListItemContent } from "@mui/joy";
 import NextLink from "next/link";
-import { AssistantPagePaths } from "helper/consts";
+import { AssistantPagePaths, QueryStatus } from "helper/consts";
 import QueryStatusChip from "../query-status-chip";
 
 type Props = {
@@ -44,7 +44,7 @@ function QueryChangesTab({ visits }: Props) {
                   </Stack>
                   <QueryStatusChip
                     sx={{ alignSelf: "flex-start" }}
-                    queryStatus={visit.fields.stav}
+                    queryStatus={visit.fields.stav as QueryStatus}
                   />
                   <Stack direction="row" justifyContent="space-between">
                     <Typography
