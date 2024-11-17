@@ -36,13 +36,13 @@ async function QueryDetailTab({ seniorQuery }: Props) {
 
   return (
     <>
-      <Box>
+      <Stack alignItems="center">
         {isQueryFinished ? null : (
           <Button
             LinkComponent={Link}
             href={`${AssistantPagePaths.NEW_VISIT}?queryId=${seniorQuery.id}`}
             variant="contained"
-            sx={{ marginBottom: "0.5rem" }}
+            sx={{ marginBottom: "0.5rem", maxWidth: "500px" }}
             fullWidth
             color="warning"
           >
@@ -54,13 +54,14 @@ async function QueryDetailTab({ seniorQuery }: Props) {
         <Button
           LinkComponent={Link}
           href={`${AssistantPagePaths.NEW_SENIOR_QUERY}?prefill=${seniorQuery.id}`}
+          sx={{ maxWidth: "500px" }}
           fullWidth
           color="info"
           variant="outlined"
         >
           + Předvyplnit další dotaz
         </Button>
-      </Box>
+      </Stack>
       <Stack spacing={2}>
         <Typography sx={{ fontWeight: "bold", fontSize: "16px" }}>
           Datum vložení:
