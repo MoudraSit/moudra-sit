@@ -1,9 +1,11 @@
 import dayjs from "dayjs";
 import {
   QUERY_OLD_DAYS,
+  QueryStatus,
   VisitMeetLocationType,
   VisitMeetLocationTypeLabels,
 } from "./consts";
+import { SeniorQuery } from "types/seniorQuery";
 
 export function generateUID() {
   // I generate the UID from two parts here
@@ -61,8 +63,11 @@ export function labelVisitLocationTypes(locations: any) {
     : locations;
 }
 
-export function checkIfQueryTooOld(queryCreated: string) {
-  const queryCreatedDate = dayjs(queryCreated);
+export function checkIfQueryTooOld(query: SeniorQuery) {
+  const queryCreatedDate = dayjs(query.fields.datumVytvoreni);
   const now = dayjs();
-  return queryCreatedDate.add(QUERY_OLD_DAYS, "day") < now;
+  return (
+    queryCreatedDate.add(QUERY_OLD_DAYS, "day") < now &&
+    query.fields.stavDotazu in [QueryStatus.NEW, QueryStatus.POSTPONED]
+  );
 }

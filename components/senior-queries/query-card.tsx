@@ -1,8 +1,5 @@
 import { Card, Typography, Stack, Box } from "@mui/material";
-import {
-  MAX_QUERY_CARD_HEIGHT,
-  QueryStatus,
-} from "helper/consts";
+import { MAX_QUERY_CARD_HEIGHT, QueryStatus } from "helper/consts";
 import {
   checkIfQueryTooOld,
   formatDate,
@@ -67,9 +64,7 @@ function QueryCard({
             </Typography>
           </Stack>
 
-          {checkIfQueryTooOld(item.fields.datumVytvoreni) ? (
-            <OldQueryChip />
-          ) : null}
+          {checkIfQueryTooOld(item) ? <OldQueryChip /> : null}
 
           <Typography variant="h2" fontWeight={"bold"}>
             {item.fields.popis}
@@ -121,7 +116,16 @@ function QueryCard({
                 </span>
               </Typography>
               {item.fields.navstevy?.fields?.posledniPoznamkaAsistent ? (
-                <Typography fontWeight="600" variant="body1">
+                <Typography
+                  fontWeight="600"
+                  variant="body1"
+                  sx={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
                   Poznámka k setkání:{" "}
                   <span style={{ fontWeight: "normal" }}>
                     {removeHTMLTags(
