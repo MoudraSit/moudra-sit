@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { FormInputDate } from "components/app-forms/inputs/FormInputDate";
 import { FormInputText } from "components/app-forms/inputs/FormInputText";
 import {
   FormInputDropdown,
@@ -33,6 +32,7 @@ import FormHeadline from "components/app-forms/FormHeadline";
 import SubmitButton from "components/buttons/submit-button";
 import { Organization } from "types/assistant";
 import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInputAsyncAutocomplete";
+import { FormInputDateTime } from "components/app-forms/inputs/FormInputDateTime";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -66,7 +66,7 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
       // Yup schema expects JS native Date, but the input works with dayjs
       organization: lastVisit?.fields?.spolupraceSOrganizaci ?? null,
       //@ts-ignore
-      date: lastVisit
+      dateTime: lastVisit
         ? dayjs(
             lastVisit.fields.datumPlanovanaNavsteva ??
               lastVisit.fields.datumUskutecneneNavstevy ??
@@ -194,12 +194,16 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           <FormInputText
             name="address"
             control={control}
-            label="Adresa návštěvy"
+            label="Adresa setkání"
             disabled={isMeetInOrganization}
           />
         )}
 
-        <FormInputDate name="date" control={control} label="Datum návštěvy" />
+        <FormInputDateTime
+          name="dateTime"
+          control={control}
+          label="Datum a čas setkání"
+        />
 
         {isQueryFinished ? (
           <FormInputText

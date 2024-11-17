@@ -4,7 +4,7 @@ import { getVisitById } from "backend/visits";
 import { redirect } from "next/navigation";
 import { NotFoundError } from "helper/exceptions";
 import { ReadOnlyBox } from "components/senior-queries/detail/helper-components";
-import { formatDate, removeHTMLTags } from "helper/utils";
+import { formatDateTime, removeHTMLTags } from "helper/utils";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
 import BasePaper from "components/layout/base-paper";
 import { Stack } from "@mui/material";
@@ -61,8 +61,13 @@ async function Page({ params }: Props) {
           <ReadOnlyBox label="Adresa návštěvy">
             {visit.fields.mistoNavstevy}
           </ReadOnlyBox>
-          <ReadOnlyBox label="Datum návštěvy">
-            {formatDate(visit.fields.datumUskutecneneNavstevy)}
+          <ReadOnlyBox label="Datuma čas setkání">
+            {formatDateTime(
+              visit.fields.stav in FINISHED_STATUSES
+                ? visit.fields.datumUskutecneneNavstevy
+                : visit.fields.datumPlanovanaNavsteva
+            )}
+            {}
           </ReadOnlyBox>
           {isQueryFinished ? (
             <ReadOnlyBox label="Délka řešení dotazu (minuty)">

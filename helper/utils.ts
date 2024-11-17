@@ -20,8 +20,8 @@ export function formatDate(date?: string) {
   return date ? new Date(date).toLocaleDateString("cs-CZ") : "";
 }
 
-export function formatDateTime(date: string) {
-  return date ? new Date(date).toLocaleString("cs-CZ") : "";
+export function formatDateTime(date?: string) {
+  return date ? dayjs(date).format("DD. MM. YYYY HH:mm") : "";
 }
 
 export function formatMonth(month: string | number) {
@@ -30,13 +30,9 @@ export function formatMonth(month: string | number) {
   return new Date(2000, month, 1).toLocaleString("cs-CZ", { month: "long" });
 }
 
-// Tabidoo BE has no timezone info and understands dates to be in the CET timezone
-// Using toISOString() returns UTC time (-1 or -2 hours), which needs to be compensated for
-export function createTabidooDateString(date?: Date) {
+export function createTabidooDateTimeString(date?: Date) {
   if (!date) return undefined;
-  const timeZoneOffsetHours = date.getTimezoneOffset() / 60;
-  const now = dayjs().add(timeZoneOffsetHours, "hour");
-  return now.toISOString();
+  return date.toISOString();
 }
 
 export function capitalizeFirstLetter(name: string) {
