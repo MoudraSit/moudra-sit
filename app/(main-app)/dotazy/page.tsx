@@ -33,7 +33,7 @@ async function Page({ searchParams }: Props) {
       </Typography>
 
       {/* The div is required for list autosizing to work */}
-      <div style={{ flex: "1 1 auto" }}>
+      <div style={{ flex: "1 1 auto",}}>
         <QueryCardDynamicList
           initialItems={seniorQueries}
           searchParams={searchParams}

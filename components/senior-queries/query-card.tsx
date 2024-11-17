@@ -1,7 +1,6 @@
 import { Card, Typography, Stack, Box } from "@mui/material";
 import {
   MAX_QUERY_CARD_HEIGHT,
-  MAX_QUERY_CARD_WIDTH,
   QueryStatus,
 } from "helper/consts";
 import {
@@ -39,7 +38,6 @@ function QueryCard({
         maxHeight: dynamicList
           ? `calc(${MAX_QUERY_CARD_HEIGHT}px - ${CARD_SPACING})`
           : "unset",
-        maxWidth: MAX_QUERY_CARD_WIDTH,
         marginBottom: CARD_SPACING,
         display: "flex",
       }}

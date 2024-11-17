@@ -90,7 +90,7 @@ function ResponsiveAppBar() {
                         : SeniorPagePaths.SENIOR_PROFILE
                     }
                   >
-                    <Person style={{ marginRight: 6 }} /> {data.user?.name}
+                    {data.user?.name}
                   </Button>
                   <Tooltip title="Account settings">
                     <IconButton
