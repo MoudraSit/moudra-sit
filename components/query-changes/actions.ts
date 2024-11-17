@@ -5,7 +5,9 @@ import { AssistantAPI } from "backend/assistant";
 import { callTabidoo } from "backend/tabidoo";
 import { FINISHED_STATUSES, QueryStatus } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
-import { createTabidooDateString } from "helper/utils";
+import {
+  createTabidooDateTimeString,
+} from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
@@ -34,12 +36,12 @@ export async function createQueryChange(
     datumUskutecneneNavstevy: FINISHED_STATUSES.includes(
       visitValues.queryStatus as QueryStatus
     )
-      ? createTabidooDateString(visitValues.date)
+      ? createTabidooDateTimeString(visitValues.dateTime)
       : null,
     datumPlanovanaNavsteva: !FINISHED_STATUSES.includes(
       visitValues.queryStatus as QueryStatus
     )
-      ? createTabidooDateString(visitValues.date)
+      ? createTabidooDateTimeString(visitValues.dateTime)
       : null,
     mistoNavstevy: visitValues.address,
     hodnoceniAsistent: visitValues.assistantScore,

@@ -8,7 +8,7 @@ import { getSeniorBy } from "backend/utils/getSeniorBy";
 import { AssistantPagePaths, QueryStatus, WEB_APP_NAME } from "helper/consts";
 import { newQuerySchema } from "helper/schemas/new-query-schema";
 import { NewSeniorValues } from "helper/schemas/new-senior-schema";
-import { createTabidooDateString, generateUID } from "helper/utils";
+import { createTabidooDateTimeString, generateUID } from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { SeniorQuery } from "types/seniorQuery";
@@ -58,7 +58,7 @@ export async function createQueryComment(queryId: string, comment: string) {
 
   const seniorQuery = await SeniorQueriesGetter.getSeniorQueryById(queryId);
 
-  const createdTimestamp = createTabidooDateString(new Date());
+  const createdTimestamp = createTabidooDateTimeString(new Date());
 
   const payload = {
     komentare: {

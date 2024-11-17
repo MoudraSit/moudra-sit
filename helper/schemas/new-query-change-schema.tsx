@@ -19,7 +19,7 @@ export const newQueryChangeSchema = yup.object({}).shape({
       val === VisitMeetLocationType.OTHER,
     then: (schema) => schema.required("Zadejte adresu setkání"),
   }),
-  date: yup
+  dateTime: yup
     .date()
     .when("isInitialChange", {
       is: true,
