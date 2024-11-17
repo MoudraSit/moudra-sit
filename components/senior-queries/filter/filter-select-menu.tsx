@@ -55,6 +55,15 @@ function FilterSelectMenu({
     );
   };
 
+  const toggleAllOptions = (value: boolean) => {
+    setSelectedOptions(
+      selectedOptions.map((v) => {
+        v.selected = value;
+        return v;
+      })
+    );
+  };
+
   const saveSelectedOptions = () => {
     handleSave(
       selectedOptions
@@ -64,6 +73,10 @@ function FilterSelectMenu({
         .join(",")
     );
   };
+
+  const areAllOptionsSelected = selectedOptions.every(
+    (option) => option.selected
+  );
 
   useEffect(() => {
     if (open) setSelectedOptions(prepareOptions(value, options));
@@ -79,6 +92,20 @@ function FilterSelectMenu({
     >
       <Box sx={{ padding: "0 0.5rem" }}>
         <MenuList dense sx={{ padding: 0 }}>
+          <MenuItem key="all" sx={{ padding: "0 0.5rem" }}>
+            <FormControlLabel
+              sx={{ marginRight: 0 }}
+              label="Vše"
+              control={
+                <Checkbox
+                  sx={{ padding: "0.25rem" }}
+                  checked={areAllOptionsSelected}
+                  color="warning"
+                  onClick={() => toggleAllOptions(!areAllOptionsSelected)}
+                />
+              }
+            />
+          </MenuItem>
           {selectedOptions.map((option, index) => (
             <MenuItem key={option.value} sx={{ padding: "0 0.5rem" }}>
               <FormControlLabel
