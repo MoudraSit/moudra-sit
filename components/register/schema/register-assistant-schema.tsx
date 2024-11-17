@@ -1,7 +1,7 @@
+import { City } from "types/assistant";
 import * as yup from "yup";
 
 const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
-const pscRegex = /^\d{3}[ ]?\d{2}$/;
 
 // schema for form validation
 export const registerAssistantSchema = yup.object({}).shape({
@@ -24,22 +24,11 @@ export const registerAssistantSchema = yup.object({}).shape({
     .min(new Date(1900, 0, 1), "Napište správné datum Vašeho narození")
     .required("Napište datum Vašeho narození")
     .typeError("Napište datum Vašeho narození"),
-  // address: yup
-  //   .string()
-  //   .matches(
-  //     /^[A-Ža-ž ]*[ ][0-9]+[/]?[0-9]*$/,
-  //     "Prosím vložte příjmení ve správném tvaru"
-  //   )
-  //   .required("Napište ulici a číslo popisné"),
-  // zipCode: yup
-  //   .string()
-  //   .matches(pscRegex, "Špatný tvar PSČ")
-  //   .required("Napište Vaše PSČ"),
-  city: yup
-    .string()
-    .matches(/^[A-Ža-ž]*$/, "Prosím napište správně název obce/města")
-    .required("Napište název obce/města"),
-  // region: yup.string().required("Zvolte kraj Vašeho bydliště"),
+  // The required check is made conditional to allow both being initially null and validated upon submitting at the same time
+  city: new yup.ObjectSchema<City>().nullable().when("phoneNumber", {
+    is: (val: string) => val,
+    then: (schema) => schema.required("Zadejte město"),
+  }),
   plusCode: yup
     .string()
     .required("Napište správný tvar předvolby (např. +420)"),

@@ -53,6 +53,7 @@ function AssistantScoreForm({ assistant }: Props) {
         disabled={isPending}
       />
       <ErrorAlert
+        errorMessage="Omlouváme se, ale došlo k chybě."
         floatingAlert
         floatingAlertOpen={isError}
         onFloatingAlertClose={() => setIsError(false)}
