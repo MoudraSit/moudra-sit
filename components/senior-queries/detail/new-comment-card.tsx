@@ -7,6 +7,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import ErrorAlert from "components/alerts/error-alert";
 import { createQueryComment } from "components/senior-queries/actions";
 import React from "react";
 
@@ -19,13 +20,21 @@ type Props = {
 function NewCommentCard({ queryId, isOpen, handleClose }: Props) {
   const [newComment, setNewComment] = React.useState("");
   const [isPending, setIsPending] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
 
   async function handleNewComment() {
-    setIsPending(true);
-    setNewComment("");
-    await createQueryComment(queryId, newComment);
-    setIsPending(false);
-    handleClose();
+    try {
+      setIsError(false);
+      setIsPending(true);
+      await createQueryComment(queryId, newComment);
+      setNewComment("");
+      setIsPending(false);
+      handleClose();
+    } catch (error) {
+      console.error(error);
+      setIsPending(false);
+      setIsError(true);
+    }
   }
 
   return (
@@ -60,6 +69,7 @@ function NewCommentCard({ queryId, isOpen, handleClose }: Props) {
         >
           Přidat komentář
         </Button>
+        {isError ? <ErrorAlert /> : null}
       </Stack>
     </Drawer>
   );
