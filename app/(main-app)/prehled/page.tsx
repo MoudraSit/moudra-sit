@@ -5,7 +5,7 @@ import { THEME_COLORS } from "components/theme/colors";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dotazy",
+  title: "Úvod",
 };
 
 function Page() {

@@ -4,7 +4,12 @@ import BackButton from "components/buttons/back-button";
 import BasePaper from "components/layout/base-paper";
 import NewQueryChangeForm from "components/query-changes/new-query-change-form";
 import { THEME_COLORS } from "components/theme/colors";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Nová změna",
+};
 
 type Props = {
   searchParams: {
