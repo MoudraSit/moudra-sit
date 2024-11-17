@@ -1,8 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { SeniorQuery } from "types/seniorQuery";
-import {
-  ReadOnlyBox,
-} from "components/senior-queries/detail/helper-components";
+import { ReadOnlyBox } from "components/senior-queries/detail/helper-components";
 import QueryDetailButton from "components/buttons/query-detail-button";
 import { formatDate } from "helper/utils";
 
@@ -58,7 +56,7 @@ function AssistantScoreDetail({ seniorQuery }: Props) {
           : ""}
       </ReadOnlyBox>
 
-      <QueryDetailButton item={seniorQuery} label="Přejít na dotaz" />
+      <QueryDetailButton queryId={seniorQuery.id} label="Přejít na dotaz" />
     </Stack>
   );
 }

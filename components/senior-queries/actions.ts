@@ -52,7 +52,6 @@ export async function createQuery(formData: Record<string, any>) {
   return newQuery.id;
 }
 
-// TODO: error handling for comments (in the page itself)
 export async function createQueryComment(queryId: string, comment: string) {
   const session = await getServerSession(authOptions);
 

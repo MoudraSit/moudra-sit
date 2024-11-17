@@ -138,7 +138,7 @@ function QueryCard({
           ) : null}
         </Box>
 
-        <QueryDetailButton item={item} />
+        <QueryDetailButton queryId={item.id} />
       </Stack>
     </Card>
   );
