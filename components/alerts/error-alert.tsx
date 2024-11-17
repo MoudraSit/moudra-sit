@@ -14,7 +14,7 @@ function ErrorAlert({
   errorMessage = "Při ukládání nastala chyba, opakujte prosím akci později.",
 }: Props) {
   const alert = (
-    <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
+    <Alert severity="error" variant="filled" sx={{ width: "100%", zIndex: 10000 }}>
       {errorMessage} Pokud problém přetrvává, kontaktujte prosím{" "}
       <a href="mailto:support@moudrasit.cz">support@moudrasit.cz</a>.
     </Alert>

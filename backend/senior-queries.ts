@@ -160,18 +160,11 @@ export class SeniorQueriesGetter {
   private static async _createSeniorQueryDeviceCategoryFilter(
     deviceCategory: string
   ) {
-    const categories = deviceCategory.split(",");
-    const filters: Array<Record<string, any>> = [];
-
-    for (const category of categories) {
-      filters.push({
-        field: "kategorieMultichoice",
-        operator: "contains",
-        value: category,
-      });
-    }
-
-    return { filter: filters, filterOperator: "and" };
+    return {
+      field: "kategorieMultichoice",
+      operator: "in",
+      value: deviceCategory,
+    };
   }
 
   private static async _createSeniorQueryUserAssignedFilter() {

@@ -1,4 +1,3 @@
-// TODO: use in the app
 export type JSObject = Record<string, any>;
 
 export type RecursivePartial<T> = {
