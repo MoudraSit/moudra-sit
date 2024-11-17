@@ -1,4 +1,4 @@
-import { List, ListItem, Stack, Typography } from "@mui/material";
+import { Box, List, ListItem, Stack, Typography } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { formatDate, removeHTMLTags } from "helper/utils";
 import { Visit } from "types/visit";
@@ -13,7 +13,7 @@ type Props = {
 
 function QueryChangesTab({ visits }: Props) {
   return (
-    <>
+    <Box sx={{ maxWidth: "90vw" }}>
       <List>
         {visits.length === 0 ? (
           <Typography
@@ -66,7 +66,7 @@ function QueryChangesTab({ visits }: Props) {
           ))
         )}
       </List>
-    </>
+    </Box>
   );
 }
 
