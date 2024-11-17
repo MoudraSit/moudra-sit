@@ -1,6 +1,11 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { AssistantPagePaths } from "helper/consts";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Stránka nenalezena",
+};
 
 function Page() {
   return (

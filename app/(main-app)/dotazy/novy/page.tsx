@@ -5,6 +5,11 @@ import BackButton from "components/buttons/back-button";
 import BasePaper from "components/layout/base-paper";
 import NewQueryForm from "components/senior-queries/new-query-form";
 import { THEME_COLORS } from "components/theme/colors";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Nový dotaz",
+};
 
 type Props = {
   searchParams?: Record<string, string>;
