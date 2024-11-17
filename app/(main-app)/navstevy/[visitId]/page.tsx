@@ -14,6 +14,11 @@ import {
   VisitMeetLocationType,
 } from "helper/consts";
 import QueryDetailScoreSection from "components/senior-queries/detail/query-detail-score-section";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Změna",
+};
 
 type Props = {
   params: {
