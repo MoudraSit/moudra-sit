@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import BackButton from "components/buttons/back-button";
 import { THEME_COLORS } from "components/theme/colors";
 import { SeniorQueriesGetter } from "backend/senior-queries";
-import { FilterType, QueryStatus } from "helper/consts";
+import { FilterType, FINISHED_STATUSES } from "helper/consts";
 import AssistantScoreListDynamicList from "components/dynamic-list/assistant-score-list-dynamic-list";
 import BasePaper from "components/layout/base-paper";
 import AssistantScoreForm from "components/assistant/assistant-score-form";
@@ -15,10 +15,9 @@ export const metadata: Metadata = {
 };
 
 async function Page() {
-  // TODO: add other "finished" statuses
   const searchParams = {
     [FilterType.USER_ASSIGNED]: true,
-    [FilterType.QUERY_STATUS]: QueryStatus.SOLVED,
+    [FilterType.QUERY_STATUS]: FINISHED_STATUSES.join(","),
   };
 
   const [assistant, seniorQueries] = await Promise.all([
