@@ -51,6 +51,11 @@ export const QueryStatusColors = {
   [QueryStatus.POSTPONED]: "#9800F5",
 };
 
+export enum CommonPagePaths {
+  LOGIN = "/prihlaseni",
+  REGISTER_ASSISTANT = "/registrace/asistent",
+  REGISTER_SENIOR = "/registrace/senior",
+}
 // Include subpaths for easy referencing in the app
 // Query and dynamic path parameters (e.g., .../id/...) should not be here
 export enum AssistantPagePaths {
