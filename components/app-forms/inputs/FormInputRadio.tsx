@@ -28,6 +28,7 @@ export const FormInputRadio: React.FC<FormInputProps> = ({
   const generateRadioOptions = () => {
     return options.map((singleOption) => (
       <FormControlLabel
+        key={singleOption.value}
         value={singleOption.value}
         label={singleOption.label}
         control={<Radio />}
