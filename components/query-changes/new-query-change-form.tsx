@@ -23,7 +23,11 @@ import {
   FormInputDropdown,
   renderFlatOptions,
 } from "components/app-forms/inputs/FormInputDropdown";
-import { createQueryChange, fetchAutocompleteOrganizations } from "./actions";
+import {
+  addEventToGoogleCalendar,
+  createQueryChange,
+  fetchAutocompleteOrganizations,
+} from "./actions";
 import { SeniorQuery } from "types/seniorQuery";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
 import { Visit } from "types/visit";
@@ -33,6 +37,7 @@ import SubmitButton from "components/buttons/submit-button";
 import { Organization } from "types/assistant";
 import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInputAsyncAutocomplete";
 import { FormInputDateTime } from "components/app-forms/inputs/FormInputDateTime";
+import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -42,6 +47,7 @@ const QUERY_STATUSES_FOR_ASSISTANT = [
 ];
 
 type NewVisitValues = yup.InferType<typeof newQueryChangeSchema>;
+type NewEventValues = yup.InferType<typeof visitCalendarEventSchema>;
 
 type Props = {
   query: SeniorQuery;
@@ -80,6 +86,8 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
   const queryStatusWatch = watch("queryStatus");
   // eslint-disable-next-line no-unused-vars
   const meetLocationTypeWatch = watch("meetLocationType");
+  // eslint-disable-next-line no-unused-vars
+  const visitDateWatch = watch("dateTime");
 
   React.useEffect(() => {
     // Skip the initial render
@@ -112,6 +120,16 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
       setIsPending(false);
       setIsError(true);
     }
+  }
+
+  async function handleAddEvent() {
+    const eventData: NewEventValues = {
+      dateTime: getValues("dateTime")!,
+      description: getValues("summary"),
+      location: getValues("address"),
+    };
+
+    await addEventToGoogleCalendar(eventData);
   }
 
   function getOrganizationLabel(option: Organization) {
@@ -204,6 +222,17 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           control={control}
           label="Datum a čas setkání"
         />
+        {!FINISHED_STATUSES.includes(getValues("queryStatus") as QueryStatus) &&
+        getValues("dateTime") ? (
+          <Button
+            color="warning"
+            onClick={handleAddEvent}
+            variant="contained"
+            sx={{ backgroundColor: "#028790 !important" }}
+          >
+            + Přidat do kalendáře
+          </Button>
+        ) : null}
 
         {isQueryFinished ? (
           <FormInputText
