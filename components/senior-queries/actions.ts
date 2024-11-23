@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, authOptions } from "app/lib/auth";
+import { authOptions } from "app/lib/auth";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import { createSenior } from "backend/seniors";
 import { callTabidoo } from "backend/tabidoo";
@@ -20,7 +20,7 @@ export async function searchSeniorsByPhoneNumber(value: string) {
 export async function createQuery(formData: Record<string, any>) {
   const values = await newQuerySchema.validate(formData);
 
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   if (!values.preexistingSeniorId) {
     const newSenior = await createSenior(values.senior as NewSeniorValues);
