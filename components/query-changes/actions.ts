@@ -10,6 +10,10 @@ import {
 } from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { google } from "googleapis";
+import { JSObject } from "types/common";
+import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
+import dayjs from "dayjs";
 
 export async function fetchAutocompleteOrganizations(inputValue: string) {
   return await AssistantAPI.getOrganizationsByName(inputValue);
@@ -64,4 +68,48 @@ export async function createQueryChange(
 
   // Ineffective, but revalidate does not work with dynamic paths reliably
   revalidatePath(`/`, "layout");
+}
+
+export async function addEventToGoogleCalendar(eventData: JSObject) {
+  const keysEnvVar = process.env.GOOGLE_CREDS;
+  const calendarId = process.env.GOOGLE_CALENDAR_ID;
+  if (!keysEnvVar)
+    throw new Error("The GOOGLE_CREDS environment variable was not found!");
+
+  const keys = JSON.parse(keysEnvVar);
+
+  const eventValues = await visitCalendarEventSchema.validate(eventData);
+
+  const scopes = ["https://www.googleapis.com/auth/calendar"];
+  const auth = new google.auth.GoogleAuth({
+    credentials: { ...keys },
+    clientOptions: { subject: "miroslav.rehounek@moudrasit.cz" },
+    scopes,
+  });
+  const calendar = google.calendar({ auth, version: "v3" });
+
+  const session = await getServerSession(authOptions);
+
+  // TODO: queryId -> seniorName or something like that
+  const event = {
+    summary: `Moudrá síť návštěva`,
+    location: eventValues.location,
+    description: eventValues.description,
+    attendees: [{ email: session?.user?.email }],
+
+    start: {
+      dateTime: dayjs(eventValues.dateTime).toISOString(),
+      timeZone: "Europe/Prague",
+    },
+    end: {
+      dateTime: dayjs(eventValues.dateTime).toISOString()
+      timeZone: "Europe/Prague",
+    },
+  };
+
+  const result = await calendar.events.insert({
+    calendarId,
+    sendUpdates: true,
+    requestBody: event,
+  });
 }
