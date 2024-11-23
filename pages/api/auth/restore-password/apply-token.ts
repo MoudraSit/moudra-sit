@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import * as yup from "yup";
 import { decode } from "next-auth/jwt";
-import { AssistantResponse } from "types/assistant";
+import { Assistant } from "types/assistant";
 
 async function handler(
   request: NextApiRequest,
@@ -33,16 +33,16 @@ async function handler(
 
     const hashedPassword = await hashPassword(values.password);
 
-    const genereatePasswordPayload = {
+    const generatePasswordPayload = {
       password: hashedPassword,
     };
 
-    await callTabidoo<AssistantResponse>(
+    await callTabidoo<Assistant>(
       `/tables/uzivatel/data/${decodedPayload?.userId}`,
       {
         method: "PATCH",
         body: {
-          fields: genereatePasswordPayload,
+          fields: generatePasswordPayload,
         },
       }
     );
