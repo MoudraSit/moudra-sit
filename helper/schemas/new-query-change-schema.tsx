@@ -1,4 +1,8 @@
-import { QueryStatus, VisitMeetLocationType } from "helper/consts";
+import {
+  FINISHED_STATUSES,
+  QueryStatus,
+  VisitMeetLocationType,
+} from "helper/consts";
 import { Organization } from "types/assistant";
 import * as yup from "yup";
 
@@ -34,7 +38,11 @@ export const newQueryChangeSchema = yup.object({}).shape({
     .number()
     .typeError("Zadejte číslo")
     .positive("Zadejte kladné číslo")
-    .integer("Zadejte celé číslo"),
+    .integer("Zadejte celé číslo")
+    .when("queryStatus", {
+      is: (val: string) => FINISHED_STATUSES.includes(val as QueryStatus),
+      then: (schema) => schema.required("Zadejte celkovou délku řešení"),
+    }),
   summary: yup.string().required("Zadejte poznámku ke změně"),
   assistantScore: yup
     .number()
@@ -43,8 +51,7 @@ export const newQueryChangeSchema = yup.object({}).shape({
     .max(5, "Zadejte hodnocení 1-5")
     .typeError("Zadejte hodnocení 1-5")
     .when("queryStatus", {
-      is: (val: string) =>
-        val === QueryStatus.SOLVED || val === QueryStatus.UNSOLVED,
+      is: (val: string) => FINISHED_STATUSES.includes(val as QueryStatus),
       then: (schema) => schema.required("Zadejte hodnocení"),
     }),
 });
