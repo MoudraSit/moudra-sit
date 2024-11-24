@@ -41,7 +41,7 @@ async function Page() {
         }}
       >
         <Typography
-          variant="h5"
+          variant="body1"
           sx={{
             fontSize: "20px",
             margin: "3px",

@@ -34,8 +34,8 @@ async function Page({ searchParams }: Props) {
       <BackButton />
       <BasePaper>
         <Typography
-          variant="h5"
-          sx={{ margin: "3px", color: THEME_COLORS.primary }}
+          variant="body1"
+          sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
         >
           Přidat změnu dotazu
         </Typography>
