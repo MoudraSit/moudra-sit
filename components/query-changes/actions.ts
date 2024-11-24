@@ -72,6 +72,7 @@ export async function createQueryChange(
 export async function addEventToGoogleCalendar(eventData: JSObject) {
   const keysEnvVar = process.env.GOOGLE_CREDS;
   const calendarId = process.env.GOOGLE_CALENDAR_ID;
+  const delegatedUserEmail = process.env.GOOGLE_DELEGATED_USER_EMAIL;
   if (!keysEnvVar)
     throw new Error("The GOOGLE_CREDS environment variable was not found!");
 
@@ -82,7 +83,7 @@ export async function addEventToGoogleCalendar(eventData: JSObject) {
   const scopes = ["https://www.googleapis.com/auth/calendar"];
   const auth = new google.auth.GoogleAuth({
     credentials: { ...keys },
-    clientOptions: { subject: "miroslav.rehounek@moudrasit.cz" },
+    clientOptions: { subject: delegatedUserEmail },
     scopes,
   });
   const calendar = google.calendar({ auth, version: "v3" });
