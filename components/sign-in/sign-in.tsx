@@ -51,7 +51,7 @@ function SignInSide() {
       setErrorMessage(result.error);
     } else {
       router.push(
-        searchParams?.get("callbackUrl") ?? AssistantPagePaths.ASSISTANT_PROFILE
+        searchParams?.get("callbackUrl") ?? AssistantPagePaths.DASHBOARD
       );
     }
   }
