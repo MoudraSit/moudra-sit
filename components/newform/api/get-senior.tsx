@@ -1,9 +1,10 @@
 import { SeniorGetId, SeniorGetNoId } from "types/senior";
-import { IValues } from "../vertical-stepper";
 import { removeSpaces } from "./senior";
+import { IValues } from "components/form/model/constants";
 
 async function ApiGetRequestSenior(values: IValues) {
-  let fixedPhoneNumber: string = values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
+  let fixedPhoneNumber: string =
+    values.plusCode.replace("+", "%2B") + removeSpaces(values.phoneNumber);
 
   try {
     const response = await fetch("/api/formtest/get-senior", {
