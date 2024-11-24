@@ -1,4 +1,5 @@
 import { Alert, Snackbar } from "@mui/material";
+import { JSObject } from "types/common";
 
 type Props = {
   floatingAlert?: boolean;
@@ -6,6 +7,7 @@ type Props = {
   onFloatingAlertClose?: Function;
   errorMessage?: string;
   showContactSupportMessage?: boolean;
+  sx?: JSObject;
 };
 
 function ErrorAlert({
@@ -14,12 +16,13 @@ function ErrorAlert({
   onFloatingAlertClose,
   errorMessage = "Při ukládání nastala chyba, opakujte prosím akci později.",
   showContactSupportMessage = true,
+  sx,
 }: Props) {
   const alert = (
     <Alert
       severity="error"
       variant="filled"
-      sx={{ width: "100%", zIndex: 10000 }}
+      sx={{ width: "100%", zIndex: 10000, ...sx }}
     >
       {errorMessage}{" "}
       {showContactSupportMessage ? (

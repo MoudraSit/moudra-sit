@@ -236,28 +236,13 @@ function RegisterAssistantForm() {
             <SubmitButton disabled={isPending} label="Registrovat se" />
 
             {isError && (
-              <>
-                <Typography
-                  sx={{
-                    pt: 5,
-                    color: "red",
-                    fontWeight: "bold",
-                  }}
-                  variant="h5"
-                  align="center"
-                  color="primary.main"
-                >
-                  <ErrorAlert
-                    errorMessage={
-                      apiError ?? "Omlouváme se, ale došlo k chybě."
-                    }
-                    showContactSupportMessage={false}
-                    floatingAlert
-                    floatingAlertOpen={isError}
-                    onFloatingAlertClose={() => setIsError(false)}
-                  />
-                </Typography>
-              </>
+              <ErrorAlert
+                errorMessage={apiError ?? "Omlouváme se, ale došlo k chybě."}
+                showContactSupportMessage={false}
+                floatingAlert
+                floatingAlertOpen={isError}
+                onFloatingAlertClose={() => setIsError(false)}
+              />
             )}
 
             <Grid container justifyContent="flex-end">
