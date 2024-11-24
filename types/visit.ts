@@ -24,5 +24,6 @@ export interface Visit {
     poznamkaSeniorem: string;
     poznamkaAsistentem: string;
     iDUzivatele: Assistant;
+    kalendarUdalostId: string;
   };
 }
