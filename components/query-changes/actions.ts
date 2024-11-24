@@ -5,9 +5,7 @@ import { AssistantAPI } from "backend/assistant";
 import { callTabidoo } from "backend/tabidoo";
 import { FINISHED_STATUSES, QueryStatus } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
-import {
-  createTabidooDateTimeString,
-} from "helper/utils";
+import { createTabidooDateTimeString } from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { google } from "googleapis";
@@ -29,6 +27,7 @@ export async function createQueryChange(
 
   const payload = {
     dotaz: { id: queryId },
+    kalendarUdalostId: visitValues.calendarEventId,
     iDUzivatele: { id: session?.user?.id },
     stav: visitValues.queryStatus,
     poznamkaAsistentem: visitValues.summary,
@@ -90,9 +89,8 @@ export async function addEventToGoogleCalendar(eventData: JSObject) {
 
   const session = await getServerSession(authOptions);
 
-  // TODO: queryId -> seniorName or something like that
   const event = {
-    summary: `Moudrá síť návštěva`,
+    summary: `Moudrá síť návštěva: ${eventValues.seniorName}`,
     location: eventValues.location,
     description: eventValues.description,
     attendees: [{ email: session?.user?.email }],
@@ -102,14 +100,25 @@ export async function addEventToGoogleCalendar(eventData: JSObject) {
       timeZone: "Europe/Prague",
     },
     end: {
-      dateTime: dayjs(eventValues.dateTime).toISOString()
+      dateTime: dayjs(eventValues.dateTime).add(1, "hour").toISOString(),
       timeZone: "Europe/Prague",
     },
   };
 
-  const result = await calendar.events.insert({
-    calendarId,
-    sendUpdates: true,
-    requestBody: event,
-  });
+  if (!eventValues.eventId) {
+    const result = await calendar.events.insert({
+      calendarId,
+      sendUpdates: "externalOnly",
+      requestBody: event,
+    });
+    return result.data;
+  } else {
+    const result = await calendar.events.update({
+      calendarId,
+      eventId: eventValues.eventId,
+      sendUpdates: "externalOnly",
+      requestBody: event,
+    });
+    return result.data;
+  }
 }

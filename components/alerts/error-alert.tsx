@@ -8,6 +8,7 @@ type Props = {
   errorMessage?: string;
   showContactSupportMessage?: boolean;
   sx?: JSObject;
+  type?: "error" | "success";
 };
 
 function ErrorAlert({
@@ -16,18 +17,19 @@ function ErrorAlert({
   onFloatingAlertClose,
   errorMessage = "Při ukládání nastala chyba, opakujte prosím akci později.",
   showContactSupportMessage = true,
+  type = "error",
   sx,
 }: Props) {
   const alert = (
     <Alert
-      severity="error"
+      severity={type}
       variant="filled"
       sx={{ width: "100%", zIndex: 10000, ...sx }}
     >
       {errorMessage}{" "}
       {showContactSupportMessage ? (
         <span>
-          Pokud problém přetrvává, kontaktujte prosím
+          Pokud problém přetrvává, kontaktujte prosím{" "}
           <a href="mailto:support@moudrasit.cz">support@moudrasit.cz</a>
         </span>
       ) : null}
@@ -37,7 +39,7 @@ function ErrorAlert({
   return floatingAlert ? (
     <Snackbar
       open={floatingAlertOpen}
-      autoHideDuration={6000}
+      autoHideDuration={4000}
       onClose={() => (onFloatingAlertClose ? onFloatingAlertClose() : null)}
     >
       {alert}

@@ -9,6 +9,7 @@ import * as yup from "yup";
 // schema for form validation
 export const newQueryChangeSchema = yup.object({}).shape({
   isInitialChange: yup.boolean(),
+  calendarEventId: yup.string(),
   queryStatus: yup.string().required("Zadejete stav dotazu"),
   meetLocationType: yup.string().required("Zadejete místo setkání"),
   organization: new yup.ObjectSchema<Organization>()
