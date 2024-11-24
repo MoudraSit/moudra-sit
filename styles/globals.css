@@ -19,6 +19,11 @@ a {
   box-sizing: border-box;
 }
 
+/* Hide Captcha badge (it appears on all pages) */
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
 /* Form */
 
 .MuiFormHelperText-root {
