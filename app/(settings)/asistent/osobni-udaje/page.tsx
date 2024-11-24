@@ -7,6 +7,7 @@ import { THEME_COLORS } from "components/theme/colors";
 import BasePaper from "components/layout/base-paper";
 import { AssistantAPI } from "backend/assistant";
 import AssistantDetailsForm from "components/assistant/assistant-details-form";
+import { AssistantPagePaths } from "helper/consts";
 
 export const metadata: Metadata = {
   title: "Osobní údaje",
@@ -17,7 +18,7 @@ async function Page() {
 
   return (
     <>
-      <BackButton />
+      <BackButton href={AssistantPagePaths.ASSISTANT_PROFILE} />
       <BasePaper elevation={0}>
         <Typography
           variant="h5"

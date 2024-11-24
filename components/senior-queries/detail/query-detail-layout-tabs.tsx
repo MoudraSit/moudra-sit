@@ -1,18 +1,23 @@
 "use client";
 
-import { Tab, Tabs, ThemeProvider } from "@mui/material";
+import { Button, Tab, Tabs, ThemeProvider } from "@mui/material";
 import { mobileAppTheme } from "components/theme/theme";
 import { QUERY_CHANGES_TAB, QUERY_DETAIL_TAB } from "helper/consts";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 function QueryDetailLayoutTabs() {
   const pathname = usePathname();
-
   const pathnameWithoutTab = pathname?.split("/").slice(0, -1).join("/");
-
   const [selectedTab, setSelectedTab] = useState(pathname?.split("/").at(-1));
+
+  const router = useRouter();
+
+  function handleRouting(route: string) {
+    // Do not remember switching between the 2 query detail tabs
+    router.replace(route);
+  }
 
   return (
     <ThemeProvider theme={mobileAppTheme}>
@@ -28,14 +33,18 @@ function QueryDetailLayoutTabs() {
         <Tab
           label="Detail dotazu"
           value={QUERY_DETAIL_TAB}
-          href={`${pathnameWithoutTab}/${QUERY_DETAIL_TAB}`}
-          component={Link}
+          onClick={() =>
+            handleRouting(`${pathnameWithoutTab}/${QUERY_DETAIL_TAB}`)
+          }
+          component={Button}
         />
         <Tab
           label="Historie změn"
           value={QUERY_CHANGES_TAB}
-          href={`${pathnameWithoutTab}/${QUERY_CHANGES_TAB}`}
-          component={Link}
+          onClick={() =>
+            handleRouting(`${pathnameWithoutTab}/${QUERY_CHANGES_TAB}`)
+          }
+          component={Button}
         />
       </Tabs>
     </ThemeProvider>

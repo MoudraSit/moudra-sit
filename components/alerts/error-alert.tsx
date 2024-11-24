@@ -5,6 +5,7 @@ type Props = {
   floatingAlertOpen?: boolean;
   onFloatingAlertClose?: Function;
   errorMessage?: string;
+  showContactSupportMessage?: boolean;
 };
 
 function ErrorAlert({
@@ -12,11 +13,21 @@ function ErrorAlert({
   floatingAlertOpen,
   onFloatingAlertClose,
   errorMessage = "Při ukládání nastala chyba, opakujte prosím akci později.",
+  showContactSupportMessage = true,
 }: Props) {
   const alert = (
-    <Alert severity="error" variant="filled" sx={{ width: "100%", zIndex: 10000 }}>
-      {errorMessage} Pokud problém přetrvává, kontaktujte prosím{" "}
-      <a href="mailto:support@moudrasit.cz">support@moudrasit.cz</a>.
+    <Alert
+      severity="error"
+      variant="filled"
+      sx={{ width: "100%", zIndex: 10000 }}
+    >
+      {errorMessage}{" "}
+      {showContactSupportMessage ? (
+        <span>
+          Pokud problém přetrvává, kontaktujte prosím
+          <a href="mailto:support@moudrasit.cz">support@moudrasit.cz</a>
+        </span>
+      ) : null}
     </Alert>
   );
 

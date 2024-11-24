@@ -17,7 +17,7 @@ async function Page({ children }: Props) {
   return (
     <>
       <BackButton />
-      <Paper sx={{ maxWidth: "1000px", alignSelf: "center" }}>
+      <Paper sx={{ width: "90vw", maxWidth: "1000px", alignSelf: "center" }}>
         <QueryDetailLayoutTabs />
         <Stack sx={{ padding: "0.5rem" }} spacing={3}>
           {children}
