@@ -22,6 +22,7 @@ import { Timesheet } from "types/timesheet";
 import { formatMonth } from "helper/utils";
 import { AssistantAPI } from "backend/assistant";
 import { auth } from "app/lib/auth";
+import { AssistantPagePaths } from "helper/consts";
 
 export const metadata: Metadata = {
   title: "Docházka",
@@ -54,7 +55,7 @@ async function Page() {
 
   return (
     <>
-      <BackButton />
+      <BackButton href={AssistantPagePaths.ASSISTANT_PROFILE} />
       <BasePaper elevation={0}>
         <Typography
           variant="h5"

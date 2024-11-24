@@ -8,6 +8,7 @@ import BasePaper from "components/layout/base-paper";
 import AssistantSettingsForm from "components/assistant/assistant-settings-form";
 import { AssistantAPI } from "backend/assistant";
 import { District } from "types/assistant";
+import { AssistantPagePaths } from "helper/consts";
 
 export const metadata: Metadata = {
   title: "Nastavení",
@@ -27,7 +28,7 @@ async function Page() {
 
   return (
     <>
-      <BackButton />
+      <BackButton href={AssistantPagePaths.ASSISTANT_PROFILE} />
       <BasePaper elevation={0}>
         <Typography
           variant="h5"

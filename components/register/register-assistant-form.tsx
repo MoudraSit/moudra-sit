@@ -5,19 +5,16 @@ import {
   Container,
   IconButton,
   InputAdornment,
-  Stack,
   Typography,
 } from "@mui/material";
 import * as React from "react";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { registerAssistantSchema } from "./schema/register-assistant-schema";
 import * as yup from "yup";
 
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   FormInputDropdown,
@@ -55,6 +52,7 @@ function RegisterAssistantForm() {
   });
 
   const [isPending, setIsPending] = React.useState(false);
+  const [apiError, setApiError] = React.useState("");
   const [isError, setIsError] = React.useState(false);
 
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -81,6 +79,7 @@ function RegisterAssistantForm() {
     } catch (error) {
       console.error(error);
       setIsPending(false);
+      if (error instanceof Error) setApiError(error.message);
       setIsError(true);
     }
   }
@@ -104,7 +103,6 @@ function RegisterAssistantForm() {
           Registrace asistenta
         </Typography>
         <form onSubmit={handleSubmit(submit)}>
-          <Stack></Stack>
           <Box sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -199,43 +197,45 @@ function RegisterAssistantForm() {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Controller
-                      name="agreement"
-                      control={control}
-                      render={({ field: { onChange, value } }) => {
-                        return (
-                          <Checkbox
-                            required
-                            checked={value}
-                            onChange={onChange}
-                            sx={{
-                              color: "info.main",
-                              "&.Mui-checked": {
-                                color: "black",
-                              },
-                            }}
-                          />
-                        );
-                      }}
-                    />
-                  }
-                  label={
-                    <Link
-                      color="#000000"
-                      href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
-                      rel="noopener"
-                      target="_blank"
-                      fontSize="1rem"
-                    >
-                      Souhlasím se zpracováním osobních údajů
-                    </Link>
-                  }
-                />
-              </Grid>
+              <Grid item xs={12}></Grid>
             </Grid>
+            <ul style={{ paddingLeft: "1rem" }}>
+              <li>
+                <Typography variant="caption">
+                  Kliknutím na tlačítko souhlasíte se{" "}
+                  <a
+                    style={{ textDecoration: "underline" }}
+                    href="https://moudrasit.cz/gdpr-zasady-ochrany-osobnich-udaju/"
+                    rel="noopener"
+                    target="_blank"
+                  >
+                    zpracováním osobních údajů
+                  </a>
+                  .
+                </Typography>
+              </li>
+              <li>
+                {" "}
+                <Typography variant="caption">
+                  Tato stránka využívá službu reCAPTCHA (
+                  <a
+                    style={{ textDecoration: "underline" }}
+                    href="https://policies.google.com/privacy"
+                  >
+                    Nastavení soukromí
+                  </a>
+                  {", "}
+                  <a
+                    style={{ textDecoration: "underline" }}
+                    href="https://policies.google.com/terms"
+                  >
+                    Podmínky
+                  </a>
+                  )
+                </Typography>
+              </li>
+            </ul>
+
             <SubmitButton disabled={isPending} label="Registrovat se" />
 
             {isError && (
@@ -251,7 +251,10 @@ function RegisterAssistantForm() {
                   color="primary.main"
                 >
                   <ErrorAlert
-                    errorMessage="Omlouváme se, ale došlo k chybě."
+                    errorMessage={
+                      apiError ?? "Omlouváme se, ale došlo k chybě."
+                    }
+                    showContactSupportMessage={false}
                     floatingAlert
                     floatingAlertOpen={isError}
                     onFloatingAlertClose={() => setIsError(false)}
