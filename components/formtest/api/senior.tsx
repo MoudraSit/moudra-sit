@@ -1,5 +1,5 @@
+import { IValues } from "components/form/model/constants";
 import { Senior } from "types/senior";
-import { IValues } from "../vertical-stepper";
 
 // check if name and surname start with capital letter
 export function capitalizeFirstLetter(name: string) {
