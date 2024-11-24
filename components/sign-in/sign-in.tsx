@@ -11,6 +11,7 @@ import * as React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import loginImage from "public/images/sign-in/welcome.jpg";
 import logo from "public/images/logo/logo.svg";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AssistantPagePaths } from "helper/consts";
@@ -55,12 +56,11 @@ function SignInSide() {
           style={{ position: "relative", overflow: "hidden" }}
         >
           <Image
-            src="/images/sign-in/welcome.jpg"
+            src={loginImage}
             alt="Uvodni foto - Moudra sit"
             style={{ objectFit: "cover" }}
             quality={75}
             fill
-            sizes="(min-width: 900px) 50vw"
             priority
           />
         </Grid>
