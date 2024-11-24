@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, MenuItem, Stack } from "@mui/material";
+import { Button, MenuItem, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import {
@@ -38,6 +38,7 @@ import { Organization } from "types/assistant";
 import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInputAsyncAutocomplete";
 import { FormInputDateTime } from "components/app-forms/inputs/FormInputDateTime";
 import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
+import ErrorAlert from "components/alerts/error-alert";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -61,24 +62,22 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
     resolver: yupResolver(newQueryChangeSchema),
     defaultValues: {
       isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
+      calendarEventId: lastVisit?.fields?.kalendarUdalostId ?? "",
       queryStatus:
         query.fields.stavDotazu === QueryStatus.IN_PROGRESS
           ? QueryStatus.SOLVED
           : QueryStatus.IN_PROGRESS,
-      meetLocationType: lastVisit
-        ? lastVisit.fields?.osobnevzdalene ?? VisitMeetLocationType.AT_SENIOR
-        : VisitMeetLocationType.AT_SENIOR,
-      address: lastVisit ? lastVisit.fields?.mistoNavstevy ?? "" : "",
+      meetLocationType:
+        lastVisit?.fields?.osobnevzdalene ?? VisitMeetLocationType.AT_SENIOR,
+      address: lastVisit?.fields?.mistoNavstevy ?? "",
       // Yup schema expects JS native Date, but the input works with dayjs
       organization: lastVisit?.fields?.spolupraceSOrganizaci ?? null,
       //@ts-ignore
-      dateTime: lastVisit
-        ? dayjs(
-            lastVisit.fields.datumPlanovanaNavsteva ??
-              lastVisit.fields.datumUskutecneneNavstevy ??
-              ""
-          )
-        : undefined,
+      dateTime: dayjs(
+        lastVisit?.fields.datumPlanovanaNavsteva ??
+          lastVisit?.fields.datumUskutecneneNavstevy ??
+          ""
+      ),
     },
   });
 
@@ -106,6 +105,10 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
   const [isPending, setIsPending] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
+  const [isCalendarPending, setIsCalendarPending] = React.useState(false);
+  const [isCalendarError, setIsCalendarError] = React.useState(false);
+  const [isCalendarSuccess, setIsCalendarSuccess] = React.useState(false);
+
   async function submit(data: NewVisitValues) {
     try {
       setIsError(false);
@@ -123,13 +126,29 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
   }
 
   async function handleAddEvent() {
-    const eventData: NewEventValues = {
-      dateTime: getValues("dateTime")!,
-      description: getValues("summary"),
-      location: getValues("address"),
-    };
+    try {
+      setIsCalendarSuccess(false);
+      setIsCalendarError(false);
+      setIsCalendarPending(true);
 
-    await addEventToGoogleCalendar(eventData);
+      const eventData: NewEventValues = {
+        eventId: getValues("calendarEventId"),
+        seniorName: query.fields.iDSeniora.fields.prijmeniJmeno,
+        dateTime: getValues("dateTime")?.toISOString()!,
+        description: getValues("summary"),
+        location: getValues("address"),
+      };
+
+      const result = await addEventToGoogleCalendar(eventData);
+      setValue("calendarEventId", result.id ?? "");
+
+      setIsCalendarSuccess(true);
+      setIsCalendarPending(false);
+    } catch (error) {
+      console.error(error);
+      setIsCalendarError(true);
+      setIsCalendarPending(false);
+    }
   }
 
   function getOrganizationLabel(option: Organization) {
@@ -222,17 +241,6 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           control={control}
           label="Datum a čas setkání"
         />
-        {!FINISHED_STATUSES.includes(getValues("queryStatus") as QueryStatus) &&
-        getValues("dateTime") ? (
-          <Button
-            color="warning"
-            onClick={handleAddEvent}
-            variant="contained"
-            sx={{ backgroundColor: "#028790 !important" }}
-          >
-            + Přidat do kalendáře
-          </Button>
-        ) : null}
 
         {isQueryFinished ? (
           <FormInputText
@@ -263,15 +271,49 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           </Stack>
         ) : null}
 
+        {isCalendarSuccess ? (
+          <ErrorAlert
+            errorMessage="Událost přidána/změněna."
+            type="success"
+            floatingAlert
+            floatingAlertOpen={isCalendarSuccess}
+            showContactSupportMessage={false}
+            onFloatingAlertClose={() => setIsCalendarSuccess(false)}
+          />
+        ) : null}
+
+        {isCalendarError ? (
+          <ErrorAlert
+            errorMessage="Při přidávání do kalendáře nastala chyba."
+            floatingAlert
+            floatingAlertOpen={isCalendarError}
+            onFloatingAlertClose={() => setIsCalendarError(false)}
+          />
+        ) : null}
+
         {isError ? (
-          <Alert severity="error">
-            Při přidávání změny dotazu nastala chyba, opakujte prosím akci
-            později. Pokud problém přetrvává, kontaktujte prosím{" "}
-            <a href="mailto:support@moudrasit.cz">support@moudrasit.cz</a>.
-          </Alert>
+          <ErrorAlert
+            errorMessage="Při přidávání změny dotazu nastala chyba."
+            floatingAlert
+            floatingAlertOpen={isError}
+            onFloatingAlertClose={() => setIsError(false)}
+          />
         ) : null}
 
         <Stack spacing={1}>
+          {!FINISHED_STATUSES.includes(
+            getValues("queryStatus") as QueryStatus
+          ) && getValues("dateTime") ? (
+            <Button
+              color="warning"
+              onClick={handleAddEvent}
+              variant="contained"
+              disabled={isCalendarPending}
+              sx={{ backgroundColor: "#028790 !important" }}
+            >
+              + Přidat do kalendáře
+            </Button>
+          ) : null}
           <SubmitButton disabled={isPending} />
           <Button
             fullWidth
