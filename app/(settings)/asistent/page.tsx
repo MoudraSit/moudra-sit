@@ -69,7 +69,7 @@ async function Page() {
       <BackButton href={AssistantPagePaths.DASHBOARD} />
       <BasePaper elevation={0}>
         <Typography
-          variant="h5"
+          variant="body1"
           sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
         >
           Můj profil
