@@ -15,16 +15,25 @@ import loginImage from "public/images/sign-in/welcome.jpg";
 import logo from "public/images/logo/logo.svg";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AssistantPagePaths } from "helper/consts";
+import ErrorAlert from "components/alerts/error-alert";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
+
+  const [isPending, setIsPending] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    setIsError(false);
+    setIsPending(true);
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -34,8 +43,11 @@ function SignInSide() {
       password: data.get("password"),
     });
 
+    setIsPending(false);
+
     if (result?.error) {
       console.error(result.error);
+      setIsError(true);
       setErrorMessage(result.error);
     } else {
       router.push(
@@ -145,24 +157,10 @@ function SignInSide() {
                   ),
                 }}
               />
-              {errorMessage ? (
-                <>
-                  <Typography
-                    sx={{
-                      pt: 5,
-                      color: "red",
-                      fontWeight: "bold",
-                    }}
-                    variant="h5"
-                    align="center"
-                    color="primary.main"
-                  >
-                    {errorMessage}
-                  </Typography>
-                </>
-              ) : null}
+
               <Button
                 type="submit"
+                disabled={isPending}
                 fullWidth
                 variant="outlined"
                 sx={{
@@ -174,6 +172,17 @@ function SignInSide() {
               >
                 Přihlásit se
               </Button>
+
+              {isError ? (
+                <ErrorAlert
+                  errorMessage={errorMessage}
+                  showContactSupportMessage={false}
+                  floatingAlert
+                  floatingAlertOpen={isError}
+                  onFloatingAlertClose={() => setIsError(false)}
+                />
+              ) : null}
+
               <Grid container>
                 <Grid item xs={12} md={4}>
                   <Link
