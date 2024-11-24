@@ -58,20 +58,17 @@ function RegisterAssistantForm() {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   async function submit(values: IRegisterValues) {
-    const gReCaptchaToken: string = await executeRecaptcha!(
-      "enquiryFormSubmit"
-    );
-
     try {
-      try {
-        await ApiRecaptcha(gReCaptchaToken);
-        console.log("Recaptcha - OK");
-      } catch (error) {
-        throw new Error("Recaptcha - you are not a human");
-      }
-
       setIsError(false);
       setIsPending(true);
+
+      const gReCaptchaToken: string = await executeRecaptcha!(
+        "enquiryFormSubmit"
+      );
+
+      await ApiRecaptcha(gReCaptchaToken);
+      console.log("Recaptcha - OK");
+
       await registerAssistant(values);
       console.log(values);
       setIsPending(false);
