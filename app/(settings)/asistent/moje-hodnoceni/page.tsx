@@ -4,7 +4,11 @@ import type { Metadata } from "next";
 import BackButton from "components/buttons/back-button";
 import { THEME_COLORS } from "components/theme/colors";
 import { SeniorQueriesGetter } from "backend/senior-queries";
-import { FilterType, FINISHED_STATUSES } from "helper/consts";
+import {
+  AssistantPagePaths,
+  FilterType,
+  FINISHED_STATUSES,
+} from "helper/consts";
 import AssistantScoreListDynamicList from "components/dynamic-list/assistant-score-list-dynamic-list";
 import BasePaper from "components/layout/base-paper";
 import AssistantScoreForm from "components/assistant/assistant-score-form";
@@ -27,7 +31,7 @@ async function Page() {
 
   return (
     <>
-      <BackButton />
+      <BackButton href={AssistantPagePaths.ASSISTANT_PROFILE} />
       <BasePaper
         elevation={0}
         sx={{

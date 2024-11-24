@@ -22,7 +22,9 @@ export function FormInputCity({
 }: InputCityProps) {
   function getCityLabel(option: City) {
     return option
-      ? `${option?.fields?.mestoObec} (${option?.fields?.okres})`
+      ? `${option?.fields?.mestoObec} (${
+          option?.fields?.PSC ?? option?.fields?.okres
+        })`
       : "";
   }
 

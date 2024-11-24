@@ -12,7 +12,7 @@ export const registerAssistantSchema = yup.object({}).shape({
     .required("Napište Vaše jméno"),
   surname: yup
     .string()
-    .matches(/^[A-Ža-ž]*$/, "Prosím vložte příjmení ve správném tvaru")
+    .matches(/^[A-Ža-ž\s]*$/, "Prosím vložte příjmení ve správném tvaru")
     .max(40)
     .required("Napište Vaše příjmení"),
   email: yup
@@ -39,9 +39,6 @@ export const registerAssistantSchema = yup.object({}).shape({
       "Napište správný tvar telefonního čísla (např. 123456789)"
     )
     .required("Napište Váš kontaktní telefon (např. 123456789)"),
-  agreement: yup
-    .boolean()
-    .required("Prosím potvrďte souhlas se zpracováním osobních údajů"),
   password: yup
     .string()
     .matches(
