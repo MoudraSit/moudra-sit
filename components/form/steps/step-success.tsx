@@ -15,7 +15,7 @@ function StepSuccess() {
         Děkujeme!
       </Typography>
       <Typography variant="h2" align="left" color="#3e3e3e" sx={{ fontWeight: "bold", pb: 2 }}>
-        Váš dotaz jsme přijali ke zpracování. Do 5 dnů Vás budeme telefonicky kontaktovat.
+        Váš dotaz jsme přijali ke zpracování. Do 7 dnů Vás budeme telefonicky kontaktovat.
       </Typography>
       <Typography variant="h2" align="left" color="#3e3e3e" sx={{ pb: 4 }}>
         Pokud jste zadali e-mail, poslali jsme Vám do něj souhrn Vašeho dotazu. Pokud ho tam
