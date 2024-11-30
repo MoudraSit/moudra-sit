@@ -14,21 +14,12 @@ async function PlannedVisitsList() {
   });
 
   const plannedQueries = myQueries.filter((query) => {
-    const nextPlannedVisit =
-      query?.fields?.navstevy?.fields?.datumPlanovanaNavsteva?._$$max ?? null;
-    if (!nextPlannedVisit) return false;
+    const nextPlannedVisitDate =
+      query?.fields?.posledniZmenaLink?.fields.datumPlanovanaNavsteva ?? null;
+    if (!nextPlannedVisitDate) return false;
 
-    return new Date(nextPlannedVisit) > new Date();
+    return new Date(nextPlannedVisitDate) > new Date();
   });
-
-  for (const plannedQuery of plannedQueries) {
-    const visits = await SeniorQueriesGetter.getVisitsForSeniorQuery(
-      plannedQuery.id
-    );
-    const lastVisit = visits.at(0);
-    plannedQuery.fields.navstevy!.fields.posledniPoznamkaAsistent =
-      lastVisit?.fields.poznamkaAsistentem;
-  }
 
   return (
     <Stack spacing={1}>

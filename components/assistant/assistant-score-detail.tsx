@@ -22,7 +22,10 @@ function AssistantScoreDetail({ seniorQuery }: Props) {
           variant="caption"
           sx={{ color: "#A5A5A5", fontWeight: "300" }}
         >
-          {formatDate(seniorQuery.fields.datumVytvoreni)}
+          {formatDate(
+            seniorQuery.fields.posledniZmenaLink?.fields
+              .datumUskutecneneNavstevy
+          )}
         </Typography>
       </Stack>
       <Box>
@@ -42,18 +45,17 @@ function AssistantScoreDetail({ seniorQuery }: Props) {
         label="Byl problém vyřešen?"
         sublabel="(jako ve škole, 1 nejlepší, 5 nejhorší)"
       >
-        {seniorQuery.fields.navstevy?.fields.problemVyresenHodnoceni?._$$max}
+        {seniorQuery.fields.posledniZmenaLink?.fields.problemVyresenHodnoceni ??
+          ""}
       </ReadOnlyBox>
       <ReadOnlyBox
         label="Spokojenost seniora s asistentem"
         sublabel="(jako ve škole, 1 nejlepší, 5 nejhorší)"
       >
-        {seniorQuery.fields.navstevy?.fields.spokojenostSenior?._$$max}
+        {seniorQuery.fields.posledniZmenaLink?.fields.spokojenostSenior ?? ""}
       </ReadOnlyBox>
       <ReadOnlyBox label="Komentář od seniora">
-        {seniorQuery.fields.navstevy?.fields.poznamkaSenioremAPI?._$$list
-          ? seniorQuery.fields.navstevy?.fields.poznamkaSenioremAPI._$$list[0]
-          : ""}
+        {seniorQuery.fields.posledniZmenaLink?.fields.poznamkaSeniorem ?? ""}
       </ReadOnlyBox>
 
       <QueryDetailButton queryId={seniorQuery.id} label="Přejít na dotaz" />

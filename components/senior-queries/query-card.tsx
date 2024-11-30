@@ -110,12 +110,12 @@ function QueryCard({
                 Datum a čas setkání:{" "}
                 <span style={{ fontWeight: "normal" }}>
                   {formatDateTime(
-                    item.fields.navstevy?.fields?.datumPlanovanaNavsteva
-                      ?._$$max ?? ""
+                    item.fields.posledniZmenaLink?.fields
+                      .datumPlanovanaNavsteva ?? ""
                   )}
                 </span>
               </Typography>
-              {item.fields.navstevy?.fields?.posledniPoznamkaAsistent ? (
+              {item.fields.posledniZmenaLink?.fields.poznamkaAsistentem ? (
                 <Typography
                   fontWeight="600"
                   variant="body1"
@@ -129,7 +129,7 @@ function QueryCard({
                   Poznámka k setkání:{" "}
                   <span style={{ fontWeight: "normal" }}>
                     {removeHTMLTags(
-                      item.fields.navstevy?.fields?.posledniPoznamkaAsistent
+                      item.fields.posledniZmenaLink?.fields.poznamkaAsistentem
                     )}
                   </span>
                 </Typography>

@@ -13,7 +13,6 @@ export async function createSenior(seniorValues: NewSeniorValues) {
         jmeno: capitalizeFirstLetter(seniorValues.name),
         prijmeni: capitalizeFirstLetter(seniorValues.surname),
         mestoLink: { id: seniorValues.city?.id },
-        mesto: seniorValues.city!.fields.mestoObec,
         email: seniorValues.email,
         stat: "Česko",
         telefon: seniorValues.phoneCountryCode.concat(
