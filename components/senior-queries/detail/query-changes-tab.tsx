@@ -1,20 +1,20 @@
 import { List, ListItem, Stack, Typography } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { formatDate, removeHTMLTags } from "helper/utils";
-import { Visit } from "types/visit";
+import { QueryChange } from "types/queryChange";
 import { ListItemContent } from "@mui/joy";
 import NextLink from "next/link";
 import { AssistantPagePaths, QueryStatus } from "helper/consts";
 import QueryStatusChip from "../query-status-chip";
 
 type Props = {
-  visits: Array<Visit>;
+  queryChanges: Array<QueryChange>;
 };
 
-function QueryChangesTab({ visits }: Props) {
+function QueryChangesTab({ queryChanges }: Props) {
   return (
     <List>
-      {visits.length === 0 ? (
+      {queryChanges.length === 0 ? (
         <Typography
           variant="body1"
           fontSize={20}
@@ -24,10 +24,10 @@ function QueryChangesTab({ visits }: Props) {
           Zatím tu nejsou žádné změny.
         </Typography>
       ) : (
-        visits.map((visit) => (
+        queryChanges.map((queryChange) => (
           <NextLink
-            key={visit.id}
-            href={`${AssistantPagePaths.VISITS}/${visit.id}`}
+            key={queryChange.id}
+            href={`${AssistantPagePaths.CHANGES}/${queryChange.id}`}
           >
             <ListItem
               sx={{ padding: "0.5rem", borderBottom: "1px solid #DADADA " }}
@@ -35,15 +35,15 @@ function QueryChangesTab({ visits }: Props) {
               <ListItemContent>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="caption">
-                    {visit.fields.iDUzivatele?.fields.email}
+                    {queryChange.fields.iDUzivatele?.fields.email}
                   </Typography>
                   <Typography variant="caption">
-                    {formatDate(visit.fields.vlozeniZaznamu)}
+                    {formatDate(queryChange.fields.vlozeniZaznamu)}
                   </Typography>
                 </Stack>
                 <QueryStatusChip
                   sx={{ alignSelf: "flex-start" }}
-                  queryStatus={visit.fields.stav as QueryStatus}
+                  queryStatus={queryChange.fields.stav as QueryStatus}
                 />
                 <Stack direction="row" justifyContent="space-between">
                   <Typography
@@ -55,7 +55,7 @@ function QueryChangesTab({ visits }: Props) {
                       textOverflow: "ellipsis",
                     }}
                   >
-                    {removeHTMLTags(visit.fields.poznamkaAsistentem)}
+                    {removeHTMLTags(queryChange.fields.poznamkaAsistentem)}
                   </Typography>
                   <ChevronRightIcon />
                 </Stack>

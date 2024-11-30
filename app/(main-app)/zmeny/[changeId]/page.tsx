@@ -1,6 +1,6 @@
 import BackButton from "components/buttons/back-button";
-import { Visit } from "types/visit";
-import { getVisitById } from "backend/visits";
+import { QueryChange } from "types/queryChange";
+import { getQueryChangeById as getQueryChangeById } from "backend/query-changes";
 import { redirect } from "next/navigation";
 import { NotFoundError } from "helper/exceptions";
 import { ReadOnlyBox } from "components/senior-queries/detail/helper-components";
@@ -11,7 +11,7 @@ import { Stack } from "@mui/material";
 import {
   FINISHED_STATUSES,
   QueryStatus,
-  VisitMeetLocationType,
+  MeetingLocationType,
 } from "helper/consts";
 import QueryDetailScoreSection from "components/senior-queries/detail/query-detail-score-section";
 import { Metadata } from "next";
@@ -22,16 +22,16 @@ export const metadata: Metadata = {
 
 type Props = {
   params: {
-    visitId: string;
+    changeId: string;
   };
 };
 
 async function Page({ params }: Props) {
-  const { visitId } = params;
+  const { changeId } = params;
 
-  let visit: Visit;
+  let queryChange: QueryChange;
   try {
-    visit = await getVisitById(visitId);
+    queryChange = await getQueryChangeById(changeId);
   } catch (error) {
     if (error instanceof NotFoundError) {
       redirect("/404");
@@ -41,11 +41,11 @@ async function Page({ params }: Props) {
   }
 
   const isQueryFinished = FINISHED_STATUSES.includes(
-    visit.fields.stav as QueryStatus
+    queryChange.fields.stav as QueryStatus
   );
 
   const isMeetInOrganization =
-    visit.fields.osobnevzdalene === VisitMeetLocationType.LIBRARY;
+    queryChange.fields.osobnevzdalene === MeetingLocationType.LIBRARY;
 
   return (
     <>
@@ -53,37 +53,41 @@ async function Page({ params }: Props) {
       <BasePaper>
         <Stack spacing={3} sx={{ marginBottom: "3rem" }}>
           <ReadOnlyBox label="Stav dotazu">
-            <QueryStatusChip queryStatus={visit.fields.stav as QueryStatus} />
+            <QueryStatusChip
+              queryStatus={queryChange.fields.stav as QueryStatus}
+            />
           </ReadOnlyBox>
           <ReadOnlyBox label="Místo setkání">
-            {visit.fields.osobnevzdalene}
+            {queryChange.fields.osobnevzdalene}
           </ReadOnlyBox>
           {isMeetInOrganization ? (
             <ReadOnlyBox label="Spolupracující organizace">
-              {visit.fields?.spolupraceSOrganizaci?.fields.nazev}
+              {queryChange.fields?.spolupraceSOrganizaci?.fields.nazev}
             </ReadOnlyBox>
           ) : null}
           <ReadOnlyBox label="Adresa návštěvy">
-            {visit.fields.mistoNavstevy}
+            {queryChange.fields.mistoNavstevy}
           </ReadOnlyBox>
           <ReadOnlyBox label="Datuma čas setkání">
             {formatDateTime(
-              visit.fields.stav in FINISHED_STATUSES
-                ? visit.fields.datumUskutecneneNavstevy
-                : visit.fields.datumPlanovanaNavsteva
+              queryChange.fields.stav in FINISHED_STATUSES
+                ? queryChange.fields.datumUskutecneneNavstevy
+                : queryChange.fields.datumPlanovanaNavsteva
             )}
             {}
           </ReadOnlyBox>
           {isQueryFinished ? (
             <ReadOnlyBox label="Délka řešení dotazu (minuty)">
-              {visit.fields.delkaReseniDotazuMinuty}
+              {queryChange.fields.delkaReseniDotazuMinuty}
             </ReadOnlyBox>
           ) : null}
           <ReadOnlyBox label="Poznámka k setkání">
-            {removeHTMLTags(visit.fields.poznamkaAsistentem)}
+            {removeHTMLTags(queryChange.fields.poznamkaAsistentem)}
           </ReadOnlyBox>
         </Stack>
-        {isQueryFinished ? <QueryDetailScoreSection lastVisit={visit} /> : null}
+        {isQueryFinished ? (
+          <QueryDetailScoreSection lastChange={queryChange} />
+        ) : null}
       </BasePaper>
     </>
   );

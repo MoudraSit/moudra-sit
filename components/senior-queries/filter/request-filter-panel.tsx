@@ -4,8 +4,8 @@ import {
   FilterType,
   QueryDeviceCategory,
   QueryStatusLabels,
-  VisitMeetLocationType,
-  VisitMeetLocationTypeLabels,
+  MeetingLocationType,
+  MeetingLocationTypeLabels,
 } from "helper/consts";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { QueryStatus } from "helper/consts";
@@ -110,8 +110,8 @@ function RequestFilterPanel({ districts }: Props) {
         />
         <FilterChip
           title="Místo setkání"
-          options={Object.values(VisitMeetLocationType)}
-          labels={VisitMeetLocationTypeLabels}
+          options={Object.values(MeetingLocationType)}
+          labels={MeetingLocationTypeLabels}
           value={meetLocationTypes}
           setValue={(newValue: string) =>
             handleFilter({ [FilterType.MEET_LOCATION_TYPES]: newValue })
