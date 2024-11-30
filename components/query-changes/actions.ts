@@ -12,6 +12,7 @@ import { google } from "googleapis";
 import { JSObject } from "types/common";
 import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
 import dayjs from "dayjs";
+import { Visit } from "types/visit";
 
 export async function fetchAutocompleteOrganizations(inputValue: string) {
   return await AssistantAPI.getOrganizationsByName(inputValue);
@@ -50,7 +51,7 @@ export async function createQueryChange(
     hodnoceniAsistent: visitValues.assistantScore,
   };
 
-  await callTabidoo(`/tables/navsteva/data/`, {
+  const queryChange = await callTabidoo<Visit>(`/tables/navsteva/data/`, {
     method: "POST",
     body: { fields: payload },
   });
@@ -61,6 +62,7 @@ export async function createQueryChange(
       fields: {
         stavDotazu: visitValues.queryStatus,
         resitelLink: { id: session?.user?.id },
+        posledniZmenaLink: { id: queryChange.id },
       },
     },
   });

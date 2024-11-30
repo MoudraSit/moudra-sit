@@ -1,5 +1,6 @@
 import { Assistant } from "./assistant";
 import { Senior } from "./senior";
+import { Visit } from "./visit";
 
 export interface QueryComment {
   id: string;
@@ -26,20 +27,10 @@ export interface SeniorQuery {
       lastChange: string;
       messages: Array<QueryComment>;
     };
+    posledniZmenaLink?: Visit;
     navstevy?: {
       count: number;
       url: string;
-      // Only fields related to the query which are on the "navsteva" object
-      // Mostly the senior and assistant score
-      fields: {
-        poznamkaSenioremAPI?: { _$$list: Array<string> };
-        // Fetched in a different API call than the query itself
-        posledniPoznamkaAsistent?: string;
-        spokojenostSenior: { _$$max: number };
-        problemVyresenHodnoceni: { _$$max: number };
-        datumPlanovanaNavsteva: { _$$max: string };
-        hodnoceniAsistent?: { _$$max: number };
-      };
     };
     kategorieMultichoice?: Array<string>;
     pozadovaneMistoPomoci?: Array<string>;

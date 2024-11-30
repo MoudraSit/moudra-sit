@@ -142,10 +142,21 @@ export class SeniorQueriesGetter {
   }
 
   private static async _createSeniorQueryLocationFilter(location: string) {
+    // Some queries will not have mestoLink, use mestoLink in the senior table instead
     return {
-      field: "mestoLink.okres",
-      operator: "in",
-      value: location,
+      filter: [
+        {
+          field: "mestoLink.okres",
+          operator: "in",
+          value: location,
+        },
+        {
+          field: "iDSeniora.okresCalc",
+          operator: "in",
+          value: location,
+        },
+      ],
+      filterOperator: "or",
     };
   }
 

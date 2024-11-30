@@ -6,6 +6,9 @@ export interface Senior {
     email: string;
     heslo: string;
     mestoLink?: City;
+    // Link "query.senior.mestoLink" cannot fetch those fields directly
+    okresCalc: string;
+    mestoObecCalc: string;
     PSC: string;
     mesto: string;
     stat: string;
