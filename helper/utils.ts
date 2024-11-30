@@ -2,8 +2,8 @@ import dayjs from "dayjs";
 import {
   QUERY_OLD_DAYS,
   QueryStatus,
-  VisitMeetLocationType,
-  VisitMeetLocationTypeLabels,
+  MeetingLocationType,
+  MeetingLocationTypeLabels,
 } from "./consts";
 import { SeniorQuery } from "types/seniorQuery";
 
@@ -56,8 +56,8 @@ export function labelVisitLocationTypes(locations: any) {
   return typeof locations === "object"
     ? locations
         .map(
-          (loc: VisitMeetLocationType) =>
-            VisitMeetLocationTypeLabels[loc] ?? loc
+          (loc: MeetingLocationType) =>
+            MeetingLocationTypeLabels[loc] ?? loc
         )
         .join(", ")
     : locations;

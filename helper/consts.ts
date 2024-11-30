@@ -67,8 +67,8 @@ export enum AssistantPagePaths {
   DASHBOARD = "/prehled",
   SENIOR_QUERIES = "/dotazy",
   NEW_SENIOR_QUERY = "/dotazy/novy",
-  VISITS = "/navstevy",
-  NEW_VISIT = "/navstevy/nova",
+  CHANGES = "/zmeny",
+  NEW_CHANGE = "/zmeny/nova",
 }
 
 export const QUERY_DETAIL_TAB = "detail";
@@ -94,18 +94,18 @@ export enum QueryDeviceCategory {
   OTHER = "Jiné IT zařízení",
 }
 
-export enum VisitMeetLocationType {
+export enum MeetingLocationType {
   AT_SENIOR = "U mě doma",
   REMOTE = "Na dálku",
   LIBRARY = "V knihovně",
   OTHER = "Jinde",
 }
 
-export const VisitMeetLocationTypeLabels = {
-  [VisitMeetLocationType.AT_SENIOR]: "U seniora doma",
-  [VisitMeetLocationType.REMOTE]: "Vzdáleně (online/telefonicky)",
-  [VisitMeetLocationType.LIBRARY]: "Knihovna / klub",
-  [VisitMeetLocationType.OTHER]: "Jiné místo",
+export const MeetingLocationTypeLabels = {
+  [MeetingLocationType.AT_SENIOR]: "U seniora doma",
+  [MeetingLocationType.REMOTE]: "Vzdáleně (online/telefonicky)",
+  [MeetingLocationType.LIBRARY]: "Knihovna / klub",
+  [MeetingLocationType.OTHER]: "Jiné místo",
 };
 
 export enum PhoneCountryCodes {

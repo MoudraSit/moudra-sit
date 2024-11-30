@@ -1,6 +1,6 @@
 import { Assistant } from "./assistant";
 import { Senior } from "./senior";
-import { Visit } from "./visit";
+import { QueryChange } from "./queryChange";
 
 export interface QueryComment {
   id: string;
@@ -27,7 +27,7 @@ export interface SeniorQuery {
       lastChange: string;
       messages: Array<QueryComment>;
     };
-    posledniZmenaLink?: Visit;
+    posledniZmenaLink?: QueryChange;
     navstevy?: {
       count: number;
       url: string;

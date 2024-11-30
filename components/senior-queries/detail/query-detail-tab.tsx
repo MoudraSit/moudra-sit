@@ -11,7 +11,7 @@ import {
 } from "helper/consts";
 import { THEME_COLORS } from "components/theme/colors";
 import QueryDetailScoreSection from "./query-detail-score-section";
-import QueryDetailVisitSection from "./query-detail-visit-section";
+import QueryDetailChangeSection from "./query-detail-change-section";
 
 type Props = {
   seniorQuery: SeniorQuery;
@@ -33,7 +33,7 @@ async function QueryDetailTab({ seniorQuery }: Props) {
         {isQueryFinished ? null : (
           <Button
             LinkComponent={Link}
-            href={`${AssistantPagePaths.NEW_VISIT}?queryId=${seniorQuery.id}`}
+            href={`${AssistantPagePaths.NEW_CHANGE}?queryId=${seniorQuery.id}`}
             variant="contained"
             sx={{ marginBottom: "0.5rem", maxWidth: "500px" }}
             fullWidth
@@ -167,14 +167,14 @@ async function QueryDetailTab({ seniorQuery }: Props) {
           {seniorQuery.fields.resitelLink?.fields.prijmeniAJmeno}
         </ReadOnlyBox>
         {isQueryFinished ? (
-          <QueryDetailVisitSection
-            lastVisit={seniorQuery.fields.posledniZmenaLink}
+          <QueryDetailChangeSection
+            lastChange={seniorQuery.fields.posledniZmenaLink!}
           />
         ) : null}
       </Stack>
       {isQueryFinished ? (
         <QueryDetailScoreSection
-          lastVisit={seniorQuery.fields.posledniZmenaLink!}
+          lastChange={seniorQuery.fields.posledniZmenaLink!}
         />
       ) : null}
       <QueryDetailCommentsSection

@@ -21,8 +21,8 @@ import {
   phoneRegexWithCountryCode,
   QUERY_DETAIL_TAB,
   QueryDeviceCategory,
-  VisitMeetLocationType,
-  VisitMeetLocationTypeLabels,
+  MeetingLocationType,
+  MeetingLocationTypeLabels,
 } from "helper/consts";
 import FormHeadline from "components/app-forms/FormHeadline";
 import SubmitButton from "components/buttons/submit-button";
@@ -235,15 +235,15 @@ function NewQueryForm({ prefilledSenior }: Props) {
             label="Preferovaná místa setkání"
             multiple
             multiline
-            renderValue={(vals: Array<VisitMeetLocationType>) =>
+            renderValue={(vals: Array<MeetingLocationType>) =>
               vals
-                .map((val) => VisitMeetLocationTypeLabels[val] ?? val)
+                .map((val) => MeetingLocationTypeLabels[val] ?? val)
                 .join(", ")
             }
           >
             {renderFlatOptions(
-              Object.values(VisitMeetLocationType),
-              VisitMeetLocationTypeLabels,
+              Object.values(MeetingLocationType),
+              MeetingLocationTypeLabels,
               (option: string) =>
                 highlightOption(
                   option,

@@ -1,7 +1,7 @@
 import {
   FINISHED_STATUSES,
   QueryStatus,
-  VisitMeetLocationType,
+  MeetingLocationType as MeetingLocationType,
 } from "helper/consts";
 import { Organization } from "types/assistant";
 import * as yup from "yup";
@@ -14,14 +14,14 @@ export const newQueryChangeSchema = yup.object({}).shape({
   meetLocationType: yup.string().required("Zadejete místo setkání"),
   organization: new yup.ObjectSchema<Organization>()
     .when("meetLocationType", {
-      is: (val: string) => val === VisitMeetLocationType.LIBRARY,
+      is: (val: string) => val === MeetingLocationType.LIBRARY,
       then: (schema) => schema.required("Zadejte organizaci"),
     })
     .nullable(),
   address: yup.string().when("meetLocationType", {
     is: (val: string) =>
-      val === VisitMeetLocationType.AT_SENIOR ||
-      val === VisitMeetLocationType.OTHER,
+      val === MeetingLocationType.AT_SENIOR ||
+      val === MeetingLocationType.OTHER,
     then: (schema) => schema.required("Zadejte adresu setkání"),
   }),
   dateTime: yup

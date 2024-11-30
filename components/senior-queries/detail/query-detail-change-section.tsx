@@ -1,25 +1,25 @@
 import { ReadOnlyBox } from "./helper-components";
-import { Visit } from "types/visit";
 import { formatDateTime } from "helper/utils";
+import { QueryChange } from "types/queryChange";
 
 type Props = {
-  lastVisit?: Visit;
+  lastChange: QueryChange;
 };
 
-function QueryDetailVisitSection({ lastVisit }: Props) {
+async function QueryDetailChangeSection({ lastChange }: Props) {
   return (
     <>
       <ReadOnlyBox label="Místo setkání">
-        {lastVisit?.fields.osobnevzdalene}
+        {lastChange?.fields.osobnevzdalene}
       </ReadOnlyBox>
       <ReadOnlyBox label="Adresa setkání">
-        {lastVisit?.fields.mistoNavstevy}
+        {lastChange?.fields.mistoNavstevy}
       </ReadOnlyBox>
       <ReadOnlyBox label="Datum a čas setkání">
-        {formatDateTime(lastVisit?.fields.datumUskutecneneNavstevy)}
+        {formatDateTime(lastChange?.fields.datumUskutecneneNavstevy)}
       </ReadOnlyBox>
     </>
   );
 }
 
-export default QueryDetailVisitSection;
+export default QueryDetailChangeSection;
