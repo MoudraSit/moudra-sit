@@ -41,7 +41,9 @@ function AssistantScoreListItem({ item: query, style }: Props) {
               variant="caption"
               sx={{ color: "#A5A5A5", fontWeight: "300" }}
             >
-              {formatDate(query.fields.datumVytvoreni)}
+              {formatDate(
+                query.fields.posledniZmenaLink?.fields.datumUskutecneneNavstevy
+              )}
             </Typography>
           </Stack>
           <Stack

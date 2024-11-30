@@ -11,7 +11,6 @@ import {
 } from "helper/consts";
 import { THEME_COLORS } from "components/theme/colors";
 import QueryDetailScoreSection from "./query-detail-score-section";
-import { SeniorQueriesGetter } from "backend/senior-queries";
 import QueryDetailVisitSection from "./query-detail-visit-section";
 
 type Props = {
@@ -23,12 +22,6 @@ async function QueryDetailTab({ seniorQuery }: Props) {
   const sortedComments = [...(comments ?? [])].sort((a, b) =>
     new Date(a.created) < new Date(b.created) ? 1 : -1
   );
-
-  const visits = await SeniorQueriesGetter.getVisitsForSeniorQuery(
-    seniorQuery.id
-  );
-  // Visits are returned from the newest on top
-  const lastVisit = visits.at(0);
 
   const isQueryFinished = FINISHED_STATUSES.includes(
     seniorQuery.fields.stavDotazu as QueryStatus
@@ -110,7 +103,7 @@ async function QueryDetailTab({ seniorQuery }: Props) {
             <Grid item xs={6}>
               <ReadOnlyField
                 label="Lokalita"
-                value={seniorQuery.fields.iDSeniora.fields.mesto}
+                value={seniorQuery.fields.iDSeniora.fields.mestoObecCalc}
               />
             </Grid>
             <Grid item xs={6}>
@@ -174,11 +167,15 @@ async function QueryDetailTab({ seniorQuery }: Props) {
           {seniorQuery.fields.resitelLink?.fields.prijmeniAJmeno}
         </ReadOnlyBox>
         {isQueryFinished ? (
-          <QueryDetailVisitSection lastVisit={lastVisit} />
+          <QueryDetailVisitSection
+            lastVisit={seniorQuery.fields.posledniZmenaLink}
+          />
         ) : null}
       </Stack>
       {isQueryFinished ? (
-        <QueryDetailScoreSection lastVisit={lastVisit!} />
+        <QueryDetailScoreSection
+          lastVisit={seniorQuery.fields.posledniZmenaLink!}
+        />
       ) : null}
       <QueryDetailCommentsSection
         queryId={seniorQuery.id}
