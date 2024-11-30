@@ -8,8 +8,8 @@ import {
   FINISHED_STATUSES,
   QUERY_CHANGES_TAB,
   QueryStatus,
-  VisitMeetLocationType,
-  VisitMeetLocationTypeLabels,
+  MeetingLocationType,
+  MeetingLocationTypeLabels,
 } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
 import * as React from "react";
@@ -30,7 +30,7 @@ import {
 } from "./actions";
 import { SeniorQuery } from "types/seniorQuery";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
-import { Visit } from "types/visit";
+import { QueryChange } from "types/queryChange";
 import dayjs from "dayjs";
 import FormHeadline from "components/app-forms/FormHeadline";
 import SubmitButton from "components/buttons/submit-button";
@@ -47,35 +47,35 @@ const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.UNSOLVED,
 ];
 
-type NewVisitValues = yup.InferType<typeof newQueryChangeSchema>;
+type NewChangeValues = yup.InferType<typeof newQueryChangeSchema>;
 type NewEventValues = yup.InferType<typeof visitCalendarEventSchema>;
 
 type Props = {
   query: SeniorQuery;
-  lastVisit?: Visit;
+  lastChange?: QueryChange;
 };
 
-function NewQueryChangeForm({ query, lastVisit }: Props) {
+function NewQueryChangeForm({ query, lastChange }: Props) {
   const router = useRouter();
 
   const { handleSubmit, control, getValues, watch, setValue } = useForm({
     resolver: yupResolver(newQueryChangeSchema),
     defaultValues: {
       isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
-      calendarEventId: lastVisit?.fields?.kalendarUdalostId ?? "",
+      calendarEventId: lastChange?.fields?.kalendarUdalostId ?? "",
       queryStatus:
         query.fields.stavDotazu === QueryStatus.IN_PROGRESS
           ? QueryStatus.SOLVED
           : QueryStatus.IN_PROGRESS,
       meetLocationType:
-        lastVisit?.fields?.osobnevzdalene ?? VisitMeetLocationType.AT_SENIOR,
-      address: lastVisit?.fields?.mistoNavstevy ?? "",
+        lastChange?.fields?.osobnevzdalene ?? MeetingLocationType.AT_SENIOR,
+      address: lastChange?.fields?.mistoNavstevy ?? "",
       // Yup schema expects JS native Date, but the input works with dayjs
-      organization: lastVisit?.fields?.spolupraceSOrganizaci ?? null,
+      organization: lastChange?.fields?.spolupraceSOrganizaci ?? null,
       //@ts-ignore
       dateTime: dayjs(
-        lastVisit?.fields.datumPlanovanaNavsteva ??
-          lastVisit?.fields.datumUskutecneneNavstevy ??
+        lastChange?.fields.datumPlanovanaNavsteva ??
+          lastChange?.fields.datumUskutecneneNavstevy ??
           ""
       ),
     },
@@ -90,12 +90,12 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
 
   React.useEffect(() => {
     // Skip the initial render
-    if (getValues("meetLocationType") === lastVisit?.fields.osobnevzdalene)
+    if (getValues("meetLocationType") === lastChange?.fields.osobnevzdalene)
       return;
     // Reset the address, it will not be the same when the input changes
     setValue("address", "");
     // Reset the org input if other type of visit was selected
-    if (getValues("meetLocationType") != VisitMeetLocationType.LIBRARY) {
+    if (getValues("meetLocationType") != MeetingLocationType.LIBRARY) {
       //@ts-ignore
       setValue("organization", { id: "" });
     }
@@ -109,7 +109,7 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
   const [isCalendarError, setIsCalendarError] = React.useState(false);
   const [isCalendarSuccess, setIsCalendarSuccess] = React.useState(false);
 
-  async function submit(data: NewVisitValues) {
+  async function submit(data: NewChangeValues) {
     try {
       setIsError(false);
       setIsPending(true);
@@ -160,10 +160,10 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
   }
 
   const isMeetInOrganization =
-    getValues("meetLocationType") === VisitMeetLocationType.LIBRARY;
+    getValues("meetLocationType") === MeetingLocationType.LIBRARY;
 
   const isMeetRemote =
-    getValues("meetLocationType") === VisitMeetLocationType.REMOTE;
+    getValues("meetLocationType") === MeetingLocationType.REMOTE;
 
   const isQueryFinished = FINISHED_STATUSES.includes(
     getValues("queryStatus") as QueryStatus
@@ -191,13 +191,13 @@ function NewQueryChangeForm({ query, lastVisit }: Props) {
           name="meetLocationType"
           control={control}
           label="Místo setkání"
-          renderValue={(val: VisitMeetLocationType) =>
-            VisitMeetLocationTypeLabels[val] ?? val
+          renderValue={(val: MeetingLocationType) =>
+            MeetingLocationTypeLabels[val] ?? val
           }
         >
           {renderFlatOptions(
-            Object.values(VisitMeetLocationType),
-            VisitMeetLocationTypeLabels
+            Object.values(MeetingLocationType),
+            MeetingLocationTypeLabels
           )}
         </FormInputDropdown>
 

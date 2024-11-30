@@ -1,7 +1,8 @@
 import { Assistant, Organization } from "./assistant";
 import { SeniorQuery } from "./seniorQuery";
 
-export interface Visit {
+// "Návštěva" in Tabidoo for legacy reasons
+export interface QueryChange {
   id: string;
   created: string;
   modified: string;

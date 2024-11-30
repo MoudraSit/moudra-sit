@@ -3,7 +3,7 @@ import { callTabidoo } from "./tabidoo";
 import { FilterType } from "helper/consts";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/auth";
-import { Visit } from "types/visit";
+import { QueryChange } from "types/queryChange";
 import { NotFoundError } from "helper/exceptions";
 import { JSObject } from "types/common";
 
@@ -36,7 +36,7 @@ export class SeniorQueriesGetter {
     return seniorQueries[0];
   }
 
-  public static async getVisitsForSeniorQuery(queryId: string) {
+  public static async getChangesForSeniorQuery(queryId: string) {
     const filters = [
       {
         field: "id",
@@ -55,12 +55,12 @@ export class SeniorQueriesGetter {
       return [];
     }
 
-    const visitsResponse = await callTabidoo<Visit[]>(
+    const changesResponse = await callTabidoo<QueryChange[]>(
       seniorQueries[0].fields.navstevy.url,
       { method: "GET", fullUrlProvided: true }
     );
 
-    return visitsResponse;
+    return changesResponse;
   }
 
   public static async getSeniorQueryCountByUIFilters(uiFilters: UIFilters) {

@@ -21,13 +21,7 @@ async function Page({ searchParams }: Props) {
 
   if (!queryId) redirect("/404");
 
-  const [query, visits] = await Promise.all([
-    SeniorQueriesGetter.getSeniorQueryById(queryId),
-    SeniorQueriesGetter.getVisitsForSeniorQuery(queryId),
-  ]);
-
-  // Visits are returned from the newest on top
-  const lastVisit = visits.at(0);
+  const query = await SeniorQueriesGetter.getSeniorQueryById(queryId);
 
   return (
     <>
@@ -40,7 +34,10 @@ async function Page({ searchParams }: Props) {
           Přidat změnu dotazu
         </Typography>
         <hr style={{ borderColor: THEME_COLORS.primary }} />{" "}
-        <NewQueryChangeForm query={query} lastVisit={lastVisit} />
+        <NewQueryChangeForm
+          query={query}
+          lastChange={query.fields.posledniZmenaLink}
+        />
       </BasePaper>
     </>
   );

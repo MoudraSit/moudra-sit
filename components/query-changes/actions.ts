@@ -12,7 +12,7 @@ import { google } from "googleapis";
 import { JSObject } from "types/common";
 import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
 import dayjs from "dayjs";
-import { Visit } from "types/visit";
+import { QueryChange } from "types/queryChange";
 
 export async function fetchAutocompleteOrganizations(inputValue: string) {
   return await AssistantAPI.getOrganizationsByName(inputValue);
@@ -20,38 +20,38 @@ export async function fetchAutocompleteOrganizations(inputValue: string) {
 
 export async function createQueryChange(
   queryId: string,
-  visit: Record<string, any>
+  queryChangeValues: Record<string, any>
 ) {
-  const visitValues = await newQueryChangeSchema.validate(visit);
+  const changeValues = await newQueryChangeSchema.validate(queryChangeValues);
 
   const session = await getServerSession(authOptions);
 
   const payload = {
     dotaz: { id: queryId },
-    kalendarUdalostId: visitValues.calendarEventId,
+    kalendarUdalostId: changeValues.calendarEventId,
     iDUzivatele: { id: session?.user?.id },
-    stav: visitValues.queryStatus,
-    poznamkaAsistentem: visitValues.summary,
-    osobnevzdalene: visitValues.meetLocationType,
-    spolupraceSOrganizaci: visitValues.organization?.id
-      ? { id: visitValues.organization.id }
+    stav: changeValues.queryStatus,
+    poznamkaAsistentem: changeValues.summary,
+    osobnevzdalene: changeValues.meetLocationType,
+    spolupraceSOrganizaci: changeValues.organization?.id
+      ? { id: changeValues.organization.id }
       : undefined,
-    delkaReseniDotazuMinuty: visitValues.duration,
+    delkaReseniDotazuMinuty: changeValues.duration,
     datumUskutecneneNavstevy: FINISHED_STATUSES.includes(
-      visitValues.queryStatus as QueryStatus
+      changeValues.queryStatus as QueryStatus
     )
-      ? createTabidooDateTimeString(visitValues.dateTime)
+      ? createTabidooDateTimeString(changeValues.dateTime)
       : null,
     datumPlanovanaNavsteva: !FINISHED_STATUSES.includes(
-      visitValues.queryStatus as QueryStatus
+      changeValues.queryStatus as QueryStatus
     )
-      ? createTabidooDateTimeString(visitValues.dateTime)
+      ? createTabidooDateTimeString(changeValues.dateTime)
       : null,
-    mistoNavstevy: visitValues.address,
-    hodnoceniAsistent: visitValues.assistantScore,
+    mistoNavstevy: changeValues.address,
+    hodnoceniAsistent: changeValues.assistantScore,
   };
 
-  const queryChange = await callTabidoo<Visit>(`/tables/navsteva/data/`, {
+  const queryChange = await callTabidoo<QueryChange>(`/tables/navsteva/data/`, {
     method: "POST",
     body: { fields: payload },
   });
@@ -60,7 +60,7 @@ export async function createQueryChange(
     method: "PATCH",
     body: {
       fields: {
-        stavDotazu: visitValues.queryStatus,
+        stavDotazu: changeValues.queryStatus,
         resitelLink: { id: session?.user?.id },
         posledniZmenaLink: { id: queryChange.id },
       },
