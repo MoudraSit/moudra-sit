@@ -46,7 +46,7 @@ async function handler(
 
     const hashedPassword = await hashPassword(values.password);
 
-    const seniorFieldsPayload: Senior["fields"] = {
+    const seniorFieldsPayload = {
       jmeno: capitalizeFirstLetter(values.name),
       prijmeni: capitalizeFirstLetter(values.surname),
       mesto: capitalizeFirstLetter(values.city),
