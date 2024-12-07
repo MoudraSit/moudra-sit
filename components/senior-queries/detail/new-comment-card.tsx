@@ -1,13 +1,8 @@
 "use client";
 
-import {
-  Button,
-  CircularProgress,
-  Drawer,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { CircularProgress, Drawer, Stack, TextField } from "@mui/material";
 import ErrorAlert from "components/alerts/error-alert";
+import SubmitButton from "components/buttons/submit-button";
 import { createQueryComment } from "components/senior-queries/actions";
 import React from "react";
 
@@ -39,7 +34,10 @@ function NewCommentCard({ queryId, isOpen, handleClose }: Props) {
 
   return (
     <Drawer open={isOpen} onClose={() => handleClose()} anchor="bottom">
-      <Stack sx={{ padding: "1rem" }}>
+      <Stack
+        sx={{ padding: "1rem", maxWidth: 700, margin: "auto", width: "100%" }}
+        spacing={2}
+      >
         {isPending ? (
           <CircularProgress
             color="secondary"
@@ -60,15 +58,11 @@ function NewCommentCard({ queryId, isOpen, handleClose }: Props) {
             inputProps={{ style: { fontSize: "1rem" } }} // font size of input text
           />
         )}
-        <Button
-          variant="text"
-          fullWidth
+        <SubmitButton
+          label="Přidat komentář"
           disabled={!newComment.length || isPending}
-          color="info"
           onClick={handleNewComment}
-        >
-          Přidat komentář
-        </Button>
+        />
         {isError ? <ErrorAlert /> : null}
       </Stack>
     </Drawer>
