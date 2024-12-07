@@ -2,10 +2,16 @@ import BackButton from "components/buttons/back-button";
 import { AssistantPagePaths, FilterType } from "helper/consts";
 import RequestFilterPanel from "components/senior-queries/filter/request-filter-panel";
 import { SeniorQueriesGetter } from "backend/senior-queries";
-import QueryCardDynamicList from "components/dynamic-list/query-card-dynamic-list";
 import { Typography } from "@mui/material";
 import { AssistantAPI } from "backend/assistant";
 import { Metadata } from "next";
+import dynamic from "next/dynamic";
+import DynamicListSkeleton from "components/skeletons/dynamic-list-skeleton";
+
+const DynamicList = dynamic(
+  () => import("components/dynamic-list/query-card-dynamic-list"),
+  { loading: () => <DynamicListSkeleton />, ssr: false }
+);
 
 export const metadata: Metadata = {
   title: "Dotazy",
@@ -33,11 +39,8 @@ async function Page({ searchParams }: Props) {
       </Typography>
 
       {/* The div is required for list autosizing to work */}
-      <div style={{ flex: "1 1 auto",}}>
-        <QueryCardDynamicList
-          initialItems={seniorQueries}
-          searchParams={searchParams}
-        />
+      <div style={{ flex: "1 1 auto" }}>
+        <DynamicList initialItems={seniorQueries} searchParams={searchParams} />
       </div>
     </>
   );

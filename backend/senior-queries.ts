@@ -103,6 +103,13 @@ export class SeniorQueriesGetter {
         )
       );
 
+    if (!!uiFilters[FilterType.MEETING_LOCATION_TYPES])
+      filters.push(
+        await this._createSeniorQueryMeetingLocationTypeFilter(
+          uiFilters[FilterType.MEETING_LOCATION_TYPES]
+        )
+      );
+
     if (!!uiFilters[FilterType.SENIOR])
       filters.push(
         await this._createSeniorQuerySeniorNameFilter(
@@ -175,6 +182,16 @@ export class SeniorQueriesGetter {
       field: "kategorieMultichoice",
       operator: "in",
       value: deviceCategory,
+    };
+  }
+
+  private static async _createSeniorQueryMeetingLocationTypeFilter(
+    locationType: string
+  ) {
+    return {
+      field: "pozadovaneMistoPomoci",
+      operator: "in",
+      value: locationType,
     };
   }
 
