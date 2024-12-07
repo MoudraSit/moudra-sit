@@ -69,14 +69,18 @@ function RegisterAssistantForm() {
       await ApiRecaptcha(gReCaptchaToken);
       console.log("Recaptcha - OK");
 
-      await registerAssistant(values);
-      console.log(values);
+      const res = await registerAssistant(values);
+
+      if (res.error) {
+        setApiError(res.error);
+        throw new Error(res.error);
+      }
+
       setIsPending(false);
       router.replace(CommonPagePaths.LOGIN);
     } catch (error) {
       console.error(error);
       setIsPending(false);
-      if (error instanceof Error) setApiError(error.message);
       setIsError(true);
     }
   }

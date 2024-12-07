@@ -184,42 +184,25 @@ function SignInSide() {
               ) : null}
 
               <Grid container>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={6}>
                   <Link
                     href="/obnova-hesla/poslat-email"
                     variant="body2"
                     color="#000000"
                   >
-                    <Typography align="left" paragraph>
-                      Zapomněli jste heslo?
-                    </Typography>
+                    <Typography paragraph>Zapomněli jste heslo?</Typography>
                   </Link>
                 </Grid>
-                <Grid item xs={12} md={8}>
-                  <Grid item xs={12}>
-                    {/* TODO: Make nicer if there is a better way to display 2 options like this */}
-                    <Link
-                      href="/registrace/senior"
-                      variant="body2"
-                      color="#000000"
-                    >
-                      <Typography align="right" paragraph>
-                        Jste senior a nemáte účet? Zaregistrujte se zde
-                      </Typography>
-                    </Link>
-                  </Grid>
-                  <Grid item xs={12}>
-                    {/* TODO: Make nicer if there is a better way to display 2 options like this */}
-                    <Link
-                      href="/registrace/asistent"
-                      variant="body2"
-                      color="#000000"
-                    >
-                      <Typography align="right" paragraph>
-                        Jste asistent a nemáte účet? Zaregistrujte se zde
-                      </Typography>
-                    </Link>
-                  </Grid>
+                <Grid item xs={12} md={6}>
+                  <Link
+                    href="/registrace/asistent"
+                    variant="body2"
+                    color="#000000"
+                  >
+                    <Typography paragraph>
+                      Jste asistent a nemáte účet?
+                    </Typography>
+                  </Link>
                 </Grid>
               </Grid>
             </Box>
