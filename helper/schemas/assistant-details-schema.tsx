@@ -30,17 +30,7 @@ export const assistantDetailsSchema = yup.object({}).shape({
       phoneRegexWithCountryCode,
       "Napište správný tvar telefonního čísla (např. 123456789)"
     ),
-  // .required("Napište svůj kontaktní telefon (např. 123456789)"),
-  city: yup
-    .string()
-    .matches(/^[A-Ža-ž]*$/, "Prosím napište správně název obce/města")
-    .required("Napište název obce/města"),
-  address: yup
-    .string()
-    .matches(
-      /^[A-Ža-ž ]*[ ][0-9]+[/]?[0-9]*$/,
-      "Prosím vložte příjmení ve správném tvaru"
-    )
-    .required("Napište ulici a číslo popisné"),
+  city: yup.string(),
+  address: yup.string(),
   organization: yup.string(),
 });

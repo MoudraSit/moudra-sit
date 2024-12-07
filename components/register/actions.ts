@@ -22,10 +22,10 @@ async function registerAssistant(request: JSObject) {
   ]);
 
   if (assistantByEmail.length > 0)
-    throw new Error("Uživatel s tímto e-mailem již existuje.");
+    return { error: "Uživatel s tímto e-mailem již existuje." };
 
   if (assistantByPhone.length > 0)
-    throw new Error("Uživatel s tímto telefonním číslem již existuje.");
+    return { error: "Uživatel s tímto e-mailem již existuje." };
 
   const hashedPassword = await hashPassword(values.password);
 
