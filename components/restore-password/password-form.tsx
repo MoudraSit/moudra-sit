@@ -19,6 +19,8 @@ import TextFieldForm from "components/form/model/input-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { restorePasswordPasswordSchema } from "components/restore-password/schema/restore-password-password-schema";
 import { useSearchParams } from "next/navigation";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import ApiRecaptcha from "components/form/api/recaptcha";
 
 export type IRestorePasswordValues = yup.InferType<
   typeof restorePasswordPasswordSchema
@@ -30,6 +32,8 @@ function RestorePasswordPasswordForm() {
 
   const searchParams = useSearchParams();
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   const {
     mutate: generatePassword,
     isError,
@@ -37,13 +41,21 @@ function RestorePasswordPasswordForm() {
     isLoading: isSubmitting,
     error,
   } = useMutation<AxiosResponse, AxiosError<{ message: string }>, any, any>({
-    mutationFn: (values: IRestorePasswordValues) =>
-      axios.post<unknown>(
+    mutationFn: async (values: IRestorePasswordValues) => {
+      const gReCaptchaToken: string = await executeRecaptcha!(
+        "enquiryFormSubmit"
+      );
+
+      await ApiRecaptcha(gReCaptchaToken);
+      console.log("Recaptcha - OK");
+
+      return axios.post<unknown>(
         `/api/auth/restore-password/apply-token?token=${searchParams?.get(
           "token"
         )}`,
         values
-      ),
+      );
+    },
   });
 
   return (
@@ -191,7 +203,6 @@ function RestorePasswordPasswordForm() {
                   {isError && (
                     <Typography
                       sx={{
-                        pt: 5,
                         color: "red",
                         fontWeight: "bold",
                       }}
@@ -214,7 +225,6 @@ function RestorePasswordPasswordForm() {
                   {isSuccess && (
                     <Typography
                       sx={{
-                        pt: 5,
                         color: "#028790",
                         fontWeight: "bold",
                       }}
@@ -225,15 +235,13 @@ function RestorePasswordPasswordForm() {
                       Heslo úspěšně změněno, nyní se můžete přihlásit.
                     </Typography>
                   )}
-                  <Grid container>
-                    <Grid item xs={12} md={4}>
-                      <Link href="/prihlaseni" variant="body2" color="#000000">
-                        <Typography align="left" paragraph>
-                          Přihlášení
-                        </Typography>
-                      </Link>
-                    </Grid>
-                  </Grid>
+                  <Box sx={{ marginTop: "0.5rem" }}>
+                    <Link href="/prihlaseni" variant="body2" color="#000000">
+                      <Typography align="left" paragraph>
+                        Přihlášení
+                      </Typography>
+                    </Link>
+                  </Box>
                 </Box>
               </Form>
             </Formik>
