@@ -83,7 +83,7 @@ export enum FilterType {
   LOCATION = "lokalita",
   USER_ASSIGNED = "jenMojeDotazy",
   DEVICE_CATEGORY = "kategorieMultichoice",
-  MEET_LOCATION_TYPES = "mistoSetkani",
+  MEETING_LOCATION_TYPES = "mistoSetkani",
   SENIOR = "senior",
 }
 
