@@ -26,7 +26,7 @@ export const commonStyles = {
     color: "black !important",
     fontWeight: "bold",
     zIndex: 1,
-    transform: "translate(0px, -12px) scale(0.75)",
+    transform: "translate(0px, -16px) scale(0.75)",
   },
   "& .MuiOutlinedInput-notchedOutline": {
     top: 0,

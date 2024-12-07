@@ -149,6 +149,7 @@ function NewQueryForm({ prefilledSenior }: Props) {
             <Grid item xs={4}>
               <FormInputDropdown
                 name="senior.phoneCountryCode"
+                label="Předvolba"
                 sx={{ paddingRight: "0.5rem" }}
                 control={control}
               >
