@@ -53,7 +53,7 @@ function RequestFilterPanel({ districts }: Props) {
   const senior = (searchParams.get(FilterType.SENIOR) as string) ?? "";
 
   const meetLocationTypes =
-    (searchParams.get(FilterType.MEET_LOCATION_TYPES) as string) ?? "";
+    (searchParams.get(FilterType.MEETING_LOCATION_TYPES) as string) ?? "";
 
   const onlyMyQueries = Boolean(
     searchParams.get(FilterType.USER_ASSIGNED) as string
@@ -114,7 +114,7 @@ function RequestFilterPanel({ districts }: Props) {
           labels={MeetingLocationTypeLabels}
           value={meetLocationTypes}
           setValue={(newValue: string) =>
-            handleFilter({ [FilterType.MEET_LOCATION_TYPES]: newValue })
+            handleFilter({ [FilterType.MEETING_LOCATION_TYPES]: newValue })
           }
         />
         <FilterChip

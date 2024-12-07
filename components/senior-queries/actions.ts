@@ -20,8 +20,6 @@ export async function searchSeniorsByPhoneNumber(value: string) {
 export async function createQuery(formData: Record<string, any>) {
   const values = await newQuerySchema.validate(formData);
 
-  const session = await getServerSession(authOptions);
-
   if (!values.preexistingSeniorId) {
     const newSenior = await createSenior(values.senior as NewSeniorValues);
     values.preexistingSeniorId = newSenior.id;
@@ -31,7 +29,6 @@ export async function createQuery(formData: Record<string, any>) {
     iDSeniora: {
       id: values.preexistingSeniorId,
     },
-    resitelLink: { id: session?.user?.id },
     mestoLink: { id: values.senior.city!.id },
     popis: values.title,
     podrobnosti: values.description,

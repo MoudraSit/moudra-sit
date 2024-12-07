@@ -9,10 +9,20 @@ import {
   FilterType,
   FINISHED_STATUSES,
 } from "helper/consts";
-import AssistantScoreListDynamicList from "components/dynamic-list/assistant-score-list-dynamic-list";
 import BasePaper from "components/layout/base-paper";
 import AssistantScoreForm from "components/assistant/assistant-score-form";
 import { AssistantAPI } from "backend/assistant";
+import DynamicListSkeleton from "components/skeletons/dynamic-list-skeleton";
+import dynamic from "next/dynamic";
+import CardSkeleton from "components/skeletons/card-skeleton";
+
+const DynamicList = dynamic(
+  () => import("components/dynamic-list/assistant-score-list-dynamic-list"),
+  {
+    loading: () => <DynamicListSkeleton SkeletonComponent={CardSkeleton} />,
+    ssr: false,
+  }
+);
 
 export const metadata: Metadata = {
   title: "Moje hodnocení",
@@ -66,7 +76,7 @@ async function Page() {
         </Typography>
 
         <div style={{ flex: "1 1 auto" }}>
-          <AssistantScoreListDynamicList
+          <DynamicList
             initialItems={seniorQueries}
             searchParams={searchParams}
           />

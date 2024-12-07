@@ -8,13 +8,19 @@ import NewQueryTile from "./tiles/new-query-tile";
 async function SeniorQueriesTiles() {
   return (
     <Stack spacing={1}>
-      <React.Suspense fallback={<CardSkeleton />}>
+      <React.Suspense
+        fallback={
+          <>
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+          </>
+        }
+      >
         <NewQueriesTile />
-      </React.Suspense>
-      <React.Suspense fallback={<CardSkeleton />}>
         <MyQueriesTile />
+        <NewQueryTile />
       </React.Suspense>
-      <NewQueryTile />
     </Stack>
   );
 }
