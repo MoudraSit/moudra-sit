@@ -6,12 +6,14 @@ type Props = {
   disabled?: boolean;
   sx?: JSObject;
   label?: string;
+  onClick?: Function;
 };
 
-function SubmitButton({ disabled, sx, label = "Uložit" }: Props) {
+function SubmitButton({ disabled, sx, label = "Uložit", onClick }: Props) {
   return (
     <Button
       type="submit"
+      onClick={() => (onClick ? onClick() : {})}
       fullWidth
       variant="contained"
       disabled={disabled}
