@@ -2,10 +2,14 @@ import Footer from "components/layout/footer";
 import Layout from "components/layout/layout";
 import RestorePasswordEmailForm from "components/restore-password/email-form";
 import { Role } from "helper/consts";
+import { Metadata } from "next";
 import { getSession } from "next-auth/react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
+export const metadata: Metadata = {
+  title: "Obnova hesla",
+};
 
 function SignInPage() {
   const router = useRouter();
@@ -25,9 +29,6 @@ function SignInPage() {
   return (
     <>
       <Layout />
-      <Head>
-        <title>Obnova hesla | Moudrá Síť App</title>
-      </Head>
       <RestorePasswordEmailForm />
       <Footer />
     </>

@@ -16,6 +16,8 @@ import logo from "public/images/logo/logo.svg";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AssistantPagePaths } from "helper/consts";
 import ErrorAlert from "components/alerts/error-alert";
+import ApiRecaptcha from "components/form/api/recaptcha";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -27,32 +29,47 @@ function SignInSide() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    setIsError(false);
-    setIsPending(true);
-
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      setIsError(false);
+      setIsPending(true);
 
-    setIsPending(false);
+      const data = new FormData(event.currentTarget);
 
-    if (result?.error) {
-      console.error(result.error);
-      setIsError(true);
-      setErrorMessage(result.error);
-    } else {
-      router.push(
-        searchParams?.get("callbackUrl") ?? AssistantPagePaths.DASHBOARD
+      const gReCaptchaToken: string = await executeRecaptcha!(
+        "enquiryFormSubmit"
       );
+
+      await ApiRecaptcha(gReCaptchaToken);
+      console.log("Recaptcha - OK");
+
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: data.get("email"),
+        password: data.get("password"),
+      });
+
+      setIsPending(false);
+
+      if (result?.error) {
+        setErrorMessage(result.error);
+        throw new Error(result.error);
+      } else {
+        router.push(
+          searchParams?.get("callbackUrl") ?? AssistantPagePaths.DASHBOARD
+        );
+      }
+    } catch (error) {
+      setIsPending(false);
+      console.error(error);
+      setIsError(true);
     }
   }
 
@@ -199,9 +216,7 @@ function SignInSide() {
                     variant="body2"
                     color="#000000"
                   >
-                    <Typography paragraph>
-                      Jste asistent a nemáte účet?
-                    </Typography>
+                    <Typography paragraph>Nemáte ještě účet?</Typography>
                   </Link>
                 </Grid>
               </Grid>

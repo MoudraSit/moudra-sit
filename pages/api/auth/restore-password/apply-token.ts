@@ -34,7 +34,7 @@ async function handler(
     const hashedPassword = await hashPassword(values.password);
 
     const generatePasswordPayload = {
-      password: hashedPassword,
+      heslo: hashedPassword,
     };
 
     await callTabidoo<Assistant>(

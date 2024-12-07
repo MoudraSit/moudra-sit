@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import Image from "next/image";
 import * as yup from "yup";
+import loginImage from "public/images/sign-in/welcome.jpg";
 
 import axios, { AxiosError, AxiosResponse } from "axios";
 
@@ -17,6 +18,8 @@ import logo from "public/images/logo/logo.svg";
 import { Form, Formik } from "formik";
 import TextFieldForm from "components/form/model/input-form";
 import { restorePasswordEmailSchema } from "components/restore-password/schema/restore-password-email-schema";
+import ApiRecaptcha from "components/form/api/recaptcha";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export type IRestorePasswordValues = yup.InferType<
   typeof restorePasswordEmailSchema
@@ -27,12 +30,25 @@ function RestorePasswordEmailForm() {
     mutate: restorePassword,
     isError,
     isSuccess,
-    isLoading: isSubmitting,
+    isLoading,
     error,
   } = useMutation<AxiosResponse, AxiosError<{ message: string }>, any, any>({
-    mutationFn: (values: IRestorePasswordValues) =>
-      axios.post<unknown>(`/api/auth/restore-password/generate-token`, values),
+    mutationFn: async (values: IRestorePasswordValues) => {
+      const gReCaptchaToken: string = await executeRecaptcha!(
+        "enquiryFormSubmit"
+      );
+
+      await ApiRecaptcha(gReCaptchaToken);
+      console.log("Recaptcha - OK");
+
+      return axios.post<unknown>(
+        `/api/auth/restore-password/generate-token`,
+        values
+      );
+    },
   });
+
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -46,11 +62,12 @@ function RestorePasswordEmailForm() {
           style={{ position: "relative", overflow: "hidden" }}
         >
           <Image
-            src="/images/sign-in/welcome.jpg"
+            src={loginImage}
             alt="Uvodni foto - Moudra sit"
             style={{ objectFit: "cover" }}
             quality={75}
             fill
+            priority
           />
         </Grid>
         <Grid
@@ -105,6 +122,7 @@ function RestorePasswordEmailForm() {
 
                   <Button
                     type="submit"
+                    disabled={isLoading}
                     fullWidth
                     variant="outlined"
                     sx={{
@@ -119,7 +137,6 @@ function RestorePasswordEmailForm() {
                   {isError && (
                     <Typography
                       sx={{
-                        pt: 5,
                         color: "red",
                         fontWeight: "bold",
                       }}
@@ -142,7 +159,6 @@ function RestorePasswordEmailForm() {
                   {isSuccess && (
                     <Typography
                       sx={{
-                        pt: 5,
                         color: "#028790",
                         fontWeight: "bold",
                       }}
@@ -153,15 +169,13 @@ function RestorePasswordEmailForm() {
                       E-mail s odkazem pro obnovu hesla byl zaslán.
                     </Typography>
                   )}
-                  <Grid container>
-                    <Grid item xs={12} md={4}>
-                      <Link href="/prihlaseni" variant="body2" color="#000000">
-                        <Typography align="left" paragraph>
-                          Přihlášení
-                        </Typography>
-                      </Link>
-                    </Grid>
-                  </Grid>
+                  <Box sx={{ marginTop: "0.5rem" }}>
+                    <Link href="/prihlaseni" variant="body2" color="#000000">
+                      <Typography align="left" paragraph>
+                        Přihlášení
+                      </Typography>
+                    </Link>
+                  </Box>
                 </Box>
               </Form>
             </Formik>
