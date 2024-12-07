@@ -29,32 +29,34 @@ async function QueryDetailTab({ seniorQuery }: Props) {
 
   return (
     <>
-      <Stack alignItems="center">
+      <Grid container spacing={1} sx={{ marginLeft: "-8px !important" }}>
         {isQueryFinished ? null : (
+          <Grid item xs={12} sm={6}>
+            <Button
+              LinkComponent={Link}
+              href={`${AssistantPagePaths.NEW_CHANGE}?queryId=${seniorQuery.id}`}
+              variant="contained"
+              fullWidth
+              color="warning"
+            >
+              {seniorQuery.fields.stavDotazu === QueryStatus.NEW
+                ? "+ Převzít dotaz"
+                : "Přidat změnu"}
+            </Button>
+          </Grid>
+        )}
+        <Grid item xs={12} sm={6}>
           <Button
             LinkComponent={Link}
-            href={`${AssistantPagePaths.NEW_CHANGE}?queryId=${seniorQuery.id}`}
-            variant="contained"
-            sx={{ marginBottom: "0.5rem", maxWidth: "500px" }}
+            href={`${AssistantPagePaths.NEW_SENIOR_QUERY}?prefill=${seniorQuery.id}`}
             fullWidth
-            color="warning"
+            color="info"
+            variant="outlined"
           >
-            {seniorQuery.fields.stavDotazu === QueryStatus.NEW
-              ? "+ Převzít dotaz"
-              : "Přidat změnu"}
+            + Předvyplnit další dotaz
           </Button>
-        )}
-        <Button
-          LinkComponent={Link}
-          href={`${AssistantPagePaths.NEW_SENIOR_QUERY}?prefill=${seniorQuery.id}`}
-          sx={{ maxWidth: "500px" }}
-          fullWidth
-          color="info"
-          variant="outlined"
-        >
-          + Předvyplnit další dotaz
-        </Button>
-      </Stack>
+        </Grid>
+      </Grid>
       <Stack spacing={2}>
         <Typography sx={{ fontWeight: "bold", fontSize: "16px" }}>
           Datum vložení:

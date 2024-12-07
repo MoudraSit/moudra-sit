@@ -2,6 +2,7 @@ import "styles/globals.css";
 
 import type { Metadata } from "next";
 import { Box } from "@mui/material";
+import { innerBoxStyles, outerBoxStyles } from "styles/common-layout";
 
 export const metadata: Metadata = {
   title: {
@@ -18,14 +19,11 @@ export default function RootLayout({
   return (
     <Box
       sx={{
+        ...outerBoxStyles,
         bgcolor: "white",
-        padding: { xs: "1rem", md: "2rem" },
-        flexGrow: 1,
-        display: "flex",
-        flexDirection: "column",
       }}
     >
-      {children}
+      <Box sx={innerBoxStyles}>{children}</Box>
     </Box>
   );
 }
