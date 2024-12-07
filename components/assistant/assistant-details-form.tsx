@@ -248,6 +248,7 @@ function AssistantDetailsForm({ assistant }: Props) {
         <Grid container spacing={0}>
           <Grid item xs={4}>
             <FormInputDropdown
+              label="Předvolba"
               name="phoneCountryCode"
               sx={{ paddingRight: "0.5rem" }}
               control={control}
