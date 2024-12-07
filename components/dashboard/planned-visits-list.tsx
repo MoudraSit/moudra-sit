@@ -44,7 +44,7 @@ async function PlannedVisitsList() {
               padding: "1.5rem 0.25rem",
             }}
           >
-            😢 Nemáte naplánované žádné návštevy.
+            😢 Nemáš naplánované žádné návštevy.
           </Typography>
           <Typography sx={{ marginTop: "1rem", fontSize: "18px" }}>
             Aktuálně evidujeme{" "}
