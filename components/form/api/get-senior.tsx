@@ -1,6 +1,5 @@
-import { SeniorGetId, SeniorGetNoId } from "backend/tabidoo/interfaces/senior";
-
 import { IValues } from "../model/constants";
+import { SeniorGetId, SeniorGetNoId } from "types/senior";
 import { removeSpaces } from "./senior";
 
 async function ApiGetRequestSenior(values: IValues) {

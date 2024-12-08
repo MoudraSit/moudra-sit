@@ -1,7 +1,7 @@
-import { AsistentResponse } from "backend/tabidoo/interfaces/asistent";
-import { SeniorResponse } from "backend/tabidoo/interfaces/senior";
+import { Assistant } from "types/assistant";
+import { Senior } from "types/senior";
 
-export const getFullName = (user?: SeniorResponse | AsistentResponse) => {
+export const getFullName = (user?: Senior | Assistant) => {
   if (!user) {
     return null;
   }
