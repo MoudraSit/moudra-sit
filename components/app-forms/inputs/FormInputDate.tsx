@@ -20,6 +20,7 @@ export const FormInputDate = ({
           closeOnSelect
           slotProps={{
             textField: {
+              fullWidth: true,
               error: !!error,
               helperText: error ? error.message : null,
               size: "small",

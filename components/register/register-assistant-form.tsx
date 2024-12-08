@@ -5,6 +5,7 @@ import {
   Container,
   IconButton,
   InputAdornment,
+  MenuItem,
   Typography,
 } from "@mui/material";
 import * as React from "react";
@@ -30,6 +31,14 @@ import { useRouter } from "next/navigation";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import ErrorAlert from "components/alerts/error-alert";
 import ApiRecaptcha from "components/form/api/recaptcha";
+import { FormInputCheckbox } from "components/app-forms/inputs/FormInputCheckbox";
+import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInputAsyncAutocomplete";
+import { Organization } from "types/assistant";
+import { fetchAutocompleteOrganizations } from "components/query-changes/actions";
+import {
+  getOrganizationLabel,
+  isOrganizationEqual,
+} from "helper/organizations";
 
 export type IRegisterValues = yup.InferType<typeof registerAssistantSchema>;
 
@@ -39,7 +48,7 @@ function RegisterAssistantForm() {
 
   const router = useRouter();
 
-  const { handleSubmit, getValues, control } = useForm({
+  const { handleSubmit, getValues, control, setValue } = useForm({
     resolver: yupResolver(registerAssistantSchema),
     defaultValues: {
       name: "",
@@ -48,6 +57,8 @@ function RegisterAssistantForm() {
       phoneNumber: "",
       plusCode: PhoneCountryCodes.CZ,
       birthDate: undefined,
+      street: "",
+      isDofE: false,
     },
   });
 
@@ -105,7 +116,7 @@ function RegisterAssistantForm() {
         </Typography>
         <form onSubmit={handleSubmit(submit)}>
           <Box sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <FormInputText name="name" control={control} label="Jméno" />
               </Grid>
@@ -137,6 +148,14 @@ function RegisterAssistantForm() {
                 />
               </Grid>
 
+              <Grid item xs={12}>
+                <FormInputText
+                  name="street"
+                  control={control}
+                  label="Ulice a číslo popisné"
+                />
+              </Grid>
+
               <Grid item xs={4}>
                 <FormInputDropdown
                   name="plusCode"
@@ -154,7 +173,46 @@ function RegisterAssistantForm() {
                   label="Telefon"
                 />
               </Grid>
+
               <Grid item xs={12}>
+                <FormInputCheckbox
+                  name="isDofE"
+                  control={control}
+                  setValue={setValue}
+                  label="Jsem členem DofE"
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormInputAsyncAutocomplete<Organization>
+                  name="organization"
+                  control={control}
+                  getValues={getValues}
+                  disabled={isPending}
+                  label="Jsem členem organizace/školy"
+                  fetchOptions={fetchAutocompleteOrganizations}
+                  getOptionLabel={getOrganizationLabel}
+                  isOptionEqualToValue={isOrganizationEqual}
+                  helperText="Pokud vaše organizace není na seznamu, nechte prosím pole prázdné."
+                  renderOption={(props: any, option: Organization) => {
+                    // Do not use the inbuilt key
+                    // eslint-disable-next-line no-unused-vars
+                    const { key, ...optionProps } = props;
+                    return (
+                      <MenuItem
+                        key={option.id}
+                        {...optionProps}
+                        value={option}
+                        dense
+                      >
+                        {getOrganizationLabel(option)}
+                      </MenuItem>
+                    );
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} sx={{ marginTop: "1rem" }}>
                 <FormInputText
                   name="password"
                   control={control}

@@ -40,6 +40,9 @@ async function registerAssistant(request: JSObject) {
     stat: "Česko",
     telefon: phoneValue,
     email: values.email,
+    jsemClenemDofE: values.isDofE,
+    organizace: { id: values.organization?.id },
+    jsemClenemOrganizace: !!values.organization?.id,
     heslo: hashedPassword,
   };
 

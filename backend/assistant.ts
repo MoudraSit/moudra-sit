@@ -75,7 +75,7 @@ export class AssistantAPI {
     });
   }
 
-  public static async getOrganizationsByName(organizationName: string) {
+  public static async getOrganizationsByNameOrCityName(name: string) {
     return await callTabidoo<Array<Organization>>(
       `/tables/organizace/data/filter`,
       {
@@ -83,9 +83,19 @@ export class AssistantAPI {
         body: {
           filter: [
             {
-              field: "nazev",
-              operator: "contains",
-              value: organizationName,
+              filterOperator: "or",
+              filter: [
+                {
+                  field: "nazev",
+                  operator: "contains",
+                  value: name,
+                },
+                {
+                  field: "mestoobec.mestoObec",
+                  operator: "contains",
+                  value: name,
+                },
+              ],
             },
           ],
         },
