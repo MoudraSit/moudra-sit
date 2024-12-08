@@ -1,4 +1,4 @@
-import { City } from "types/assistant";
+import { City, Organization } from "types/assistant";
 import * as yup from "yup";
 
 const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
@@ -29,6 +29,7 @@ export const registerAssistantSchema = yup.object({}).shape({
     is: (val: string) => val,
     then: (schema) => schema.required("Zadejte město"),
   }),
+  street: yup.string(),
   plusCode: yup
     .string()
     .required("Napište správný tvar předvolby (např. +420)"),
@@ -39,6 +40,8 @@ export const registerAssistantSchema = yup.object({}).shape({
       "Napište správný tvar telefonního čísla (např. 123456789)"
     )
     .required("Napište Váš kontaktní telefon (např. 123456789)"),
+  isDofE: yup.bool(),
+  organization: new yup.ObjectSchema<Organization>().nullable(),
   password: yup
     .string()
     .matches(

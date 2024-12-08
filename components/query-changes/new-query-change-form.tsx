@@ -39,6 +39,7 @@ import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInpu
 import { FormInputDateTime } from "components/app-forms/inputs/FormInputDateTime";
 import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
 import ErrorAlert from "components/alerts/error-alert";
+import { getOrganizationLabel, isOrganizationEqual } from "helper/organizations";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -151,13 +152,7 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
     }
   }
 
-  function getOrganizationLabel(option: Organization) {
-    return option?.fields?.nazev ?? "";
-  }
 
-  function isOrganizationEqual(option: Organization, value: Organization) {
-    return option?.id === value?.id;
-  }
 
   const isMeetInOrganization =
     getValues("meetLocationType") === MeetingLocationType.LIBRARY;

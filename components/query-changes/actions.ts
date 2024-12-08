@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 import { QueryChange } from "types/queryChange";
 
 export async function fetchAutocompleteOrganizations(inputValue: string) {
-  return await AssistantAPI.getOrganizationsByName(inputValue);
+  return await AssistantAPI.getOrganizationsByNameOrCityName(inputValue);
 }
 
 export async function createQueryChange(

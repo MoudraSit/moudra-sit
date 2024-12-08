@@ -201,7 +201,7 @@ function SignInSide() {
               ) : null}
 
               <Grid container>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Link
                     href="/obnova-hesla/poslat-email"
                     variant="body2"
@@ -210,7 +210,7 @@ function SignInSide() {
                     <Typography paragraph>Zapomněli jste heslo?</Typography>
                   </Link>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Link
                     href="/registrace/asistent"
                     variant="body2"
