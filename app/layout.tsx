@@ -3,9 +3,9 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import { appTheme } from "components/theme/theme";
 import { SessionProviderWrapper } from "components/session-provider-wrapper/session-provider-wrapper";
-import ResponsiveAppBar from "components/layout/header";
 
 import type { Metadata } from "next";
+import AppHeader from "components/layout/app-header";
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +25,7 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={appTheme}>
             <SessionProviderWrapper>
-              <ResponsiveAppBar />
+              <AppHeader />
               {children}
             </SessionProviderWrapper>
           </ThemeProvider>
