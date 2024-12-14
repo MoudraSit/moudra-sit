@@ -8,12 +8,12 @@ import { getServerSession } from "next-auth";
 import { AssistantAuthStatus, Role } from "helper/consts";
 import { callTabidoo } from "backend/tabidoo";
 import { Assistant } from "types/assistant";
-import { Senior } from "types/senior";
 import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const AUTH_ERROR_MESSAGE = "Špatně zadaný e-mail nebo heslo";
+const MORE_USERS_ERROR_MESSAGE = "Nalezeno více uživatelů se stejným e-mailem";
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -71,24 +71,16 @@ export const authOptions: NextAuthOptions = {
           },
         };
 
-        const [foundSeniors, foundAssistants] = await Promise.all([
-          callTabidoo<Senior[]>(
-            "/tables/senior/data/filter",
-            tabidooRequestPayload
-          ),
-          callTabidoo<Assistant[]>(
-            "/tables/uzivatel/data/filter",
-            tabidooRequestPayload
-          ),
-        ]);
+        const foundAssistants = await callTabidoo<Assistant[]>(
+          "/tables/uzivatel/data/filter",
+          tabidooRequestPayload
+        );
 
-        const foundUsers = [...foundAssistants, ...foundSeniors];
-
-        if (foundUsers.length != 1) {
-          throw new Error(AUTH_ERROR_MESSAGE);
+        if (foundAssistants.length != 1) {
+          throw new Error(MORE_USERS_ERROR_MESSAGE);
         }
 
-        const user = foundUsers[0];
+        const user = foundAssistants[0];
 
         const isValid = await verifyPassword(password, user.fields.heslo ?? "");
 
@@ -96,7 +88,7 @@ export const authOptions: NextAuthOptions = {
           throw Error(AUTH_ERROR_MESSAGE);
         }
 
-        const role = foundSeniors.length > 0 ? Role.SENIOR : Role.DA;
+        const role = Role.DA;
         let status = undefined;
         if (role == Role.DA) {
           if ((user as Assistant).fields.administrativniStav === "🟢DONE")
