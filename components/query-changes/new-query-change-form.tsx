@@ -39,7 +39,11 @@ import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInpu
 import { FormInputDateTime } from "components/app-forms/inputs/FormInputDateTime";
 import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
 import ErrorAlert from "components/alerts/error-alert";
-import { getOrganizationLabel, isOrganizationEqual } from "helper/organizations";
+import {
+  getOrganizationLabel,
+  isOrganizationEqual,
+} from "helper/organizations";
+import ConfirmCalendarEventDialog from "./confirm-calendar-event-dialog";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -110,6 +114,8 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
   const [isCalendarError, setIsCalendarError] = React.useState(false);
   const [isCalendarSuccess, setIsCalendarSuccess] = React.useState(false);
 
+  const [isCalendarDialogOpen, setIsCalendarDialogOpen] = React.useState(false);
+
   async function submit(data: NewChangeValues) {
     try {
       setIsError(false);
@@ -151,8 +157,6 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
       setIsCalendarPending(false);
     }
   }
-
-
 
   const isMeetInOrganization =
     getValues("meetLocationType") === MeetingLocationType.LIBRARY;
@@ -256,7 +260,7 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
 
         {getValues("queryStatus") === QueryStatus.SOLVED ? (
           <Stack spacing={3} sx={{ marginBottom: "3rem" }}>
-            <FormHeadline text="Hodnocení asistenta" />
+            <FormHeadline text="Hodnocení asistentem" />
 
             <FormInputText
               name="assistantScore"
@@ -268,7 +272,7 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
 
         {isCalendarSuccess ? (
           <ErrorAlert
-            errorMessage="Událost přidána/změněna."
+            errorMessage="Událost přidána/změněna"
             type="success"
             floatingAlert
             floatingAlertOpen={isCalendarSuccess}
@@ -301,7 +305,7 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
           ) && getValues("dateTime") ? (
             <Button
               color="warning"
-              onClick={handleAddEvent}
+              onClick={() => setIsCalendarDialogOpen(true)}
               variant="contained"
               disabled={isCalendarPending}
               sx={{ backgroundColor: "#028790 !important" }}
@@ -309,6 +313,17 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
               + Přidat do kalendáře
             </Button>
           ) : null}
+          <ConfirmCalendarEventDialog
+            open={isCalendarDialogOpen}
+            handleClose={() => {
+              setIsCalendarDialogOpen(false);
+            }}
+            handleConfirm={() => {
+              setIsCalendarDialogOpen(false);
+              handleAddEvent();
+            }}
+            visitDate={getValues("dateTime")?.toISOString()!}
+          />
           <SubmitButton disabled={isPending} />
           <Button
             fullWidth
