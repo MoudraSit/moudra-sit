@@ -60,13 +60,21 @@ function SignInSide() {
 
       if (result?.error) {
         setErrorMessage(result.error);
-        throw new Error(result.error);
+        setIsPending(false);
+        console.error(result.error);
+        setIsError(true);
       } else {
         router.push(
           searchParams?.get("callbackUrl") ?? AssistantPagePaths.DASHBOARD
         );
       }
     } catch (error) {
+      const errorMessage =
+        typeof error === "string"
+          ? error
+          : // @ts-ignore
+            error?.message || "Neočekávaná chyba";
+      setErrorMessage(errorMessage);
       setIsPending(false);
       console.error(error);
       setIsError(true);
