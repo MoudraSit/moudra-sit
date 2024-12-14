@@ -40,7 +40,7 @@ async function QueryDetailTab({ seniorQuery }: Props) {
               color="warning"
             >
               {seniorQuery.fields.stavDotazu === QueryStatus.NEW
-                ? "+ Převzít dotaz"
+                ? "Převzít dotaz"
                 : "Přidat změnu"}
             </Button>
           </Grid>
@@ -53,7 +53,7 @@ async function QueryDetailTab({ seniorQuery }: Props) {
             color="info"
             variant="outlined"
           >
-            + Předvyplnit další dotaz
+            Předvyplnit další dotaz
           </Button>
         </Grid>
       </Grid>
