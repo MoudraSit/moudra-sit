@@ -1,4 +1,3 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,51 +7,79 @@ import Paper from "@mui/material/Paper";
 import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { appTheme } from "components/theme/theme";
-import { signIn, useSession } from "next-auth/react";
-import Image from "next/image";
 import * as React from "react";
-
-import { Role } from "backend/role";
-import { useRouter } from "next/router";
-import logo from "public/images/logo/logo.png";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
+import loginImage from "public/images/sign-in/welcome.jpg";
+import logo from "public/images/logo/logo.svg";
+import { useRouter, useSearchParams } from "next/navigation";
+import { AssistantPagePaths } from "helper/consts";
+import ErrorAlert from "components/alerts/error-alert";
+import ApiRecaptcha from "components/form/api/recaptcha";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 function SignInSide() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
+
+  const [isPending, setIsPending] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   const router = useRouter();
-  const session = useSession();
+  const searchParams = useSearchParams();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      setIsError(false);
+      setIsPending(true);
 
-    if (!result?.error) {
-      console.log(result);
+      const data = new FormData(event.currentTarget);
 
-      // otherwise show error to user
-    } else {
-      console.log(result);
-      setErrorMessage(result.error);
+      const gReCaptchaToken: string = await executeRecaptcha!(
+        "enquiryFormSubmit"
+      );
+
+      await ApiRecaptcha(gReCaptchaToken);
+      console.log("Recaptcha - OK");
+
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: data.get("email"),
+        password: data.get("password"),
+      });
+
+      setIsPending(false);
+
+      if (result?.error) {
+        setErrorMessage(result.error);
+        setIsPending(false);
+        console.error(result.error);
+        setIsError(true);
+      } else {
+        router.push(
+          searchParams?.get("callbackUrl") ?? AssistantPagePaths.DASHBOARD
+        );
+      }
+    } catch (error) {
+      const errorMessage =
+        typeof error === "string"
+          ? error
+          : // @ts-ignore
+            error?.message || "Neočekávaná chyba";
+      setErrorMessage(errorMessage);
+      setIsPending(false);
+      console.error(error);
+      setIsError(true);
     }
   }
-
-  React.useEffect(() => {
-    // succesfully singed in, redirect to profile
-    if (session?.data?.user?.role === Role.SENIOR) {
-      router.replace("/senior");
-    }
-    if (session?.data?.user?.role === Role.DA) {
-      router.replace("/asistent");
-    }
-  }, [router, session]);
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -66,14 +93,23 @@ function SignInSide() {
           style={{ position: "relative", overflow: "hidden" }}
         >
           <Image
-            src="/images/sign-in/welcome.jpg"
+            src={loginImage}
             alt="Uvodni foto - Moudra sit"
             style={{ objectFit: "cover" }}
             quality={75}
             fill
+            priority
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={5} component={Paper} elevation={6} square>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+        >
           <Box
             sx={{
               my: 8,
@@ -87,7 +123,12 @@ function SignInSide() {
             <Typography variant="h1" sx={{ mt: 3, mb: 3, fontWeight: "bold" }}>
               Přihlašování do účtu
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -141,26 +182,12 @@ function SignInSide() {
                   ),
                 }}
               />
-              {errorMessage ? (
-                <>
-                  <Typography
-                    sx={{
-                      pt: 5,
-                      color: "red",
-                      fontWeight: "bold",
-                    }}
-                    variant="h5"
-                    align="center"
-                    color="primary.main"
-                  >
-                    {errorMessage}
-                  </Typography>
-                </>
-              ) : null}
+
               <Button
                 type="submit"
+                disabled={isPending}
                 fullWidth
-                variant="contained"
+                variant="outlined"
                 sx={{
                   mt: 3,
                   mb: 3,
@@ -170,19 +197,34 @@ function SignInSide() {
               >
                 Přihlásit se
               </Button>
+
+              {isError ? (
+                <ErrorAlert
+                  errorMessage={errorMessage}
+                  showContactSupportMessage={false}
+                  floatingAlert
+                  floatingAlertOpen={isError}
+                  onFloatingAlertClose={() => setIsError(false)}
+                />
+              ) : null}
+
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2" color="#000000">
-                    <Typography align="left" paragraph>
-                      Zapomněli jste heslo?
-                    </Typography>
+                <Grid item xs={12}>
+                  <Link
+                    href="/obnova-hesla/poslat-email"
+                    variant="body2"
+                    color="#000000"
+                  >
+                    <Typography paragraph>Zapomněli jste heslo?</Typography>
                   </Link>
                 </Grid>
-                <Grid item>
-                  <Link href="/register" variant="body2" color="#000000">
-                    <Typography align="right" paragraph>
-                      Nemáte účet? Zaregistrujte se zde
-                    </Typography>
+                <Grid item xs={12}>
+                  <Link
+                    href="/registrace/asistent"
+                    variant="body2"
+                    color="#000000"
+                  >
+                    <Typography paragraph>Nemáte ještě účet?</Typography>
                   </Link>
                 </Grid>
               </Grid>
