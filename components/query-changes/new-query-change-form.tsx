@@ -63,28 +63,29 @@ type Props = {
 function NewQueryChangeForm({ query, lastChange }: Props) {
   const router = useRouter();
 
-  const { handleSubmit, control, getValues, watch, setValue } = useForm({
-    resolver: yupResolver(newQueryChangeSchema),
-    defaultValues: {
-      isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
-      calendarEventId: lastChange?.fields?.kalendarUdalostId ?? "",
-      queryStatus:
-        query.fields.stavDotazu === QueryStatus.IN_PROGRESS
-          ? QueryStatus.SOLVED
-          : QueryStatus.IN_PROGRESS,
-      meetLocationType:
-        lastChange?.fields?.osobnevzdalene ?? MeetingLocationType.AT_SENIOR,
-      address: lastChange?.fields?.mistoNavstevy ?? "",
-      // Yup schema expects JS native Date, but the input works with dayjs
-      organization: lastChange?.fields?.spolupraceSOrganizaci ?? null,
-      //@ts-ignore
-      dateTime: dayjs(
-        lastChange?.fields.datumPlanovanaNavsteva ??
-          lastChange?.fields.datumUskutecneneNavstevy ??
-          ""
-      ),
-    },
-  });
+  const { handleSubmit, control, getValues, watch, setValue, trigger } =
+    useForm({
+      resolver: yupResolver(newQueryChangeSchema),
+      defaultValues: {
+        isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
+        calendarEventId: lastChange?.fields?.kalendarUdalostId ?? "",
+        queryStatus:
+          query.fields.stavDotazu === QueryStatus.IN_PROGRESS
+            ? QueryStatus.SOLVED
+            : QueryStatus.IN_PROGRESS,
+        meetLocationType:
+          lastChange?.fields?.osobnevzdalene ?? MeetingLocationType.AT_SENIOR,
+        address: lastChange?.fields?.mistoNavstevy ?? "",
+        // Yup schema expects JS native Date, but the input works with dayjs
+        organization: lastChange?.fields?.spolupraceSOrganizaci ?? null,
+        //@ts-ignore
+        dateTime: dayjs(
+          lastChange?.fields.datumPlanovanaNavsteva ??
+            lastChange?.fields.datumUskutecneneNavstevy ??
+            new Date()
+        ),
+      },
+    });
 
   // eslint-disable-next-line no-unused-vars
   const queryStatusWatch = watch("queryStatus");
@@ -305,7 +306,10 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
           ) && getValues("dateTime") ? (
             <Button
               color="warning"
-              onClick={() => setIsCalendarDialogOpen(true)}
+              onClick={async () => {
+                if (!(await trigger())) return;
+                setIsCalendarDialogOpen(true);
+              }}
               variant="contained"
               disabled={isCalendarPending}
               sx={{ backgroundColor: "#028790 !important" }}
