@@ -15,9 +15,10 @@ import Image from "next/image";
 
 import { useSession } from "next-auth/react";
 import logo from "public/images/logo/logo.png";
+import { auth } from "app/lib/auth";
 
-function Profile() {
-  const session = useSession();
+async function Profile() {
+  const session = await auth();
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -277,10 +278,10 @@ function Profile() {
             >
               <Image src={logo} alt={""} height="35" />
               <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 3 }}>
-                {session.data?.user?.name}
+                {session?.user?.name}
               </Typography>
               <Typography component="h1" variant="h5" sx={{ mt: 3, mb: 3 }}>
-                {session.data?.user?.email}
+                {session?.user?.email}
               </Typography>
             </Box>
           </Grid>

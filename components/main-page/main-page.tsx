@@ -52,14 +52,36 @@ function MainPage() {
               a správně ovládat techologie
             </Typography>
 
-            <Stack sx={{ pt: 4, mb: 15 }} direction="row" spacing={2} justifyContent="center">
+            <Stack
+              sx={{ pt: 4, mb: 15 }}
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
               <Link href="https://moudrasit.cz/">
-                <Button color="secondary" variant="contained" endIcon={<KeyboardArrowRightIcon />}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  endIcon={<KeyboardArrowRightIcon />}
+                >
                   Přejít na náš web
                 </Button>
               </Link>
+              <Link href="/prihlaseni">
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  endIcon={<KeyboardArrowRightIcon />}
+                >
+                  Přejít do aplikace
+                </Button>
+              </Link>
               <Link href="/form">
-                <Button color="secondary" variant="contained" endIcon={<KeyboardArrowRightIcon />}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  endIcon={<KeyboardArrowRightIcon />}
+                >
                   Vyplnit formulář
                 </Button>
               </Link>

@@ -12,11 +12,8 @@ async function ApiRecaptcha(token: string): Promise<void> {
 
     const reCaptchaRes = await response.json();
 
-    if (reCaptchaRes?.status === "success") {
-      return;
-    } else {
-      return Promise.reject("Recaptcha - you are bot");
-    }
+    if (reCaptchaRes?.status === "success") return;
+    else return Promise.reject("Recaptcha selhala, zkuste to prosím znovu.");
   } catch (error) {
     console.log("Recaptcha error: ", error);
     return Promise.reject(error);
