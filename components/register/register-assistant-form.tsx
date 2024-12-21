@@ -91,6 +91,8 @@ function RegisterAssistantForm() {
       router.replace(CommonPagePaths.LOGIN);
     } catch (error) {
       console.error(error);
+      // @ts-ignore
+      setApiError(error instanceof Error ? error.message : error);
       setIsPending(false);
       setIsError(true);
     }

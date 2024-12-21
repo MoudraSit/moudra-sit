@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import zxcvbn from "zxcvbn";
 
 export const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
 const pscRegex = /^\d{3}[ ]?\d{2}$/;
@@ -59,9 +60,14 @@ export const registerSeniorSchema = yup.object({}).shape({
     .required("Prosím potvrďte souhlas se zpracováním osobních údajů"),
   password: yup
     .string()
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-      "Heslo musí mít minimálně 8 znaků a obsahovat alespoň 1 číslo"
+    .test(
+      "password-strength",
+      "Napište dostatečně dlouhé a bezpečné heslo",
+      (value) => {
+        if (!value) return false;
+        const result = zxcvbn(value);
+        return result.score >= 3; // Scores from 0 to 4
+      }
     )
     .required("Prosím zvolte Vaše heslo"),
   confirmPwd: yup
