@@ -88,5 +88,5 @@ export async function saveAssistantSettings(
 }
 
 export async function fetchAutocompleteCities(inputValue: string) {
-  return await AssistantAPI.getCitiesByName(inputValue);
+  return await AssistantAPI.getCitiesByNameOrPostalCode(inputValue);
 }
