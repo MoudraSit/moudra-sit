@@ -31,7 +31,7 @@ export async function createQuery(formData: JSObject) {
     iDSeniora: {
       id: values.preexistingSeniorId,
     },
-    mestoLink: { id: values.senior.city!.id },
+    lokalita: { id: values.senior.city!.id },
     popis: values.title,
     podrobnosti: values.description,
     kategorieMultichoice: values.deviceTypes,
