@@ -1,7 +1,7 @@
 "use client";
 
 import { CircularProgress, Drawer, Stack, TextField } from "@mui/material";
-import ErrorAlert from "components/alerts/error-alert";
+import FloatingAlert from "components/alerts/floating-alert";
 import SubmitButton from "components/buttons/submit-button";
 import { createQueryComment } from "components/senior-queries/actions";
 import React from "react";
@@ -63,7 +63,7 @@ function NewCommentCard({ queryId, isOpen, handleClose }: Props) {
           disabled={!newComment.length || isPending}
           onClick={handleNewComment}
         />
-        {isError ? <ErrorAlert /> : null}
+        {isError ? <FloatingAlert /> : null}
       </Stack>
     </Drawer>
   );

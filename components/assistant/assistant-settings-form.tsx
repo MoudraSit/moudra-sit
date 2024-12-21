@@ -13,8 +13,9 @@ import { assistantSettingsSchema } from "helper/schemas/assistant-settings-schem
 import { saveAssistantSettings } from "./actions";
 import { FormInputAutocomplete } from "components/app-forms/inputs/FormInputAutocomplete";
 import SubmitButton from "components/buttons/submit-button";
-import ErrorAlert from "components/alerts/error-alert";
+import FloatingAlert from "components/alerts/floating-alert";
 import { FormInputCity } from "components/app-forms/inputs/FormInputCity";
+import SuccessAlert from "components/alerts/success-alert";
 
 type SettingsValues = yup.InferType<typeof assistantSettingsSchema>;
 
@@ -40,13 +41,16 @@ function AssistantSettingsForm({
 
   const [isPending, setIsPending] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   async function submit(data: SettingsValues) {
     try {
+      setIsSuccess(false);
       setIsError(false);
       setIsPending(true);
       await saveAssistantSettings(assistant.id, data);
       setIsPending(false);
+      setIsSuccess(true);
     } catch (error) {
       console.error(error);
       setIsPending(false);
@@ -98,7 +102,11 @@ function AssistantSettingsForm({
 
         <SubmitButton disabled={isPending} />
 
-        {isError ? <ErrorAlert /> : null}
+        <SuccessAlert isSuccess={isSuccess} setIsSuccess={setIsSuccess} />
+        <FloatingAlert
+          floatingAlertOpen={isError}
+          onFloatingAlertClose={() => setIsError(false)}
+        />
       </Stack>
     </form>
   );

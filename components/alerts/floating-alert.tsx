@@ -1,7 +1,7 @@
 import { Alert, Snackbar } from "@mui/material";
 import { JSObject } from "types/common";
 
-type Props = {
+export type Props = {
   floatingAlert?: boolean;
   floatingAlertOpen?: boolean;
   onFloatingAlertClose?: Function;
@@ -11,8 +11,8 @@ type Props = {
   type?: "error" | "success";
 };
 
-function ErrorAlert({
-  floatingAlert,
+function FloatingAlert({
+  floatingAlert = true,
   floatingAlertOpen,
   onFloatingAlertClose,
   errorMessage = "Při ukládání nastala chyba, opakujte prosím akci později.",
@@ -49,4 +49,4 @@ function ErrorAlert({
   );
 }
 
-export default ErrorAlert;
+export default FloatingAlert;

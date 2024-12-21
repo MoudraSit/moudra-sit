@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Grid, Typography, Stack } from "@mui/material";
-import ErrorAlert from "components/alerts/error-alert";
+import FloatingAlert from "components/alerts/floating-alert";
 import { FormInputCity } from "components/app-forms/inputs/FormInputCity";
 import {
   FormInputDropdown,
@@ -114,14 +114,12 @@ export async function EditSeniorForm({
             <SubmitButton sx={{ mt: 0, mb: 0 }} disabled={isPending} />
           </Stack>
         </Grid>
-        {isError ? (
-          <ErrorAlert
-            errorMessage="Při přidávání změny seniora nastala chyba."
-            floatingAlert
-            floatingAlertOpen={isError}
-            onFloatingAlertClose={() => setIsError(false)}
-          />
-        ) : null}
+
+        <FloatingAlert
+          errorMessage="Při přidávání změny seniora nastala chyba."
+          floatingAlertOpen={isError}
+          onFloatingAlertClose={() => setIsError(false)}
+        />
       </Grid>
     </form>
   );

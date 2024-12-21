@@ -128,6 +128,11 @@ export enum AssistantStatus {
   PENDING = "Čeká na schválení",
 }
 
+export const EDITABLE_ASSISTANT_STATUSES = [
+  AssistantStatus.AVAILABLE,
+  AssistantStatus.UNAVAILABLE,
+];
+
 // Object allows dynamic key names
 export const AssistantStatusColors = {
   [AssistantStatus.AVAILABLE]: "#12BA55",

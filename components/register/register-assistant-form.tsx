@@ -29,7 +29,7 @@ import SubmitButton from "components/buttons/submit-button";
 import registerAssistant from "./actions";
 import { useRouter } from "next/navigation";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import ErrorAlert from "components/alerts/error-alert";
+import FloatingAlert from "components/alerts/floating-alert";
 import ApiRecaptcha from "components/form/api/recaptcha";
 import { FormInputCheckbox } from "components/app-forms/inputs/FormInputCheckbox";
 import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInputAsyncAutocomplete";
@@ -300,7 +300,7 @@ function RegisterAssistantForm() {
             <SubmitButton disabled={isPending} label="Registrovat se" />
 
             {isError && (
-              <ErrorAlert
+              <FloatingAlert
                 errorMessage={apiError ?? "Omlouváme se, ale došlo k chybě."}
                 showContactSupportMessage={false}
                 floatingAlert
