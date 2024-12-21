@@ -26,7 +26,7 @@ export const registerAssistantSchema = yup.object({}).shape({
     .typeError("Napište datum Vašeho narození"),
   // The required check is made conditional to allow both being initially null and validated upon submitting at the same time
   city: new yup.ObjectSchema<City>().nullable().when("phoneNumber", {
-    is: (val: string) => val,
+    is: (val: string) => val || !val,
     then: (schema) => schema.required("Zadejte město"),
   }),
   street: yup.string(),
