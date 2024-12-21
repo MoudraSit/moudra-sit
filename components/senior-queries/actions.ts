@@ -2,22 +2,24 @@
 
 import { authOptions } from "app/lib/auth";
 import { SeniorQueriesGetter } from "backend/senior-queries";
-import { createSenior } from "backend/seniors";
+import { createSenior, getSeniorCityById, updateSenior } from "backend/seniors";
 import { callTabidoo } from "backend/tabidoo";
 import { getSeniorBy } from "backend/utils/getSeniorBy";
 import { AssistantPagePaths, QueryStatus, WEB_APP_NAME } from "helper/consts";
+import { editSeniorSchema } from "helper/schemas/edit-senior-schema";
 import { newQuerySchema } from "helper/schemas/new-query-schema";
 import { NewSeniorValues } from "helper/schemas/new-senior-schema";
 import { createTabidooDateTimeString, generateUID } from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { JSObject } from "types/common";
 import { SeniorQuery } from "types/seniorQuery";
 
 export async function searchSeniorsByPhoneNumber(value: string) {
   return await getSeniorBy("telefon", value);
 }
 
-export async function createQuery(formData: Record<string, any>) {
+export async function createQuery(formData: JSObject) {
   const values = await newQuerySchema.validate(formData);
 
   if (!values.preexistingSeniorId) {
@@ -47,6 +49,17 @@ export async function createQuery(formData: Record<string, any>) {
   await new Promise((resolve) => setTimeout(resolve, 500));
   revalidatePath("/", "layout");
   return newQuery.id;
+}
+
+export async function getSeniorCity(id: string) {
+  return await getSeniorCityById(id);
+}
+
+export async function editSenior(seniorId: string, formData: JSObject) {
+  if (!seniorId) throw new Error("Missing senior ID");
+  const values = await editSeniorSchema.validate(formData);
+  await updateSenior(seniorId, values);
+  revalidatePath("/", "layout");
 }
 
 export async function createQueryComment(queryId: string, comment: string) {

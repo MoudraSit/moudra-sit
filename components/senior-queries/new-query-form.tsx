@@ -45,7 +45,7 @@ function highlightOption(option: string, values?: Array<string>) {
   return values && values.includes(option);
 }
 
-function prefillSenior(prefilledSenior?: Senior): NewSeniorValues {
+export function prefillSenior(prefilledSenior?: Senior): NewSeniorValues {
   if (!prefilledSenior) return seniorInitialValues;
 
   // eslint-disable-next-line no-unused-vars
