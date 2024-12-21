@@ -35,7 +35,7 @@ function QueryChangesTab({ queryChanges }: Props) {
               <ListItemContent>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="caption">
-                    {queryChange.fields.iDUzivatele?.fields.email}
+                    {queryChange.fields.iDUzivatele?.fields.prijmeniAJmeno}
                   </Typography>
                   <Typography variant="caption">
                     {formatDate(queryChange.fields.vlozeniZaznamu)}
