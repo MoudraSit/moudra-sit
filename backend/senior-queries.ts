@@ -149,11 +149,11 @@ export class SeniorQueriesGetter {
   }
 
   private static async _createSeniorQueryLocationFilter(location: string) {
-    // Some queries will not have mestoLink, use mestoLink in the senior table instead
+    // Some queries will not have lokalita, use mestoLink in the senior table instead (via a calculated field)
     return {
       filter: [
         {
-          field: "mestoLink.okres",
+          field: "lokalita.okres",
           operator: "in",
           value: location,
         },
