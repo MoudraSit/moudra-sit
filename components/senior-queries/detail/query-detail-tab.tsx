@@ -1,6 +1,13 @@
-import { Box, Button, Grid, Link, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { SeniorQuery } from "types/seniorQuery";
-import { BORDER_COLOR, ReadOnlyBox, ReadOnlyField } from "./helper-components";
+import { ReadOnlyBox } from "./helper-components";
 import { formatDate, labelVisitLocationTypes } from "helper/utils";
 import QueryStatusChip from "../query-status-chip";
 import QueryDetailCommentsSection from "./query-detail-comments-section";
@@ -9,9 +16,10 @@ import {
   FINISHED_STATUSES,
   QueryStatus,
 } from "helper/consts";
-import { THEME_COLORS } from "components/theme/colors";
 import QueryDetailScoreSection from "./query-detail-score-section";
 import QueryDetailChangeSection from "./query-detail-change-section";
+import { QueryDetailSeniorSection } from "./query-detail-senior-section";
+import { getSeniorCity as getSeniorCityById } from "../actions";
 
 type Props = {
   seniorQuery: SeniorQuery;
@@ -26,6 +34,12 @@ async function QueryDetailTab({ seniorQuery }: Props) {
   const isQueryFinished = FINISHED_STATUSES.includes(
     seniorQuery.fields.stavDotazu as QueryStatus
   );
+
+  const seniorCity = seniorQuery.fields.iDSeniora.fields?.mestoLink?.id
+    ? await getSeniorCityById(
+        seniorQuery.fields.iDSeniora.fields?.mestoLink?.id
+      )
+    : undefined;
 
   return (
     <>
@@ -87,74 +101,10 @@ async function QueryDetailTab({ seniorQuery }: Props) {
           >
             Senior
           </Typography>
-          <Grid
-            container
-            spacing={1}
-            sx={{
-              width: "100%",
-              border: `1px ${BORDER_COLOR} solid`,
-              padding: "0.5rem",
-              margin: 0,
-            }}
-          >
-            <Grid item xs={12}>
-              <Typography>
-                {seniorQuery.fields.iDSeniora.fields.prijmeniJmeno}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <ReadOnlyField
-                label="Lokalita"
-                value={seniorQuery.fields.iDSeniora.fields.mestoObecCalc}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="caption"
-                sx={{ color: "#A5A5A5", overflowWrap: "break-word" }}
-              >
-                Telefon
-              </Typography>
-              <Typography
-                sx={{
-                  overflowWrap: "break-word",
-                  color: THEME_COLORS.primary,
-                  textDecoration: "underline",
-                }}
-              >
-                <a href={`tel:${seniorQuery.fields.iDSeniora.fields.telefon}`}>
-                  {seniorQuery.fields.iDSeniora.fields.telefon}
-                </a>
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <ReadOnlyField
-                label="Věk"
-                value={
-                  new Date().getFullYear() -
-                  seniorQuery.fields.iDSeniora.fields.rokNarozeni
-                }
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="caption"
-                sx={{ color: "#A5A5A5", overflowWrap: "break-word" }}
-              >
-                E-mail
-              </Typography>
-              <Typography
-                sx={{
-                  overflowWrap: "break-word",
-                  textDecoration: "underline",
-                }}
-              >
-                <a href={`mailto:${seniorQuery.fields.iDSeniora.fields.email}`}>
-                  {seniorQuery.fields.iDSeniora.fields.email}
-                </a>
-              </Typography>
-            </Grid>
-          </Grid>
+          <QueryDetailSeniorSection
+            seniorCity={seniorCity}
+            seniorQuery={seniorQuery}
+          />
         </Box>
         <ReadOnlyBox label="Zařízení">
           {seniorQuery.fields.kategorieMultichoice?.join(", ")}
