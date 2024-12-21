@@ -1,5 +1,6 @@
 import { City, Organization } from "types/assistant";
 import * as yup from "yup";
+import zxcvbn from "zxcvbn";
 
 const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
 
@@ -44,9 +45,14 @@ export const registerAssistantSchema = yup.object({}).shape({
   organization: new yup.ObjectSchema<Organization>().nullable(),
   password: yup
     .string()
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-      "Heslo musí mít minimálně 8 znaků a obsahovat alespoň 1 číslo"
+    .test(
+      "password-strength",
+      "Napište dostatečně dlouhé a bezpečné heslo",
+      (value) => {
+        if (!value) return false;
+        const result = zxcvbn(value);
+        return result.score >= 3; // Scores from 0 to 4
+      }
     )
     .required("Prosím zvolte Vaše heslo"),
   confirmPwd: yup
