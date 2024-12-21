@@ -33,13 +33,26 @@ export const newQueryChangeSchema = yup.object({}).shape({
           "Při převzetí dotazu je potřeba domluvit termín se seniorem"
         ),
     })
-    .min(new Date(2021, 0, 1), "Napište správné datum návštěvy")
+    .test(
+      "is-not-too-old",
+      "Datum nesmí být více než měsíc v minulosti",
+      function (value) {
+        if (!value) return false;
+
+        const now = new Date();
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(now.getMonth() - 1);
+
+        return value >= oneMonthAgo;
+      }
+    )
     .typeError("Napište datum návštěvy"),
   duration: yup
     .number()
     .typeError("Zadejte číslo")
     .positive("Zadejte kladné číslo")
     .integer("Zadejte celé číslo")
+    .max(600, "Maximální délka řešení je 600 minut")
     .when("queryStatus", {
       is: (val: string) => FINISHED_STATUSES.includes(val as QueryStatus),
       then: (schema) => schema.required("Zadejte celkovou délku řešení"),
@@ -52,7 +65,7 @@ export const newQueryChangeSchema = yup.object({}).shape({
     .max(5, "Zadejte hodnocení 1-5")
     .typeError("Zadejte hodnocení 1-5")
     .when("queryStatus", {
-      is: (val: string) => FINISHED_STATUSES.includes(val as QueryStatus),
+      is: (val: string) => val === QueryStatus.SOLVED,
       then: (schema) => schema.required("Zadejte hodnocení"),
     }),
 });
