@@ -10,9 +10,11 @@ import {
 
 async function NewQueriesTile() {
   const selectedQueryStatuses = WITHOUT_SOLVER_STATUSES.join(",");
-  const queries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.QUERY_STATUS]: selectedQueryStatuses,
-  });
+  const queriesCount = await SeniorQueriesGetter.getSeniorQueryCountByUIFilters(
+    {
+      [FilterType.QUERY_STATUS]: selectedQueryStatuses,
+    }
+  );
 
   return (
     <Card>
@@ -26,7 +28,7 @@ async function NewQueriesTile() {
             color={"#D3215D"}
             sx={{ fontSize: "18px", fontWeight: "500", textAlign: "center" }}
           >
-            Dotazy bez řešitele ({queries.length})
+            Dotazy bez řešitele ({queriesCount})
           </Typography>
         </CardContent>
       </CardActionArea>

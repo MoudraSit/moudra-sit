@@ -1,4 +1,4 @@
-import { Assistant } from "./assistant";
+import { Assistant, City } from "./assistant";
 import { Senior } from "./senior";
 import { QueryChange } from "./queryChange";
 
@@ -23,6 +23,7 @@ export interface SeniorQuery {
     resitelDotazu: string;
     resitelLink: Assistant;
     stavDotazu: string;
+    lokalita?: City;
     komentare?: {
       lastChange: string;
       messages: Array<QueryComment>;
