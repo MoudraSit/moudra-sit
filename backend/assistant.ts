@@ -75,6 +75,31 @@ export class AssistantAPI {
     });
   }
 
+  public static async getCitiesByNameOrPostalCode(value: string) {
+    return await callTabidoo<Array<City>>(`/tables/mestaaobcecr/data/filter`, {
+      method: "POST",
+      body: {
+        filter: [
+          {
+            filterOperator: "or",
+            filter: [
+              {
+                field: "PSC",
+                operator: "contains",
+                value: value,
+              },
+              {
+                field: "mestoObec",
+                operator: "contains",
+                value: value,
+              },
+            ],
+          },
+        ],
+      },
+    });
+  }
+
   public static async getOrganizationsByNameOrCityName(name: string) {
     return await callTabidoo<Array<Organization>>(
       `/tables/organizace/data/filter`,
