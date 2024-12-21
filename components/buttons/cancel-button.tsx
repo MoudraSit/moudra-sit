@@ -17,6 +17,8 @@ function CancelButton({ disabled, sx, label = "Zrušit", onClick }: Props) {
       color="info"
       disabled={disabled}
       sx={{
+        mt: 3,
+        mb: 3,
         ...sx,
       }}
     >
