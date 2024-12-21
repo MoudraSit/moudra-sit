@@ -34,7 +34,7 @@ async function handler(
     const reCaptchaRes = await responseAPI.json();
 
     // human or robot validation based on score
-    if (reCaptchaRes?.score > 0.5) {
+    if (reCaptchaRes?.success) {
       response.status(200).json({
         status: "success",
         message: "Enquiry submitted successfully",
