@@ -38,12 +38,13 @@ import { Organization } from "types/assistant";
 import { FormInputAsyncAutocomplete } from "components/app-forms/inputs/FormInputAsyncAutocomplete";
 import { FormInputDateTime } from "components/app-forms/inputs/FormInputDateTime";
 import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
-import ErrorAlert from "components/alerts/error-alert";
+import FloatingAlert from "components/alerts/floating-alert";
 import {
   getOrganizationLabel,
   isOrganizationEqual,
 } from "helper/organizations";
 import ConfirmCalendarEventDialog from "./confirm-calendar-event-dialog";
+import SuccessAlert from "components/alerts/success-alert";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -271,34 +272,23 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
           </Stack>
         ) : null}
 
-        {isCalendarSuccess ? (
-          <ErrorAlert
-            errorMessage="Událost přidána/změněna"
-            type="success"
-            floatingAlert
-            floatingAlertOpen={isCalendarSuccess}
-            showContactSupportMessage={false}
-            onFloatingAlertClose={() => setIsCalendarSuccess(false)}
-          />
-        ) : null}
+        <SuccessAlert
+          errorMessage="Událost přidána/změněna"
+          isSuccess={isCalendarSuccess}
+          setIsSuccess={setIsCalendarSuccess}
+        />
 
-        {isCalendarError ? (
-          <ErrorAlert
-            errorMessage="Při přidávání do kalendáře nastala chyba."
-            floatingAlert
-            floatingAlertOpen={isCalendarError}
-            onFloatingAlertClose={() => setIsCalendarError(false)}
-          />
-        ) : null}
+        <FloatingAlert
+          errorMessage="Při přidávání do kalendáře nastala chyba."
+          floatingAlertOpen={isCalendarError}
+          onFloatingAlertClose={() => setIsCalendarError(false)}
+        />
 
-        {isError ? (
-          <ErrorAlert
-            errorMessage="Při přidávání změny dotazu nastala chyba."
-            floatingAlert
-            floatingAlertOpen={isError}
-            onFloatingAlertClose={() => setIsError(false)}
-          />
-        ) : null}
+        <FloatingAlert
+          errorMessage="Při přidávání změny dotazu nastala chyba."
+          floatingAlertOpen={isError}
+          onFloatingAlertClose={() => setIsError(false)}
+        />
 
         <Stack spacing={1}>
           {!FINISHED_STATUSES.includes(

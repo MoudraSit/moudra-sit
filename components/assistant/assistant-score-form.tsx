@@ -10,7 +10,8 @@ import { Assistant } from "types/assistant";
 import { assistantSettingsSchema } from "helper/schemas/assistant-settings-schema";
 import { FormInputSwitch } from "components/app-forms/inputs/FormInputSwitch";
 import { saveAssistantSettings } from "./actions";
-import ErrorAlert from "components/alerts/error-alert";
+import FloatingAlert from "components/alerts/floating-alert";
+import SuccessAlert from "components/alerts/success-alert";
 
 type Props = {
   assistant: Assistant;
@@ -26,9 +27,11 @@ function AssistantScoreForm({ assistant }: Props) {
 
   const [isPending, setIsPending] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   async function submit() {
     try {
+      setIsSuccess(false);
       setIsError(false);
       setIsPending(true);
       const sendScoreEmailNotification = getValues(
@@ -36,6 +39,7 @@ function AssistantScoreForm({ assistant }: Props) {
       );
       await saveAssistantSettings(assistant.id, { sendScoreEmailNotification });
       setIsPending(false);
+      setIsSuccess(true);
     } catch (error) {
       console.error(error);
       setIsPending(false);
@@ -52,9 +56,9 @@ function AssistantScoreForm({ assistant }: Props) {
         submitOnChange={submit}
         disabled={isPending}
       />
-      <ErrorAlert
-        errorMessage="Omlouváme se, ale došlo k chybě."
-        floatingAlert
+
+      <SuccessAlert isSuccess={isSuccess} setIsSuccess={setIsSuccess} />
+      <FloatingAlert
         floatingAlertOpen={isError}
         onFloatingAlertClose={() => setIsError(false)}
       />

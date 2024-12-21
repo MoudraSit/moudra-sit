@@ -15,7 +15,7 @@ import loginImage from "public/images/sign-in/welcome.jpg";
 import logo from "public/images/logo/logo.svg";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AssistantPagePaths } from "helper/consts";
-import ErrorAlert from "components/alerts/error-alert";
+import FloatingAlert from "components/alerts/floating-alert";
 import ApiRecaptcha from "components/form/api/recaptcha";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
@@ -199,7 +199,7 @@ function SignInSide() {
               </Button>
 
               {isError ? (
-                <ErrorAlert
+                <FloatingAlert
                   errorMessage={errorMessage}
                   showContactSupportMessage={false}
                   floatingAlert

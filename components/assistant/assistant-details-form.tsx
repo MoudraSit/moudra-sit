@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  Alert,
   Avatar,
   Badge,
   Box,
+  ClickAwayListener,
   Grid,
   IconButton,
   MenuItem,
@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 
 import {
   AssistantStatus,
+  EDITABLE_ASSISTANT_STATUSES,
   PhoneCountryCodes,
   phoneRegexWithCountryCode,
 } from "helper/consts";
@@ -40,6 +41,9 @@ import { saveAssistantDetails } from "./actions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SubmitButton from "components/buttons/submit-button";
+import { resizeImage } from "helper/resizeImage";
+import SuccessAlert from "components/alerts/success-alert";
+import FloatingAlert from "components/alerts/floating-alert";
 
 function getInitials(assistant: Assistant) {
   return (
@@ -104,13 +108,16 @@ function AssistantDetailsForm({ assistant }: Props) {
   const [isDialOpen, setIsDialOpen] = React.useState(false);
   const [isPending, setIsPending] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   async function submit(data: AssistantValues) {
     try {
       setIsError(false);
+      setIsSuccess(false);
       setIsPending(true);
       await saveAssistantDetails(assistant.id, data);
       setIsPending(false);
+      setIsSuccess(true);
     } catch (error) {
       console.error(error);
       setIsPending(false);
@@ -142,61 +149,79 @@ function AssistantDetailsForm({ assistant }: Props) {
           <Stack direction="row" alignItems="center">
             <Badge
               badgeContent={
-                <SpeedDial
-                  open={isDialOpen}
-                  onClick={() => setIsDialOpen(true)}
-                  onClose={() => setIsDialOpen(false)}
-                  direction="right"
-                  ariaLabel="SpeedDial"
-                  FabProps={{
-                    size: "small",
-                    color: "warning",
-                    sx: {
-                      width: "1.5rem",
-                      height: "1.5rem",
-                      minHeight: "unset",
-                    },
-                  }}
-                  sx={{
-                    position: "absolute",
-                    left: 0,
-                  }}
-                  icon={<EditIcon sx={{ fontSize: "1rem" }} />}
-                >
-                  <SpeedDialAction
-                    icon={
-                      <IconButton component="label" color="warning">
-                        <input
-                          onChange={async (e) => {
-                            if (e.target.files?.length) {
-                              const bytes =
-                                await e.target.files?.[0].arrayBuffer();
-                              const buffer =
-                                Buffer.from(bytes).toString("base64");
-                              setValue("photoFileBase64", buffer);
-                              trigger("photoFileBase64");
-                              setValue("photoFileName", e.target.files[0].name);
-                              setValue("photoFileType", e.target.files[0].type);
-                            }
-                          }}
-                          type="file"
-                          hidden
-                          accept="image/*"
-                        />
-                        <CameraAltIcon />
-                      </IconButton>
-                    }
-                    tooltipTitle={"Smazat fotku"}
-                  ></SpeedDialAction>
-                  <SpeedDialAction
-                    icon={<DeleteIcon />}
+                <ClickAwayListener onClickAway={() => setIsDialOpen(false)}>
+                  <SpeedDial
+                    open={isDialOpen}
                     onClick={() => {
-                      setValue("deleteCurrentPhoto", true);
-                      setIsDialOpen(false);
+                      setIsDialOpen((prev) => !prev);
                     }}
-                    tooltipTitle={"Smazat fotku"}
-                  />
-                </SpeedDial>
+                    direction="right"
+                    ariaLabel="SpeedDial"
+                    FabProps={{
+                      size: "small",
+                      color: "warning",
+                      sx: {
+                        width: "1.5rem",
+                        height: "1.5rem",
+                        minHeight: "unset",
+                      },
+                    }}
+                    sx={{
+                      position: "absolute",
+                      left: 0,
+                    }}
+                    icon={<EditIcon sx={{ fontSize: "1rem" }} />}
+                  >
+                    <SpeedDialAction
+                      icon={
+                        <IconButton component="label" color="warning">
+                          <input
+                            onChange={async (e) => {
+                              if (e.target.files?.length) {
+                                const file = e.target.files[0];
+
+                                try {
+                                  // Resize and compress the image
+                                  const resizedBlob = await resizeImage(file);
+
+                                  // Convert to base64
+                                  const reader = new FileReader();
+                                  reader.onload = () => {
+                                    // @ts-ignore
+                                    const base64 = reader.result.split(",")[1];
+                                    setValue("photoFileBase64", base64);
+                                    trigger("photoFileBase64");
+                                    setValue("photoFileName", file.name);
+                                    setValue("photoFileType", file.type);
+                                  };
+                                  reader.readAsDataURL(resizedBlob as Blob);
+                                } catch (error) {
+                                  console.error(
+                                    "Image processing failed:",
+                                    error
+                                  );
+                                }
+                              }
+                            }}
+                            type="file"
+                            hidden
+                            accept="image/*"
+                          />
+                          <CameraAltIcon />
+                        </IconButton>
+                      }
+                      tooltipTitle={"Smazat fotku"}
+                    ></SpeedDialAction>
+                    <SpeedDialAction
+                      icon={<DeleteIcon />}
+                      onClick={() => {
+                        setValue("deleteCurrentPhoto", true);
+                        setIsDialOpen(false);
+                      }}
+                      tooltipTitle={"Smazat fotku"}
+                    />
+                  </SpeedDial>
+                </ClickAwayListener>
               }
               overlap="circular"
             >
@@ -231,7 +256,7 @@ function AssistantDetailsForm({ assistant }: Props) {
           control={control}
           label="Status asistenta"
         >
-          {Object.values(AssistantStatus).map((option) => (
+          {EDITABLE_ASSISTANT_STATUSES.map((option) => (
             <MenuItem key={option} value={option} dense>
               <AssistantStatusChip status={option} />
             </MenuItem>
@@ -282,13 +307,11 @@ function AssistantDetailsForm({ assistant }: Props) {
           label="Organizace / škola"
         />
 
-        {isError ? (
-          <Alert severity="error">
-            Při ukládání osobních údajů nastala chyba, opakujte prosím akci
-            později. Pokud problém přetrvává, kontaktujte prosím{" "}
-            <a href="mailto:support@moudrasit.cz">support@moudrasit.cz</a>.
-          </Alert>
-        ) : null}
+        <SuccessAlert isSuccess={isSuccess} setIsSuccess={setIsSuccess} />
+        <FloatingAlert
+          floatingAlertOpen={isError}
+          onFloatingAlertClose={() => setIsError(false)}
+        />
 
         <SubmitButton disabled={isPending} />
       </Stack>
