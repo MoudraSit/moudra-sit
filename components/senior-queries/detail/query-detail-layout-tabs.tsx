@@ -6,6 +6,7 @@ import { QUERY_CHANGES_TAB, QUERY_DETAIL_TAB } from "helper/consts";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import ScrollToElement from "./scroll-to-element";
 
 function QueryDetailLayoutTabs() {
   const pathname = usePathname();
@@ -24,12 +25,15 @@ function QueryDetailLayoutTabs() {
       <Tabs
         value={selectedTab}
         centered
+        id="tabs"
         role="navigation"
         variant="fullWidth"
         textColor="primary"
         indicatorColor="primary"
         onChange={(e, newValue) => setSelectedTab(newValue)}
       >
+        {/* Making sure the focus is at the top when navigating from query-form (for instance) */}
+        <ScrollToElement elementId="tabs" offset={120} />
         <Tab
           label="Detail dotazu"
           value={QUERY_DETAIL_TAB}

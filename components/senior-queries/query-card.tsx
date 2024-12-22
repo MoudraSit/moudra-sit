@@ -92,8 +92,7 @@ function QueryCard({
               </Typography>
               <Typography variant="body1">
                 {item.fields.lokalita?.fields.mestoObec ??
-                  item.fields.iDSeniora?.fields.mestoObecCalc ??
-                  item.fields.iDSeniora?.fields.mesto}
+                  item.fields.iDSeniora?.fields.mestoObecCalc}
               </Typography>
               <Typography
                 variant="body1"
