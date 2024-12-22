@@ -5,9 +5,12 @@ import { THEME_COLORS } from "components/theme/colors";
 import { FilterType, WITHOUT_SOLVER_STATUSES } from "helper/consts";
 
 async function PlannedVisitsList() {
-  const newQueries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.QUERY_STATUS]: WITHOUT_SOLVER_STATUSES.join(","),
-  });
+  const selectedQueryStatuses = WITHOUT_SOLVER_STATUSES.join(",");
+  const queriesCount = await SeniorQueriesGetter.getSeniorQueryCountByUIFilters(
+    {
+      [FilterType.QUERY_STATUS]: selectedQueryStatuses,
+    }
+  );
 
   const myQueries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
     [FilterType.USER_ASSIGNED]: true,
@@ -48,9 +51,7 @@ async function PlannedVisitsList() {
           </Typography>
           <Typography sx={{ marginTop: "1rem", fontSize: "18px" }}>
             Aktuálně evidujeme{" "}
-            <span style={{ color: THEME_COLORS.primary }}>
-              {newQueries.length}
-            </span>{" "}
+            <span style={{ color: THEME_COLORS.primary }}>{queriesCount}</span>{" "}
             dotazů bez řešitele.
             <br />
             Nenech seniory dlouho čekat a podívej se, zda bys nemohl nějaký
