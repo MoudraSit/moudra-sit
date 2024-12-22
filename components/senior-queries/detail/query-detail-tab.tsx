@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Link,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Link, Stack, Typography } from "@mui/material";
 import { SeniorQuery } from "types/seniorQuery";
 import { ReadOnlyBox } from "./helper-components";
 import { formatDate, labelVisitLocationTypes } from "helper/utils";
@@ -47,6 +40,7 @@ async function QueryDetailTab({ seniorQuery }: Props) {
         {isQueryFinished ? null : (
           <Grid item xs={12} sm={6}>
             <Button
+              id="primary-button"
               LinkComponent={Link}
               href={`${AssistantPagePaths.NEW_CHANGE}?queryId=${seniorQuery.id}`}
               variant="contained"
