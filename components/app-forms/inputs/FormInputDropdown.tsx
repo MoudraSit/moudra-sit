@@ -69,6 +69,16 @@ export function FormInputDropdown({
             renderValue: renderValue
               ? (renderValue as () => ReactNode)
               : (selected: any) => (multiple ? selected.join(", ") : selected),
+            MenuProps: {
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+              transformOrigin: {
+                vertical: "bottom",
+                horizontal: "center",
+              },
+            },
           }}
         >
           {children}

@@ -193,7 +193,6 @@ function NewQueryForm({ prefilledSenior }: Props) {
             name="senior.email"
             control={control}
             label="E-mail"
-            disabled={!!getValues("preexistingSeniorId")}
           />
 
           <FormInputCity
@@ -201,7 +200,6 @@ function NewQueryForm({ prefilledSenior }: Props) {
             control={control}
             getValues={getValues}
             isPending={isPending}
-            disabled={!!getValues("preexistingSeniorId")}
           />
         </Stack>
         <Stack spacing={3}>
