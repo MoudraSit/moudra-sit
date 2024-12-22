@@ -1,27 +1,31 @@
 import Script from "next/script";
 
 function SklikRtg() {
-  const customScript = ` 
-  window.sznIVA.IS.updateIdentities({
-    eid: null
-  });
+  const handleScriptLoad = () => {
+    // @ts-ignore
+    if (window.sznIVA?.IS) {
+      // @ts-ignore
+      window.sznIVA.IS.updateIdentities({ eid: null });
 
-  var retargetingConf = {
-    rtgId: 1524717,
-    consent: null
+      const retargetingConf = {
+        rtgId: 1524717,
+        consent: null,
+      };
+      // @ts-ignore
+      window.rc?.retargetingHit(retargetingConf);
+    } else {
+      console.error("sznIVA or IS is not available.");
+    }
   };
-  window.rc.retargetingHit(retargetingConf);
-  `;
+
   return (
     <>
       <Script
         type="text/javascript"
         src="https://c.seznam.cz/js/rc.js"
         strategy="lazyOnload"
-      ></Script>
-      <Script id="sklik-rtg" strategy="lazyOnload">
-        {customScript}
-      </Script>
+        onLoad={handleScriptLoad}
+      />
     </>
   );
 }
