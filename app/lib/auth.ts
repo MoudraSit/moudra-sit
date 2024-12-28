@@ -12,8 +12,8 @@ import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const AUTH_ERROR_MESSAGE = "Špatně zadaný e-mail nebo heslo";
-const MORE_USERS_ERROR_MESSAGE = "Nalezeno více uživatelů se stejným e-mailem";
+export const AUTH_ERROR_MESSAGE = "Špatně zadaný e-mail nebo heslo";
+export const MORE_USERS_ERROR_MESSAGE = "Nalezeno více uživatelů se stejným e-mailem";
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -76,9 +76,10 @@ export const authOptions: NextAuthOptions = {
           tabidooRequestPayload
         );
 
-        if (foundAssistants.length != 1) {
+        if (foundAssistants.length > 1)
           throw new Error(MORE_USERS_ERROR_MESSAGE);
-        }
+        else if (foundAssistants.length < 1)
+          throw new Error(AUTH_ERROR_MESSAGE);
 
         const user = foundAssistants[0];
 
