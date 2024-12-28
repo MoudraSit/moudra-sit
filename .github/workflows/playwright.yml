@@ -8,6 +8,11 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      TABIDOO_API_KEY: ${{ secrets.TABIDOO_API_KEY }} 
+      TABIDOO_APP_NAME: ${{ vars.TABIDOO_APP_NAME }} 
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }} 
+      NEXTAUTH_URL: ${{ vars.NEXTAUTH_URL }} 
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -15,6 +20,8 @@ jobs:
         node-version: lts/*
     - name: Install dependencies
       run: npm ci
+    - name: Build the application
+      run: npm run build
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
