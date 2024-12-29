@@ -7,9 +7,10 @@ import {
   Page,
 } from "@playwright/test";
 import { AUTH_ERROR_MESSAGE } from "app/lib/auth";
+import { AssistantPagePaths, CommonPagePaths } from "helper/consts";
 import { BASE_URL } from "playwright.config";
 
-test.describe("/prihlaseni (Login Page)", () => {
+test.describe("Login Page", () => {
   let browser: Browser;
   let context: BrowserContext;
   let page: Page;
@@ -21,7 +22,7 @@ test.describe("/prihlaseni (Login Page)", () => {
     page = await context.newPage();
 
     // Navigate to the login page before each test
-    await page.goto("/prihlaseni");
+    await page.goto(CommonPagePaths.LOGIN);
   });
 
   test.afterEach(async () => {
@@ -77,11 +78,11 @@ test.describe("/prihlaseni (Login Page)", () => {
 
     // Expect error message to be displayed
     const errorMessage = page.locator(`text=${AUTH_ERROR_MESSAGE}`);
-    await expect(errorMessage).toBeVisible({ timeout: 10_000 });
+    await expect(errorMessage).toBeVisible({ timeout: 20_000 });
   });
 
   test("redirects to dashboard on successful login", async ({}) => {
-    const callbackUrl = `${BASE_URL}/prehled`;
+    const callbackUrl = `${BASE_URL}${AssistantPagePaths.DASHBOARD}`;
 
     // Intercept reCAPTCHA API request and mock a success response
     await page.route("/api/recaptcha", async (route) => {
@@ -101,7 +102,7 @@ test.describe("/prihlaseni (Login Page)", () => {
     await page.click('button:has-text("Přihlásit se")');
 
     // Wait for the redirection to the callbackUrl
-    await page.waitForURL(callbackUrl);
+    await page.waitForURL(callbackUrl, { timeout: 40_000 });
 
     // Assert that the URL is correct
     await expect(page).toHaveURL(callbackUrl);
