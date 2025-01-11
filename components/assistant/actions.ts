@@ -76,7 +76,7 @@ export async function saveAssistantSettings(
         assistant.fields.okresyProOdesilaniNotifikaci?.url
       );
     payload.okresyProOdesilaniNotifikaci = {
-      remove: previousNotificationDistricts,
+      remove: previousNotificationDistricts.map((district) => district.id),
       add: settingsValues.notificationDistricts.map((district) => district.id),
     };
   }

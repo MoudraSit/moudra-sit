@@ -41,23 +41,14 @@ export class AssistantAPI {
   }
 
   public static async getDistricts() {
-    // const result = await callTabidoo<Array<District>>(
-    //   `/tables/okresy/data?limit=100`,
-    //   {
-    //     method: "GET",
-    //   }
-    // );
-
-    // return result;
-    // TODO: replace one the table of districts is filled in Tabidoo
-    const results = await callTabidoo<Array<District>>(
-      `/tables/mestaaobcecr/data`,
+    const result = await callTabidoo<Array<District>>(
+      `/tables/okresy/data?limit=100`,
       {
         method: "GET",
       }
     );
 
-    return results;
+    return result;
   }
 
   public static async getCitiesByName(cityName: string) {
