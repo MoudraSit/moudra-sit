@@ -17,7 +17,8 @@ export enum AssistantAuthStatus {
 export enum QueryStatus {
   NEW = "00. Nový",
   FOR_HANDOVER = "01. K předání",
-  ACCEPTED = "02. Přijato",
+  // Not used anymore
+  // ACCEPTED = "02. Přijato",
   IN_PROGRESS = "03. V řešení",
   SOLVED = "04. Vyřešeno - ukončeno",
   UNSOLVED = "05. Nevyřešeno - ukončeno",
@@ -34,7 +35,7 @@ export const WITHOUT_SOLVER_STATUSES = [
 export const QueryStatusLabels = {
   [QueryStatus.NEW]: "Nový",
   [QueryStatus.FOR_HANDOVER]: "K předání",
-  [QueryStatus.ACCEPTED]: "Přijato",
+  // [QueryStatus.ACCEPTED]: "Přijato",
   [QueryStatus.IN_PROGRESS]: "V řešení",
   [QueryStatus.SOLVED]: "Vyřešeno - ukončeno",
   [QueryStatus.UNSOLVED]: "Nevyřešeno - ukončeno",
