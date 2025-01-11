@@ -33,7 +33,6 @@ function AssistantSettingsForm({
   const { control, getValues, handleSubmit } = useForm({
     resolver: yupResolver(assistantSettingsSchema),
     defaultValues: {
-      sendScoreEmailNotification: assistant.fields.noveHodnoceniOdSenioraEmail,
       mainArea: assistant.fields?.hlavniMistoPusobeni ?? null,
       notificationDistricts: assistantDistricts,
     },
