@@ -58,6 +58,17 @@ export async function getSeniorCity(id: string) {
 export async function editSenior(seniorId: string, formData: JSObject) {
   if (!seniorId) throw new Error("Missing senior ID");
   const values = await editSeniorSchema.validate(formData);
+
+  const newPhone = values.phoneCountryCode + values.phone;
+  const seniorsByPhone = await getSeniorBy("telefon", newPhone);
+
+  const ERROR_MESSAGE = "Jiný senior již má toto telefonní číslo.";
+  if (
+    seniorsByPhone.length > 1 ||
+    (seniorsByPhone.length == 1 && seniorsByPhone[0].id != seniorId)
+  )
+    throw new Error(ERROR_MESSAGE);
+
   await updateSenior(seniorId, values);
   revalidatePath("/", "layout");
 }
