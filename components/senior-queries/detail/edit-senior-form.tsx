@@ -101,12 +101,12 @@ export async function EditSeniorForm({
           </Grid>
         </Grid>
 
-        <FormInputText name="year" control={control} label="Rok narození" />
+        <FormInputText name="year" disabled control={control} label="Rok narození" />
 
         <FormInputText name="email" control={control} label="E-mail" />
 
         <Grid item xs={12} sx={{ paddingLeft: "0 !important" }}>
-          <Stack direction="row">
+          <Stack direction="row" spacing={1}>
             <CancelButton
               sx={{ mt: 0, mb: 0 }}
               onClick={() => onEditCancel()}
