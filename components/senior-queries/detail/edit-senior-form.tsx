@@ -43,6 +43,7 @@ export async function EditSeniorForm({
 
   const [isPending, setIsPending] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function submit(values: EditSeniorValues) {
     try {
@@ -53,6 +54,12 @@ export async function EditSeniorForm({
       onEditCancel();
     } catch (error) {
       console.error(error);
+      const errorMessage =
+        typeof error === "string"
+          ? error
+          : // @ts-ignore
+            error?.message || "Při přidávání změny seniora nastala chyba.";
+      setErrorMessage(errorMessage);
       setIsPending(false);
       setIsError(true);
     }
@@ -101,7 +108,12 @@ export async function EditSeniorForm({
           </Grid>
         </Grid>
 
-        <FormInputText name="year" disabled control={control} label="Rok narození" />
+        <FormInputText
+          name="year"
+          disabled
+          control={control}
+          label="Rok narození"
+        />
 
         <FormInputText name="email" control={control} label="E-mail" />
 
@@ -116,7 +128,7 @@ export async function EditSeniorForm({
         </Grid>
 
         <FloatingAlert
-          errorMessage="Při přidávání změny seniora nastala chyba."
+          errorMessage={errorMessage}
           floatingAlertOpen={isError}
           onFloatingAlertClose={() => setIsError(false)}
         />
