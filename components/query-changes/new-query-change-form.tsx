@@ -176,7 +176,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
         <FormInputDropdown
           name="queryStatus"
           control={control}
-          label="Stavu dotazu"
+          label="Stav dotazu"
           renderValue={(status: QueryStatus) => (
             <QueryStatusChip queryStatus={status} />
           )}
