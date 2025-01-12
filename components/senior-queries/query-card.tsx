@@ -6,6 +6,7 @@ import {
 } from "helper/consts";
 import {
   checkIfQueryTooOld,
+  checkIfVisitInThePast,
   formatDate,
   formatDateTime,
   labelVisitLocationTypes,
@@ -17,6 +18,7 @@ import QueryStatusChip from "./query-status-chip";
 import QueryDetailButton from "components/buttons/query-detail-button";
 import OldQueryChip from "./old-query-chip";
 import Link from "next/link";
+import OldVisitChip from "./old-visit-chip";
 
 const CARD_SPACING = "1rem";
 
@@ -83,6 +85,9 @@ function QueryCard({
               </Stack>
 
               {checkIfQueryTooOld(item) ? <OldQueryChip /> : null}
+              {checkIfVisitInThePast(item) && showVisitInfo ? (
+                <OldVisitChip />
+              ) : null}
 
               <Typography variant="h2" fontWeight={"bold"}>
                 {item.fields.popis}
@@ -118,8 +123,12 @@ function QueryCard({
               >
                 Místo setkání:{" "}
                 <span style={{ fontWeight: "normal" }}>
-                  {/* This field used to be a string historically */}
-                  {labelVisitLocationTypes(item.fields?.pozadovaneMistoPomoci)}
+                  {/* pozadovaneMistoPomoci used to be a string historically */}
+                  {labelVisitLocationTypes(
+                    item.fields.posledniZmenaLink
+                      ? item.fields.posledniZmenaLink.fields.osobnevzdalene
+                      : item.fields?.pozadovaneMistoPomoci
+                  )}
                 </span>
               </Typography>
               {showVisitInfo ? (
