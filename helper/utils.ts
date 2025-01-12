@@ -56,10 +56,11 @@ export function labelVisitLocationTypes(locations: any) {
   return typeof locations === "object"
     ? locations
         .map(
-          (loc: MeetingLocationType) =>
-            MeetingLocationTypeLabels[loc] ?? loc
+          (loc: MeetingLocationType) => MeetingLocationTypeLabels[loc] ?? loc
         )
         .join(", ")
+    : locations in MeetingLocationTypeLabels
+    ? MeetingLocationTypeLabels[locations as MeetingLocationType]
     : locations;
 }
 
@@ -70,4 +71,12 @@ export function checkIfQueryTooOld(query: SeniorQuery) {
     queryCreatedDate.add(QUERY_OLD_DAYS, "day") < now &&
     query.fields.stavDotazu in [QueryStatus.NEW, QueryStatus.POSTPONED]
   );
+}
+
+export function checkIfVisitInThePast(query: SeniorQuery) {
+  const visitDate = dayjs(
+    query.fields.posledniZmenaLink?.fields.datumPlanovanaNavsteva
+  );
+  const now = dayjs();
+  return visitDate < now;
 }
