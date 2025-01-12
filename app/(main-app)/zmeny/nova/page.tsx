@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { AssistantAPI } from "backend/assistant";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import BackButton from "components/buttons/back-button";
 import BasePaper from "components/layout/base-paper";
@@ -23,6 +24,13 @@ async function Page({ searchParams }: Props) {
 
   const query = await SeniorQueriesGetter.getSeniorQueryById(queryId);
 
+  // Needs to be fetched since the nested zmena object has only a link
+  let organization = undefined;
+  const organizationId =
+    query.fields.posledniZmenaLink?.fields.spolupraceSOrganizaci?.id;
+  if (organizationId)
+    organization = await AssistantAPI.getOrganizationById(organizationId);
+
   return (
     <>
       <BackButton />
@@ -37,6 +45,7 @@ async function Page({ searchParams }: Props) {
         <NewQueryChangeForm
           query={query}
           lastChange={query.fields.posledniZmenaLink}
+          organization={organization}
         />
       </BasePaper>
     </>
