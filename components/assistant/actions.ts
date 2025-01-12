@@ -65,8 +65,10 @@ export async function saveAssistantSettings(
     payload.noveHodnoceniOdSenioraEmail =
       settingsValues.sendScoreEmailNotification;
 
-  if (settingsValues.mainArea)
-    payload.hlavniMistoPusobeni = { id: settingsValues.mainArea.id };
+  if ("mainArea" in settingsValues)
+    payload.hlavniMistoPusobeni = settingsValues.mainArea?.id
+      ? { id: settingsValues.mainArea.id }
+      : null;
 
   if (settingsValues.notificationDistricts) {
     const assistant = await AssistantAPI.getAssistantDetails(assistantId);
