@@ -1,10 +1,9 @@
-import { Typography } from "@mui/material";
 import { AssistantAPI } from "backend/assistant";
 import { SeniorQueriesGetter } from "backend/senior-queries";
+import { PrimaryFormHeadline } from "components/app-forms/PrimaryFormHeadline";
 import BackButton from "components/buttons/back-button";
 import BasePaper from "components/layout/base-paper";
 import NewQueryChangeForm from "components/query-changes/new-query-change-form";
-import { THEME_COLORS } from "components/theme/colors";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -35,13 +34,7 @@ async function Page({ searchParams }: Props) {
     <>
       <BackButton />
       <BasePaper>
-        <Typography
-          variant="body1"
-          sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
-        >
-          Přidat změnu dotazu
-        </Typography>
-        <hr style={{ borderColor: THEME_COLORS.primary }} />{" "}
+        <PrimaryFormHeadline title="Přidat změnu dotazu" />
         <NewQueryChangeForm
           query={query}
           lastChange={query.fields.posledniZmenaLink}

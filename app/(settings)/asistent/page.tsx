@@ -1,4 +1,4 @@
-import { Alert, List, ListItemText, Stack, Typography } from "@mui/material";
+import { Alert, List, ListItemText, Stack } from "@mui/material";
 import type { Metadata } from "next";
 import NextLink from "next/link";
 
@@ -6,10 +6,10 @@ import BackButton from "components/buttons/back-button";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { AssistantAuthStatus, AssistantPagePaths } from "helper/consts";
-import { THEME_COLORS } from "components/theme/colors";
 import SignOutButton from "components/assistant/sign-out-button";
 import BasePaper from "components/layout/base-paper";
 import { auth } from "app/lib/auth";
+import { PrimaryFormHeadline } from "components/app-forms/PrimaryFormHeadline";
 
 const SETTINGS_OPTIONS = [
   {
@@ -68,13 +68,7 @@ async function Page() {
     <>
       <BackButton href={AssistantPagePaths.DASHBOARD} />
       <BasePaper elevation={0}>
-        <Typography
-          variant="body1"
-          sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
-        >
-          Můj profil
-        </Typography>
-        <hr style={{ borderColor: THEME_COLORS.primary }} />
+        <PrimaryFormHeadline title="Můj profil" removeBottomMargin />
         <Stack
           sx={{ padding: "0.5rem", paddingTop: 0, marginTop: "-1rem" }}
           spacing={3}

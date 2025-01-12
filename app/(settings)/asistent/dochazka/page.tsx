@@ -11,7 +11,6 @@ import type { Metadata } from "next";
 
 import BackButton from "components/buttons/back-button";
 
-import { THEME_COLORS } from "components/theme/colors";
 import BasePaper from "components/layout/base-paper";
 import {
   BORDER_COLOR,
@@ -23,6 +22,7 @@ import { formatMonth } from "helper/utils";
 import { AssistantAPI } from "backend/assistant";
 import { auth } from "app/lib/auth";
 import { AssistantPagePaths } from "helper/consts";
+import { PrimaryFormHeadline } from "components/app-forms/PrimaryFormHeadline";
 
 export const metadata: Metadata = {
   title: "Docházka",
@@ -57,15 +57,7 @@ async function Page() {
     <>
       <BackButton href={AssistantPagePaths.ASSISTANT_PROFILE} />
       <BasePaper elevation={0}>
-        <Typography
-          variant="body1"
-          sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
-        >
-          Docházka
-        </Typography>
-        <hr
-          style={{ borderColor: THEME_COLORS.primary, marginBottom: "1rem" }}
-        />
+        <PrimaryFormHeadline title="Docházka" removeBottomMargin />
         <Stack spacing={3}>
           <ReadOnlyBox label="Počet odpracovaných hodin">
             {assistant.fields.hodinCelkem ?? 0}
