@@ -59,9 +59,10 @@ type NewEventValues = yup.InferType<typeof visitCalendarEventSchema>;
 type Props = {
   query: SeniorQuery;
   lastChange?: QueryChange;
+  organization?: Organization;
 };
 
-function NewQueryChangeForm({ query, lastChange }: Props) {
+function NewQueryChangeForm({ query, lastChange, organization }: Props) {
   const router = useRouter();
 
   const { handleSubmit, control, getValues, watch, setValue, trigger } =
@@ -77,8 +78,7 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
         meetLocationType:
           lastChange?.fields?.osobnevzdalene ?? MeetingLocationType.AT_SENIOR,
         address: lastChange?.fields?.mistoNavstevy ?? "",
-        // Yup schema expects JS native Date, but the input works with dayjs
-        organization: lastChange?.fields?.spolupraceSOrganizaci ?? null,
+        organization: organization,
         //@ts-ignore
         dateTime: dayjs(
           lastChange?.fields.datumPlanovanaNavsteva ??
@@ -213,7 +213,7 @@ function NewQueryChangeForm({ query, lastChange }: Props) {
             getOptionLabel={getOrganizationLabel}
             isOptionEqualToValue={isOrganizationEqual}
             handleChange={(newValue: Organization) =>
-              setValue("address", newValue.fields.adresa)
+              setValue("address", newValue ? newValue.fields.adresa : "")
             }
             renderOption={(props: any, option: Organization) => {
               // Do not use the inbuilt key

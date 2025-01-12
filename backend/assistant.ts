@@ -31,6 +31,28 @@ export class AssistantAPI {
     return assistants[0];
   }
 
+  public static async getOrganizationById(organizationId?: string) {
+    const organizations = await callTabidoo<Array<Organization>>(
+      `/tables/organizace/data/filter`,
+      {
+        body: {
+          filter: [
+            {
+              field: "id",
+              operator: "eq",
+              value: organizationId,
+            },
+          ],
+        },
+        method: "POST",
+      }
+    );
+
+    if (!organizations.length) throw new NotFoundError("Organizace nenalezena");
+
+    return organizations[0];
+  }
+
   public static async getAssistantDistricts(districtUrl: string) {
     const result = await callTabidoo<Array<District>>(districtUrl, {
       method: "GET",

@@ -80,11 +80,9 @@ export function FormInputAsyncAutocomplete<OPTION>({
           filterSelectedOptions
           value={value}
           onChange={(event, newValue) => {
-            if (newValue) {
-              onChange(newValue);
-              if (handleChange) handleChange(newValue);
-              if (submitOnChange) submitOnChange(name);
-            }
+            onChange(newValue);
+            if (handleChange) handleChange(newValue);
+            if (submitOnChange) submitOnChange(name);
           }}
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);
