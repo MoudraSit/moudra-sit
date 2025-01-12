@@ -2,7 +2,11 @@ import { Stack, Typography } from "@mui/material";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import QueryCard from "components/senior-queries/query-card";
 import { THEME_COLORS } from "components/theme/colors";
-import { FilterType, WITHOUT_SOLVER_STATUSES } from "helper/consts";
+import {
+  FilterType,
+  QueryStatus,
+  WITHOUT_SOLVER_STATUSES,
+} from "helper/consts";
 
 async function PlannedVisitsList() {
   const selectedQueryStatuses = WITHOUT_SOLVER_STATUSES.join(",");
@@ -12,16 +16,19 @@ async function PlannedVisitsList() {
     }
   );
 
-  const myQueries = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.USER_ASSIGNED]: true,
-  });
+  const myCurrentQueries =
+    await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
+      [FilterType.USER_ASSIGNED]: true,
+      [FilterType.QUERY_STATUS]: [
+        QueryStatus.IN_PROGRESS,
+        QueryStatus.FOR_HANDOVER,
+      ].join(","),
+    });
 
-  const plannedQueries = myQueries.filter((query) => {
+  const plannedQueries = myCurrentQueries.filter((query) => {
     const nextPlannedVisitDate =
       query?.fields?.posledniZmenaLink?.fields.datumPlanovanaNavsteva ?? null;
-    if (!nextPlannedVisitDate) return false;
-
-    return new Date(nextPlannedVisitDate) > new Date();
+    return !!nextPlannedVisitDate;
   });
 
   return (
