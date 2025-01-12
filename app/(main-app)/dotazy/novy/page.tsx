@@ -1,10 +1,9 @@
-import { Typography } from "@mui/material";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import { getSeniorById } from "backend/seniors";
+import { PrimaryFormHeadline } from "components/app-forms/PrimaryFormHeadline";
 import BackButton from "components/buttons/back-button";
 import BasePaper from "components/layout/base-paper";
 import NewQueryForm from "components/senior-queries/new-query-form";
-import { THEME_COLORS } from "components/theme/colors";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -28,13 +27,7 @@ async function Page({ searchParams }: Props) {
     <>
       <BackButton />
       <BasePaper>
-        <Typography
-          variant="body1"
-          sx={{ fontSize: "20px", margin: "3px", color: THEME_COLORS.primary }}
-        >
-          Nový dotaz
-        </Typography>
-        <hr style={{ borderColor: THEME_COLORS.primary }} />
+        <PrimaryFormHeadline title="Nový dotaz" removeBottomMargin />
         <NewQueryForm prefilledSenior={prefilledSenior} />
       </BasePaper>
     </>

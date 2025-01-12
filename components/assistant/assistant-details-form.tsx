@@ -141,7 +141,7 @@ function AssistantDetailsForm({ assistant }: Props) {
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <Stack spacing={3} sx={{ marginTop: "1rem" }}>
+      <Stack spacing={3}>
         <Box>
           <Typography variant="h6" sx={{ fontSize: "1rem" }}>
             Profilová fotka

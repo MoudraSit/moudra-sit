@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import type { Metadata } from "next";
 
 import BackButton from "components/buttons/back-button";
-import { THEME_COLORS } from "components/theme/colors";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import {
   AssistantPagePaths,
@@ -15,6 +14,7 @@ import { AssistantAPI } from "backend/assistant";
 import DynamicListSkeleton from "components/skeletons/dynamic-list-skeleton";
 import dynamic from "next/dynamic";
 import CardSkeleton from "components/skeletons/card-skeleton";
+import { PrimaryFormHeadline } from "components/app-forms/PrimaryFormHeadline";
 
 const DynamicList = dynamic(
   () => import("components/dynamic-list/assistant-score-list-dynamic-list"),
@@ -50,23 +50,7 @@ async function Page() {
           flexGrow: "1",
         }}
       >
-        <Typography
-          variant="body1"
-          sx={{
-            fontSize: "20px",
-            margin: "3px",
-            color: THEME_COLORS.primary,
-          }}
-        >
-          Moje hodnocení
-        </Typography>
-        <hr
-          style={{
-            width: "100%",
-            borderColor: THEME_COLORS.primary,
-            marginBottom: "1rem",
-          }}
-        />
+        <PrimaryFormHeadline title=" Moje hodnocení" removeBottomMargin />
         <Box sx={{ marginBottom: "1rem" }}>
           <AssistantScoreForm assistant={assistant} />
         </Box>
