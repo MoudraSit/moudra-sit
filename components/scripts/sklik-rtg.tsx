@@ -8,7 +8,7 @@ function SklikRtg() {
 
   var retargetingConf = {
     rtgId: 1524717,
-    consent: null
+    consent: 0
   };
   window.rc.retargetingHit(retargetingConf);
   `;
