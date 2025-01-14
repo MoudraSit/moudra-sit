@@ -9,7 +9,7 @@ function SklikConversion() {
   var conversionConf = {
     id: 100210649,
     value: null,
-    consent: null
+    consent: 0
   };
   window.rc.conversionHit(conversionConf);`;
   return (
