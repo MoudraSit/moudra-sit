@@ -319,16 +319,6 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
             visitDate={getValues("dateTime")?.toISOString()!}
           />
           <SubmitButton disabled={isPending} />
-          <Button
-            fullWidth
-            variant="outlined"
-            color="info"
-            onClick={() => {
-              router.back();
-            }}
-          >
-            Zrušit
-          </Button>
         </Stack>
       </Stack>
     </form>
