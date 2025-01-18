@@ -82,21 +82,8 @@ export async function createQueryChange(
       })
     );
 
-    // TODO: webhooks
-    const webhookUrl = new URL(`${process.env.RESTORE_EMAIL_WEBHOOK_URL}`);
-    const webhookPayload =
-      changeValues.remoteHelpType === RemoteHelpTypes.GOOGLE_MEET
-        ? { googleMeetLink: "..." }
-        : {};
-
     requests.push(
-      fetch(webhookUrl, {
-        method: "POST",
-        body: JSON.stringify(webhookPayload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      sendInstructionEmail(changeValues.remoteHelpType as RemoteHelpTypes)
     );
   }
 
@@ -117,6 +104,38 @@ export async function createQueryChange(
 
   // Ineffective, but revalidate does not work with dynamic paths reliably
   revalidatePath(`/`, "layout");
+}
+
+export async function sendInstructionEmail(remoteHelpType: RemoteHelpTypes) {
+  // TODO: webhooks by type
+  // TODO: google meet link
+  // TODO: interaction with calendar event
+  switch (remoteHelpType) {
+    case RemoteHelpTypes.GOOGLE_MEET:
+      "...";
+    case RemoteHelpTypes.QUICK_ASSIST:
+      "...";
+    case RemoteHelpTypes.WHATSAPP:
+      "...";
+    default:
+      "...";
+  }
+
+  const webhookUrl = new URL(`${process.env.RESTORE_EMAIL_WEBHOOK_URL}`);
+  // TODO: add emails to which to send the instructions
+  // TODO: add link to the instruction docs as an ENV variable
+  const webhookPayload =
+    remoteHelpType === RemoteHelpTypes.GOOGLE_MEET
+      ? { googleMeetLink: "..." }
+      : {};
+
+  await fetch(webhookUrl, {
+    method: "POST",
+    body: JSON.stringify(webhookPayload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
 
 export async function addEventToGoogleCalendar(eventData: JSObject) {

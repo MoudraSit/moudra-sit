@@ -121,6 +121,12 @@ export enum RemoteHelpTypes {
   QUICK_ASSIST = "quickAssist",
 }
 
+export const RemoteHelpTypeLabels = {
+  [RemoteHelpTypes.GOOGLE_MEET]: "Google Meet",
+  [RemoteHelpTypes.WHATSAPP]: "WhatsApp",
+  [RemoteHelpTypes.QUICK_ASSIST]: "Rychlý pomocník",
+};
+
 export enum PhoneCountryCodes {
   CZ = "+420",
   SK = "+421",
