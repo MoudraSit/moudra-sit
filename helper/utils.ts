@@ -68,8 +68,10 @@ export function checkIfQueryTooOld(query: SeniorQuery) {
   const queryCreatedDate = dayjs(query.fields.datumVytvoreni);
   const now = dayjs();
   return (
-    queryCreatedDate.add(QUERY_OLD_DAYS, "day") < now &&
-    query.fields.stavDotazu in [QueryStatus.NEW, QueryStatus.POSTPONED]
+    queryCreatedDate.add(QUERY_OLD_DAYS, "day").isBefore(now) &&
+    [QueryStatus.NEW, QueryStatus.POSTPONED].includes(
+      query.fields.stavDotazu as QueryStatus
+    )
   );
 }
 
@@ -78,5 +80,5 @@ export function checkIfVisitInThePast(query: SeniorQuery) {
     query.fields.posledniZmenaLink?.fields.datumPlanovanaNavsteva
   );
   const now = dayjs();
-  return visitDate < now;
+  return visitDate.isBefore(now);
 }

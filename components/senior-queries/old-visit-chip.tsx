@@ -5,7 +5,7 @@ function OldVisitChip() {
   return (
     <Chip
       size="small"
-      label="Návštěva již měla proběhnout!"
+      label="😢 Setkání již mělo proběhnout!"
       sx={{
         backgroundColor: `${THEME_COLORS.primary}`,
         fontWeight: "bold",
