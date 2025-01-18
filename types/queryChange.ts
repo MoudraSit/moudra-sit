@@ -26,5 +26,6 @@ export interface QueryChange {
     poznamkaAsistentem: string;
     iDUzivatele: Assistant;
     kalendarUdalostId: string;
+    typPomociNaDalku: string;
   };
 }

@@ -3,7 +3,12 @@
 import { authOptions } from "app/lib/auth";
 import { AssistantAPI } from "backend/assistant";
 import { callTabidoo } from "backend/tabidoo";
-import { FINISHED_STATUSES, QueryStatus } from "helper/consts";
+import {
+  FINISHED_STATUSES,
+  MeetingLocationType,
+  QueryStatus,
+  RemoteHelpTypes,
+} from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
 import { createTabidooDateTimeString } from "helper/utils";
 import { getServerSession } from "next-auth";
@@ -13,6 +18,7 @@ import { JSObject } from "types/common";
 import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-schema";
 import dayjs from "dayjs";
 import { QueryChange } from "types/queryChange";
+import { Senior } from "types/senior";
 
 export async function fetchAutocompleteOrganizations(inputValue: string) {
   return await AssistantAPI.getOrganizationsByNameOrCityName(inputValue);
@@ -20,6 +26,7 @@ export async function fetchAutocompleteOrganizations(inputValue: string) {
 
 export async function createQueryChange(
   queryId: string,
+  seniorId: string,
   queryChangeValues: Record<string, any>
 ) {
   const changeValues = await newQueryChangeSchema.validate(queryChangeValues);
@@ -29,6 +36,7 @@ export async function createQueryChange(
   const payload = {
     dotaz: { id: queryId },
     kalendarUdalostId: changeValues.calendarEventId,
+    typPomociNaDalku: changeValues.remoteHelpType,
     iDUzivatele: { id: session?.user?.id },
     stav: changeValues.queryStatus,
     poznamkaAsistentem: changeValues.summary,
@@ -56,16 +64,56 @@ export async function createQueryChange(
     body: { fields: payload },
   });
 
-  await callTabidoo(`/tables/dotaz/data/${queryId}`, {
-    method: "PATCH",
-    body: {
-      fields: {
-        stavDotazu: changeValues.queryStatus,
-        resitelLink: { id: session?.user?.id },
-        posledniZmenaLink: { id: queryChange.id },
+  const requests = [];
+
+  if (
+    changeValues.meetLocationType === MeetingLocationType.REMOTE &&
+    changeValues.remoteHelpType &&
+    changeValues.seniorEmail
+  ) {
+    requests.push(
+      callTabidoo<Senior>(`/tables/senior/data/${seniorId}`, {
+        method: "PATCH",
+        body: {
+          fields: {
+            email: changeValues.seniorEmail,
+          },
+        },
+      })
+    );
+
+    // TODO: webhooks
+    const webhookUrl = new URL(`${process.env.RESTORE_EMAIL_WEBHOOK_URL}`);
+    const webhookPayload =
+      changeValues.remoteHelpType === RemoteHelpTypes.GOOGLE_MEET
+        ? { googleMeetLink: "..." }
+        : {};
+
+    requests.push(
+      fetch(webhookUrl, {
+        method: "POST",
+        body: JSON.stringify(webhookPayload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+    );
+  }
+
+  requests.push(
+    callTabidoo(`/tables/dotaz/data/${queryId}`, {
+      method: "PATCH",
+      body: {
+        fields: {
+          stavDotazu: changeValues.queryStatus,
+          resitelLink: { id: session?.user?.id },
+          posledniZmenaLink: { id: queryChange.id },
+        },
       },
-    },
-  });
+    })
+  );
+
+  await Promise.all(requests);
 
   // Ineffective, but revalidate does not work with dynamic paths reliably
   revalidatePath(`/`, "layout");
