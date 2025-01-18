@@ -112,14 +112,10 @@ async function QueryDetailTab({ seniorQuery }: Props) {
         <ReadOnlyBox label="Řešitel dotazu">
           {seniorQuery.fields.resitelLink?.fields.prijmeniAJmeno}
         </ReadOnlyBox>
-        <ReadOnlyBox label="Tabidoo ID">
-          {seniorQuery.fields.x_ID}
-        </ReadOnlyBox>
-        {isQueryFinished ? (
-          <QueryDetailChangeSection
-            lastChange={seniorQuery.fields.posledniZmenaLink!}
-          />
-        ) : null}
+        <ReadOnlyBox label="Tabidoo ID">{seniorQuery.fields.x_ID}</ReadOnlyBox>
+        <QueryDetailChangeSection
+          lastChange={seniorQuery.fields.posledniZmenaLink!}
+        />
       </Stack>
       {isQueryFinished ? (
         <QueryDetailScoreSection
