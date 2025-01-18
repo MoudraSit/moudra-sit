@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Button,
-  MenuItem,
-  Stack,
-  Tooltip,
-} from "@mui/material";
+import { Button, MenuItem, Stack, Tooltip } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import {
@@ -51,6 +46,7 @@ import {
 import InfoIcon from "@mui/icons-material/Info";
 import ConfirmCalendarEventDialog from "./confirm-calendar-event-dialog";
 import SuccessAlert from "components/alerts/success-alert";
+import RemoteHelpTiles from "./remote-help-tiles";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -84,6 +80,8 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
     defaultValues: {
       isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
       calendarEventId: lastChange?.fields?.kalendarUdalostId ?? "",
+      remoteHelpType: lastChange?.fields?.typPomociNaDalku ?? "",
+      seniorEmail: query.fields.iDSeniora?.fields?.email ?? "",
       queryStatus:
         query.fields.stavDotazu === QueryStatus.IN_PROGRESS
           ? QueryStatus.SOLVED
@@ -134,6 +132,9 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
     if (getValues("meetLocationType") != MeetingLocationType.LIBRARY) {
       //@ts-ignore
       setValue("organization", { id: "" });
+    } else if (getValues("meetLocationType") != MeetingLocationType.REMOTE) {
+      //@ts-ignore
+      setValue("remoteHelpType", "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meetLocationTypeWatch]);
@@ -151,7 +152,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
     try {
       setIsError(false);
       setIsPending(true);
-      await createQueryChange(query.id, data);
+      await createQueryChange(query.id, query.fields?.iDSeniora?.id, data);
       setIsPending(false);
       router.replace(
         `${AssistantPagePaths.SENIOR_QUERIES}/${query.id}/${QUERY_CHANGES_TAB}`
@@ -265,6 +266,21 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
             disabled={isMeetInOrganization}
           />
         )}
+
+        {isMeetRemote ? (
+          <>
+            <RemoteHelpTiles
+              name="remoteHelpType"
+              label="Typ pomoci na dálku"
+              control={control}
+            />
+            <FormInputText
+              name="seniorEmail"
+              control={control}
+              label="E-mail (seniora)"
+            />
+          </>
+        ) : null}
 
         <FormInputDateTime
           name="dateTime"

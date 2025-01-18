@@ -115,6 +115,12 @@ export const MeetingLocationTypeLabels = {
   [MeetingLocationType.OTHER]: "Jiné místo",
 };
 
+export enum RemoteHelpTypes {
+  GOOGLE_MEET = "googleMeet",
+  WHATSAPP = "whatsapp",
+  QUICK_ASSIST = "quickAssist",
+}
+
 export enum PhoneCountryCodes {
   CZ = "+420",
   SK = "+421",
