@@ -2,6 +2,7 @@ import {
   FINISHED_STATUSES,
   QueryStatus,
   MeetingLocationType as MeetingLocationType,
+  RemoteHelpTypes,
 } from "helper/consts";
 import { Organization } from "types/assistant";
 import * as yup from "yup";
@@ -10,6 +11,14 @@ import * as yup from "yup";
 export const newQueryChangeSchema = yup.object({}).shape({
   isInitialChange: yup.boolean(),
   calendarEventId: yup.string(),
+  remoteHelpType: yup.string().when("meetLocationType", {
+    is: (val: string) => val === MeetingLocationType.REMOTE,
+    then: (schema) => schema.required("Zadejte typ pomoci na dálku"),
+  }),
+  seniorEmail: yup.string().when("remoteHelpType", {
+    is: (val: string) => val === RemoteHelpTypes.GOOGLE_MEET,
+    then: (schema) => schema.required("Zadejte e/mail seniora"),
+  }),
   queryStatus: yup.string().required("Zadejete stav dotazu"),
   meetLocationType: yup.string().required("Zadejete místo setkání"),
   organization: new yup.ObjectSchema<Organization>()
