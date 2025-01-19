@@ -17,9 +17,10 @@ function RemoteHelpSection({ queryChange }: { queryChange: QueryChange }) {
     try {
       setIsError(false);
       setIsPending(true);
-      await sendInstructionEmailAction(
-        queryChange.fields.typPomociNaDalku as RemoteHelpTypes
-      );
+      await sendInstructionEmailAction({
+        remoteHelpType: queryChange.fields.typPomociNaDalku as RemoteHelpTypes,
+        googleMeetLink: queryChange.fields.googleMeetLink,
+      });
       setIsPending(false);
     } catch (error) {
       console.error(error);
@@ -94,10 +95,9 @@ function RemoteHelpSection({ queryChange }: { queryChange: QueryChange }) {
               textDecoration: "underline",
             }}
           >
-            a
-            {/* <a href={seniorQuery.fields.iDSeniora.fields.email}>
-            {seniorQuery.fields.iDSeniora.fields.email}
-            </a> */}
+            <a href={queryChange.fields.googleMeetLink}>
+              {queryChange.fields.googleMeetLink}
+            </a>
           </Typography>
         </Grid>
       ) : null}

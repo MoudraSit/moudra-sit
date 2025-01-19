@@ -10,6 +10,7 @@ import {
   QueryStatus,
   MeetingLocationType,
   MeetingLocationTypeLabels,
+  RemoteHelpTypes,
 } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
 import * as React from "react";
@@ -80,6 +81,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
     defaultValues: {
       isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
       calendarEventId: lastChange?.fields?.kalendarUdalostId ?? "",
+      googleMeetLink: lastChange?.fields?.googleMeetLink ?? "",
       remoteHelpType: lastChange?.fields?.typPomociNaDalku ?? "",
       seniorEmail: query.fields.iDSeniora?.fields?.email ?? "",
       queryStatus:
@@ -152,6 +154,17 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
     try {
       setIsError(false);
       setIsPending(true);
+
+      // The email requires a google meet link which can only be generated with a calendar event
+      if (
+        getValues("remoteHelpType") === RemoteHelpTypes.GOOGLE_MEET &&
+        !getValues("googleMeetLink")
+      ) {
+        await handleAddEvent();
+        // Refresh the data explicitly
+        data.googleMeetLink = getValues("googleMeetLink");
+      }
+
       await createQueryChange(query.id, query.fields?.iDSeniora?.id, data);
       setIsPending(false);
       router.replace(
@@ -173,6 +186,9 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
       const eventData: NewEventValues = {
         eventId: getValues("calendarEventId"),
         seniorName: query.fields.iDSeniora.fields.prijmeniJmeno,
+        isGoogleMeetRemoteHelp:
+          getValues("meetLocationType") === MeetingLocationType.REMOTE &&
+          getValues("remoteHelpType") === RemoteHelpTypes.GOOGLE_MEET,
         dateTime: getValues("dateTime")?.toISOString()!,
         description: getValues("summary"),
         location: getValues("address"),
@@ -180,6 +196,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
 
       const result = await addEventToGoogleCalendar(eventData);
       setValue("calendarEventId", result.id ?? "");
+      setValue("googleMeetLink", result.hangoutLink ?? "");
 
       setIsCalendarSuccess(true);
       setIsCalendarPending(false);
