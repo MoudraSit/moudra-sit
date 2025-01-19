@@ -36,6 +36,7 @@ export async function createQueryChange(
   const payload = {
     dotaz: { id: queryId },
     kalendarUdalostId: changeValues.calendarEventId,
+    googleMeetLink: changeValues.googleMeetLink,
     typPomociNaDalku: changeValues.remoteHelpType,
     iDUzivatele: { id: session?.user?.id },
     stav: changeValues.queryStatus,
@@ -83,7 +84,10 @@ export async function createQueryChange(
     );
 
     requests.push(
-      sendInstructionEmail(changeValues.remoteHelpType as RemoteHelpTypes)
+      sendInstructionEmail({
+        remoteHelpType: changeValues.remoteHelpType as RemoteHelpTypes,
+        googleMeetLink: changeValues.googleMeetLink,
+      })
     );
   }
 
@@ -106,10 +110,14 @@ export async function createQueryChange(
   revalidatePath(`/`, "layout");
 }
 
-export async function sendInstructionEmail(remoteHelpType: RemoteHelpTypes) {
+export async function sendInstructionEmail({
+  remoteHelpType,
+  googleMeetLink,
+}: {
+  remoteHelpType: RemoteHelpTypes;
+  googleMeetLink?: string;
+}) {
   // TODO: webhooks by type
-  // TODO: google meet link
-  // TODO: interaction with calendar event
   switch (remoteHelpType) {
     case RemoteHelpTypes.GOOGLE_MEET:
       "...";
@@ -122,12 +130,11 @@ export async function sendInstructionEmail(remoteHelpType: RemoteHelpTypes) {
   }
 
   const webhookUrl = new URL(`${process.env.RESTORE_EMAIL_WEBHOOK_URL}`);
+
   // TODO: add emails to which to send the instructions
   // TODO: add link to the instruction docs as an ENV variable
   const webhookPayload =
-    remoteHelpType === RemoteHelpTypes.GOOGLE_MEET
-      ? { googleMeetLink: "..." }
-      : {};
+    remoteHelpType === RemoteHelpTypes.GOOGLE_MEET ? { googleMeetLink } : {};
 
   await fetch(webhookUrl, {
     method: "POST",
@@ -159,7 +166,7 @@ export async function addEventToGoogleCalendar(eventData: JSObject) {
 
   const session = await getServerSession(authOptions);
 
-  const event = {
+  const event: JSObject = {
     summary: `Moudrá síť návštěva: ${eventValues.seniorName}`,
     location: eventValues.location,
     description: eventValues.description,
@@ -175,11 +182,24 @@ export async function addEventToGoogleCalendar(eventData: JSObject) {
     },
   };
 
+  // Generate Google Meet link (it will be reused for the remote help email)
+  if (eventValues.isGoogleMeetRemoteHelp) {
+    event.conferenceData = {
+      createRequest: {
+        requestId: crypto.randomUUID(),
+        conferenceSolutionKey: {
+          type: "hangoutsMeet",
+        },
+      },
+    };
+  }
+
   if (!eventValues.eventId) {
     const result = await calendar.events.insert({
       calendarId,
       sendUpdates: "externalOnly",
       requestBody: event,
+      conferenceDataVersion: 1,
     });
     return result.data;
   } else {
@@ -188,6 +208,7 @@ export async function addEventToGoogleCalendar(eventData: JSObject) {
       eventId: eventValues.eventId,
       sendUpdates: "externalOnly",
       requestBody: event,
+      conferenceDataVersion: 1,
     });
     return result.data;
   }
