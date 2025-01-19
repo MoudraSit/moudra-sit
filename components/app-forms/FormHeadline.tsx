@@ -8,6 +8,7 @@ function FormHeadline({ text }: { text: string }) {
         padding: "0.5rem",
         fontSize: "16px",
         fontWeight: "bold",
+        textTransform: "uppercase",
       }}
       variant="h2"
     >

@@ -67,8 +67,21 @@ appTheme = createTheme(appTheme, {
   },
 });
 
-// Default theme color is white, the input then does not display everything properly
 export const mobileAppTheme = createTheme(appTheme, {
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+          textTransform: "none", // 👈 This removes the all-caps styling
+        },
+      },
+    },
+  },
+});
+
+// Default theme color is white, the input then does not display everything properly
+export const mobileAppTabsTheme = createTheme(appTheme, {
   palette: {
     primary: {
       main: THEME_COLORS.primary,

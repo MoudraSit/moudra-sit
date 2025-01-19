@@ -127,7 +127,7 @@ function RequestFilterPanel({ districts }: Props) {
         <Button
           onClick={clearFilters}
           sx={{
-            fontSize: "0.75rem",
+            fontSize: "0.8rem",
             padding: 0,
             color: "black",
             fontWeight: "500",
