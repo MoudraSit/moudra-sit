@@ -89,7 +89,11 @@ function QueryCard({
                 <OldVisitChip />
               ) : null}
 
-              <Typography variant="h2" fontWeight={"bold"}>
+              <Typography
+                variant="h2"
+                fontWeight={"bold"}
+                sx={{ mt: "0.5rem" }}
+              >
                 {item.fields.popis}
               </Typography>
               <Typography variant="body1">

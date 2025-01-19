@@ -25,16 +25,16 @@ function QueryDetailScoreSection({ lastChange }: Props) {
           label="Byl problém vyřešen?"
           sublabel="(jako ve škole, 1 nejlepší, 5 nejhorší)"
         >
-          {lastChange.fields?.problemVyresenHodnoceni}
+          {lastChange?.fields?.problemVyresenHodnoceni}
         </ReadOnlyBox>
         <ReadOnlyBox
           label="Spokojenost seniora s asistentem"
           sublabel="(jako ve škole, 1 nejlepší, 5 nejhorší)"
         >
-          {lastChange.fields?.spokojenostSenior}
+          {lastChange?.fields?.spokojenostSenior}
         </ReadOnlyBox>
         <ReadOnlyBox label="Komentář od seniora">
-          {lastChange.fields?.poznamkaSeniorem}
+          {lastChange?.fields?.poznamkaSeniorem}
         </ReadOnlyBox>
       </Stack>
     </>

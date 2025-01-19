@@ -9,7 +9,7 @@ import {
 } from "@mui/x-date-pickers";
 import { ThemeProvider } from "@mui/material";
 import { csCZ } from "@mui/x-date-pickers/locales";
-import { mobileAppTheme } from "components/theme/theme";
+import { mobileAppTabsTheme } from "components/theme/theme";
 
 export const FormInputDateTime = ({
   name,
@@ -23,7 +23,7 @@ export const FormInputDateTime = ({
         csCZ.components.MuiLocalizationProvider.defaultProps.localeText
       }
     >
-      <ThemeProvider theme={mobileAppTheme}>
+      <ThemeProvider theme={mobileAppTabsTheme}>
         <Controller
           name={name}
           control={control}
