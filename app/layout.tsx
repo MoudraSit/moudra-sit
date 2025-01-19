@@ -1,7 +1,7 @@
 import "styles/globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
-import { appTheme } from "components/theme/theme";
+import { mobileAppTheme } from "components/theme/theme";
 import { SessionProviderWrapper } from "components/session-provider-wrapper/session-provider-wrapper";
 
 import type { Metadata } from "next";
@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={appTheme}>
+          <ThemeProvider theme={mobileAppTheme}>
             <SessionProviderWrapper>
               <AppHeader />
               {children}

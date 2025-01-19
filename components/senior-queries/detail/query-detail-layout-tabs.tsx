@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, Tab, ThemeProvider } from "@mui/material";
-import { mobileAppTheme } from "components/theme/theme";
+import { mobileAppTabsTheme } from "components/theme/theme";
 import { QUERY_CHANGES_TAB, QUERY_DETAIL_TAB } from "helper/consts";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
@@ -23,7 +23,7 @@ function QueryDetailLayoutTabs() {
   }
 
   return (
-    <ThemeProvider theme={mobileAppTheme}>
+    <ThemeProvider theme={mobileAppTabsTheme}>
       <ScrollToElement elementId="tabs" offset={120} />
       <Tabs
         value={selectedTab}
