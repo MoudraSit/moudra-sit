@@ -26,6 +26,7 @@ export interface QueryChange {
     poznamkaAsistentem: string;
     iDUzivatele: Assistant;
     kalendarUdalostId: string;
+    googleMeetLink: string;
     typPomociNaDalku: string;
   };
 }

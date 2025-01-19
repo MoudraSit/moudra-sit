@@ -7,4 +7,5 @@ export const visitCalendarEventSchema = yup.object({}).shape({
   dateTime: yup.string().required(),
   description: yup.string(),
   location: yup.string(),
+  isGoogleMeetRemoteHelp: yup.bool(),
 });

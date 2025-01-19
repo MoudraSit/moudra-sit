@@ -11,6 +11,7 @@ import * as yup from "yup";
 export const newQueryChangeSchema = yup.object({}).shape({
   isInitialChange: yup.boolean(),
   calendarEventId: yup.string(),
+  googleMeetLink: yup.string(),
   remoteHelpType: yup.string().when("meetLocationType", {
     is: (val: string) => val === MeetingLocationType.REMOTE,
     then: (schema) => schema.required("Zadejte typ pomoci na dálku"),
