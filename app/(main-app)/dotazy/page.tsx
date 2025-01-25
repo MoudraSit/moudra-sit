@@ -1,5 +1,5 @@
 import BackButton from "components/buttons/back-button";
-import { AssistantPagePaths, FilterType } from "helper/consts";
+import { AssistantPagePaths, FilterType, TOO_SMALL_HEIGHT } from "helper/consts";
 import RequestFilterPanel from "components/senior-queries/filter/request-filter-panel";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import { Typography } from "@mui/material";
@@ -32,7 +32,14 @@ async function Page({ searchParams }: Props) {
 
   return (
     <>
-      <BackButton href={AssistantPagePaths.DASHBOARD} />
+      <BackButton
+        href={AssistantPagePaths.DASHBOARD}
+        sx={{
+          [`@media (max-height: ${TOO_SMALL_HEIGHT}px)`]: {
+            display: "none",
+          },
+        }}
+      />
       <RequestFilterPanel districts={districts} />
       <Typography variant="caption" sx={{ margin: "3px" }}>
         Výsledky: {seniorQueriesTotalCount}

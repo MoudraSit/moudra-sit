@@ -1,5 +1,7 @@
 export const WEB_APP_NAME = "Mobilní aplikace MS";
 
+export const TOO_SMALL_HEIGHT = 500;
+
 export const QUERY_OLD_DAYS = 5;
 
 /* eslint-disable no-unused-vars */
