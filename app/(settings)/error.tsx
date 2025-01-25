@@ -1,15 +1,17 @@
 "use client";
 
 import { Button, Stack, Typography } from "@mui/material";
+import { AssistantPagePaths } from "helper/consts";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
 }) {
+  const router = useRouter();
+
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -29,7 +31,7 @@ export default function Error({
       <Button
         sx={{ alignSelf: "center" }}
         variant="contained"
-        onClick={() => reset()}
+        onClick={() => router.push(AssistantPagePaths.DASHBOARD)}
       >
         Obnovit
       </Button>
