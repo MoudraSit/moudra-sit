@@ -4,13 +4,15 @@ import { Button } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useRouter } from "next/navigation";
 import { AssistantPagePaths } from "helper/consts";
+import { JSObject } from "types/common";
 
 type Props = {
   href?: string;
   fallback?: string;
+  sx?: JSObject;
 };
 
-function BackButton({ href, fallback }: Props) {
+function BackButton({ href, fallback, sx }: Props) {
   const router = useRouter();
 
   function handleBack() {
@@ -29,7 +31,7 @@ function BackButton({ href, fallback }: Props) {
       size="small"
       onClick={handleBack}
       startIcon={<ArrowBackIosIcon />}
-      sx={{ color: "black", width: "64px", marginBottom: "0.5rem" }}
+      sx={{ color: "black", width: "64px", marginBottom: "0.5rem", ...sx }}
     >
       Zpět
     </Button>

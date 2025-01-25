@@ -6,6 +6,7 @@ import {
   QueryStatusLabels,
   MeetingLocationType,
   MeetingLocationTypeLabels,
+  TOO_SMALL_HEIGHT,
 } from "helper/consts";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { QueryStatus } from "helper/consts";
@@ -82,8 +83,13 @@ function RequestFilterPanel({ districts }: Props) {
     <Box
       sx={{
         borderBottom: "1px solid #DADADA",
-        marginBottom: "1rem",
-        marginTop: "1rem",
+
+        marginBottom: "0.5rem",
+        marginTop: "0rem",
+        [`@media (max-height: ${TOO_SMALL_HEIGHT}px)`]: {
+          marginBottom: "0rem",
+          marginTop: "0rem",
+        },
       }}
     >
       <Box>
@@ -147,6 +153,9 @@ function RequestFilterPanel({ districts }: Props) {
       <FormControl
         sx={{
           marginTop: "0.5rem",
+          [`@media (max-height: ${TOO_SMALL_HEIGHT}px)`]: {
+            marginTop: "0rem",
+          },
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
