@@ -3,7 +3,10 @@ import { Senior } from "types/senior";
 
 // check if name and surname start with capital letter
 export function capitalizeFirstLetter(name: string) {
-  return name.charAt(0).toUpperCase() + name.slice(1);
+  return name
+    .split(" ") // Split by spaces
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter
+    .join(" "); // Join words back together
 }
 
 // remove spaces from string

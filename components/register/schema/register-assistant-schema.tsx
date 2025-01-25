@@ -8,7 +8,7 @@ const phoneRegex = /^\d{3}[ ]?\d{3}[ ]?\d{3}$/;
 export const registerAssistantSchema = yup.object({}).shape({
   name: yup
     .string()
-    .matches(/^[A-Ža-ž]*$/, "Prosím vložte jméno ve správném tvaru")
+    .matches(/^[A-Ža-ž\s]*$/, "Prosím vložte jméno ve správném tvaru")
     .max(40)
     .required("Napište Vaše jméno"),
   surname: yup
