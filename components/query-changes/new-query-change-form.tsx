@@ -65,28 +65,35 @@ type Props = {
 function NewQueryChangeForm({ query, lastChange, organization }: Props) {
   const router = useRouter();
 
-  const { handleSubmit, control, getValues, watch, setValue, trigger } =
-    useForm({
-      resolver: yupResolver(newQueryChangeSchema),
-      defaultValues: {
-        isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
-        calendarEventId: lastChange?.fields?.kalendarUdalostId ?? "",
-        queryStatus:
-          query.fields.stavDotazu === QueryStatus.IN_PROGRESS
-            ? QueryStatus.SOLVED
-            : QueryStatus.IN_PROGRESS,
-        meetLocationType:
-          lastChange?.fields?.osobnevzdalene ?? MeetingLocationType.AT_SENIOR,
-        address: lastChange?.fields?.mistoNavstevy ?? "",
-        organization: organization,
-        //@ts-ignore
-        dateTime: dayjs(
-          lastChange?.fields.datumPlanovanaNavsteva ??
-            lastChange?.fields.datumUskutecneneNavstevy ??
-            new Date()
-        ),
-      },
-    });
+  const {
+    handleSubmit,
+    control,
+    getValues,
+    watch,
+    setValue,
+    trigger,
+    formState,
+  } = useForm({
+    resolver: yupResolver(newQueryChangeSchema),
+    defaultValues: {
+      isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
+      calendarEventId: lastChange?.fields?.kalendarUdalostId ?? "",
+      queryStatus:
+        query.fields.stavDotazu === QueryStatus.IN_PROGRESS
+          ? QueryStatus.SOLVED
+          : QueryStatus.IN_PROGRESS,
+      meetLocationType:
+        lastChange?.fields?.osobnevzdalene ?? MeetingLocationType.AT_SENIOR,
+      address: lastChange?.fields?.mistoNavstevy ?? "",
+      organization: organization,
+      //@ts-ignore
+      dateTime: dayjs(
+        lastChange?.fields.datumPlanovanaNavsteva ??
+          lastChange?.fields.datumUskutecneneNavstevy ??
+          new Date()
+      ),
+    },
+  });
 
   // eslint-disable-next-line no-unused-vars
   const queryStatusWatch = watch("queryStatus");
@@ -94,6 +101,22 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
   const meetLocationTypeWatch = watch("meetLocationType");
   // eslint-disable-next-line no-unused-vars
   const visitDateWatch = watch("dateTime");
+
+  const { isDirty } = formState;
+
+  React.useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isDirty) {
+        event.preventDefault();
+        event.returnValue = ""; // Required for Chrome
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty]);
 
   React.useEffect(() => {
     // Skip the initial render
@@ -243,13 +266,11 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
           label="Datum a čas setkání"
         />
 
-        {isQueryFinished ? (
-          <FormInputText
-            name="duration"
-            control={control}
-            label="Délka řešení (minuty)"
-          />
-        ) : null}
+        <FormInputText
+          name="duration"
+          control={control}
+          label="Délka řešení (minuty)"
+        />
 
         <FormInputText
           name="summary"
@@ -291,9 +312,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
         />
 
         <Stack spacing={1}>
-          {!FINISHED_STATUSES.includes(
-            getValues("queryStatus") as QueryStatus
-          ) && getValues("dateTime") ? (
+          {!isQueryFinished && getValues("dateTime") ? (
             <Button
               color="warning"
               onClick={async () => {

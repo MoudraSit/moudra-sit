@@ -49,13 +49,13 @@ export const newQueryChangeSchema = yup.object({}).shape({
     .typeError("Napište datum návštěvy"),
   duration: yup
     .number()
+    .required("Zadejte délku řešení")
     .typeError("Zadejte číslo")
-    .positive("Zadejte kladné číslo")
     .integer("Zadejte celé číslo")
     .max(600, "Maximální délka řešení je 600 minut")
     .when("queryStatus", {
       is: (val: string) => FINISHED_STATUSES.includes(val as QueryStatus),
-      then: (schema) => schema.required("Zadejte celkovou délku řešení"),
+      then: (schema) => schema.positive("Zadejte kladné číslo"),
     }),
   summary: yup.string().required("Zadejte poznámku ke změně"),
   assistantScore: yup

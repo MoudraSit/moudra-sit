@@ -77,17 +77,18 @@ type Props = {
 function NewQueryForm({ prefilledSenior }: Props) {
   const router = useRouter();
 
-  const { handleSubmit, watch, getValues, setValue, control } = useForm({
-    resolver: yupResolver(newQuerySchema),
-    defaultValues: {
-      preexistingSeniorId: prefilledSenior?.id,
-      senior: prefillSenior(prefilledSenior),
-      deviceTypes: [],
-      preferredMeetLocations: [],
-      title: "",
-      description: "",
-    },
-  });
+  const { handleSubmit, watch, getValues, setValue, control, formState } =
+    useForm({
+      resolver: yupResolver(newQuerySchema),
+      defaultValues: {
+        preexistingSeniorId: prefilledSenior?.id,
+        senior: prefillSenior(prefilledSenior),
+        deviceTypes: [],
+        preferredMeetLocations: [],
+        title: "",
+        description: "",
+      },
+    });
 
   // Rerenders the form in case device types changed
   // This allows applying the right styles to the selected and unselected options
@@ -97,6 +98,22 @@ function NewQueryForm({ prefilledSenior }: Props) {
   const watchPreferredMeetLocations = watch("preferredMeetLocations");
   // eslint-disable-next-line no-unused-vars
   const watchPreexistingSenior = watch("preexistingSeniorId");
+
+  const { isDirty } = formState;
+
+  React.useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isDirty) {
+        event.preventDefault();
+        event.returnValue = ""; // Required for Chrome
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty]);
 
   const handlePhoneBlur = async () => {
     const seniorsWithSamePhone = await searchSeniorsByPhoneNumber(
@@ -189,11 +206,7 @@ function NewQueryForm({ prefilledSenior }: Props) {
             label="Rok narození"
             disabled={!!getValues("preexistingSeniorId")}
           />
-          <FormInputText
-            name="senior.email"
-            control={control}
-            label="E-mail"
-          />
+          <FormInputText name="senior.email" control={control} label="E-mail" />
 
           <FormInputCity
             name="senior.city"
