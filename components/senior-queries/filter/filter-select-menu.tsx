@@ -92,31 +92,43 @@ function FilterSelectMenu({
     >
       <Box sx={{ padding: "0 0.5rem" }}>
         <MenuList dense sx={{ padding: 0 }}>
-          <MenuItem key="all" sx={{ padding: "0 0.5rem" }}>
+          <MenuItem
+            key="all"
+            sx={{ padding: "0 0.5rem" }}
+            onClick={() => toggleAllOptions(!areAllOptionsSelected)}
+          >
             <FormControlLabel
               sx={{ marginRight: 0 }}
               label="Vše"
+              onClick={(e) => e.stopPropagation()} // Prevents MenuItem click triggering when clicking the label
               control={
                 <Checkbox
                   sx={{ padding: "0.25rem" }}
                   checked={areAllOptionsSelected}
                   color="warning"
-                  onClick={() => toggleAllOptions(!areAllOptionsSelected)}
+                  onClick={(e) => e.stopPropagation()} // Prevents MenuItem click triggering when clicking the checkbox
+                  onChange={() => toggleAllOptions(!areAllOptionsSelected)}
                 />
               }
             />
           </MenuItem>
           {selectedOptions.map((option, index) => (
-            <MenuItem key={option.value} sx={{ padding: "0 0.5rem" }}>
+            <MenuItem
+              key={option.value}
+              sx={{ padding: "0 0.5rem" }}
+              onClick={() => toggleCheckboxValue(index)}
+            >
               <FormControlLabel
                 sx={{ marginRight: 0 }}
                 label={labels?.[option.value] ?? option.value}
+                onClick={(e) => e.stopPropagation()} // Prevents MenuItem click triggering when clicking the label
                 control={
                   <Checkbox
                     sx={{ padding: "0.25rem" }}
                     checked={option.selected}
                     color="warning"
-                    onClick={() => toggleCheckboxValue(index)}
+                    onClick={(e) => e.stopPropagation()} // Prevents MenuItem click triggering when clicking the checkbox
+                    onChange={() => toggleCheckboxValue(index)} // Ensure checkbox changes state
                   />
                 }
               />
