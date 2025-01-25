@@ -105,7 +105,7 @@ export enum MeetingLocationType {
 export const MeetingLocationTypeLabels = {
   [MeetingLocationType.AT_SENIOR]: "U seniora doma",
   [MeetingLocationType.REMOTE]: "Vzdáleně (online/telefonicky)",
-  [MeetingLocationType.LIBRARY]: "Knihovna / klub",
+  [MeetingLocationType.LIBRARY]: "Spolupracující organizace (např. knihovna)",
   [MeetingLocationType.OTHER]: "Jiné místo",
 };
 
