@@ -145,16 +145,22 @@ function FilterAutocompleteMenu({
           {controlledOptions
             .filter((option) => option.filtered)
             .map((option) => (
-              <MenuItem key={option.value} sx={{ padding: "0 0.5rem" }}>
+              <MenuItem
+                key={option.value}
+                sx={{ padding: "0 0.5rem" }}
+                onClick={() => toggleCheckboxValue(option.value)}
+              >
                 <FormControlLabel
                   sx={{ marginRight: 0 }}
                   label={labels?.[option.value] ?? option.value}
+                  onClick={(e) => e.stopPropagation()} // Prevents MenuItem click triggering when clicking the label
                   control={
                     <Checkbox
                       sx={{ padding: "0.25rem" }}
                       checked={option.selected}
                       color="warning"
-                      onClick={() => toggleCheckboxValue(option.value)}
+                      onClick={(e) => e.stopPropagation()} // Prevents MenuItem click triggering when clicking the checkbox
+                      onChange={() => toggleCheckboxValue(option.value)} // Ensure checkbox changes state
                     />
                   }
                 />
