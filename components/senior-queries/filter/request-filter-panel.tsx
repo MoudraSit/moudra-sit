@@ -23,8 +23,13 @@ function RequestFilterPanel({ districts }: Props) {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function handleFilter(filters: Partial<Record<FilterType, any>>) {
-    const params = new URLSearchParams(searchParams as unknown as string);
+  function handleFilter(
+    filters: Partial<Record<FilterType, any>>,
+    replaceParams: boolean = false
+  ) {
+    const params = replaceParams
+      ? new URLSearchParams("")
+      : new URLSearchParams(searchParams as unknown as string);
 
     for (const [filterType, filterValue] of Object.entries(filters)) {
       if (filterValue) params.set(filterType, filterValue);
@@ -161,9 +166,12 @@ function RequestFilterPanel({ districts }: Props) {
         <Switch
           checked={onlyMyQueries}
           color="warning"
-          onChange={(e) =>
-            handleFilter({ [FilterType.USER_ASSIGNED]: e.target.checked })
-          }
+          onChange={(e) => {
+            handleFilter(
+              { [FilterType.USER_ASSIGNED]: e.target.checked },
+              true
+            );
+          }}
         />
       </FormControl>
     </Box>
