@@ -237,7 +237,6 @@ function AssistantDetailsForm({ assistant }: Props) {
           </Stack>
         </Box>
 
-        <FormInputText name="title" control={control} label="Titul" />
         <FormInputText
           name="firstName"
           disabled
