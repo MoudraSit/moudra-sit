@@ -2,6 +2,7 @@ import { Card, Typography, Stack, Box, ButtonBase } from "@mui/material";
 import {
   AssistantPagePaths,
   MAX_QUERY_CARD_HEIGHT,
+  MeetingLocationType,
   QueryStatus,
 } from "helper/consts";
 import {
@@ -134,6 +135,13 @@ function QueryCard({
                       : item.fields?.pozadovaneMistoPomoci
                   )}
                 </span>
+                {item.fields.posledniZmenaLink?.fields.osobnevzdalene !==
+                MeetingLocationType.REMOTE ? (
+                  <span style={{ fontWeight: "normal" }}>
+                    {" "}
+                    ({item.fields.posledniZmenaLink?.fields.mistoNavstevy})
+                  </span>
+                ) : null}
               </Typography>
               {showVisitInfo ? (
                 <>

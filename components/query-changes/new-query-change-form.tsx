@@ -1,6 +1,11 @@
 "use client";
 
-import { Button, MenuItem, Stack } from "@mui/material";
+import {
+  Button,
+  MenuItem,
+  Stack,
+  Tooltip,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import {
@@ -43,6 +48,7 @@ import {
   getOrganizationLabel,
   isOrganizationEqual,
 } from "helper/organizations";
+import InfoIcon from "@mui/icons-material/Info";
 import ConfirmCalendarEventDialog from "./confirm-calendar-event-dialog";
 import SuccessAlert from "components/alerts/success-alert";
 
@@ -277,11 +283,11 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
           control={control}
           label="Poznámka k setkání"
           multiline
-          minRows={6}
+          minRows={2}
           maxRows={10}
         />
 
-        {getValues("queryStatus") === QueryStatus.SOLVED ? (
+        {isQueryFinished ? (
           <Stack spacing={3} sx={{ marginBottom: "3rem" }}>
             <FormHeadline text="Hodnocení asistentem" />
 
@@ -289,6 +295,16 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
               name="assistantScore"
               control={control}
               label="Hodnocení (1-5 jako ve škole)"
+              InputProps={{
+                startAdornment: (
+                  <Tooltip
+                    title="Ohodnoťte, jaké bylo komunikovat a řešit tento dotaz se seniorem"
+                    placement="top-start"
+                  >
+                    <InfoIcon sx={{ color: "grey", ml: "0.5rem" }} />
+                  </Tooltip>
+                ),
+              }}
             />
           </Stack>
         ) : null}
