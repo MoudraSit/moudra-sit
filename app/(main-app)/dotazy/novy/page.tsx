@@ -3,7 +3,7 @@ import { getSeniorById } from "backend/seniors";
 import { PrimaryFormHeadline } from "components/app-forms/PrimaryFormHeadline";
 import BackButton from "components/buttons/back-button";
 import BasePaper from "components/layout/base-paper";
-import NewQueryForm from "components/senior-queries/new-query-form";
+import NewQueryForm from "components/senior-queries/new-query-form/new-query-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
