@@ -1,6 +1,6 @@
 import BackButton from "components/buttons/back-button";
 import { AssistantPagePaths, FilterType, TOO_SMALL_HEIGHT } from "helper/consts";
-import RequestFilterPanel from "components/senior-queries/filter/request-filter-panel";
+import QueryFilterPanel from "components/senior-queries/filter/query-filter-panel";
 import { SeniorQueriesGetter } from "backend/senior-queries";
 import { Typography } from "@mui/material";
 import { AssistantAPI } from "backend/assistant";
@@ -40,7 +40,7 @@ async function Page({ searchParams }: Props) {
           },
         }}
       />
-      <RequestFilterPanel districts={districts} />
+      <QueryFilterPanel districts={districts} />
       <Typography variant="caption" sx={{ margin: "3px" }}>
         Výsledky: {seniorQueriesTotalCount}
       </Typography>
