@@ -14,6 +14,7 @@ import FilterChip from "./filter-chip";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Box, Button, FormControl, FormLabel, Switch } from "@mui/material";
 import { District } from "types/assistant";
+import React from "react";
 
 type Props = {
   districts: Array<District>;
@@ -23,6 +24,10 @@ function QueryFilterPanel({ districts }: Props) {
   const searchParams = useSearchParams()!;
   const pathname = usePathname();
   const { replace } = useRouter();
+
+  const [onlyMyQueries, setOnlyMyQueries] = React.useState(
+    Boolean(searchParams.get(FilterType.USER_ASSIGNED))
+  );
 
   function handleFilter(
     filters: Partial<Record<FilterType, any>>,
@@ -39,6 +44,12 @@ function QueryFilterPanel({ districts }: Props) {
 
     replace(`${pathname}?${params.toString()}`);
   }
+
+  const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.checked;
+    setOnlyMyQueries(newValue); // Instantly update UI state
+    handleFilter({ [FilterType.USER_ASSIGNED]: newValue }, true);
+  };
 
   function clearFilters() {
     const params = new URLSearchParams(searchParams as unknown as string);
@@ -60,24 +71,6 @@ function QueryFilterPanel({ districts }: Props) {
 
   const meetLocationTypes =
     (searchParams.get(FilterType.MEETING_LOCATION_TYPES) as string) ?? "";
-
-  const onlyMyQueries = Boolean(
-    searchParams.get(FilterType.USER_ASSIGNED) as string
-  );
-
-  // const getDistrictLabel = (value: string, options: Array<District>) => {
-  //   const districtNames = [];
-  //   const districtIds = value.split(",");
-  //   for (const id of districtIds) {
-  //     districtNames.push(
-  //       ...options
-  //         .filter((option) => option.id === id)
-  //         .map((option) => option.fields.okres)
-  //     );
-  //   }
-
-  //   return districtNames.join(",");
-  // };
 
   return (
     <Box
@@ -175,12 +168,7 @@ function QueryFilterPanel({ districts }: Props) {
         <Switch
           checked={onlyMyQueries}
           color="warning"
-          onChange={(e) => {
-            handleFilter(
-              { [FilterType.USER_ASSIGNED]: e.target.checked },
-              true
-            );
-          }}
+          onChange={handleToggle}
         />
       </FormControl>
     </Box>

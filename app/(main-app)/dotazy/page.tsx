@@ -1,16 +1,19 @@
 import BackButton from "components/buttons/back-button";
-import { AssistantPagePaths, FilterType, TOO_SMALL_HEIGHT } from "helper/consts";
+import {
+  AssistantPagePaths,
+  FilterType,
+  TOO_SMALL_HEIGHT,
+} from "helper/consts";
 import QueryFilterPanel from "components/senior-queries/filter/query-filter-panel";
 import { SeniorQueriesGetter } from "backend/senior-queries";
-import { Typography } from "@mui/material";
 import { AssistantAPI } from "backend/assistant";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import DynamicListSkeleton from "components/skeletons/dynamic-list-skeleton";
+import QueryCardDynamicListSkeleton from "components/skeletons/query-card-dynamic-list-skeleton";
 
-const DynamicList = dynamic(
-  () => import("components/dynamic-list/query-card-dynamic-list"),
-  { loading: () => <DynamicListSkeleton />, ssr: false }
+const ClientQueryList = dynamic(
+  () => import("components/dynamic-list/client-query-list"),
+  { loading: () => <QueryCardDynamicListSkeleton />, ssr: false }
 );
 
 export const metadata: Metadata = {
@@ -41,14 +44,10 @@ async function Page({ searchParams }: Props) {
         }}
       />
       <QueryFilterPanel districts={districts} />
-      <Typography variant="caption" sx={{ margin: "3px" }}>
-        Výsledky: {seniorQueriesTotalCount}
-      </Typography>
-
-      {/* The div is required for list autosizing to work */}
-      <div style={{ flex: "1 1 auto" }}>
-        <DynamicList initialItems={seniorQueries} searchParams={searchParams} />
-      </div>
+      <ClientQueryList
+        initialQueries={seniorQueries}
+        initialTotal={seniorQueriesTotalCount}
+      />
     </>
   );
 }

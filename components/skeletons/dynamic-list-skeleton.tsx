@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import QueryCardSkeleton from "./query-card-skeleton";
 
-type Props = {
+export type Props = {
   height?: number;
   SkeletonComponent?: React.ComponentType<{ height: number }>;
 };
