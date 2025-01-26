@@ -19,7 +19,7 @@ type Props = {
   districts: Array<District>;
 };
 
-function RequestFilterPanel({ districts }: Props) {
+function QueryFilterPanel({ districts }: Props) {
   const searchParams = useSearchParams()!;
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -187,4 +187,4 @@ function RequestFilterPanel({ districts }: Props) {
   );
 }
 
-export default RequestFilterPanel;
+export default QueryFilterPanel;
