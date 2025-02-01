@@ -48,7 +48,7 @@ function QueryFilterPanel({ districts }: Props) {
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
     setOnlyMyQueries(newValue); // Instantly update UI state
-    handleFilter({ [FilterType.USER_ASSIGNED]: newValue }, true);
+    handleFilter({ [FilterType.USER_ASSIGNED]: newValue }, false);
   };
 
   function clearFilters() {
