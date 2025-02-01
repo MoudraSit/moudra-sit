@@ -46,6 +46,21 @@ export const newQueryChangeSchema = yup.object({}).shape({
         return value >= oneMonthAgo;
       }
     )
+    .when("queryStatus", {
+      is: (val: string) => FINISHED_STATUSES.includes(val as QueryStatus),
+      then: (schema) =>
+        schema.test(
+          "is-not-in-future",
+          "U vyřešeného dotazu nemůže být návštěva v budoucnosti",
+          (value) => {
+            if (!value) return true;
+
+            const now = new Date();
+
+            return value <= now;
+          }
+        ),
+    })
     .typeError("Napište datum návštěvy"),
   duration: yup
     .number()
