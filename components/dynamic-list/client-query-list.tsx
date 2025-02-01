@@ -6,7 +6,6 @@ import DynamicList from "components/dynamic-list/query-card-dynamic-list";
 import { getQueryCount, loadMoreQueries } from "./actions";
 import DynamicListSkeleton from "components/skeletons/dynamic-list-skeleton";
 import { Typography } from "@mui/material";
-import { FilterType } from "helper/consts";
 
 type Props = {
   initialQueries: any[];
@@ -51,7 +50,7 @@ export default function ClientQueryList({
         ) : (
           <DynamicList
             initialItems={queries}
-            searchParams={searchParams as Partial<Record<FilterType, any>>}
+            queryObject={Object.fromEntries(searchParams!.entries())}
           />
         )}
       </div>
