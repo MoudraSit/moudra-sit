@@ -16,6 +16,7 @@ export interface SeniorQuery {
   modified: string;
   ver: number;
   fields: {
+    x_ID: number;
     popis: string;
     podrobnosti: string;
     iDSeniora: Senior;
