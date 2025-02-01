@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, FormLabel, Switch, SwitchProps } from "@mui/material";
+import { Box, FormLabel, SwitchProps } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { FormInputProps } from "./FormInputProps";
+import IOSSwitch from "../ios-switch";
 
 export const FormInputSwitch = ({
   name,
@@ -21,7 +22,7 @@ export const FormInputSwitch = ({
     >
       <FormLabel
         sx={{
-          fontSize: "0.75rem !important",
+          fontSize: "1rem !important",
           fontWeight: "bold",
           color: "black !important",
         }}
@@ -33,7 +34,7 @@ export const FormInputSwitch = ({
         name={name}
         control={control}
         render={({ field: { value, onChange: handleChange } }) => (
-          <Switch
+          <IOSSwitch
             color="warning"
             checked={value}
             onChange={(event) => {
