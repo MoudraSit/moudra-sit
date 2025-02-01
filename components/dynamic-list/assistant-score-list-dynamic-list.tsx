@@ -12,10 +12,10 @@ import ListItemSkeleton from "components/skeletons/list-item-skeleton";
 
 type Props = {
   initialItems: Array<SeniorQuery>;
-  searchParams?: Partial<Record<FilterType, any>>;
+  queryObject?: Partial<Record<FilterType, any>>;
 };
 
-function AssistantScoreListDynamicList({ initialItems, searchParams }: Props) {
+function AssistantScoreListDynamicList({ initialItems, queryObject }: Props) {
   // We create a reference for the InfiniteLoader
   const infiniteLoaderRef = React.useRef(null);
   const hasMountedRef = React.useRef(false);
@@ -35,7 +35,8 @@ function AssistantScoreListDynamicList({ initialItems, searchParams }: Props) {
     : async () => {
         setPage(page + 1);
         setIsNextPageLoading(true);
-        const newQueries = await loadMoreQueries(page + 1, searchParams);
+
+        const newQueries = await loadMoreQueries(page + 1, queryObject);
         setIsNextPageLoading(false);
         if (!newQueries.length) setHasNextPage(false);
         setItems((items) => [...items, ...newQueries]);
