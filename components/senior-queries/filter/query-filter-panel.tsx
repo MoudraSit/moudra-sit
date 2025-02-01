@@ -57,6 +57,9 @@ function QueryFilterPanel({ districts }: Props) {
       params.delete(filterType);
     }
     replace(`${pathname}?${params.toString()}`);
+
+    // Needs explicit handling
+    setOnlyMyQueries(false);
   }
 
   const queryStatuses =
