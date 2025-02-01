@@ -298,7 +298,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
               InputProps={{
                 startAdornment: (
                   <Tooltip
-                    title="Ohodnoťte, jaké bylo komunikovat a řešit tento dotaz se seniorem"
+                    title="Jak hodnotíte návštěvu či komunikaci se seniorem. (jako ve škole, 1 nejvyšší a 5 nejnižší) "
                     placement="top-start"
                   >
                     <InfoIcon sx={{ color: "grey", ml: "0.5rem" }} />
