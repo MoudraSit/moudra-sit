@@ -6,9 +6,9 @@ function OldQueryChip() {
       size="small"
       label="🙏 Senior čeká na kontakt!"
       sx={{
-        backgroundColor: "red",
+        backgroundColor: "#FFE74C",
         fontWeight: "bold",
-        color: "white",
+        color: "#3E3E3E",
         height: "20px",
       }}
     />

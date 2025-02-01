@@ -39,19 +39,19 @@ export const QueryStatusLabels = {
   [QueryStatus.FOR_HANDOVER]: "K předání",
   // [QueryStatus.ACCEPTED]: "Přijato",
   [QueryStatus.IN_PROGRESS]: "V řešení",
-  [QueryStatus.SOLVED]: "Vyřešeno - ukončeno",
-  [QueryStatus.UNSOLVED]: "Nevyřešeno - ukončeno",
-  [QueryStatus.POSTPONED]: "Odloženo",
+  [QueryStatus.SOLVED]: "Vyřešený - ukončeno",
+  [QueryStatus.UNSOLVED]: "Nevyřešený - ukončeno",
+  [QueryStatus.POSTPONED]: "Odložený",
 };
 
 // Object allows dynamic key names
 export const QueryStatusColors = {
-  [QueryStatus.NEW]: "#7BD7BE",
-  [QueryStatus.IN_PROGRESS]: "#2766FF",
-  [QueryStatus.FOR_HANDOVER]: "#FFC247",
-  [QueryStatus.SOLVED]: "#12BA55",
-  [QueryStatus.UNSOLVED]: "#08090C",
-  [QueryStatus.POSTPONED]: "#9800F5",
+  [QueryStatus.NEW]: "#12A9B0",
+  [QueryStatus.IN_PROGRESS]: "#4464AD",
+  [QueryStatus.FOR_HANDOVER]: "#FF6666",
+  [QueryStatus.SOLVED]: "#66CC66",
+  [QueryStatus.UNSOLVED]: "#FFE9CE",
+  [QueryStatus.POSTPONED]: "#CC66CC",
 };
 
 export enum CommonPagePaths {
