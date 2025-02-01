@@ -76,14 +76,14 @@ function AssistantSettingsForm({
           control={control}
           getValues={getValues}
           isPending={isPending}
-          label="Hlavní místo působení"
+          label="Obec"
         />
         <FormInputAutocomplete<District>
           name="notificationDistricts"
           control={control}
           multiple
           disabled={isPending}
-          label="Preferované okresy v aplikaci"
+          label="Všechny okresy působení"
           options={districts}
           getOptionLabel={getDistrictLabel}
           isOptionEqualToValue={isCityOrDistrictEqual}
