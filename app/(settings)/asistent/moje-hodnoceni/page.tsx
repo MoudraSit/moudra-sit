@@ -62,7 +62,7 @@ async function Page() {
         <div style={{ flex: "1 1 auto" }}>
           <DynamicList
             initialItems={seniorQueries}
-            searchParams={searchParams}
+            queryObject={searchParams}
           />
         </div>
       </BasePaper>
