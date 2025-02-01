@@ -12,9 +12,10 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { QueryStatus } from "helper/consts";
 import FilterChip from "./filter-chip";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Box, Button, FormControl, FormLabel, Switch } from "@mui/material";
+import { Box, Button, FormControl, FormLabel } from "@mui/material";
 import { District } from "types/assistant";
 import React from "react";
+import IOSSwitch from "components/app-forms/ios-switch";
 
 type Props = {
   districts: Array<District>;
@@ -168,7 +169,7 @@ function QueryFilterPanel({ districts }: Props) {
         >
           Moje dotazy
         </FormLabel>
-        <Switch
+        <IOSSwitch
           checked={onlyMyQueries}
           color="warning"
           onChange={handleToggle}
