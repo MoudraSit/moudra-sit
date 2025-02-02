@@ -9,6 +9,7 @@ import {
   MenuList,
 } from "@mui/material";
 import { JSObject } from "types/common";
+import { TOO_SMALL_HEIGHT } from "helper/consts";
 
 type Props = {
   open: boolean;
@@ -86,6 +87,14 @@ function FilterSelectMenu({
   return (
     <Menu
       sx={{ marginTop: "2px" }}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "center",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "center",
+      }}
       anchorEl={anchorEl}
       open={open}
       onClose={() => handleClose()}
@@ -94,7 +103,13 @@ function FilterSelectMenu({
         <MenuList dense sx={{ padding: 0 }}>
           <MenuItem
             key="all"
-            sx={{ padding: "0 0.5rem" }}
+            sx={{
+              padding: "0 0.5rem",
+              maxHeight: "300px",
+              [`@media (max-height: ${TOO_SMALL_HEIGHT}px)`]: {
+                maxHeight: "100px",
+              },
+            }}
             onClick={() => toggleAllOptions(!areAllOptionsSelected)}
           >
             <FormControlLabel

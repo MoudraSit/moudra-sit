@@ -58,7 +58,7 @@ function FilterChip({
           margin: "6px 2px",
           background: "white",
           fontWeight: value.length ? "bold" : "normal",
-          fontSize: "0.75rem",
+          fontSize: "1rem",
           "& .MuiChip-label": {
             paddingLeft: "0.5rem",
             paddingRight: "0.5rem",
