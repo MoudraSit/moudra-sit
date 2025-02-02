@@ -138,7 +138,8 @@ function QueryCard({
                   )}
                 </span>
                 {item.fields.posledniZmenaLink?.fields.osobnevzdalene !==
-                MeetingLocationType.REMOTE ? (
+                  MeetingLocationType.REMOTE &&
+                !!item.fields.posledniZmenaLink?.fields.mistoNavstevy ? (
                   <span style={{ fontWeight: "normal" }}>
                     {" "}
                     ({item.fields.posledniZmenaLink?.fields.mistoNavstevy})
