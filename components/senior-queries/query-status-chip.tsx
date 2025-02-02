@@ -2,6 +2,7 @@ import { Chip } from "@mui/material";
 import {
   QueryStatus,
   QueryStatusColors,
+  QueryStatusFontColors,
   QueryStatusLabels,
 } from "helper/consts";
 
@@ -17,6 +18,12 @@ function QueryStatusChip({ queryStatus, sx }: Props) {
       return QueryStatusColors[queryStatus];
     return "grey";
   }
+  function selectFontColor(queryStatus: string) {
+    if (queryStatus in QueryStatusFontColors)
+      //@ts-ignore
+      return QueryStatusFontColors[queryStatus];
+    return "white";
+  }
 
   return (
     <Chip
@@ -24,7 +31,8 @@ function QueryStatusChip({ queryStatus, sx }: Props) {
       label={QueryStatusLabels[queryStatus] ?? queryStatus}
       sx={{
         backgroundColor: selectChipColor(queryStatus),
-        color: "white",
+        color: selectFontColor(queryStatus),
+        fontWeight: "bold",
         height: "18px",
         ...sx,
       }}
