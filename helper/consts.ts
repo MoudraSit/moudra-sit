@@ -39,8 +39,8 @@ export const QueryStatusLabels = {
   [QueryStatus.FOR_HANDOVER]: "K předání",
   // [QueryStatus.ACCEPTED]: "Přijato",
   [QueryStatus.IN_PROGRESS]: "V řešení",
-  [QueryStatus.SOLVED]: "Vyřešený - ukončeno",
-  [QueryStatus.UNSOLVED]: "Nevyřešený - ukončeno",
+  [QueryStatus.SOLVED]: "Vyřešený",
+  [QueryStatus.UNSOLVED]: "Nevyřešen",
   [QueryStatus.POSTPONED]: "Odložený",
 };
 
