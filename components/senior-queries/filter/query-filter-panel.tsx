@@ -135,15 +135,15 @@ function QueryFilterPanel({ districts }: Props) {
         <Button
           onClick={clearFilters}
           sx={{
-            fontSize: "0.8rem",
+            fontSize: "1rem",
             padding: 0,
             color: "black",
-            fontWeight: "500",
+            fontWeight: "400",
             textDecoration: "underline",
           }}
           variant="text"
         >
-          <ClearIcon sx={{ marginRight: 0, fontSize: "1rem" }} />
+          <ClearIcon sx={{ marginRight: 0, fontSize: "0.9rem" }} />
           Odstranit filtry
         </Button>
       </Box>
