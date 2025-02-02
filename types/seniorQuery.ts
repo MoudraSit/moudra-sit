@@ -34,6 +34,15 @@ export interface SeniorQuery {
       url: string;
     };
     kategorieMultichoice?: Array<string>;
+    // Legacy
+    kategorie: {
+      id: string;
+      fields: {
+        nazev: {
+          _$$list?: Array<string>;
+        };
+      };
+    };
     pozadovaneMistoPomoci?: Array<string>;
     pocetHodinCelkem: number;
     pocetNavstev: number;
