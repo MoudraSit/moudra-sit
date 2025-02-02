@@ -22,12 +22,12 @@ function QueryCommentCard({ text, authorName, created }: QueryComment) {
       </Grid>
       <Grid item xs={11} sx={{ paddingLeft: "0.5rem" }}>
         <Stack direction="row" justifyContent={"space-between"}>
-          <Typography variant="caption" sx={{ fontSize: "11px" }}>
+          <Typography variant="caption" sx={{ fontSize: "12px" }}>
             {authorName}
           </Typography>
           <Typography
             variant="caption"
-            sx={{ fontSize: "11px", color: "#9E9E9E", textAlign: "right" }}
+            sx={{ fontSize: "12px", color: "#9E9E9E", textAlign: "right" }}
           >
             {formatDateTime(created)}
           </Typography>

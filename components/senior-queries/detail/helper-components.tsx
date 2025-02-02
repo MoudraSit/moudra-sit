@@ -28,7 +28,11 @@ export function ReadOnlyBox({
           padding: "0.5rem",
         }}
       >
-        {children}
+        {children !== undefined && children !== null ? (
+          children
+        ) : (
+          <span>&nbsp;</span>
+        )}
       </div>
     </Box>
   );
