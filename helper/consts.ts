@@ -40,7 +40,7 @@ export const QueryStatusLabels = {
   // [QueryStatus.ACCEPTED]: "Přijato",
   [QueryStatus.IN_PROGRESS]: "V řešení",
   [QueryStatus.SOLVED]: "Vyřešený",
-  [QueryStatus.UNSOLVED]: "Nevyřešen",
+  [QueryStatus.UNSOLVED]: "Nevyřešený - ukončený",
   [QueryStatus.POSTPONED]: "Odložený",
 };
 
@@ -52,6 +52,10 @@ export const QueryStatusColors = {
   [QueryStatus.SOLVED]: "#66CC66",
   [QueryStatus.UNSOLVED]: "#FFE9CE",
   [QueryStatus.POSTPONED]: "#CC66CC",
+};
+
+export const QueryStatusFontColors = {
+  [QueryStatus.UNSOLVED]: "black",
 };
 
 export enum CommonPagePaths {
