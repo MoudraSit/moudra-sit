@@ -114,7 +114,9 @@ function QueryCard({
               >
                 Zařízení:{" "}
                 <span style={{ fontWeight: "normal" }}>
-                  {item.fields?.kategorieMultichoice?.join(", ")}
+                  {item.fields?.kategorieMultichoice
+                    ? item.fields?.kategorieMultichoice?.join(", ")
+                    : item.fields?.kategorie.fields.nazev?._$$list?.join(", ")}
                 </span>
               </Typography>
               <Typography
