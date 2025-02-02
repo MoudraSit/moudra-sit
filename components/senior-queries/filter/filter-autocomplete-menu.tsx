@@ -14,6 +14,7 @@ import {
 import { Search } from "@mui/icons-material";
 import { THEME_COLORS } from "components/theme/colors";
 import { JSObject } from "types/common";
+import { TOO_SMALL_HEIGHT } from "helper/consts";
 
 type Props = {
   open: boolean;
@@ -108,6 +109,14 @@ function FilterAutocompleteMenu({
   return (
     <Menu
       sx={{ marginTop: "2px" }}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "center",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "center",
+      }}
       anchorEl={anchorEl}
       open={open}
       onClose={() => handleClose()}
@@ -140,7 +149,14 @@ function FilterAutocompleteMenu({
         />
         <MenuList
           dense
-          sx={{ padding: 0, overflow: "scroll", maxHeight: "50vh" }}
+          sx={{
+            padding: 0,
+            overflow: "scroll",
+            maxHeight: "300px",
+            [`@media (max-height: ${TOO_SMALL_HEIGHT}px)`]: {
+              maxHeight: "100px",
+            },
+          }}
         >
           {controlledOptions
             .filter((option) => option.filtered)
