@@ -1,4 +1,8 @@
-import { FINISHED_STATUSES, MeetingLocationType } from "helper/consts";
+import {
+  FINISHED_STATUSES,
+  MeetingLocationType,
+  RemoteHelpTypes,
+} from "helper/consts";
 import { ReadOnlyBox } from "./helper-components";
 import { formatDateTime } from "helper/utils";
 import { QueryChange } from "types/queryChange";
@@ -6,10 +10,11 @@ import { Box, Typography } from "@mui/material";
 import RemoteHelpSection from "./remote-help-section";
 
 type Props = {
+  queryId: string;
   lastChange: QueryChange;
 };
 
-async function QueryDetailChangeSection({ lastChange }: Props) {
+async function QueryDetailChangeSection({ queryId, lastChange }: Props) {
   if (!lastChange) return <></>;
 
   return (
@@ -26,7 +31,8 @@ async function QueryDetailChangeSection({ lastChange }: Props) {
         )}
       </ReadOnlyBox>
 
-      {lastChange.fields.osobnevzdalene === MeetingLocationType.REMOTE ? (
+      {lastChange.fields.osobnevzdalene === MeetingLocationType.REMOTE &&
+      lastChange.fields.typPomociNaDalku !== RemoteHelpTypes.PHONE ? (
         <Box>
           <Typography
             sx={{
@@ -37,7 +43,7 @@ async function QueryDetailChangeSection({ lastChange }: Props) {
           >
             Pomoc na dálku
           </Typography>
-          <RemoteHelpSection queryChange={lastChange} />
+          <RemoteHelpSection queryId={queryId} queryChange={lastChange} />
         </Box>
       ) : (
         <ReadOnlyBox label="Adresa setkání">

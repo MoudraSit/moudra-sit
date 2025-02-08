@@ -116,12 +116,14 @@ export const MeetingLocationTypeLabels = {
 };
 
 export enum RemoteHelpTypes {
+  PHONE = "phone",
   GOOGLE_MEET = "googleMeet",
   WHATSAPP = "whatsapp",
   QUICK_ASSIST = "quickAssist",
 }
 
 export const RemoteHelpTypeLabels = {
+  [RemoteHelpTypes.PHONE]: "Telefonicky",
   [RemoteHelpTypes.GOOGLE_MEET]: "Google Meet",
   [RemoteHelpTypes.WHATSAPP]: "WhatsApp",
   [RemoteHelpTypes.QUICK_ASSIST]: "Rychlý pomocník",
