@@ -18,11 +18,11 @@ export function generateUID() {
   );
 }
 
-export function formatDate(date?: string) {
+export function formatDate(date?: string | Date) {
   return date ? new Date(date).toLocaleDateString("cs-CZ") : "";
 }
 
-export function formatDateTime(date?: string) {
+export function formatDateTime(date?: string | Date) {
   return date ? dayjs(date).format("DD. MM. YYYY HH:mm") : "";
 }
 

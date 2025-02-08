@@ -1,81 +1,81 @@
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  RadioGroup,
-} from "@mui/material";
+import React from "react";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { FormInputProps } from "components/app-forms/inputs/FormInputProps";
-import { RemoteHelpTypes } from "helper/consts";
+import { RemoteHelpTypeLabels, RemoteHelpTypes } from "helper/consts";
 import { Controller } from "react-hook-form";
 
 const REMOTE_HELP_OPTIONS = [
   {
+    id: RemoteHelpTypes.PHONE,
+    imagePath: "/images/app/phone_icon.png",
+  },
+  {
     id: RemoteHelpTypes.GOOGLE_MEET,
-    label: "Google Meet",
     imagePath: "/images/app/google_meet.png",
   },
   {
     id: RemoteHelpTypes.QUICK_ASSIST,
-    label: "Rychlý pomocník",
     imagePath: "/images/app/quick_assist.png",
   },
   {
     id: RemoteHelpTypes.WHATSAPP,
-    label: "WhatsApp",
     imagePath: "/images/app/whatsapp.png",
   },
 ];
 
 function RemoteHelpTiles({ name, control }: FormInputProps) {
   return (
-    <FormControl component="fieldset">
-      {/* <FormLabel component="legend">{label}</FormLabel> */}
-      <Controller
-        name={name}
-        control={control}
-        render={({ field: { onChange, value: selectedValue } }) => (
-          <Grid container spacing={2}>
-            {REMOTE_HELP_OPTIONS.map(({ id, label, imagePath }) => (
-              <Grid key={id} item xs={4}>
-                <FormControlLabel
-                  value={id}
-                  label=""
-                  control={
-                    <Card
-                      data-active={selectedValue === id ? "" : undefined}
-                      onClick={() => onChange(id)}
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
-                        padding: "1rem !important",
-                        "&[data-active]": {
-                          backgroundColor: "action.selected",
-                          "&:hover": {
-                            backgroundColor: "action.selectedHover",
-                          },
-                        },
-                      }}
-                    >
-                      <CardMedia
-                        sx={{ height: "64px", width: "64px" }}
-                        image={imagePath}
-                      />
-                      <CardContent>{label}</CardContent>
-                    </Card>
-                  }
+    <Controller
+      name={name}
+      control={control}
+      render={({ field: { onChange, value: selectedValue } }) => (
+        <ImageList cols={2} gap={16} sx={{ width: "100%", padding: "0.5rem" }}>
+          {REMOTE_HELP_OPTIONS.map(({ id, imagePath }) => {
+            const label = RemoteHelpTypeLabels[id];
+            return (
+              <ImageListItem
+                key={id}
+                onClick={() => onChange(id)}
+                sx={{
+                  cursor: "pointer",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  transition: "box-shadow 0.2s ease-in-out",
+                  boxShadow:
+                    selectedValue === id
+                      ? "0px 0px 8px 2px rgba(64, 70, 75, 0.4)" // Softer shadow for selected tile
+                      : "0px 2px 6px rgba(0, 0, 0, 0.12)", // Subtle shadow for non-selected tiles
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imagePath}
+                  alt={label}
+                  loading="lazy"
+                  style={{
+                    width: "100%",
+                    height: "120px",
+                    objectFit: "contain",
+                    padding: "8px",
+                  }}
                 />
-              </Grid>
-            ))}
-          </Grid>
-        )}
-      />
-    </FormControl>
+                <ImageListItemBar
+                  title={label}
+                  position="below"
+                  sx={{
+                    textAlign: "center",
+                    backgroundColor: "transparent",
+                    fontSize: "14px",
+                  }}
+                />
+              </ImageListItem>
+            );
+          })}
+        </ImageList>
+      )}
+    />
   );
 }
 

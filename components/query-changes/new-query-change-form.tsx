@@ -82,7 +82,8 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
       isInitialChange: query.fields.stavDotazu === QueryStatus.NEW,
       calendarEventId: lastChange?.fields?.kalendarUdalostId ?? "",
       googleMeetLink: lastChange?.fields?.googleMeetLink ?? "",
-      remoteHelpType: lastChange?.fields?.typPomociNaDalku ?? "",
+      remoteHelpType:
+        lastChange?.fields?.typPomociNaDalku ?? RemoteHelpTypes.PHONE,
       seniorEmail: query.fields.iDSeniora?.fields?.email ?? "",
       queryStatus:
         query.fields.stavDotazu === QueryStatus.IN_PROGRESS
@@ -284,7 +285,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
           />
         )}
 
-        {isMeetRemote ? (
+        {isMeetRemote && !isQueryFinished ? (
           <>
             <RemoteHelpTiles
               name="remoteHelpType"
@@ -369,7 +370,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
                 setIsCalendarDialogOpen(true);
               }}
               variant="contained"
-              disabled={isCalendarPending}
+              disabled={isCalendarPending || isPending}
               sx={{ backgroundColor: "#028790 !important" }}
             >
               + Přidat do kalendáře
