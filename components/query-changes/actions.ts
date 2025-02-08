@@ -10,7 +10,7 @@ import {
   RemoteHelpTypes,
 } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
-import { createTabidooDateTimeString } from "helper/utils";
+import { createTabidooDateTimeString, formatDateTime } from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { google } from "googleapis";
@@ -19,6 +19,9 @@ import { visitCalendarEventSchema } from "helper/schemas/visit-calendar-event-sc
 import dayjs from "dayjs";
 import { QueryChange } from "types/queryChange";
 import { Senior } from "types/senior";
+import { InferType } from "yup";
+import { getSeniorById } from "backend/seniors";
+import { SeniorQueriesGetter } from "backend/senior-queries";
 
 export async function fetchAutocompleteOrganizations(inputValue: string) {
   return await AssistantAPI.getOrganizationsByNameOrCityName(inputValue);
@@ -37,7 +40,10 @@ export async function createQueryChange(
     dotaz: { id: queryId },
     kalendarUdalostId: changeValues.calendarEventId,
     googleMeetLink: changeValues.googleMeetLink,
-    typPomociNaDalku: changeValues.remoteHelpType,
+    typPomociNaDalku:
+      changeValues.meetLocationType == MeetingLocationType.REMOTE
+        ? changeValues.remoteHelpType
+        : null,
     iDUzivatele: { id: session?.user?.id },
     stav: changeValues.queryStatus,
     poznamkaAsistentem: changeValues.summary,
@@ -69,7 +75,7 @@ export async function createQueryChange(
 
   if (
     changeValues.meetLocationType === MeetingLocationType.REMOTE &&
-    changeValues.remoteHelpType &&
+    changeValues.remoteHelpType !== RemoteHelpTypes.PHONE &&
     changeValues.seniorEmail
   ) {
     requests.push(
@@ -83,12 +89,7 @@ export async function createQueryChange(
       })
     );
 
-    requests.push(
-      sendInstructionEmail({
-        remoteHelpType: changeValues.remoteHelpType as RemoteHelpTypes,
-        googleMeetLink: changeValues.googleMeetLink,
-      })
-    );
+    requests.push(sendInstructionEmail(queryId, changeValues));
   }
 
   requests.push(
@@ -110,31 +111,57 @@ export async function createQueryChange(
   revalidatePath(`/`, "layout");
 }
 
-export async function sendInstructionEmail({
-  remoteHelpType,
-  googleMeetLink,
-}: {
-  remoteHelpType: RemoteHelpTypes;
-  googleMeetLink?: string;
-}) {
-  // TODO: webhooks by type
-  switch (remoteHelpType) {
+export async function sendInstructionEmail(
+  queryId: string,
+  formValues: Pick<
+    InferType<typeof newQueryChangeSchema>,
+    "googleMeetLink" | "remoteHelpType" | "dateTime"
+  >
+) {
+  const [assistant, query] = await Promise.all([
+    AssistantAPI.getAssistantDetails(),
+    SeniorQueriesGetter.getSeniorQueryById(queryId),
+  ]);
+
+  const senior = await getSeniorById(query.fields.iDSeniora.id);
+
+  const webhookPayload: JSObject = {
+    senior: {
+      jmeno: senior.fields.jmeno,
+      prijmeni: senior.fields.prijmeni,
+      telefon: senior.fields.telefon,
+      email: senior.fields.email,
+    },
+    asistent: {
+      jmeno: assistant.fields.jmeno,
+      prijmeni: assistant.fields.prijmeni,
+      telefon: assistant.fields.telefon,
+      email: assistant.fields.email,
+    },
+    datumCasSpojeni: formatDateTime(formValues.dateTime),
+  };
+
+  // Webhook expects slightly different values for types
+  switch (formValues.remoteHelpType) {
     case RemoteHelpTypes.GOOGLE_MEET:
-      "...";
+      webhookPayload.typPomoci = "googlemeet";
+      webhookPayload.googleMeetLink = formValues.googleMeetLink;
+      break;
     case RemoteHelpTypes.QUICK_ASSIST:
-      "...";
+      webhookPayload.typPomoci = "rychlypomocnik";
+      break;
     case RemoteHelpTypes.WHATSAPP:
-      "...";
+      webhookPayload.typPomoci = "whatsapp";
+      break;
+    case RemoteHelpTypes.PHONE:
+      return;
     default:
-      "...";
+      throw new Error(`Neplatný typ pomoci na dálku`);
   }
 
-  const webhookUrl = new URL(`${process.env.RESTORE_EMAIL_WEBHOOK_URL}`);
-
-  // TODO: add emails to which to send the instructions
-  // TODO: add link to the instruction docs as an ENV variable
-  const webhookPayload =
-    remoteHelpType === RemoteHelpTypes.GOOGLE_MEET ? { googleMeetLink } : {};
+  const webhookUrl = new URL(
+    `${process.env.REMOTE_HELP_NOTIFICATION_WEBHOOK_URL}`
+  );
 
   await fetch(webhookUrl, {
     method: "POST",

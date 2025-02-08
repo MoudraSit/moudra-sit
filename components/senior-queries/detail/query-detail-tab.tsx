@@ -114,6 +114,7 @@ async function QueryDetailTab({ seniorQuery }: Props) {
         </ReadOnlyBox>
         <ReadOnlyBox label="Tabidoo ID">{seniorQuery.fields.x_ID}</ReadOnlyBox>
         <QueryDetailChangeSection
+          queryId={seniorQuery.id}
           lastChange={seniorQuery.fields.posledniZmenaLink!}
         />
       </Stack>

@@ -7,20 +7,34 @@ import { useState } from "react";
 import { RemoteHelpTypeLabels, RemoteHelpTypes } from "helper/consts";
 import { sendInstructionEmail as sendInstructionEmailAction } from "components/query-changes/actions";
 import FloatingAlert from "components/alerts/floating-alert";
+import SuccessAlert from "components/alerts/success-alert";
 
-function RemoteHelpSection({ queryChange }: { queryChange: QueryChange }) {
+function RemoteHelpSection({
+  queryId,
+  queryChange,
+}: {
+  queryId: string;
+  queryChange: QueryChange;
+}) {
   const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   async function sendInstructionEmail() {
     try {
+      setIsSuccess(false);
       setIsError(false);
+      setErrorMessage("");
       setIsPending(true);
-      await sendInstructionEmailAction({
+
+      await sendInstructionEmailAction(queryId, {
         remoteHelpType: queryChange.fields.typPomociNaDalku as RemoteHelpTypes,
         googleMeetLink: queryChange.fields.googleMeetLink,
+        dateTime: new Date(queryChange.fields.datumPlanovanaNavsteva),
       });
+
+      setIsSuccess(true);
       setIsPending(false);
     } catch (error) {
       console.error(error);
@@ -47,25 +61,6 @@ function RemoteHelpSection({ queryChange }: { queryChange: QueryChange }) {
         position: "relative",
       }}
     >
-      {/* <Grid item xs={6}>
-        <Typography
-          variant="caption"
-          sx={{ color: "#A5A5A5", overflowWrap: "break-word" }}
-        >
-          Telefon
-        </Typography>
-        <Typography
-          sx={{
-            overflowWrap: "break-word",
-            color: THEME_COLORS.primary,
-            textDecoration: "underline",
-          }}
-        >
-          <a href={`tel:${seniorQuery.fields.iDSeniora.fields.telefon}`}>
-            {seniorQuery.fields.iDSeniora.fields.telefon}
-          </a>
-        </Typography>
-      </Grid> */}
       <Grid item xs={6}>
         <Typography
           variant="caption"
@@ -101,7 +96,7 @@ function RemoteHelpSection({ queryChange }: { queryChange: QueryChange }) {
           </Typography>
         </Grid>
       ) : null}
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <Button
           color="warning"
           onClick={sendInstructionEmail}
@@ -112,6 +107,12 @@ function RemoteHelpSection({ queryChange }: { queryChange: QueryChange }) {
           Poslat e-mail s instrukcemi
         </Button>
       </Grid>
+      <SuccessAlert
+        errorMessage="E-mail odeslán"
+        isSuccess={isSuccess}
+        setIsSuccess={setIsSuccess}
+      />
+
       <FloatingAlert
         errorMessage={errorMessage}
         floatingAlertOpen={isError}
