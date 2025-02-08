@@ -56,7 +56,7 @@ function RemoteHelpTiles({ name, control }: FormInputProps) {
                   loading="lazy"
                   style={{
                     width: "100%",
-                    height: "120px",
+                    height: "64px",
                     objectFit: "contain",
                     padding: "8px",
                   }}
