@@ -28,7 +28,7 @@ export function ReadOnlyBox({
           padding: "0.5rem",
         }}
       >
-        {children !== undefined && children !== null ? (
+        {![null, undefined, ""].includes(children as any) ? (
           children
         ) : (
           <span>&nbsp;</span>
