@@ -13,6 +13,7 @@ import QueryDetailScoreSection from "./query-detail-score-section";
 import QueryDetailChangeSection from "./query-detail-change-section";
 import { QueryDetailSeniorSection } from "./query-detail-senior-section";
 import { getSeniorCity as getSeniorCityById } from "../actions";
+import SecondaryButton from "components/buttons/secondary-button";
 
 type Props = {
   seniorQuery: SeniorQuery;
@@ -54,15 +55,13 @@ async function QueryDetailTab({ seniorQuery }: Props) {
           </Grid>
         )}
         <Grid item xs={12} sm={6}>
-          <Button
+          <SecondaryButton
             LinkComponent={Link}
             href={`${AssistantPagePaths.NEW_SENIOR_QUERY}?prefill=${seniorQuery.id}`}
+            sx={{ mt: 0, mb: 0 }}
             fullWidth
-            color="info"
-            variant="outlined"
-          >
-            Předvyplnit další dotaz
-          </Button>
+            label="Předvyplnit další dotaz"
+          />
         </Grid>
       </Grid>
       <Stack spacing={2}>

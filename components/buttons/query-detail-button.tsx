@@ -1,6 +1,6 @@
-import { Button } from "@mui/material";
 import { AssistantPagePaths } from "helper/consts";
 import Link from "next/link";
+import SecondaryButton from "./secondary-button";
 
 type Props = {
   queryId: string;
@@ -9,15 +9,13 @@ type Props = {
 
 function QueryDetailButton({ queryId, label = "Zobrazit detail" }: Props) {
   return (
-    <Button
+    <SecondaryButton
       LinkComponent={Link}
       href={`${AssistantPagePaths.SENIOR_QUERIES}/${queryId}/detail`}
-      variant="outlined"
-      color="info"
+      sx={{ mt: 0, mb: 0 }}
       fullWidth
-    >
-      {label}
-    </Button>
+      label={label}
+    />
   );
 }
 
