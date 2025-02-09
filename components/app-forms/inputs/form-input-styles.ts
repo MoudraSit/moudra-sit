@@ -4,7 +4,7 @@ export const commonStyles = {
     padding: 0,
   },
   "& .MuiInputBase-root.Mui-disabled": {
-    background: "#F5F3EE",
+    background: "#F6F6F6",
   },
   "& .Mui-disabled": {
     "& .MuiOutlinedInput-notchedOutline": {
@@ -16,7 +16,7 @@ export const commonStyles = {
     paddingLeft: "0.5rem",
   },
   "& .MuiInputBase-input.Mui-disabled": {
-    background: "#F5F3EE",
+    background: "#F6F6F6",
     color: "black !important",
     // "-webkit-text-fill-color": "black !important",
     WebkitTextFillColor: "black !important",
@@ -30,7 +30,7 @@ export const commonStyles = {
   },
   "& .MuiOutlinedInput-notchedOutline": {
     top: 0,
-    borderColor: "#F5F3EE",
+    borderColor: "#F6F6F6",
     "& legend": {
       zIndex: 0,
       width: 0,
