@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, MenuItem, Stack, Tooltip } from "@mui/material";
+import { MenuItem, Stack, Tooltip } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import {
@@ -48,6 +48,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import ConfirmCalendarEventDialog from "./confirm-calendar-event-dialog";
 import SuccessAlert from "components/alerts/success-alert";
 import RemoteHelpTiles from "./remote-help-tiles";
+import SecondaryButton from "components/buttons/secondary-button";
 
 const QUERY_STATUSES_FOR_ASSISTANT = [
   QueryStatus.IN_PROGRESS,
@@ -363,18 +364,14 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
 
         <Stack spacing={1}>
           {!isQueryFinished && getValues("dateTime") ? (
-            <Button
-              color="warning"
+            <SecondaryButton
               onClick={async () => {
                 if (!(await trigger())) return;
                 setIsCalendarDialogOpen(true);
               }}
-              variant="contained"
               disabled={isCalendarPending || isPending}
-              sx={{ backgroundColor: "#028790 !important" }}
-            >
-              + Přidat do kalendáře
-            </Button>
+              label="+ Přidat do kalendáře"
+            />
           ) : null}
           <ConfirmCalendarEventDialog
             open={isCalendarDialogOpen}

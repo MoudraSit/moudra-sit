@@ -2,10 +2,10 @@ import { Button, ButtonProps } from "@mui/material";
 import { THEME_COLORS } from "components/theme/colors";
 
 type Props = ButtonProps & {
-  label?: string;
+  label: string;
 };
 
-function SubmitButton({ label = "Uložit", sx, ...rest }: Props) {
+function SecondaryButton({ label, sx, ...rest }: Props) {
   return (
     <Button
       fullWidth
@@ -13,8 +13,8 @@ function SubmitButton({ label = "Uložit", sx, ...rest }: Props) {
       sx={{
         mt: 3,
         mb: 3,
-        bgcolor: `${THEME_COLORS.primary} !important`,
-        color: "white",
+        borderColor: THEME_COLORS.primary,
+        color: THEME_COLORS.primary,
         ...sx,
       }}
       {...rest}
@@ -24,4 +24,4 @@ function SubmitButton({ label = "Uložit", sx, ...rest }: Props) {
   );
 }
 
-export default SubmitButton;
+export default SecondaryButton;
