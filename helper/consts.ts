@@ -62,6 +62,8 @@ export enum CommonPagePaths {
   LOGIN = "/prihlaseni",
   REGISTER_ASSISTANT = "/registrace/asistent",
   REGISTER_SENIOR = "/registrace/senior",
+  PASSWORD_RECOVERY_REQUEST = "/obnova-hesla/poslat-email",
+  PASSWORD_RECOVERY_FORM = "/obnova-hesla/nove-heslo",
 }
 // Include subpaths for easy referencing in the app
 // Query and dynamic path parameters (e.g., .../id/...) should not be here

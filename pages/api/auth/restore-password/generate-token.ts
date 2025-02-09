@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import * as yup from "yup";
 import { encode, JWT } from "next-auth/jwt";
+import { callTabidoo } from "backend/tabidoo";
 
 async function handler(
   request: NextApiRequest,
@@ -45,7 +46,7 @@ async function handler(
 
     const webhookUrl = new URL(`${process.env.RESTORE_EMAIL_WEBHOOK_URL}`);
 
-    const res = await fetch(webhookUrl, {
+    await fetch(webhookUrl, {
       method: "POST",
       body: JSON.stringify(restorePasswordPayload),
       headers: {
@@ -53,8 +54,15 @@ async function handler(
       },
     });
 
-    console.log(res.status);
-    console.log(await res.text());
+    // Make the old password invalid (security feature if it was breached)
+    await callTabidoo(`/tables/uzivatel/data/${assistantByEmail[0].id}`, {
+      method: "PATCH",
+      body: {
+        fields: {
+          heslo: "",
+        },
+      },
+    });
 
     response.status(200).json({ status: "success" });
 
