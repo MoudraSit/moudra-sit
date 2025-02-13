@@ -8,6 +8,7 @@ type Props = ButtonProps & {
 function SubmitButton({ label = "Uložit", sx, ...rest }: Props) {
   return (
     <Button
+      type="submit"
       fullWidth
       variant="outlined"
       sx={{
