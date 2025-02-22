@@ -21,6 +21,7 @@ import { restorePasswordPasswordSchema } from "components/restore-password/schem
 import { useSearchParams } from "next/navigation";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import ApiRecaptcha from "components/form/api/recaptcha";
+import loginImage from "public/images/sign-in/welcome.jpg";
 
 export type IRestorePasswordValues = yup.InferType<
   typeof restorePasswordPasswordSchema
@@ -70,11 +71,12 @@ function RestorePasswordPasswordForm() {
           style={{ position: "relative", overflow: "hidden" }}
         >
           <Image
-            src="/images/sign-in/welcome.jpg"
+            src={loginImage}
             alt="Uvodni foto - Moudra sit"
             style={{ objectFit: "cover" }}
             quality={75}
             fill
+            priority
           />
         </Grid>
         <Grid
