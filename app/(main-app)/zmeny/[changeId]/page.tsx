@@ -68,7 +68,7 @@ async function Page({ params }: Props) {
           <ReadOnlyBox label="Adresa návštěvy">
             {queryChange.fields.mistoNavstevy}
           </ReadOnlyBox>
-          <ReadOnlyBox label="Datuma čas setkání">
+          <ReadOnlyBox label="Datum a čas setkání">
             {formatDateTime(
               queryChange.fields.stav in FINISHED_STATUSES
                 ? queryChange.fields.datumUskutecneneNavstevy
