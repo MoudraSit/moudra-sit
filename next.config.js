@@ -15,7 +15,7 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "https://moudrasit.cz",
+        destination: "/prehled",
         permanent: false,
         basePath: false,
         has: [
