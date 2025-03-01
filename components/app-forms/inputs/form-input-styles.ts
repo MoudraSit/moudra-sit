@@ -22,11 +22,11 @@ export const commonStyles = {
     WebkitTextFillColor: "black !important",
   },
   "& .MuiFormLabel-root": {
-    fontSize: "1rem !important",
+    fontSize: "15px !important",
     color: "black !important",
     fontWeight: "bold",
     zIndex: 1,
-    transform: "translate(0px, -16px) scale(0.75)",
+    transform: "translate(0px, -16px) scale(1)",
   },
   "& .MuiOutlinedInput-notchedOutline": {
     top: 0,
