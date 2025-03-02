@@ -1,4 +1,10 @@
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 import {
   QUERY_OLD_DAYS,
   QueryStatus,
@@ -23,7 +29,9 @@ export function formatDate(date?: string | Date) {
 }
 
 export function formatDateTime(date?: string | Date) {
-  return date ? dayjs(date).format("DD. MM. YYYY HH:mm") : "";
+  return date
+    ? dayjs.utc(date).tz("Europe/Prague").format("DD. MM. YYYY HH:mm")
+    : "";
 }
 
 export function formatMonth(month: string | number) {
