@@ -1,6 +1,10 @@
 import { SeniorQuery } from "types/seniorQuery";
 import { callTabidoo } from "./tabidoo";
-import { FilterType } from "helper/consts";
+import {
+  FilterType,
+  QueryStatus,
+  WITHOUT_SOLVER_STATUSES,
+} from "helper/consts";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/auth";
 import { QueryChange } from "types/queryChange";
@@ -140,11 +144,43 @@ export class SeniorQueriesGetter {
     return seniorQueries;
   }
 
-  private static async _createSeniorQueryStatusFilter(queryStatus: string) {
+  private static async _createSeniorQueryStatusFilter(
+    queryStatusString: string
+  ) {
+    const session = await getServerSession(authOptions);
+
+    const finishedFilters = [];
+    const queryStatuses = queryStatusString.split(",");
+
+    for (const queryStatus of queryStatuses) {
+      if (WITHOUT_SOLVER_STATUSES.includes(queryStatus as QueryStatus)) {
+        finishedFilters.push({
+          field: "stavDotazu",
+          operator: "in",
+          value: queryStatus,
+        });
+      } else {
+        finishedFilters.push({
+          filter: [
+            {
+              field: "stavDotazu",
+              operator: "in",
+              value: queryStatus,
+            },
+            {
+              field: "resitelLink.id",
+              operator: "eq",
+              value: session?.user?.id,
+            },
+          ],
+          filterOperator: "and",
+        });
+      }
+    }
+
     return {
-      field: "stavDotazu",
-      operator: "in",
-      value: queryStatus,
+      filter: finishedFilters,
+      filterOperator: "or",
     };
   }
 
