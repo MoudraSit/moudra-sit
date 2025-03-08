@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import DynamicList from "components/dynamic-list/query-card-dynamic-list";
 import { getQueryCount, loadMoreQueries } from "./actions";
 import DynamicListSkeleton from "components/skeletons/dynamic-list-skeleton";
 import { Typography } from "@mui/material";
+import { enforceSearchParams } from "helper/auth";
 
 type Props = {
   initialQueries: any[];
@@ -17,11 +18,19 @@ export default function ClientQueryList({
   initialTotal,
 }: Props) {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [queries, setQueries] = useState(initialQueries);
   const [total, setTotal] = useState(initialTotal);
 
   useEffect(() => {
+    // Do not allow empty params
+    if (!searchParams!.toString()) {
+      const newParams = new URLSearchParams(enforceSearchParams());
+      router.replace(`?${newParams.toString()}`);
+    }
+
     const fetchData = async () => {
       setLoading(true);
       const queryObject = Object.fromEntries(searchParams!.entries());
@@ -35,7 +44,7 @@ export default function ClientQueryList({
     };
 
     fetchData();
-  }, [searchParams]); // Re-run when filters change
+  }, [searchParams, router]); // Re-run when filters change
 
   return (
     <>

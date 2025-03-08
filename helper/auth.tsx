@@ -1,4 +1,4 @@
-import { Role } from "./consts";
+import { FilterType, QueryStatus, Role } from "./consts";
 import { compare, hash } from "bcryptjs";
 import { User } from "next-auth";
 
@@ -21,4 +21,10 @@ export function isUserAssistant(user?: User) {
 
 export function isUserSenior(user?: User) {
   return user?.role === Role.SENIOR;
+}
+
+export function enforceSearchParams() {
+  return {
+    [FilterType.QUERY_STATUS]: Object.values(QueryStatus).join(","),
+  };
 }

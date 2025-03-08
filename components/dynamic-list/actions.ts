@@ -12,6 +12,7 @@ export async function loadMoreQueries(
     pageNumber
   );
 }
+
 export async function getQueryCount(searchParams?: JSObject) {
   return await SeniorQueriesGetter.getSeniorQueryCountByUIFilters(
     searchParams || {}
