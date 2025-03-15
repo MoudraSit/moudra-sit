@@ -1,18 +1,28 @@
+import { canUserAccessQuery } from "helper/auth";
 import {
   AssistantPagePaths,
   AssistantAuthStatus,
   Role,
   SeniorPagePaths,
+  CommonPagePaths,
 } from "helper/consts";
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(
-  function middleware(req) {
+  async function middleware(req) {
     const { token } = req.nextauth;
 
+    if (!token) {
+      console.error("Middleware: Token is missing");
+      return NextResponse.redirect(new URL(CommonPagePaths.LOGIN, req.url));
+    }
+
     // Newly created users that were not admin-approved in Tabidoo should have access only to their detail page
-    if (token?.role === Role.DA && token?.status === AssistantAuthStatus.PENDING) {
+    if (
+      token?.role === Role.DA &&
+      token?.status === AssistantAuthStatus.PENDING
+    ) {
       // Prevent inifinite redirection
       if (req.nextUrl.pathname == AssistantPagePaths.ASSISTANT_PROFILE) return;
       else
@@ -20,6 +30,17 @@ export default withAuth(
           new URL(AssistantPagePaths.ASSISTANT_PROFILE, req.url)
         );
     }
+
+    // // Check if the user is trying to access SENIOR_QUERIES/:id
+    // if (req.nextUrl.pathname.startsWith(AssistantPagePaths.SENIOR_QUERIES)) {
+    //   const queryId = extractUuidFromPath(req.nextUrl.pathname);
+
+    //   if (queryId && !(await canUserAccessQuery(token!, queryId))) {
+    //     return NextResponse.redirect(
+    //       new URL(AssistantPagePaths.SENIOR_QUERIES, req.url)
+    //     );
+    //   }
+    // }
 
     // If the user is logged in as a senior and is trying to access assistant paths, redirect him.
     for (const assistantPath of Object.values(AssistantPagePaths)) {
@@ -55,6 +76,8 @@ export default withAuth(
     },
   }
 );
+
+
 
 // Needs to be constant at build time, variables would be ignored
 // Defined negatively via regex negative lookahead

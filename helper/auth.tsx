@@ -1,6 +1,13 @@
-import { FilterType, QueryStatus, Role } from "./consts";
+import { SeniorQueriesGetter } from "backend/senior-queries";
+import {
+  FilterType,
+  QueryStatus,
+  Role,
+  WITHOUT_SOLVER_STATUSES,
+} from "./consts";
 import { compare, hash } from "bcryptjs";
 import { User } from "next-auth";
+import { JWT } from "next-auth/jwt";
 
 // for hashing and salting the user passwords
 export async function hashPassword(password: string): Promise<string> {
@@ -27,4 +34,14 @@ export function enforceSearchParams() {
   return {
     [FilterType.QUERY_STATUS]: Object.values(QueryStatus).join(","),
   };
+}
+
+export async function canUserAccessQuery(token: JWT, queryId: string) {
+  const query = await SeniorQueriesGetter.getSeniorQueryById(queryId);
+
+  if (query.fields?.resitelLink?.id === token.id) return true;
+
+  return WITHOUT_SOLVER_STATUSES.includes(
+    query.fields.stavDotazu as QueryStatus
+  );
 }
