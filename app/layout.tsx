@@ -10,7 +10,17 @@ import AppHeader from "components/layout/app-header";
 export const metadata: Metadata = {
   title: {
     template: "%s |  Moudrá Síť App",
-    default: "Aplikace", // a default is required when creating a template
+    default: "Aplikace", // a default is required when creating a template,
+  },
+  manifest: "/manifest.json",
+  icons: {
+    apple: [
+      {
+        url: "/images/logo/192-logo.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+    ],
   },
 };
 
@@ -21,6 +31,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={mobileAppTheme}>
