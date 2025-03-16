@@ -61,6 +61,6 @@ export default withAuth(
 // Includes pages from the older app (mostly form and registration/login)
 export const config = {
   matcher: [
-    "/((?!form|newform|hodnoceni|api|prihlaseni|registrace|obnova-hesla|images|_next|favicon.ico).*)",
+    "/((?!form|newform|hodnoceni|api|prihlaseni|registrace|obnova-hesla|images|_next|favicon.ico|manifest.json).*)",
   ],
 };
