@@ -149,22 +149,10 @@ export class SeniorQueriesGetter {
   }
 
   private static async _createSeniorQueryLocationFilter(location: string) {
-    // Queries should not use lokalita, use mestoLink in the senior table instead (via a calculated field)
-    // lokalita is kept for legacy reasons only
     return {
-      filter: [
-        {
-          field: "lokalita.okres",
-          operator: "in",
-          value: location,
-        },
-        {
-          field: "iDSeniora.okresCalc",
-          operator: "in",
-          value: location,
-        },
-      ],
-      filterOperator: "or",
+      field: "iDSeniora.okresCalc",
+      operator: "in",
+      value: location,
     };
   }
 
