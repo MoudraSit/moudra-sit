@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useField } from "formik";
 import React from "react";
 
@@ -39,6 +33,7 @@ const PhoneCodeFieldForm = ({
         >
           <MenuItem value={"+420"}>+420 (Česko)</MenuItem>
           <MenuItem value={"+421"}>+421 (Slovensko)</MenuItem>
+          <MenuItem value={"+380"}>+380 (Ukrajina)</MenuItem>
         </Select>
       </FormControl>
     </>
