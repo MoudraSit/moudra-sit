@@ -67,6 +67,23 @@ function placesOfHelp(props: IValues) {
   return places;
 }
 
+function categories(props: IValues) {
+  const categories = [];
+  if (props.phoneCheckbox) {
+    categories.push("Mobilní telefon");
+  }
+  if (props.pcCheckbox) {
+    categories.push("Počítač");
+  }
+  if (props.printerCheckbox) {
+    categories.push("Tiskárna");
+  }
+  if (props.otherCheckbox) {
+    categories.push("Jiné IT zařízení");
+  }
+  return categories;
+}
+
 // return the photo to upload in API format or null
 function isUploadedPhoto(values: IValues): [IImage] | null {
   // if image was uploaded
@@ -96,6 +113,7 @@ async function ApiRequestRequirment(values: IValues, idSenior: string) {
           datumVytvoreni: currentDate,
           pozadovaneMistoPomoci: placesOfHelp(values),
           fotka: isUploadedPhoto(values),
+          kategorieMultichoice: categories(values),
           iDSeniora: {
             id: idSenior,
           },
