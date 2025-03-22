@@ -163,3 +163,5 @@ export const AssistantStatusColors = {
   [AssistantStatus.TERMINATED]: "rgb(110, 34, 37)",
   [AssistantStatus.PENDING]: "#FFC247",
 };
+
+export const HOMEPAGE_VISIT_FLAG_SESSION_KEY = "homepageVisitLogged";

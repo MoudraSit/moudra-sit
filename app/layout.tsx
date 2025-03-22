@@ -6,6 +6,7 @@ import { SessionProviderWrapper } from "components/session-provider-wrapper/sess
 
 import type { Metadata } from "next";
 import AppHeader from "components/layout/app-header";
+import RecordUserSession from "components/record-user-session";
 
 export const metadata: Metadata = {
   title: {
@@ -36,6 +37,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
+        <RecordUserSession />
         <AppRouterCacheProvider>
           <ThemeProvider theme={mobileAppTheme}>
             <SessionProviderWrapper>

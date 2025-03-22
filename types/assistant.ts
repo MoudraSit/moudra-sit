@@ -76,5 +76,6 @@ export interface Assistant {
     skolainstituce?: string;
     administrativniStav?: string;
     hodinCelkem: number;
+    posledniOtevreniAplikace: string;
   };
 }
