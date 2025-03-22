@@ -134,6 +134,7 @@ export const RemoteHelpTypeLabels = {
 export enum PhoneCountryCodes {
   CZ = "+420",
   SK = "+421",
+  UA = "+380",
 }
 
 export const phoneRegexWithCountryCode =
