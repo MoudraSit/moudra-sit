@@ -7,6 +7,7 @@ import { SessionProviderWrapper } from "components/session-provider-wrapper/sess
 import type { Metadata } from "next";
 import AppHeader from "components/layout/app-header";
 import RecordUserSession from "components/record-user-session";
+import AppInstallBanner from "components/app-install-banner";
 
 export const metadata: Metadata = {
   title: {
@@ -40,6 +41,7 @@ export default function RootLayout({
         <RecordUserSession />
         <AppRouterCacheProvider>
           <ThemeProvider theme={mobileAppTheme}>
+            <AppInstallBanner />
             <SessionProviderWrapper>
               <AppHeader />
               {children}
