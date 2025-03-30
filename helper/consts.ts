@@ -166,3 +166,4 @@ export const AssistantStatusColors = {
 };
 
 export const HOMEPAGE_VISIT_FLAG_SESSION_KEY = "homepageVisitLogged";
+export const QUERY_FILTER_KEY = "queryFilters"

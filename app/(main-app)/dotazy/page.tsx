@@ -10,6 +10,7 @@ import { AssistantAPI } from "backend/assistant";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import QueryCardDynamicListSkeleton from "components/skeletons/query-card-dynamic-list-skeleton";
+import FilterRedirectIfEmpty from "components/senior-queries/filter/filter-redirect-if-empty";
 
 const ClientQueryList = dynamic(
   () => import("components/dynamic-list/client-query-list"),
@@ -43,6 +44,7 @@ async function Page({ searchParams }: Props) {
           },
         }}
       />
+      <FilterRedirectIfEmpty />
       <QueryFilterPanel districts={districts} />
       <ClientQueryList
         initialQueries={seniorQueries}
