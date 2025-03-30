@@ -7,6 +7,7 @@ import {
   MeetingLocationType,
   MeetingLocationTypeLabels,
   TOO_SMALL_HEIGHT,
+  QUERY_FILTER_KEY,
 } from "helper/consts";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { QueryStatus } from "helper/consts";
@@ -16,6 +17,7 @@ import { Box, Button, FormControl, FormLabel } from "@mui/material";
 import { District } from "types/assistant";
 import React from "react";
 import IOSSwitch from "components/app-forms/ios-switch";
+import { enforceSearchParams } from "helper/auth";
 
 type Props = {
   districts: Array<District>;
@@ -44,6 +46,9 @@ function QueryFilterPanel({ districts }: Props) {
     }
 
     replace(`${pathname}?${params.toString()}`);
+
+    const filterObject = Object.fromEntries(params.entries());
+    localStorage.setItem(QUERY_FILTER_KEY, JSON.stringify(filterObject));
   }
 
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,11 +58,14 @@ function QueryFilterPanel({ districts }: Props) {
   };
 
   function clearFilters() {
-    const params = new URLSearchParams(searchParams as unknown as string);
-    for (const filterType of Object.values(FilterType)) {
-      params.delete(filterType);
+    const defaultFilters = enforceSearchParams();
+
+    const params = new URLSearchParams("");
+    for (const [filterType, filterValue] of Object.entries(defaultFilters)) {
+      if (filterValue) params.set(filterType, filterValue);
     }
     replace(`${pathname}?${params.toString()}`);
+    localStorage.setItem(QUERY_FILTER_KEY, JSON.stringify(defaultFilters));
 
     // Needs explicit handling
     setOnlyMyQueries(false);

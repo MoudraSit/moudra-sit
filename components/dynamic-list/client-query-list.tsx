@@ -6,7 +6,6 @@ import DynamicList from "components/dynamic-list/query-card-dynamic-list";
 import { getQueryCount, loadMoreQueries } from "./actions";
 import DynamicListSkeleton from "components/skeletons/dynamic-list-skeleton";
 import { Typography } from "@mui/material";
-import { enforceSearchParams } from "helper/auth";
 
 type Props = {
   initialQueries: any[];
@@ -25,12 +24,6 @@ export default function ClientQueryList({
   const [total, setTotal] = useState(initialTotal);
 
   useEffect(() => {
-    // Do not allow empty params
-    if (!searchParams!.toString()) {
-      const newParams = new URLSearchParams(enforceSearchParams());
-      router.replace(`?${newParams.toString()}`);
-    }
-
     const fetchData = async () => {
       setLoading(true);
       const queryObject = Object.fromEntries(searchParams!.entries());

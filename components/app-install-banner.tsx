@@ -6,8 +6,17 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { Snackbar, Button, Slide } from "@mui/material";
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+}
+
 export default function PWAInstallBanner() {
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [open, setOpen] = useState(false);
 
   const STORAGE_KEY = "pwa-install-dismissed-at";
@@ -21,13 +30,12 @@ export default function PWAInstallBanner() {
       dismissedAt &&
       Date.now() - Number(dismissedAt) < DISMISS_DURATION_DAYS * 86400000;
 
-    if (recentlyDismissed || deferredPrompt) {
-      return;
-    }
+    if (recentlyDismissed || deferredPrompt) return;
 
-    const handler = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
+    const handler = (e: Event) => {
+      const bpEvent = e as BeforeInstallPromptEvent;
+      bpEvent.preventDefault();
+      setDeferredPrompt(bpEvent);
       setOpen(true);
     };
 

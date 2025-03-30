@@ -10,6 +10,7 @@ import { authOptions } from "app/lib/auth";
 import { QueryChange } from "types/queryChange";
 import { NotFoundError } from "helper/exceptions";
 import { JSObject } from "types/common";
+import { enforceSearchParams } from "helper/auth";
 
 const QUERY_PAGE_SIZE = 12;
 
@@ -86,13 +87,6 @@ export class SeniorQueriesGetter {
   private static async _createSeniorQueryFilters(uiFilters: UIFilters) {
     const filters = [];
 
-    if (!!uiFilters[FilterType.QUERY_STATUS])
-      filters.push(
-        await this._createSeniorQueryStatusFilter(
-          uiFilters[FilterType.QUERY_STATUS]
-        )
-      );
-
     if (!!uiFilters[FilterType.LOCATION])
       filters.push(
         await this._createSeniorQueryLocationFilter(
@@ -124,6 +118,13 @@ export class SeniorQueriesGetter {
     if (!!uiFilters[FilterType.USER_ASSIGNED])
       filters.push(await this._createSeniorQueryUserAssignedFilter());
 
+    // Enforce queryStatus even if the user did not provide it
+    filters.push(
+      await this._createSeniorQueryStatusFilter(
+        uiFilters[FilterType.QUERY_STATUS] ??
+          enforceSearchParams()[FilterType.QUERY_STATUS]
+      )
+    );
     return filters;
   }
 
