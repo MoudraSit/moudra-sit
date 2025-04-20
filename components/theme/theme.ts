@@ -22,7 +22,7 @@ export let appTheme = createTheme({
   typography: {
     fontFamily: "Roboto",
     allVariants: {
-      color: "#3E3E3E",
+      color: "#000000",
     },
     fontWeightBold: 700,
     fontWeightMedium: 700,

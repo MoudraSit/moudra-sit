@@ -50,13 +50,13 @@ async function Page() {
           flexGrow: "1",
         }}
       >
-        <PrimaryFormHeadline title=" Moje hodnocení" removeBottomMargin />
-        <Box sx={{ marginBottom: "1rem" }}>
+        <PrimaryFormHeadline title=" Moje hodnocení" bottomMargin="1rem" />
+        <Box sx={{ marginBottom: "2rem" }}>
           <AssistantScoreForm assistant={assistant} />
         </Box>
 
         <Typography variant="h6" sx={{ fontSize: "1rem" }}>
-          Dotazy
+          Vyřešené dotazy
         </Typography>
 
         <div style={{ flex: "1 1 auto" }}>

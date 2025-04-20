@@ -76,7 +76,7 @@ function AssistantSettingsForm({
           control={control}
           getValues={getValues}
           isPending={isPending}
-          label="Obec"
+          label="Hlavní obec působení"
         />
         <FormInputAutocomplete<District>
           name="notificationDistricts"

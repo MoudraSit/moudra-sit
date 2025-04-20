@@ -17,7 +17,7 @@ export const FormInputSwitch = ({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        borderBottom: "1px solid #F6F5F0",
+        borderBottom: "1px solid #DADADA",
       }}
     >
       <FormLabel

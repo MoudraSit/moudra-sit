@@ -7,6 +7,7 @@ import FilterSearchMenu from "./filter-search-menu";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import FilterAutocompleteMenu from "./filter-autocomplete-menu";
 import { JSObject } from "types/common";
+import { THEME_COLORS } from "components/theme/colors";
 
 type Props = {
   title: string;
@@ -58,6 +59,7 @@ function FilterChip({
           margin: "6px 2px",
           background: "white",
           fontWeight: value.length ? "bold" : "normal",
+          color: value.length ? THEME_COLORS.primary : "black",
           fontSize: "1rem",
           "& .MuiChip-label": {
             paddingLeft: "0.5rem",

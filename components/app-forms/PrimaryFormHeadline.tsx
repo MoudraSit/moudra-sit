@@ -4,9 +4,14 @@ import { THEME_COLORS } from "components/theme/colors";
 type Props = {
   title: string;
   removeBottomMargin?: boolean;
+  bottomMargin?: string;
 };
 
-export function PrimaryFormHeadline({ title, removeBottomMargin }: Props) {
+export function PrimaryFormHeadline({
+  title,
+  removeBottomMargin,
+  bottomMargin = "2rem",
+}: Props) {
   return (
     <>
       <Typography
@@ -26,7 +31,7 @@ export function PrimaryFormHeadline({ title, removeBottomMargin }: Props) {
           border: "none",
           marginTop: 0,
           width: "100%",
-          marginBottom: removeBottomMargin ? "0.5rem" : "2rem",
+          marginBottom: removeBottomMargin ? "0.5rem" : bottomMargin,
         }}
       />
     </>

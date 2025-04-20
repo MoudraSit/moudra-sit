@@ -13,7 +13,7 @@ import BackButton from "components/buttons/back-button";
 
 import BasePaper from "components/layout/base-paper";
 import {
-  BORDER_COLOR,
+  DEFAULT_BORDER_COLOR,
   ReadOnlyBox,
 } from "components/senior-queries/detail/helper-components";
 import { TimesheetsGetter } from "backend/timesheets";
@@ -83,7 +83,7 @@ async function Page() {
                     <Stack
                       sx={{
                         padding: "0.5rem",
-                        border: `1px ${BORDER_COLOR} solid`,
+                        border: `1px ${DEFAULT_BORDER_COLOR} solid`,
                         margin: "0.25rem",
                       }}
                       key={month}

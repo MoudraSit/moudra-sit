@@ -1,18 +1,16 @@
 import { Box, Typography } from "@mui/material";
 
-export const BORDER_COLOR = "#F5F3EE";
+export const DEFAULT_BORDER_COLOR = "#F5F3EE";
 
-export function ReadOnlyBox({
+export function ReadOnlyBoxLabel({
   label,
   sublabel,
-  children,
 }: {
   label: string;
   sublabel?: string;
-  children: React.ReactElement | string | number | undefined;
 }) {
   return (
-    <Box>
+    <>
       <Typography sx={{ fontWeight: "bold", fontSize: "16px" }}>
         {label}
       </Typography>
@@ -21,10 +19,28 @@ export function ReadOnlyBox({
           {sublabel}
         </Typography>
       ) : null}
+    </>
+  );
+}
+
+export function ReadOnlyBox({
+  label,
+  sublabel,
+  children,
+  borderColor = DEFAULT_BORDER_COLOR,
+}: {
+  label: string;
+  sublabel?: string;
+  borderColor?: string;
+  children: React.ReactElement | string | number | undefined;
+}) {
+  return (
+    <Box>
+      <ReadOnlyBoxLabel label={label} sublabel={sublabel} />
 
       <div
         style={{
-          border: `1px ${BORDER_COLOR} solid`,
+          border: `1px ${borderColor} solid`,
           padding: "0.5rem",
         }}
       >

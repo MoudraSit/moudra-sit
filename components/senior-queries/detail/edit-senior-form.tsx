@@ -18,7 +18,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { editSenior } from "../actions";
 import { prefillSenior } from "../new-query-form/new-query-form";
-import { BORDER_COLOR } from "./helper-components";
+import { DEFAULT_BORDER_COLOR } from "./helper-components";
 import { City } from "types/assistant";
 import { SeniorQuery } from "types/seniorQuery";
 
@@ -72,7 +72,7 @@ export async function EditSeniorForm({
         gap={3}
         sx={{
           width: "100%",
-          border: `1px ${BORDER_COLOR} solid`,
+          border: `1px ${DEFAULT_BORDER_COLOR} solid`,
           padding: "0.5rem",
           margin: 0,
           position: "relative",

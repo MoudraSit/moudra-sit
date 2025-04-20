@@ -84,21 +84,11 @@ async function QueryDetailTab({ seniorQuery }: Props) {
           <Typography>{seniorQuery.fields.podrobnosti}</Typography>
         </Box>
 
-        <Box>
-          <Typography
-            sx={{
-              fontWeight: "bold",
-              fontSize: "16px",
-              marginBottom: "0.5rem",
-            }}
-          >
-            Senior
-          </Typography>
-          <QueryDetailSeniorSection
-            seniorCity={seniorCity}
-            seniorQuery={seniorQuery}
-          />
-        </Box>
+        <QueryDetailSeniorSection
+          seniorCity={seniorCity}
+          seniorQuery={seniorQuery}
+        />
+
         <ReadOnlyBox label="Zařízení">
           {seniorQuery.fields.kategorieMultichoice?.join(", ")}
         </ReadOnlyBox>

@@ -2,7 +2,7 @@ import { Edit } from "@mui/icons-material";
 import { Grid, Typography, IconButton } from "@mui/material";
 import { THEME_COLORS } from "components/theme/colors";
 import { SeniorQuery } from "types/seniorQuery";
-import { BORDER_COLOR, ReadOnlyField } from "./helper-components";
+import { DEFAULT_BORDER_COLOR, ReadOnlyField } from "./helper-components";
 
 function SeniorInfo({
   seniorQuery,
@@ -17,7 +17,7 @@ function SeniorInfo({
       spacing={1}
       sx={{
         width: "100%",
-        border: `1px ${BORDER_COLOR} solid`,
+        border: `1px ${DEFAULT_BORDER_COLOR} solid`,
         padding: "0.5rem",
         margin: 0,
         position: "relative",

@@ -33,15 +33,32 @@ function QueryDetailLayoutTabs() {
         variant="fullWidth"
         textColor="primary"
         onChange={handleRouting}
+        TabIndicatorProps={{
+          sx: {
+            height: 0.025,
+          },
+        }}
       >
         <Tab
           label="Detail dotazu"
-          sx={{ textTransform: "none", fontSize: "20px" }}
+          sx={{
+            textTransform: "none",
+            fontSize: "18px",
+            fontWeight: "normal",
+            color: "#AAAAAA",
+            fontFamily: "var(--font-roboto-condensed), Roboto",
+          }}
           value={QUERY_DETAIL_TAB}
         />
         <Tab
           label="Historie změn"
-          sx={{ textTransform: "none", fontSize: "20px" }}
+          sx={{
+            textTransform: "none",
+            fontWeight: "normal",
+            fontSize: "18px",
+            color: "#AAAAAA",
+            fontFamily: "var(--font-roboto-condensed), Roboto",
+          }}
           value={QUERY_CHANGES_TAB}
         />
       </Tabs>

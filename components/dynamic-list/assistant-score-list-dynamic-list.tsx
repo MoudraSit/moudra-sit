@@ -9,6 +9,7 @@ import { loadMoreQueries } from "./actions";
 import { SeniorQuery } from "types/seniorQuery";
 import AssistantScoreListItem from "components/assistant/assistant-score-list-item";
 import ListItemSkeleton from "components/skeletons/list-item-skeleton";
+import { Typography } from "@mui/material";
 
 type Props = {
   initialItems: Array<SeniorQuery>;
@@ -65,37 +66,49 @@ function AssistantScoreListDynamicList({ initialItems, queryObject }: Props) {
   }, [initialItems]);
 
   return (
-    <InfiniteLoader
-      ref={infiniteLoaderRef}
-      isItemLoaded={isItemLoaded}
-      itemCount={itemCount}
-      loadMoreItems={loadMoreItems}
-    >
-      {({ onItemsRendered, ref }) => (
-        <AutoSizer>
-          {({ height, width }) => (
-            <FixedSizeList
-              className="LFist"
-              itemCount={items.length}
-              onItemsRendered={onItemsRendered}
-              ref={ref}
-              itemSize={MAX_LIST_ITEM_HEIGHT}
-              height={height}
-              width={width}
-            >
-              {({ index, style }) => {
-                const item = items[index];
-                return isItemLoaded(index) ? (
-                  <AssistantScoreListItem style={style} item={item} />
-                ) : (
-                  <ListItemSkeleton />
-                );
-              }}
-            </FixedSizeList>
+    <>
+      {!itemCount ? (
+        <Typography
+          fontSize={20}
+          textAlign="center"
+          sx={{ padding: "2rem" }}
+        >
+          Zatím nemáte žádné vyřešené dotazy.
+        </Typography>
+      ) : (
+        <InfiniteLoader
+          ref={infiniteLoaderRef}
+          isItemLoaded={isItemLoaded}
+          itemCount={itemCount}
+          loadMoreItems={loadMoreItems}
+        >
+          {({ onItemsRendered, ref }) => (
+            <AutoSizer>
+              {({ height, width }) => (
+                <FixedSizeList
+                  className="LFist"
+                  itemCount={items.length}
+                  onItemsRendered={onItemsRendered}
+                  ref={ref}
+                  itemSize={MAX_LIST_ITEM_HEIGHT}
+                  height={height}
+                  width={width}
+                >
+                  {({ index, style }) => {
+                    const item = items[index];
+                    return isItemLoaded(index) ? (
+                      <AssistantScoreListItem style={style} item={item} />
+                    ) : (
+                      <ListItemSkeleton />
+                    );
+                  }}
+                </FixedSizeList>
+              )}
+            </AutoSizer>
           )}
-        </AutoSizer>
+        </InfiniteLoader>
       )}
-    </InfiniteLoader>
+    </>
   );
 }
 
