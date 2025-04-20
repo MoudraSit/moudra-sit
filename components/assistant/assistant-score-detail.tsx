@@ -44,6 +44,7 @@ function AssistantScoreDetail({ seniorQuery }: Props) {
       <ReadOnlyBox
         label="Byl problém vyřešen?"
         sublabel="(jako ve škole, 1 nejlepší, 5 nejhorší)"
+        borderColor="#DADADA"
       >
         {seniorQuery.fields.posledniZmenaLink?.fields.problemVyresenHodnoceni ??
           ""}
@@ -51,10 +52,11 @@ function AssistantScoreDetail({ seniorQuery }: Props) {
       <ReadOnlyBox
         label="Spokojenost seniora s asistentem"
         sublabel="(jako ve škole, 1 nejlepší, 5 nejhorší)"
+        borderColor="#DADADA"
       >
         {seniorQuery.fields.posledniZmenaLink?.fields.spokojenostSenior ?? ""}
       </ReadOnlyBox>
-      <ReadOnlyBox label="Komentář od seniora">
+      <ReadOnlyBox label="Komentář od seniora" borderColor="#DADADA">
         {seniorQuery.fields.posledniZmenaLink?.fields.poznamkaSeniorem ?? ""}
       </ReadOnlyBox>
 

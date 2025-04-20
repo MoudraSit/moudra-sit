@@ -50,8 +50,8 @@ async function PlannedVisitsList() {
           <Typography
             sx={{
               fontSize: "18px",
-              border: `1px solid ${THEME_COLORS.primary}`,
-              padding: "1.5rem 0.25rem",
+              padding: "10px",
+              margin: '0 !important',
             }}
           >
             😢 Nemáš naplánované žádné návštevy.

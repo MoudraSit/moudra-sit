@@ -5,6 +5,7 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { FormInputProps } from "components/app-forms/inputs/FormInputProps";
 import { RemoteHelpTypeLabels, RemoteHelpTypes } from "helper/consts";
 import { Controller } from "react-hook-form";
+import { THEME_COLORS } from "components/theme/colors";
 
 const REMOTE_HELP_OPTIONS = [
   {
@@ -42,11 +43,9 @@ function RemoteHelpTiles({ name, control }: FormInputProps) {
                   cursor: "pointer",
                   borderRadius: "8px",
                   overflow: "hidden",
+                  border: selectedValue === id ? `1px solid ${THEME_COLORS.primary}` : "none",
                   transition: "box-shadow 0.2s ease-in-out",
-                  boxShadow:
-                    selectedValue === id
-                      ? "0px 0px 8px 2px rgba(64, 70, 75, 0.4)" // Softer shadow for selected tile
-                      : "0px 2px 6px rgba(0, 0, 0, 0.12)", // Subtle shadow for non-selected tiles
+                  boxShadow: "0px 1px 4px 0px #00000040",
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

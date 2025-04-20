@@ -16,7 +16,6 @@ function QueryChangesTab({ queryChanges }: Props) {
     <List>
       {queryChanges.length === 0 ? (
         <Typography
-          variant="body1"
           fontSize={20}
           textAlign="center"
           sx={{ padding: "1rem" }}

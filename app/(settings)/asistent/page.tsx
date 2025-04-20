@@ -68,7 +68,7 @@ async function Page() {
     <>
       <BackButton href={AssistantPagePaths.DASHBOARD} />
       <BasePaper elevation={0}>
-        <PrimaryFormHeadline title="Můj profil" removeBottomMargin />
+        <PrimaryFormHeadline title="Můj profil" bottomMargin="1rem" />
         <Stack
           sx={{ padding: "0.5rem", paddingTop: 0, marginTop: "-1rem" }}
           spacing={3}

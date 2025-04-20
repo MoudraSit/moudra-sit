@@ -144,7 +144,6 @@ function QueryFilterPanel({ districts }: Props) {
           onClick={clearFilters}
           sx={{
             fontSize: "1rem",
-            padding: 0,
             color: "black",
             fontWeight: "400",
             textDecoration: "underline",

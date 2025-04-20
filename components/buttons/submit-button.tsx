@@ -16,6 +16,10 @@ function SubmitButton({ label = "Uložit", sx, ...rest }: Props) {
         mb: 3,
         bgcolor: `${THEME_COLORS.primary} !important`,
         color: "white",
+        "&.Mui-disabled": {
+          bgcolor: "#DADADA !important",
+          color: "#9E9E9E",
+        },
         ...sx,
       }}
       {...rest}

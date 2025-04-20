@@ -23,6 +23,27 @@ import OldVisitChip from "./old-visit-chip";
 
 const CARD_SPACING = "1rem";
 
+function CardCaptionValue({
+  caption,
+  value = "",
+}: {
+  caption: string;
+  value?: string;
+}) {
+  return (
+    <Typography
+      fontWeight="bold"
+      sx={{
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      }}
+    >
+      {caption}: <span style={{ fontWeight: "normal" }}>{value}</span>
+    </Typography>
+  );
+}
+
 type Props = {
   style?: JSObject;
   item: SeniorQuery;
@@ -80,7 +101,7 @@ function QueryCard({
                 <QueryStatusChip
                   queryStatus={item.fields.stavDotazu as QueryStatus}
                 />
-                <Typography variant="body1">
+                <Typography fontSize="14px">
                   {formatDate(item.fields.datumVytvoreni)}
                 </Typography>
               </Stack>
@@ -90,92 +111,61 @@ function QueryCard({
                 <OldVisitChip />
               ) : null}
 
-              <Typography
-                variant="h2"
-                fontWeight={"bold"}
-                sx={{ mt: "0.5rem" }}
-              >
+              <Typography fontWeight="bold" sx={{ mt: "0.5rem" }}>
                 {item.fields.popis}
               </Typography>
-              <Typography variant="body1">
-                {item.fields.iDSeniora?.fields.prijmeniJmeno}
-              </Typography>
-              <Typography variant="body1">
-                {item.fields.iDSeniora?.fields.mestoObecCalc}
-              </Typography>
-              <Typography
-                variant="body1"
-                fontWeight="600"
-                sx={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                Zařízení:{" "}
-                <span style={{ fontWeight: "normal" }}>
-                  {item.fields?.kategorieMultichoice
+              <CardCaptionValue
+                caption="Senior"
+                value={item.fields.iDSeniora?.fields.prijmeniJmeno}
+              />
+              <CardCaptionValue
+                caption="Lokalita"
+                value={item.fields.iDSeniora?.fields.mestoObecCalc}
+              />
+              <CardCaptionValue
+                caption="Zařízení"
+                value={
+                  item.fields?.kategorieMultichoice
                     ? item.fields?.kategorieMultichoice?.join(", ")
-                    : item.fields?.kategorie?.fields.nazev?._$$list?.join(", ")}
-                </span>
-              </Typography>
-              <Typography
-                fontWeight="600"
-                variant="body1"
-                sx={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                Místo setkání:{" "}
-                <span style={{ fontWeight: "normal" }}>
-                  {/* pozadovaneMistoPomoci used to be a string historically */}
-                  {labelVisitLocationTypes(
-                    item.fields.posledniZmenaLink
-                      ? item.fields.posledniZmenaLink.fields.osobnevzdalene
-                      : item.fields?.pozadovaneMistoPomoci
-                  )}
-                </span>
-                {item.fields.posledniZmenaLink?.fields.osobnevzdalene !==
-                  MeetingLocationType.REMOTE &&
-                !!item.fields.posledniZmenaLink?.fields.mistoNavstevy ? (
-                  <span style={{ fontWeight: "normal" }}>
-                    {" "}
-                    ({item.fields.posledniZmenaLink?.fields.mistoNavstevy})
-                  </span>
-                ) : null}
-              </Typography>
+                    : item.fields?.kategorie?.fields.nazev?._$$list?.join(", ")
+                }
+              />
+
+              {/* pozadovaneMistoPomoci used to be a string historically */}
+              <CardCaptionValue
+                caption="Místo setkání"
+                value={`${labelVisitLocationTypes(
+                  item.fields.posledniZmenaLink
+                    ? item.fields.posledniZmenaLink.fields.osobnevzdalene
+                    : item.fields?.pozadovaneMistoPomoci
+                )}
+                    ${
+                      item.fields.posledniZmenaLink?.fields.osobnevzdalene !==
+                        MeetingLocationType.REMOTE &&
+                      !!item.fields.posledniZmenaLink?.fields.mistoNavstevy
+                        ? " " +
+                          item.fields.posledniZmenaLink?.fields.mistoNavstevy
+                        : ""
+                    }`}
+              />
+
               {showVisitInfo ? (
                 <>
-                  <Typography fontWeight="600" variant="body1">
-                    Datum a čas setkání:{" "}
-                    <span style={{ fontWeight: "normal" }}>
-                      {formatDateTime(
-                        item.fields.posledniZmenaLink?.fields
-                          .datumPlanovanaNavsteva ?? ""
-                      )}
-                    </span>
-                  </Typography>
+                  <CardCaptionValue
+                    caption="Datum a čas setkání"
+                    value={formatDateTime(
+                      item.fields.posledniZmenaLink?.fields
+                        .datumPlanovanaNavsteva ?? ""
+                    )}
+                  />
+
                   {item.fields.posledniZmenaLink?.fields.poznamkaAsistentem ? (
-                    <Typography
-                      fontWeight="600"
-                      variant="body1"
-                      sx={{
-                        display: "-webkit-box",
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                      }}
-                    >
-                      Poznámka k setkání:{" "}
-                      <span style={{ fontWeight: "normal" }}>
-                        {removeHTMLTags(
-                          item.fields.posledniZmenaLink?.fields
-                            .poznamkaAsistentem
-                        )}
-                      </span>
-                    </Typography>
+                    <CardCaptionValue
+                      caption="Poznámka k setkání"
+                      value={removeHTMLTags(
+                        item.fields.posledniZmenaLink?.fields.poznamkaAsistentem
+                      )}
+                    />
                   ) : null}
                 </>
               ) : null}

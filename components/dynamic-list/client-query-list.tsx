@@ -41,7 +41,7 @@ export default function ClientQueryList({
 
   return (
     <>
-      <Typography variant="caption" sx={{ margin: "3px" }}>
+      <Typography variant="caption" sx={{ margin: "3px", marginTop: "1rem" }}>
         Výsledky: {total}
       </Typography>
 

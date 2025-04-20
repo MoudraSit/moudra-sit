@@ -1,13 +1,14 @@
 "use client";
 
-import { Grid, Typography, Button } from "@mui/material";
-import { BORDER_COLOR } from "./helper-components";
+import { Grid, Typography } from "@mui/material";
+import { DEFAULT_BORDER_COLOR } from "./helper-components";
 import { QueryChange } from "types/queryChange";
 import { useState } from "react";
 import { RemoteHelpTypeLabels, RemoteHelpTypes } from "helper/consts";
 import { sendInstructionEmail as sendInstructionEmailAction } from "components/query-changes/actions";
 import FloatingAlert from "components/alerts/floating-alert";
 import SuccessAlert from "components/alerts/success-alert";
+import SecondaryButton from "components/buttons/secondary-button";
 
 function RemoteHelpSection({
   queryId,
@@ -55,7 +56,7 @@ function RemoteHelpSection({
       spacing={1}
       sx={{
         width: "100%",
-        border: `1px ${BORDER_COLOR} solid`,
+        border: `1px ${DEFAULT_BORDER_COLOR} solid`,
         padding: "0.5rem",
         margin: 0,
         position: "relative",
@@ -96,16 +97,14 @@ function RemoteHelpSection({
           </Typography>
         </Grid>
       ) : null}
-      <Grid item xs={12} sm={6}>
-        <Button
-          color="warning"
+      <Grid item xs={12}>
+        <SecondaryButton
           onClick={sendInstructionEmail}
-          variant="contained"
+          fullWidth
           disabled={isPending}
-          sx={{ backgroundColor: "#028790 !important" }}
-        >
-          Poslat e-mail s instrukcemi
-        </Button>
+          label="Poslat e-mail s instrukcemi"
+          sx={{ m: 0 }}
+        ></SecondaryButton>
       </Grid>
       <SuccessAlert
         errorMessage="E-mail odeslán"

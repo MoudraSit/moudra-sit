@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import AppHeader from "components/layout/app-header";
 import RecordUserSession from "components/record-user-session";
 import AppInstallBanner from "components/app-install-banner";
+import { robotoCondensed } from "components/theme/fonts";
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={robotoCondensed.variable}>
       <head>
         <meta name="theme-color" content="#ffffff" />
         <link rel="manifest" href="/manifest.json" />
