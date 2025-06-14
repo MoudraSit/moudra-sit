@@ -22,7 +22,6 @@ export async function verifyPassword(password: string, hashedPassword: string) {
 }
 
 export function isUserAssistant(user?: User) {
-  console.log(user);
   return user?.role === Role.DA;
 }
 
