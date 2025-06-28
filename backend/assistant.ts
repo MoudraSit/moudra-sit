@@ -1,7 +1,7 @@
 import { callTabidoo } from "./tabidoo";
 import { getServerSession } from "next-auth";
 import { authOptions } from "app/lib/auth";
-import { Assistant, City, District, Organization } from "types/assistant";
+import { Assistant, AssistantFilter, City, District, Organization } from "types/assistant";
 import { NotFoundError } from "helper/exceptions";
 
 export class AssistantAPI {
@@ -60,6 +60,30 @@ export class AssistantAPI {
     });
 
     return result;
+  }
+
+  public static async getAssistantFilters() {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) return [];
+
+    const assistantFilters = await callTabidoo<Array<AssistantFilter>>(
+      `/tables/uzivatelskeFiltry/data/filter`,
+      {
+        body: {
+          filter: [
+            {
+              field: "uzivatelLink.id",
+              operator: "eq",
+              value: session?.user?.id,
+            },
+          ],
+        },
+        method: "POST",
+      }
+    );
+
+    return assistantFilters;
   }
 
   public static async getDistricts() {

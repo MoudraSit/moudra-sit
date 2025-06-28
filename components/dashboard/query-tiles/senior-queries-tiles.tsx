@@ -4,6 +4,7 @@ import CardSkeleton from "components/skeletons/card-skeleton";
 import NewQueriesTile from "./tiles/new-queries-tile";
 import MyQueriesTile from "./tiles/my-queries-tile";
 import NewQueryTile from "./tiles/new-query-tile";
+import SavedFilterTile from "./tiles/saved-filter-tile";
 
 async function SeniorQueriesTiles() {
   return (
@@ -17,6 +18,7 @@ async function SeniorQueriesTiles() {
           </>
         }
       >
+        <SavedFilterTile />
         <NewQueriesTile />
         <MyQueriesTile />
         <NewQueryTile />

@@ -18,7 +18,7 @@ async function MyQueriesTile() {
         <CardContent>
           <Typography
             variant="body2"
-            color={"#028790"}
+            color="black"
             sx={{ fontSize: "18px", fontWeight: "500", textAlign: "center" }}
           >
             Moje dotazy ({requests.length})

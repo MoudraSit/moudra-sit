@@ -1,4 +1,4 @@
-import { AssistantStatus } from "helper/consts";
+import { AssistantStatus, QueryStatus } from "helper/consts";
 
 export interface Organization {
   id: string;
@@ -20,6 +20,24 @@ export interface District {
   fields: {
     okres: string;
     kraj: string;
+  };
+}
+
+export interface AssistantFilter {
+  id: string;
+  created: string;
+  modified: string;
+  ver: number;
+  fields: {
+    nazev: string;
+    vychoziFiltr: boolean;
+    uzivatelLink: Assistant;
+    lokalita?: string;
+    stavDotazu?: Array<QueryStatus>;
+    zarizeni?: Array<string>;
+    pozadovaneMistoPomoci?: Array<string>;
+    senior?: string;
+    jenMojeDotazy: boolean;
   };
 }
 

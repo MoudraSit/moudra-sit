@@ -70,6 +70,7 @@ export enum CommonPagePaths {
 export enum AssistantPagePaths {
   ASSISTANT_PROFILE = "/asistent",
   ASSISTANT_PROFILE_PERSONAL_INFORMATION = "/asistent/osobni-udaje",
+  ASSISTANT_PROFILE_FILTERS = "/asistent/ulozene-filtry",
   ASSISTANT_PROFILE_MY_SCORE = "/asistent/moje-hodnoceni",
   ASSISTANT_PROFILE_ATTENDANCE = "/asistent/dochazka",
   ASSISTANT_PROFILE_SETTINGS = "/asistent/nastaveni",
@@ -94,6 +95,7 @@ export enum FilterType {
   DEVICE_CATEGORY = "kategorieMultichoice",
   MEETING_LOCATION_TYPES = "mistoSetkani",
   SENIOR = "senior",
+  SAVED_FILTER = "ulozeneFiltry",
 }
 
 export enum QueryDeviceCategory {

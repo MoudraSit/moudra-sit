@@ -26,13 +26,13 @@ type Props = {
 };
 
 async function Page({ searchParams }: Props) {
-  const [seniorQueries, seniorQueriesTotalCount, districts] = await Promise.all(
-    [
+  const [seniorQueries, seniorQueriesTotalCount, districts, assistantFilters] =
+    await Promise.all([
       SeniorQueriesGetter.getSeniorQueriesByUIFilters(searchParams || {}, 0),
       SeniorQueriesGetter.getSeniorQueryCountByUIFilters(searchParams || {}),
       AssistantAPI.getDistricts(),
-    ]
-  );
+      AssistantAPI.getAssistantFilters(),
+    ]);
 
   return (
     <>
@@ -45,7 +45,7 @@ async function Page({ searchParams }: Props) {
         }}
       />
       <FilterRedirectIfEmpty />
-      <QueryFilterPanel districts={districts} />
+      <QueryFilterPanel districts={districts} assistantFilters={assistantFilters} />
       <ClientQueryList
         initialQueries={seniorQueries}
         initialTotal={seniorQueriesTotalCount}

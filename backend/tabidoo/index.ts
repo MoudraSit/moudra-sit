@@ -38,6 +38,8 @@ export async function callTabidoo<T = unknown>(
     throw new Error("Tabidoo API call failed");
   }
 
+  if (method === "DELETE") return {} as T;
+
   const responseJson = (await apiResponse.json()) as { data: T };
 
   if (JSON.stringify(responseJson).includes("errors")) {

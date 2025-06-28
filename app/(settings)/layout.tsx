@@ -1,6 +1,5 @@
 import "styles/globals.css";
 
-import type { Metadata } from "next";
 import { Box } from "@mui/material";
 import { innerBoxStyles, outerBoxStyles } from "styles/common-layout";
 
