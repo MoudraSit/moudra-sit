@@ -14,28 +14,41 @@ import { QueryStatus } from "helper/consts";
 import FilterChip from "./filter-chip";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Box, Button, FormControl, FormLabel } from "@mui/material";
-import { District } from "types/assistant";
-import React from "react";
+import { AssistantFilter, District } from "types/assistant";
+import React, { useEffect } from "react";
 import IOSSwitch from "components/app-forms/ios-switch";
 import { enforceSearchParams } from "helper/auth";
+import { useQueryFilters } from "helper/hooks";
+import { applyAssistantFilterToFilters } from "./applyAssistantFilterToFilters";
 
 type Props = {
   districts: Array<District>;
+  assistantFilters: Array<AssistantFilter>;
 };
 
-function QueryFilterPanel({ districts }: Props) {
+function QueryFilterPanel({ districts, assistantFilters }: Props) {
   const searchParams = useSearchParams()!;
   const pathname = usePathname();
   const { replace } = useRouter();
 
   const [onlyMyQueries, setOnlyMyQueries] = React.useState(
-    Boolean(searchParams.get(FilterType.USER_ASSIGNED))
+    searchParams.get(FilterType.USER_ASSIGNED) === "true"
   );
 
   function handleFilter(
     filters: Partial<Record<FilterType, any>>,
     replaceParams: boolean = false
   ) {
+    const selectedAssistantFilter = assistantFilters.find(
+      (filter) => filter.fields.nazev === filters[FilterType.SAVED_FILTER]
+    );
+    if (selectedAssistantFilter) {
+      applyAssistantFilterToFilters(filters, selectedAssistantFilter);
+    } else {
+      // If no assistant filter is selected, ensure the saved filter is cleared
+      filters[FilterType.SAVED_FILTER] = "";
+    }
+
     const params = replaceParams
       ? new URLSearchParams("")
       : new URLSearchParams(searchParams as unknown as string);
@@ -54,7 +67,10 @@ function QueryFilterPanel({ districts }: Props) {
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
     setOnlyMyQueries(newValue); // Instantly update UI state
-    handleFilter({ [FilterType.USER_ASSIGNED]: newValue }, false);
+    handleFilter(
+      { [FilterType.USER_ASSIGNED]: newValue ? "true" : "false" },
+      false
+    );
   };
 
   function clearFilters() {
@@ -71,18 +87,23 @@ function QueryFilterPanel({ districts }: Props) {
     setOnlyMyQueries(false);
   }
 
-  const queryStatuses =
-    (searchParams.get(FilterType.QUERY_STATUS) as string) ?? "";
+  // First load needs to expand saved filter into the URL params
+  useEffect(() => {
+    handleFilter({
+      [FilterType.SAVED_FILTER]:
+        searchParams.get(FilterType.SAVED_FILTER) || "",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const locations = (searchParams.get(FilterType.LOCATION) as string) ?? "";
-
-  const deviceCategories =
-    (searchParams.get(FilterType.DEVICE_CATEGORY) as string) ?? "";
-
-  const senior = (searchParams.get(FilterType.SENIOR) as string) ?? "";
-
-  const meetLocationTypes =
-    (searchParams.get(FilterType.MEETING_LOCATION_TYPES) as string) ?? "";
+  const {
+    assistantFilter,
+    queryStatuses,
+    locations,
+    deviceCategories,
+    senior,
+    meetLocationTypes,
+  } = useQueryFilters(searchParams);
 
   return (
     <Box
@@ -140,6 +161,18 @@ function QueryFilterPanel({ districts }: Props) {
             handleFilter({ [FilterType.SENIOR]: newValue })
           }
         />
+        {assistantFilters.length > 0 ? (
+          <FilterChip
+            title="Uložené filtry"
+            singleSelect
+            options={assistantFilters.map((option) => option.fields.nazev)}
+            value={assistantFilter}
+            setValue={(newValue: string) =>
+              handleFilter({ [FilterType.SAVED_FILTER]: newValue })
+            }
+          />
+        ) : null}
+
         <Button
           onClick={clearFilters}
           sx={{

@@ -34,7 +34,7 @@ function prepareOptions(currentValue: string, options: Array<string>) {
   }));
 }
 
-function FilterSelectMenu({
+export function FilterMultiSelectMenu({
   anchorEl,
   open,
   handleClose,
@@ -166,4 +166,96 @@ function FilterSelectMenu({
   );
 }
 
-export default FilterSelectMenu;
+export function FilterSingleSelectMenu({
+  anchorEl,
+  open,
+  handleClose,
+  handleSave,
+  options,
+  labels,
+  value,
+}: Props) {
+  const [selectedOptions, setSelectedOptions] = React.useState<Array<Option>>(
+    []
+  );
+
+  const toggleCheckboxValue = (index: number) => {
+    setSelectedOptions(
+      selectedOptions.map((v, i) => {
+        if (i === index) v.selected = !v.selected;
+        else v.selected = false; // Unselect all others
+        return v;
+      })
+    );
+  };
+
+  const saveSelectedOptions = () => {
+    handleSave(
+      selectedOptions
+        .slice()
+        .filter((option) => option.selected)
+        .map((option) => option.value)
+        .join(",")
+    );
+  };
+
+  useEffect(() => {
+    if (open) setSelectedOptions(prepareOptions(value, options));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  return (
+    <Menu
+      sx={{ marginTop: "2px" }}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "center",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "center",
+      }}
+      anchorEl={anchorEl}
+      open={open}
+      onClose={() => handleClose()}
+    >
+      <Box sx={{ padding: "0 0.5rem" }}>
+        <MenuList dense sx={{ padding: 0 }}>
+          {selectedOptions.map((option, index) => (
+            <MenuItem
+              key={option.value}
+              sx={{ padding: "0 0.5rem" }}
+              onClick={() => toggleCheckboxValue(index)}
+            >
+              <FormControlLabel
+                sx={{ marginRight: 0 }}
+                label={labels?.[option.value] ?? option.value}
+                onClick={(e) => e.stopPropagation()} // Prevents MenuItem click triggering when clicking the label
+                control={
+                  <Checkbox
+                    sx={{ padding: "0.25rem" }}
+                    checked={option.selected}
+                    color="warning"
+                    onClick={(e) => e.stopPropagation()} // Prevents MenuItem click triggering when clicking the checkbox
+                    onChange={() => toggleCheckboxValue(index)} // Ensure checkbox changes state
+                  />
+                }
+              />
+            </MenuItem>
+          ))}
+        </MenuList>
+        <Button
+          variant="contained"
+          fullWidth
+          color="warning"
+          onClick={() => {
+            saveSelectedOptions();
+            handleClose();
+          }}
+        >
+          Použít
+        </Button>
+      </Box>
+    </Menu>
+  );
+}

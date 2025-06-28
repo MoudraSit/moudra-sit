@@ -7,6 +7,7 @@ import {
   FilterType,
   WITHOUT_SOLVER_STATUSES,
 } from "helper/consts";
+import { THEME_COLORS } from "components/theme/colors";
 
 async function NewQueriesTile() {
   const selectedQueryStatuses = WITHOUT_SOLVER_STATUSES.join(",");
@@ -25,7 +26,7 @@ async function NewQueriesTile() {
         <CardContent>
           <Typography
             variant="body2"
-            color={"#D3215D"}
+            color={THEME_COLORS.secondary}
             sx={{ fontSize: "18px", fontWeight: "500", textAlign: "center" }}
           >
             Dotazy bez řešitele ({queriesCount})

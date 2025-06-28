@@ -8,8 +8,9 @@ export const FormInputSwitch = ({
   name,
   control,
   label,
-  submitOnChange,
-}: FormInputProps & SwitchProps) => {
+  submitOnChange = () => {},
+  hiddenBottomBorder = false,
+}: FormInputProps & SwitchProps & { hiddenBottomBorder?: boolean }) => {
   return (
     <Box
       sx={{
@@ -17,7 +18,7 @@ export const FormInputSwitch = ({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        borderBottom: "1px solid #DADADA",
+        borderBottom: hiddenBottomBorder ? "0" : "1px solid #DADADA",
       }}
     >
       <FormLabel

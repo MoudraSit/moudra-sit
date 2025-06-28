@@ -115,7 +115,7 @@ export class SeniorQueriesGetter {
         )
       );
 
-    if (!!uiFilters[FilterType.USER_ASSIGNED])
+    if (uiFilters[FilterType.USER_ASSIGNED] === "true")
       filters.push(await this._createSeniorQueryUserAssignedFilter());
 
     // Enforce queryStatus even if the user did not provide it

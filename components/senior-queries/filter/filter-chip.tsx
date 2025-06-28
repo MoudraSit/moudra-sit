@@ -2,7 +2,10 @@
 
 import React from "react";
 import { Chip, Stack } from "@mui/material";
-import FilterSelectMenu from "./filter-select-menu";
+import {
+  FilterMultiSelectMenu,
+  FilterSingleSelectMenu,
+} from "./filter-select-menu";
 import FilterSearchMenu from "./filter-search-menu";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import FilterAutocompleteMenu from "./filter-autocomplete-menu";
@@ -10,20 +13,24 @@ import { JSObject } from "types/common";
 import { THEME_COLORS } from "components/theme/colors";
 
 type Props = {
-  title: string;
+  title?: string;
+  readOnly?: boolean;
+  singleSelect?: boolean;
   options?: Array<any>;
   labels?: JSObject;
   useAutocomplete?: boolean;
   value: string;
-  setValue: Function;
+  setValue?: Function;
 };
 
 function FilterChip({
-  title,
+  title = "",
+  readOnly = false,
+  singleSelect = false,
   options,
   labels,
   value,
-  setValue,
+  setValue = () => {},
   useAutocomplete,
 }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -40,7 +47,8 @@ function FilterChip({
 
     const splitValues = value.split(",");
     // For 1 value, just display it
-    if (splitValues.length < 2) {
+    // Readonly should show everything
+    if (splitValues.length < 2 || readOnly) {
       return splitValues.map((value) => labels?.[value] ?? value).join(", ");
     }
 
@@ -71,38 +79,48 @@ function FilterChip({
         label={
           <Stack direction="row" alignItems="center">
             {createChipLabel()}
-            <ArrowDropDownIcon sx={{ fontSize: "1.25rem" }} />
+            {readOnly ? null : (
+              <ArrowDropDownIcon sx={{ fontSize: "1.25rem" }} />
+            )}
           </Stack>
         }
       />
 
-      {options && options.length ? (
-        useAutocomplete ? (
-          <FilterAutocompleteMenu
-            anchorEl={anchorEl}
-            open={open}
-            handleClose={handleClose}
-            handleSave={setValue}
-            options={options}
-            value={value}
-          />
-        ) : (
-          <FilterSelectMenu
-            anchorEl={anchorEl}
-            open={open}
-            handleClose={handleClose}
-            handleSave={setValue}
-            options={options}
-            labels={labels}
-            value={value}
-          />
-        )
-      ) : (
+      {readOnly ? null : options == undefined || options == null ? (
         <FilterSearchMenu
           anchorEl={anchorEl}
           open={open}
           handleClose={handleClose}
           handleSave={setValue}
+          value={value}
+        />
+      ) : useAutocomplete ? (
+        <FilterAutocompleteMenu
+          anchorEl={anchorEl}
+          open={open}
+          handleClose={handleClose}
+          handleSave={setValue}
+          options={options}
+          value={value}
+        />
+      ) : singleSelect ? (
+        <FilterSingleSelectMenu
+          anchorEl={anchorEl}
+          open={open}
+          handleClose={handleClose}
+          handleSave={setValue}
+          options={options}
+          labels={labels}
+          value={value}
+        />
+      ) : (
+        <FilterMultiSelectMenu
+          anchorEl={anchorEl}
+          open={open}
+          handleClose={handleClose}
+          handleSave={setValue}
+          options={options}
+          labels={labels}
           value={value}
         />
       )}

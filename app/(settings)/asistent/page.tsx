@@ -17,6 +17,10 @@ const SETTINGS_OPTIONS = [
     path: AssistantPagePaths.ASSISTANT_PROFILE_PERSONAL_INFORMATION,
   },
   {
+    label: "Uložené filtry",
+    path: AssistantPagePaths.ASSISTANT_PROFILE_FILTERS,
+  },
+  {
     label: "Moje hodnocení",
     path: AssistantPagePaths.ASSISTANT_PROFILE_MY_SCORE,
   },

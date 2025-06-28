@@ -4,10 +4,11 @@ import { AssistantAPI } from "backend/assistant";
 import { callTabidoo } from "backend/tabidoo";
 import { AssistantPagePaths } from "helper/consts";
 import { assistantDetailsSchema } from "helper/schemas/assistant-details-schema";
+import { assistantFilterPartialSchema } from "helper/schemas/assistant-filter-schema";
 import { assistantSettingsSchema } from "helper/schemas/assistant-settings-schema";
 import { removeSpaces } from "helper/utils";
 import { revalidatePath } from "next/cache";
-import { District } from "types/assistant";
+import { AssistantFilter, District } from "types/assistant";
 import { JSObject } from "types/common";
 
 export async function saveAssistantDetails(
@@ -87,6 +88,48 @@ export async function saveAssistantSettings(
     method: "PATCH",
     body: { fields: payload },
   });
+}
+
+export async function saveAssistantFilter(
+  filterId: string,
+  values: Record<string, any>
+) {
+  const filterValues = await assistantFilterPartialSchema.validate(values);
+
+  const payload = {
+    vychoziFiltr: filterValues.isDefaultFilter,
+  };
+
+  if (payload.vychoziFiltr) {
+    const existingFilters = await AssistantAPI.getAssistantFilters();
+    const defaultFilter = existingFilters.find(
+      (filter) => filter.fields.vychoziFiltr
+    );
+    if (defaultFilter) {
+      // Remove the default filter flag from the existing default filter
+      await callTabidoo<AssistantFilter>(
+        `/tables/uzivatelskeFiltry/data/${defaultFilter.id}`,
+        {
+          method: "PATCH",
+          body: { fields: { vychoziFiltr: false } },
+        }
+      );
+    }
+  }
+
+  await callTabidoo(`/tables/uzivatelskeFiltry/data/${filterId}`, {
+    method: "PATCH",
+    body: { fields: payload },
+  });
+
+  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_FILTERS}`, "layout");
+}
+export async function deleteAssistantFilter(filterId: string) {
+  await callTabidoo(`/tables/uzivatelskeFiltry/data/${filterId}`, {
+    method: "DELETE",
+  });
+
+  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_FILTERS}`, "layout");
 }
 
 export async function fetchAutocompleteCities(inputValue: string) {
