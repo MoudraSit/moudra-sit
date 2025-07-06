@@ -75,7 +75,7 @@ export interface Assistant {
     statusAsistenta: AssistantStatus;
     organizace?: Organization;
     hlavniMistoPusobeni?: City;
-    okresyProOdesilaniNotifikaci?: {
+    preferovaneOkresy?: {
       url: string;
       count: number;
     };

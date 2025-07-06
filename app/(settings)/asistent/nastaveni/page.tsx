@@ -20,9 +20,9 @@ async function Page() {
   ]);
 
   let notificationDistricts: Array<District> = [];
-  if (assistant.fields.okresyProOdesilaniNotifikaci?.url)
+  if (assistant.fields.preferovaneOkresy?.url)
     notificationDistricts = await AssistantAPI.getAssistantDistricts(
-      assistant.fields.okresyProOdesilaniNotifikaci?.url
+      assistant.fields.preferovaneOkresy?.url
     );
 
   return (

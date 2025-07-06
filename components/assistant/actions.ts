@@ -74,11 +74,11 @@ export async function saveAssistantSettings(
   if (settingsValues.notificationDistricts) {
     const assistant = await AssistantAPI.getAssistantDetails(assistantId);
     let previousNotificationDistricts: Array<District> = [];
-    if (assistant.fields.okresyProOdesilaniNotifikaci?.url)
+    if (assistant.fields.preferovaneOkresy?.url)
       previousNotificationDistricts = await AssistantAPI.getAssistantDistricts(
-        assistant.fields.okresyProOdesilaniNotifikaci?.url
+        assistant.fields.preferovaneOkresy?.url
       );
-    payload.okresyProOdesilaniNotifikaci = {
+    payload.preferovaneOkresy = {
       remove: previousNotificationDistricts.map((district) => district.id),
       add: settingsValues.notificationDistricts.map((district) => district.id),
     };
@@ -88,6 +88,8 @@ export async function saveAssistantSettings(
     method: "PATCH",
     body: { fields: payload },
   });
+
+  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_SETTINGS}`, "page");
 }
 
 export async function saveAssistantFilter(
@@ -122,14 +124,14 @@ export async function saveAssistantFilter(
     body: { fields: payload },
   });
 
-  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_FILTERS}`, "layout");
+  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_FILTERS}`, "page");
 }
 export async function deleteAssistantFilter(filterId: string) {
   await callTabidoo(`/tables/uzivatelskeFiltry/data/${filterId}`, {
     method: "DELETE",
   });
 
-  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_FILTERS}`, "layout");
+  revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_FILTERS}`, "page");
 }
 
 export async function fetchAutocompleteCities(inputValue: string) {
