@@ -33,9 +33,10 @@ function QueryDetailLayoutTabs() {
         variant="fullWidth"
         textColor="primary"
         onChange={handleRouting}
+        sx={{ borderBottom: 0.01, borderColor: "divider" }}
         TabIndicatorProps={{
           sx: {
-            height: 0.025,
+            height: 0.01,
           },
         }}
       >

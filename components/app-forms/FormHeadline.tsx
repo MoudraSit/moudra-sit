@@ -4,7 +4,7 @@ function FormHeadline({ text }: { text: string }) {
   return (
     <Typography
       sx={{
-        background: "#F4F4F4",
+        background: "#E0DFDF",
         padding: "0.5rem",
         fontSize: "16px",
         fontWeight: "bold",
