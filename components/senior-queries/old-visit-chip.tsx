@@ -7,6 +7,7 @@ function OldVisitChip() {
       label="☝️ Setkání proběhlo, uzavři dotaz!"
       sx={{
         backgroundColor: "#5B5B5B",
+        marginBottom: "4px",
         fontWeight: "bold",
         color: "white",
         height: "20px",

@@ -100,6 +100,7 @@ function QueryCard({
               >
                 <QueryStatusChip
                   queryStatus={item.fields.stavDotazu as QueryStatus}
+                  sx={{ marginBottom: "4px" }}
                 />
                 <Typography fontSize="14px">
                   {formatDate(item.fields.datumVytvoreni)}
@@ -111,7 +112,14 @@ function QueryCard({
                 <OldVisitChip />
               ) : null}
 
-              <Typography fontWeight="bold" sx={{ mt: "0.5rem" }}>
+              <Typography
+                fontWeight="bold"
+                sx={{
+                  mt: "0",
+                  fontSize: "18px",
+                  fontFamily: "var(--font-roboto-condensed), Roboto",
+                }}
+              >
                 {item.fields.popis}
               </Typography>
               <CardCaptionValue

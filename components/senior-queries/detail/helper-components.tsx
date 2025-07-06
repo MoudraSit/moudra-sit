@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-export const DEFAULT_BORDER_COLOR = "#F5F3EE";
+export const DEFAULT_BORDER_COLOR = "#DADADA";
 
 export function ReadOnlyBoxLabel({
   label,

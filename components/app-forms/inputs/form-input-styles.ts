@@ -30,7 +30,7 @@ export const commonStyles = {
   },
   "& .MuiOutlinedInput-notchedOutline": {
     top: 0,
-    borderColor: "#F6F6F6",
+    borderColor: "#DADADA",
     "& legend": {
       zIndex: 0,
       width: 0,
