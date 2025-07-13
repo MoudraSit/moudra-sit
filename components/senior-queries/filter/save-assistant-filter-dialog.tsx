@@ -28,9 +28,14 @@ import FloatingAlert from "components/alerts/floating-alert";
 type Props = {
   open: boolean;
   handleClose: Function;
+  defaultAssistantFilterExists: boolean;
 };
 
-function SaveAssistantFilterDialog({ open, handleClose }: Props) {
+function SaveAssistantFilterDialog({
+  open,
+  handleClose,
+  defaultAssistantFilterExists,
+}: Props) {
   const searchParams = useSearchParams()!;
 
   const {
@@ -51,7 +56,7 @@ function SaveAssistantFilterDialog({ open, handleClose }: Props) {
     resolver: yupResolver(buildAssistantFilterSchema(checkFilterNameUnique)),
     defaultValues: {
       name: "",
-      isDefaultFilter: false,
+      isDefaultFilter: !defaultAssistantFilterExists,
     },
   });
 

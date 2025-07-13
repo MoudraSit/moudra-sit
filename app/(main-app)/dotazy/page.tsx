@@ -34,6 +34,10 @@ async function Page({ searchParams }: Props) {
       AssistantAPI.getAssistantFilters(),
     ]);
 
+  const defaultAssistantFilterExists = assistantFilters.some(
+    (filter) => filter.fields.vychoziFiltr
+  );
+
   return (
     <>
       <BackButton
@@ -45,10 +49,14 @@ async function Page({ searchParams }: Props) {
         }}
       />
       <FilterRedirectIfEmpty />
-      <QueryFilterPanel districts={districts} assistantFilters={assistantFilters} />
+      <QueryFilterPanel
+        districts={districts}
+        assistantFilters={assistantFilters}
+      />
       <ClientQueryList
         initialQueries={seniorQueries}
         initialTotal={seniorQueriesTotalCount}
+        defaultAssistantFilterExists={defaultAssistantFilterExists}
       />
     </>
   );
