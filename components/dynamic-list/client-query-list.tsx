@@ -13,11 +13,13 @@ import { useQueryFilters } from "helper/hooks";
 type Props = {
   initialQueries: any[];
   initialTotal: number;
+  defaultAssistantFilterExists: boolean;
 };
 
 export default function ClientQueryList({
   initialQueries,
   initialTotal,
+  defaultAssistantFilterExists,
 }: Props) {
   const searchParams = useSearchParams()!;
   const router = useRouter();
@@ -61,6 +63,7 @@ export default function ClientQueryList({
         )}
         <SaveAssistantFilterDialog
           open={isDialogOpen}
+          defaultAssistantFilterExists={defaultAssistantFilterExists}
           handleClose={() => {
             setIsDialogOpen(false);
           }}
