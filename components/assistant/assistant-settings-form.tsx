@@ -16,6 +16,7 @@ import SubmitButton from "components/buttons/submit-button";
 import FloatingAlert from "components/alerts/floating-alert";
 import { FormInputCity } from "components/app-forms/inputs/FormInputCity";
 import SuccessAlert from "components/alerts/success-alert";
+import { FormInputSwitch } from "components/app-forms/inputs/FormInputSwitch";
 
 type SettingsValues = yup.InferType<typeof assistantSettingsSchema>;
 
@@ -35,6 +36,8 @@ function AssistantSettingsForm({
     defaultValues: {
       mainArea: assistant.fields?.hlavniMistoPusobeni ?? null,
       notificationDistricts: assistantDistricts,
+      sendNewQueryEmailNotification:
+        assistant.fields?.novyDotazVeVybranychLokalitachEmail ?? false,
     },
   });
 
@@ -97,6 +100,14 @@ function AssistantSettingsForm({
               </MenuItem>
             );
           }}
+        />
+
+        <FormInputSwitch
+          control={control}
+          name="sendNewQueryEmailNotification"
+          label="Posílat oznámení o nových dotazech ve vybraných okresech na e-mail"
+          disabled={isPending}
+          hiddenBottomBorder
         />
 
         <SubmitButton disabled={isPending} />

@@ -6,4 +6,5 @@ export const assistantSettingsSchema = yup.object({}).shape({
   sendScoreEmailNotification: yup.boolean(),
   mainArea: new yup.ObjectSchema<City>().nullable(),
   notificationDistricts: yup.array(new yup.ObjectSchema<District>()),
+  sendNewQueryEmailNotification: yup.boolean(),
 });

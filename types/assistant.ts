@@ -79,6 +79,7 @@ export interface Assistant {
       url: string;
       count: number;
     };
+    novyDotazVeVybranychLokalitachEmail: boolean;
     noveHodnoceniOdSenioraEmail: boolean;
     trvaleBydliste: City;
     // Should not be used, not sure why it exists in Tabidoo

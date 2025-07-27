@@ -59,7 +59,10 @@ export async function saveAssistantSettings(
 ) {
   const settingsValues = await assistantSettingsSchema.validate(details);
 
-  const payload: JSObject = {};
+  const payload: JSObject = {
+    novyDotazVeVybranychLokalitachEmail:
+      settingsValues.sendNewQueryEmailNotification,
+  };
 
   // Because this is a boolean flag
   if ("sendScoreEmailNotification" in settingsValues)
