@@ -6,12 +6,12 @@ import * as yup from "yup";
 export const newSeniorSchema = yup.object({
   name: yup
     .string()
-    .matches(/^[A-Ža-ž]*$/, "Prosím vložte jméno ve správném tvaru")
+    .matches(/^[A-Ža-ž\s]*$/, "Prosím vložte jméno ve správném tvaru")
     .max(40)
     .required("Napište jméno seniora"),
   surname: yup
     .string()
-    .matches(/^[A-Ža-ž]*$/, "Prosím příjmení ve správném tvaru")
+    .matches(/^[A-Ža-ž\s]*$/, "Prosím příjmení ve správném tvaru")
     .max(40)
     .required("Napište příjmení seniora"),
   email: yup
