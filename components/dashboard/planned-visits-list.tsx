@@ -18,7 +18,7 @@ async function PlannedVisitsList() {
 
   const myCurrentQueries =
     await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-      [FilterType.USER_ASSIGNED]: true,
+      [FilterType.USER_ASSIGNED]: "true",
       [FilterType.QUERY_STATUS]: [
         QueryStatus.IN_PROGRESS,
         QueryStatus.FOR_HANDOVER,

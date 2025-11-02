@@ -6,7 +6,7 @@ import { AssistantPagePaths, FilterType } from "helper/consts";
 
 async function MyQueriesTile() {
   const requests = await SeniorQueriesGetter.getSeniorQueriesByUIFilters({
-    [FilterType.USER_ASSIGNED]: true,
+    [FilterType.USER_ASSIGNED]: "true",
   });
 
   return (
