@@ -69,6 +69,7 @@ export enum CommonPagePaths {
 // Query and dynamic path parameters (e.g., .../id/...) should not be here
 export enum AssistantPagePaths {
   ASSISTANT_PROFILE = "/asistent",
+  ASSISTANT_PROFILE_PENDING = "/asistent/overeni",
   ASSISTANT_PROFILE_PERSONAL_INFORMATION = "/asistent/osobni-udaje",
   ASSISTANT_PROFILE_FILTERS = "/asistent/ulozene-filtry",
   ASSISTANT_PROFILE_MY_SCORE = "/asistent/moje-hodnoceni",

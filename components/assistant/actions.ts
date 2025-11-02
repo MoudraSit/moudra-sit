@@ -8,7 +8,11 @@ import { assistantFilterPartialSchema } from "helper/schemas/assistant-filter-sc
 import { assistantSettingsSchema } from "helper/schemas/assistant-settings-schema";
 import { removeSpaces } from "helper/utils";
 import { revalidatePath } from "next/cache";
-import { AssistantFilter, District } from "types/assistant";
+import {
+  AssistantAdministrationStates,
+  AssistantFilter,
+  District,
+} from "types/assistant";
 import { JSObject } from "types/common";
 
 export async function saveAssistantDetails(
@@ -129,6 +133,25 @@ export async function saveAssistantFilter(
 
   revalidatePath(`${AssistantPagePaths.ASSISTANT_PROFILE_FILTERS}`, "page");
 }
+
+export async function saveAssistantTrainingMaterialConfirmation(
+  assistantId: string
+) {
+  const assistant = await AssistantAPI.getAssistantDetails(assistantId);
+
+  const payload = {
+    administrativa: [
+      ...(assistant.fields.administrativa ?? []),
+      AssistantAdministrationStates.TRAINING_DONE,
+    ],
+  };
+
+  await callTabidoo(`/tables/uzivatel/data/${assistantId}`, {
+    method: "PATCH",
+    body: { fields: payload },
+  });
+}
+
 export async function deleteAssistantFilter(filterId: string) {
   await callTabidoo(`/tables/uzivatelskeFiltry/data/${filterId}`, {
     method: "DELETE",

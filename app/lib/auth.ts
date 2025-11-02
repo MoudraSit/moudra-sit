@@ -13,15 +13,40 @@ import { verifyPassword } from "helper/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const AUTH_ERROR_MESSAGE = "Špatně zadaný e-mail nebo heslo";
-export const MORE_USERS_ERROR_MESSAGE = "Nalezeno více uživatelů se stejným e-mailem";
+export const MORE_USERS_ERROR_MESSAGE =
+  "Nalezeno více uživatelů se stejným e-mailem";
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    async jwt({ token, user }) {
-      // Do not assign if the user attributes are null
-      if (user?.id) token.id = user.id;
-      if (user?.role) token.role = user.role;
-      if (user?.status) token.status = user.status;
+    async jwt({ token, user, trigger }) {
+      // Initial login only
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+        token.status = user.status;
+        return token;
+      }
+
+      // If explicitly triggered refresh
+      if (trigger === "update") {
+        const refreshed = await callTabidoo<Assistant[]>(
+          "/tables/uzivatel/data/filter",
+          {
+            method: "POST",
+            body: {
+              filter: [{ field: "id", operator: "eq", value: token.id }],
+            },
+            urlParams: { limit: "1" },
+          }
+        );
+
+        const dbUser = refreshed[0];
+        token.role = Role.DA;
+        token.status =
+          dbUser.fields.administrativniStav === "🟢DONE"
+            ? AssistantAuthStatus.ACTIVE
+            : AssistantAuthStatus.PENDING;
+      }
 
       return token;
     },
