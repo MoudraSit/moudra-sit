@@ -1,14 +1,13 @@
-import { Alert, List, ListItemText, Stack } from "@mui/material";
+import { List, ListItemText, Stack } from "@mui/material";
 import type { Metadata } from "next";
 import NextLink from "next/link";
 
 import BackButton from "components/buttons/back-button";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import { AssistantAuthStatus, AssistantPagePaths } from "helper/consts";
+import { AssistantPagePaths } from "helper/consts";
 import SignOutButton from "components/assistant/sign-out-button";
 import BasePaper from "components/layout/base-paper";
-import { auth } from "app/lib/auth";
 import { PrimaryFormHeadline } from "components/app-forms/PrimaryFormHeadline";
 
 const SETTINGS_OPTIONS = [
@@ -35,39 +34,7 @@ export const metadata: Metadata = {
   title: "Profil Digitálního Asistenta",
 };
 
-function PendingOverlay() {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        width: "100%",
-        height: "100%",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0,0,0,0.22)",
-        zIndex: 2,
-        cursor: "pointer",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "start",
-      }}
-    >
-      <Alert
-        severity="warning"
-        variant="filled"
-        sx={{ margin: "1rem", marginTop: "125px" }}
-      >
-        Čeká se na schválení vašeho účtu koordinátorem Moudré sítě.
-      </Alert>
-    </div>
-  );
-}
-
 async function Page() {
-  const session = await auth();
-
   return (
     <>
       <BackButton href={AssistantPagePaths.DASHBOARD} />
@@ -95,9 +62,6 @@ async function Page() {
           </List>
         </Stack>
       </BasePaper>
-      {session?.user?.status != AssistantAuthStatus.ACTIVE ? (
-        <PendingOverlay />
-      ) : null}
     </>
   );
 }
