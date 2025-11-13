@@ -15,7 +15,6 @@ import { FormInputCheckbox } from "components/app-forms/inputs/FormInputCheckbox
 import { assistantTrainingMaterialsConfirmationSchema } from "helper/schemas/assistant-training-materials-confirmation-schema";
 import { Assistant } from "types/assistant";
 import { useSession } from "next-auth/react";
-import { Assistant } from "next/font/google";
 import { AssistantPagePaths } from "helper/consts";
 import { useRouter } from "next/navigation";
 
