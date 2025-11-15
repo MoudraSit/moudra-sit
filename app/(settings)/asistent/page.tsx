@@ -28,6 +28,10 @@ const SETTINGS_OPTIONS = [
     label: "Nastavení aplikace",
     path: AssistantPagePaths.ASSISTANT_PROFILE_SETTINGS,
   },
+  {
+    label: "Návody",
+    path: AssistantPagePaths.ASSISTANT_PROFILE_TRAINING_GUIDES,
+  },
 ];
 
 export const metadata: Metadata = {

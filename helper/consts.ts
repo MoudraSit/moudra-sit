@@ -75,6 +75,7 @@ export enum AssistantPagePaths {
   ASSISTANT_PROFILE_MY_SCORE = "/asistent/moje-hodnoceni",
   ASSISTANT_PROFILE_ATTENDANCE = "/asistent/dochazka",
   ASSISTANT_PROFILE_SETTINGS = "/asistent/nastaveni",
+  ASSISTANT_PROFILE_TRAINING_GUIDES = "/asistent/navody",
   DASHBOARD = "/prehled",
   SENIOR_QUERIES = "/dotazy",
   NEW_SENIOR_QUERY = "/dotazy/novy",
