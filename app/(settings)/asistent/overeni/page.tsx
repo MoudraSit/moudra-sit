@@ -1,5 +1,6 @@
 import {
   Alert,
+  Box,
   Card,
   CardContent,
   Checkbox,
@@ -99,13 +100,23 @@ function showScreenBasedOnAdminFlags(adminFlags: AdminFlags) {
 
     assistantTodos.push(
       <ListItem dense>
-        <Checkbox color="warning" checked={adminFlags.contractInfoProvided} />
+        <Checkbox
+          color="warning"
+          checked={adminFlags.contractInfoProvided}
+          disabled
+          style={{ color: "rgba(0, 0, 0, 0.6)" }}
+        />
         <ListItemText primary="Dodat info ke smlouvě" />
       </ListItem>
     );
     assistantTodos.push(
       <ListItem dense>
-        <Checkbox color="warning" checked={adminFlags.kodoDone} />
+        <Checkbox
+          color="warning"
+          checked={adminFlags.kodoDone}
+          disabled
+          style={{ color: "rgba(0, 0, 0, 0.6)" }}
+        />
         <ListItemText
           primary={
             <>
@@ -125,7 +136,12 @@ function showScreenBasedOnAdminFlags(adminFlags: AdminFlags) {
     );
     assistantTodos.push(
       <ListItem dense>
-        <Checkbox color="warning" checked={adminFlags.criminalRegisterDone} />
+        <Checkbox
+          color="warning"
+          checked={adminFlags.criminalRegisterDone}
+          disabled
+          style={{ color: "rgba(0, 0, 0, 0.6)" }}
+        />
         <ListItemText primary="Dodat výpis z trestního rejstříku" />
       </ListItem>
     );
@@ -140,15 +156,91 @@ function showScreenBasedOnAdminFlags(adminFlags: AdminFlags) {
     );
   }
 
+  if (adminFlags.contractInfoProvided && !adminFlags.contractSent) {
+    return (
+      <Alert severity="warning">
+        Koordinátor připravuje smlouvu. Přijde ti do tvého e-mailu.
+      </Alert>
+    );
+  }
+
   if (adminFlags.contractSent && !adminFlags.contractDone) {
     return (
-      <Alert severity="warning">Smlouva byla odeslána do tvého e-mailu.</Alert>
+      <>
+        <Alert severity="warning">
+          Smlouva byla odeslána do tvého e-mailu. ČEKÁ SE NA PODPIS Z TVÉ
+          STRANY.
+        </Alert>
+      </>
+    );
+  }
+
+  if (
+    adminFlags.contractDone &&
+    adminFlags.trainingDone &&
+    !adminFlags.tabidooAccess
+  ) {
+    return (
+      <Alert severity="warning">
+        Koordinátor připravuje přístupy do Tabidoo a návod na přístup do
+        Discordu.
+      </Alert>
+    );
+  }
+
+  if (
+    !adminFlags.discordAccess &&
+    adminFlags.contractDone &&
+    adminFlags.trainingDone &&
+    adminFlags.tabidooAccess
+  ) {
+    return (
+      <>
+        <Alert severity="warning">
+          Koordinátor ti poslal přístup do Tabidoo a návod na přístup do
+          Discordu.
+          <br />
+          <br />
+          Jakmile se přidáš na Discord, dostaneš přístup do mobilní aplikace.
+        </Alert>
+        <Box sx={{ mt: 2 }}>
+          <Stack spacing={1} component="ol" sx={{ pl: 0, pr: 0 }}>
+            <ListItem dense>
+              1. Klikni zde na odkaz 👉{" "}
+              <a
+                href="https://discord.gg/XEsY7JPSaP"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: THEME_COLORS.secondary }}
+              >
+                https://discord.gg/XEsY7JPSaP
+              </a>
+            </ListItem>
+            <ListItem dense>2. Pokud nemáš DC účet, tak si ho vytvoř</ListItem>
+            <ListItem dense>3. Přihlas se na server Moudrá Síť</ListItem>
+            <ListItem dense>4. Projdi si úvodní kroky:</ListItem>
+            <Stack component="ol" sx={{ pl: 1, mt: 1 }} spacing={0.5}>
+              <ListItem dense>
+                a. Změň si přezdívku na svoje jméno a příjmení
+              </ListItem>
+              <ListItem dense>
+                b. Do Lobby napiš město, kde budeš působit (včetně části, např.
+                Praha 10)
+              </ListItem>
+              <ListItem dense>c. Mrkni do kanálu Technická podpora</ListItem>
+              <ListItem dense>d. Mrkni do kanálu Klábosení</ListItem>
+              <ListItem dense>e. Projdi si pravidla</ListItem>
+            </Stack>
+          </Stack>
+        </Box>
+      </>
     );
   }
 }
 
 function showTrainingLinks(adminFlags: AdminFlags, assistant: Assistant) {
-  if (adminFlags.trainingDone) return;
+  // Don't show training if they finished it or haven't signed the contract yet
+  if (adminFlags.trainingDone || !adminFlags.contractDone) return;
 
   return (
     <Stack>
@@ -173,7 +265,7 @@ async function Page() {
 
   return (
     <>
-      <Card style={{ minHeight: "200px" }}>
+      <Card>
         <CardContent>
           {showScreenBasedOnAdminFlags(adminFlags)}
           {showTrainingLinks(adminFlags, assistant)}
