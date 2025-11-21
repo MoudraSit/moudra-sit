@@ -22,6 +22,7 @@ import { AssistantAPI } from "backend/assistant";
 import { THEME_COLORS } from "components/theme/colors";
 import AssistantTrainingMaterialsConfirmationForm from "components/assistant/assistant-training-materials-confirmation-form";
 import AssistantTrainingLinks from "components/assistant/assistant-training-links";
+import AssistantCriminalRegisterUploadForm from "components/assistant/assistant-criminal-register-upload-form";
 
 export const metadata: Metadata = {
   title: "Profil Digitálního Asistenta",
@@ -73,7 +74,10 @@ function mapAdminStatesToFlags(assistant: Assistant): AdminFlags {
   return adminFlags;
 }
 
-function showScreenBasedOnAdminFlags(adminFlags: AdminFlags) {
+function showScreenBasedOnAdminFlags(
+  adminFlags: AdminFlags,
+  assistant: Assistant
+) {
   if (!adminFlags.firstCallCompleted) {
     return (
       <Alert severity="warning">
@@ -152,6 +156,14 @@ function showScreenBasedOnAdminFlags(adminFlags: AdminFlags) {
           Čeká se na splnění nezaškrtnutých úkolů.
         </Alert>
         {assistantTodos.map((todo) => todo)}
+        {adminFlags.criminalRegisterDone ? null : (
+          <Box sx={{ mt: 2 }}>
+            <Alert severity="warning" sx={{ mb: 0 }}>
+              Pro nahrání výpisu z trestního rejstříku použij formulář níže.
+            </Alert>
+            <AssistantCriminalRegisterUploadForm assistant={assistant} />
+          </Box>
+        )}
       </>
     );
   }
@@ -267,7 +279,7 @@ async function Page() {
     <>
       <Card>
         <CardContent>
-          {showScreenBasedOnAdminFlags(adminFlags)}
+          {showScreenBasedOnAdminFlags(adminFlags, assistant)}
           {showTrainingLinks(adminFlags, assistant)}
         </CardContent>
       </Card>

@@ -152,6 +152,26 @@ export async function saveAssistantTrainingMaterialConfirmation(
   });
 }
 
+export async function saveAssistanCriminalRegisterFile(
+  assistantId: string,
+  values: Record<string, any>
+) {
+  const payload = {
+    vypisZRejstrikuTrestu: [
+      {
+        filename: values.filename,
+        mimetype: values.mimetype,
+        filedata: values.fileBase64,
+      },
+    ],
+  };
+
+  await callTabidoo(`/tables/uzivatel/data/${assistantId}`, {
+    method: "PATCH",
+    body: { fields: payload },
+  });
+}
+
 export async function deleteAssistantFilter(filterId: string) {
   await callTabidoo(`/tables/uzivatelskeFiltry/data/${filterId}`, {
     method: "DELETE",
