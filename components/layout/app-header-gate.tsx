@@ -4,10 +4,16 @@ import * as React from "react";
 import AppHeader from "components/layout/app-header";
 
 function AppHeaderGate() {
-  const [isEmbedded, setIsEmbedded] = React.useState(false);
+  const [isEmbedded, setIsEmbedded] = React.useState(true);
 
   React.useEffect(() => {
-    setIsEmbedded(window.self !== window.top);
+    let embedded = false;
+    try {
+      embedded = window.self !== window.top;
+    } catch {
+      embedded = true;
+    }
+    setIsEmbedded(embedded);
   }, []);
 
   if (isEmbedded) {
