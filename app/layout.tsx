@@ -5,7 +5,7 @@ import { mobileAppTheme } from "components/theme/theme";
 import { SessionProviderWrapper } from "components/session-provider-wrapper/session-provider-wrapper";
 
 import type { Metadata } from "next";
-import AppHeader from "components/layout/app-header";
+import AppHeaderGate from "components/layout/app-header-gate";
 import RecordUserSession from "components/record-user-session";
 import AppInstallBanner from "components/app-install-banner";
 import { robotoCondensed } from "components/theme/fonts";
@@ -44,7 +44,7 @@ export default function RootLayout({
           <ThemeProvider theme={mobileAppTheme}>
             <AppInstallBanner />
             <SessionProviderWrapper>
-              <AppHeader />
+              <AppHeaderGate />
               {children}
             </SessionProviderWrapper>
           </ThemeProvider>
