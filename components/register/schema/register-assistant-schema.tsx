@@ -30,7 +30,7 @@ export const registerAssistantSchema = yup.object({}).shape({
     is: (val: string) => val || !val,
     then: (schema) => schema.required("Zadejte město"),
   }),
-  street: yup.string(),
+
   plusCode: yup
     .string()
     .required("Napište správný tvar předvolby (např. +420)"),

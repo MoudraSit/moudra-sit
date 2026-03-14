@@ -57,7 +57,7 @@ function RegisterAssistantForm() {
       phoneNumber: "",
       plusCode: PhoneCountryCodes.CZ,
       birthDate: undefined,
-      street: "",
+
       isDofE: false,
     },
   });
@@ -147,14 +147,6 @@ function RegisterAssistantForm() {
                   getValues={getValues}
                   isPending={isPending}
                   label="Obec/město"
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <FormInputText
-                  name="street"
-                  control={control}
-                  label="Ulice a číslo popisné"
                 />
               </Grid>
 
