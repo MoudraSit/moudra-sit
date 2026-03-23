@@ -93,6 +93,10 @@ export interface Assistant {
     kraj?: string;
     pozvan?: boolean;
     skolainstituce?: string;
+    jmenoZakonnyZastupce?: string;
+    prijmeniZakonnyZastupce?: string;
+    telefonZakonnyZastupce?: string;
+    emailZakonnyZastupce?: string;
     administrativniStav?: string;
     administrativa?: Array<string>;
     hodinCelkem: number;

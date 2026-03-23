@@ -23,6 +23,8 @@ import { THEME_COLORS } from "components/theme/colors";
 import AssistantTrainingMaterialsConfirmationForm from "components/assistant/assistant-training-materials-confirmation-form";
 import AssistantTrainingLinks from "components/assistant/assistant-training-links";
 import AssistantCriminalRegisterUploadForm from "components/assistant/assistant-criminal-register-upload-form";
+import AssistantFirstCallInfoForm from "components/assistant/assistant-first-call-info-form";
+import AssistantDiscordConfirmationForm from "components/assistant/assistant-discord-confirmation-form";
 
 export const metadata: Metadata = {
   title: "Profil Digitálního Asistenta",
@@ -72,6 +74,21 @@ function mapAdminStatesToFlags(assistant: Assistant): AdminFlags {
   );
 
   return adminFlags;
+}
+
+function isAssistantUnder18(assistant: Assistant): boolean {
+  if (!assistant.fields.denNarozeni) return false;
+  const birthDate = new Date(assistant.fields.denNarozeni);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+  return age < 18;
 }
 
 function showScreenBasedOnAdminFlags(
@@ -164,6 +181,14 @@ function showScreenBasedOnAdminFlags(
             <AssistantCriminalRegisterUploadForm assistant={assistant} />
           </Box>
         )}
+        {!adminFlags.contractInfoProvided && (
+          <Box sx={{ mt: 2 }}>
+            <AssistantFirstCallInfoForm
+              assistant={assistant}
+              isUnder18={isAssistantUnder18(assistant)}
+            />
+          </Box>
+        )}
       </>
     );
   }
@@ -184,6 +209,18 @@ function showScreenBasedOnAdminFlags(
           STRANY.
         </Alert>
       </>
+    );
+  }
+
+  if (adminFlags.contractDone && !adminFlags.trainingDone) {
+    return (
+      <Stack>
+        <Alert severity="warning" style={{ marginBottom: "1rem" }}>
+          Pro dokončení registrace je potřeba projít školením.
+        </Alert>
+        <AssistantTrainingLinks />
+        <AssistantTrainingMaterialsConfirmationForm assistant={assistant} />
+      </Stack>
     );
   }
 
@@ -208,12 +245,12 @@ function showScreenBasedOnAdminFlags(
   ) {
     return (
       <>
-        <Alert severity="warning">
+        <Alert severity="info">
           Koordinátor ti poslal přístup do Tabidoo a návod na přístup do
           Discordu.
           <br />
           <br />
-          Jakmile se přidáš na Discord, dostaneš přístup do mobilní aplikace.
+          Přidej se na Discord (volitelné) nebo pokračuj do aplikace.
         </Alert>
         <Box sx={{ mt: 2 }}>
           <Stack spacing={1} component="ol" sx={{ pl: 0, pr: 0 }}>
@@ -245,24 +282,10 @@ function showScreenBasedOnAdminFlags(
             </Stack>
           </Stack>
         </Box>
+        <AssistantDiscordConfirmationForm assistant={assistant} />
       </>
     );
   }
-}
-
-function showTrainingLinks(adminFlags: AdminFlags, assistant: Assistant) {
-  // Don't show training if they finished it or haven't signed the contract yet
-  if (adminFlags.trainingDone || !adminFlags.contractDone) return;
-
-  return (
-    <Stack>
-      <Alert severity="warning" style={{ marginBottom: "1rem" }}>
-        Pro dokončení registrace je potřeba projít školením.
-      </Alert>
-      <AssistantTrainingLinks />
-      <AssistantTrainingMaterialsConfirmationForm assistant={assistant} />
-    </Stack>
-  );
 }
 
 async function Page() {
@@ -280,7 +303,6 @@ async function Page() {
       <Card>
         <CardContent>
           {showScreenBasedOnAdminFlags(adminFlags, assistant)}
-          {showTrainingLinks(adminFlags, assistant)}
         </CardContent>
       </Card>
     </>

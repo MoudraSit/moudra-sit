@@ -152,6 +152,24 @@ export async function saveAssistantTrainingMaterialConfirmation(
   });
 }
 
+export async function saveAssistantDiscordConfirmation(
+  assistantId: string
+) {
+  const assistant = await AssistantAPI.getAssistantDetails(assistantId);
+
+  const payload = {
+    administrativa: [
+      ...(assistant.fields.administrativa ?? []),
+      AssistantAdministrationStates.DISCORD_ACCESS,
+    ],
+  };
+
+  await callTabidoo(`/tables/uzivatel/data/${assistantId}`, {
+    method: "PATCH",
+    body: { fields: payload },
+  });
+}
+
 export async function saveAssistanCriminalRegisterFile(
   assistantId: string,
   values: Record<string, any>
@@ -170,6 +188,35 @@ export async function saveAssistanCriminalRegisterFile(
     method: "PATCH",
     body: { fields: payload },
   });
+}
+
+export async function saveAssistantFirstCallInfo(
+  assistantId: string,
+  values: Record<string, any>
+) {
+  const assistant = await AssistantAPI.getAssistantDetails(assistantId);
+
+  const payload: JSObject = {
+    ulice: values.uliceACisloPopisne,
+    administrativa: [
+      ...(assistant.fields.administrativa ?? []),
+      AssistantAdministrationStates.CONTRACT_INFO_PROVIDED,
+    ],
+  };
+
+  if (values.isUnder18) {
+    payload.jmenoZakonnyZastupce = values.jmenoZakonnyZastupce;
+    payload.prijmeniZakonnyZastupce = values.prijmeniZakonnyZastupce;
+    payload.telefonZakonnyZastupce = values.telefonZakonnyZastupce;
+    payload.emailZakonnyZastupce = values.emailZakonnyZastupce;
+  }
+
+  await callTabidoo(`/tables/uzivatel/data/${assistantId}`, {
+    method: "PATCH",
+    body: { fields: payload },
+  });
+
+  revalidatePath(AssistantPagePaths.ASSISTANT_PROFILE_PENDING);
 }
 
 export async function deleteAssistantFilter(filterId: string) {
