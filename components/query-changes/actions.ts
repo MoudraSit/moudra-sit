@@ -74,6 +74,7 @@ export async function createQueryChange(
   const requests = [];
 
   if (
+    changeValues.queryStatus === QueryStatus.IN_PROGRESS &&
     changeValues.meetLocationType === MeetingLocationType.REMOTE &&
     changeValues.remoteHelpType !== RemoteHelpTypes.PHONE &&
     changeValues.seniorEmail
