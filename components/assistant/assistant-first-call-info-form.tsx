@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Grid, Stack, Typography } from "@mui/material";
+import { Alert, Box, Grid, Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import * as React from "react";
@@ -16,6 +16,12 @@ import { assistantFirstCallInfoSchema } from "helper/schemas/assistant-first-cal
 import { Assistant } from "types/assistant";
 import { useRouter } from "next/navigation";
 import { AssistantPagePaths } from "helper/consts";
+
+function formatDate(dateString: string): string {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  return date.toLocaleDateString("cs-CZ");
+}
 
 type Props = {
   assistant: Assistant;
@@ -61,8 +67,39 @@ function AssistantFirstCallInfoForm({ assistant, isUnder18 }: Props) {
     <form onSubmit={handleSubmit(submit)}>
       <Stack spacing={3}>
         <Alert severity="info">
-          Pro pokračování v registraci je potřeba doplnit následující údaje.
+          Pro pokračování v registraci je potřeba zkontrolovat a doplnit
+          následující údaje ke smlouvě.
         </Alert>
+
+        <Box>
+          <Typography variant="subtitle2" color="text.secondary">
+            Celé jméno a příjmení
+          </Typography>
+          <Typography>
+            {assistant.fields.jmeno} {assistant.fields.prijmeni}
+          </Typography>
+        </Box>
+
+        <Box>
+          <Typography variant="subtitle2" color="text.secondary">
+            Datum narození
+          </Typography>
+          <Typography>
+            {formatDate(assistant.fields.denNarozeni)}
+          </Typography>
+        </Box>
+
+        <Box>
+          <Typography variant="subtitle2" color="text.secondary">
+            Trvale bytem
+          </Typography>
+          <Typography>
+            {assistant.fields.trvaleBydliste?.fields?.mestoObec ?? ""}
+            {assistant.fields.PSC
+              ? `, ${assistant.fields.PSC}`
+              : ""}
+          </Typography>
+        </Box>
 
         <FormInputText
           name="uliceACisloPopisne"
@@ -70,10 +107,18 @@ function AssistantFirstCallInfoForm({ assistant, isUnder18 }: Props) {
           label="Ulice a číslo popisné"
         />
 
+        <Box>
+          <Typography variant="subtitle2" color="text.secondary">
+            Kontakt
+          </Typography>
+          <Typography>{assistant.fields.email}</Typography>
+          <Typography>{assistant.fields.telefon}</Typography>
+        </Box>
+
         {isUnder18 && (
           <>
             <Typography variant="subtitle1" fontWeight="bold">
-              Zákonný zástupce
+              Zákonný zástupce (mladší 18 let)
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
