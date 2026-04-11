@@ -24,7 +24,7 @@ import AssistantTrainingMaterialsConfirmationForm from "components/assistant/ass
 import AssistantTrainingLinks from "components/assistant/assistant-training-links";
 import AssistantCriminalRegisterUploadForm from "components/assistant/assistant-criminal-register-upload-form";
 import AssistantFirstCallInfoForm from "components/assistant/assistant-first-call-info-form";
-import AssistantDiscordConfirmationForm from "components/assistant/assistant-discord-confirmation-form";
+
 
 export const metadata: Metadata = {
   title: "Profil Digitálního Asistenta",
@@ -97,8 +97,9 @@ function showScreenBasedOnAdminFlags(
 ) {
   if (!adminFlags.firstCallCompleted) {
     return (
-      <Alert severity="warning">
-        Váš první hovor ještě nebyl dokončen. Prosím, rezervujte si jej na{" "}
+      <Alert severity="info">
+        Díky za registraci! Teď je třeba si rezervovat call s koordinátorem.
+        To můžeš učinit na{" "}
         <a
           target="_blank"
           rel="noopener noreferrer"
@@ -216,7 +217,8 @@ function showScreenBasedOnAdminFlags(
     return (
       <Stack>
         <Alert severity="warning" style={{ marginBottom: "1rem" }}>
-          Pro dokončení registrace je potřeba projít školením.
+          Pro dokončení registrace je potřeba projít školením. Ke všem
+          materiálům budeš mít přístup i později v aplikaci.
         </Alert>
         <AssistantTrainingLinks />
         <AssistantTrainingMaterialsConfirmationForm assistant={assistant} />
@@ -246,11 +248,8 @@ function showScreenBasedOnAdminFlags(
     return (
       <>
         <Alert severity="info">
-          Koordinátor ti poslal přístup do Tabidoo a návod na přístup do
-          Discordu.
-          <br />
-          <br />
-          Přidej se na Discord (volitelné) nebo pokračuj do aplikace.
+          Koordinátor ti do e-mailu poslal přístup do Tabidoo, návod na Discord
+          máš níže.
         </Alert>
         <Box sx={{ mt: 2 }}>
           <Stack spacing={1} component="ol" sx={{ pl: 0, pr: 0 }}>
@@ -282,7 +281,20 @@ function showScreenBasedOnAdminFlags(
             </Stack>
           </Stack>
         </Box>
-        <AssistantDiscordConfirmationForm assistant={assistant} />
+        <Alert severity="info" sx={{ mt: 2 }}>
+          Jakmile vše splníš a napíšeš do Lobby, tak ti dáme přístupy a tady
+          uvidíš už dotazy.
+          <br />
+          <br />
+          Pokud se nechceš přidávat k nám na Discord, napiš email na{" "}
+          <a
+            href="mailto:lukas@moudrasit.cz"
+            style={{ color: THEME_COLORS.secondary }}
+          >
+            lukas@moudrasit.cz
+          </a>
+          .
+        </Alert>
       </>
     );
   }
