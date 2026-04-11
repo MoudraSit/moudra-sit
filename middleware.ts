@@ -1,4 +1,3 @@
-import { canUserAccessQuery } from "helper/auth";
 import {
   AssistantPagePaths,
   AssistantAuthStatus,
@@ -24,10 +23,11 @@ export default withAuth(
       token?.status === AssistantAuthStatus.PENDING
     ) {
       // Prevent inifinite redirection
-      if (req.nextUrl.pathname == AssistantPagePaths.ASSISTANT_PROFILE) return;
+      if (req.nextUrl.pathname == AssistantPagePaths.ASSISTANT_PROFILE_PENDING)
+        return;
       else
         return NextResponse.redirect(
-          new URL(AssistantPagePaths.ASSISTANT_PROFILE, req.url)
+          new URL(AssistantPagePaths.ASSISTANT_PROFILE_PENDING, req.url)
         );
     }
 
@@ -76,8 +76,6 @@ export default withAuth(
     },
   }
 );
-
-
 
 // Needs to be constant at build time, variables would be ignored
 // Defined negatively via regex negative lookahead

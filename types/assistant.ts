@@ -79,6 +79,7 @@ export interface Assistant {
       url: string;
       count: number;
     };
+    novyDotazVeVybranychLokalitachEmail: boolean;
     noveHodnoceniOdSenioraEmail: boolean;
     trvaleBydliste: City;
     // Should not be used, not sure why it exists in Tabidoo
@@ -92,8 +93,36 @@ export interface Assistant {
     kraj?: string;
     pozvan?: boolean;
     skolainstituce?: string;
+    jmenoZakonnyZastupce?: string;
+    prijmeniZakonnyZastupce?: string;
+    telefonZakonnyZastupce?: string;
+    emailZakonnyZastupce?: string;
     administrativniStav?: string;
+    administrativa?: Array<string>;
     hodinCelkem: number;
     posledniOtevreniAplikace: string;
   };
+}
+export type AdminFlags = {
+  firstCallCompleted: boolean;
+  contractInfoProvided: boolean;
+  contractSent: boolean;
+  contractDone: boolean;
+  criminalRegisterDone: boolean;
+  kodoDone: boolean;
+  tabidooAccess: boolean;
+  discordAccess: boolean;
+  trainingDone: boolean;
+};
+
+export enum AssistantAdministrationStates {
+  FIRST_CALL_COMPLETED = "Prošel 1. callem",
+  CONTRACT_INFO_PROVIDED = "Dodal info ke smlouvě",
+  CONTRACT_SENT = "Smlouva odeslána",
+  CONTRACT_DONE = "Smlouva - hotovo",
+  CRIMINAL_REGISTER_DONE = "Rejstřík",
+  KODO_DONE = "KoDo",
+  TABIDOO_ACCESS = "Přístup Tabidoo",
+  DISCORD_ACCESS = "Discord hotovo",
+  TRAINING_DONE = "Praktické školení",
 }
