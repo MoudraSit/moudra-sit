@@ -100,29 +100,41 @@ export default function OnboardingAccordion({
               sx={{ py: 1 }}
             >
               <Stack
-                direction="row"
-                alignItems="center"
-                spacing={2}
+                direction={{ xs: "column", sm: "row" }}
+                alignItems={{ xs: "flex-start", sm: "center" }}
+                spacing={{ xs: 1, sm: 2 }}
                 sx={{ width: "100%" }}
               >
-                <Box>{statusIcon(step.status)}</Box>
-                <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Typography variant="h6" component="h2" sx={{ lineHeight: 1.2 }}>
-                    {step.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ mt: 0.25 }}
-                  >
-                    {step.description}
-                  </Typography>
-                </Box>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={2}
+                  sx={{ flex: 1, minWidth: 0, width: "100%" }}
+                >
+                  <Box>{statusIcon(step.status)}</Box>
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Typography
+                      variant="h6"
+                      component="h2"
+                      sx={{ lineHeight: 1.2 }}
+                    >
+                      {step.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ mt: 0.25 }}
+                    >
+                      {step.description}
+                    </Typography>
+                  </Box>
+                </Stack>
                 <Chip
                   size="small"
                   label={step.statusLabel}
                   color={statusColor(step.status)}
                   variant={step.status === "locked" ? "outlined" : "filled"}
+                  sx={{ alignSelf: { xs: "flex-start", sm: "center" }, ml: { xs: 4, sm: 0 } }}
                 />
               </Stack>
             </AccordionSummary>

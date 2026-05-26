@@ -71,7 +71,7 @@ export default function DevStatePanel({ initialStates }: Props) {
         p: 2,
         border: "2px dashed",
         borderColor: "warning.main",
-        bgcolor: "warning.50",
+        bgcolor: "rgba(255, 167, 38, 0.08)",
       }}
     >
       <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
