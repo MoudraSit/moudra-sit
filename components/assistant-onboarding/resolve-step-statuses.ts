@@ -1,5 +1,12 @@
 import { AdminFlagsV2 } from "types/assistant";
 import { StepDescriptor } from "./types";
+import VideoCallIcon from "@mui/icons-material/VideoCall";
+import DescriptionIcon from "@mui/icons-material/Description";
+import DrawIcon from "@mui/icons-material/Draw";
+import GavelIcon from "@mui/icons-material/Gavel";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import SchoolIcon from "@mui/icons-material/School";
+import ForumIcon from "@mui/icons-material/Forum";
 
 export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
   const postCall = flags.callCompleted;
@@ -8,6 +15,7 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
       id: "call",
       title: "Úvodní call",
       description: "Vyberte si termín úvodního představení projektu.",
+      Icon: VideoCallIcon,
       status: flags.callCompleted
         ? "done"
         : flags.callSlotReserved
@@ -23,6 +31,7 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
       id: "contractInfo",
       title: "Informace ke smlouvě",
       description: "Doplňte identifikační a kontaktní údaje pro smlouvu.",
+      Icon: DescriptionIcon,
       status: !postCall
         ? "locked"
         : flags.contractInfoProvided
@@ -39,6 +48,7 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
       title: "Podpis smlouvy",
       description:
         "Po přípravě smlouvy přejděte k jejímu elektronickému podpisu.",
+      Icon: DrawIcon,
       status: !flags.contractCreated
         ? "locked"
         : flags.contractSigned
@@ -54,6 +64,7 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
       id: "criminalRecord",
       title: "Výpis z rejstříku trestů",
       description: "Nahrajte soubor s výpisem ke kontrole.",
+      Icon: GavelIcon,
       status: !postCall
         ? "locked"
         : flags.criminalRecordApproved
@@ -73,6 +84,7 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
       id: "kodo",
       title: "Registrace v KoDo",
       description: "Dokončete registraci v externím formuláři KoDo.",
+      Icon: AppRegistrationIcon,
       status: !postCall
         ? "locked"
         : flags.kodoConfirmed
@@ -89,12 +101,13 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
       title: "Proškolení",
       description:
         "Projděte si školicí materiály a potvrďte jejich prostudování.",
-      status: !postCall
+      Icon: SchoolIcon,
+      status: !flags.contractSigned
         ? "locked"
         : flags.trainingConfirmed
         ? "done"
         : "active",
-      statusLabel: !postCall
+      statusLabel: !flags.contractSigned
         ? "Uzamčeno"
         : flags.trainingConfirmed
         ? "Dokončeno"
@@ -105,14 +118,15 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
       title: "Discord",
       description:
         "Zadejte své Discord uživatelské jméno nebo zvolte, že Discord nepoužíváte.",
-      status: !postCall
+      Icon: ForumIcon,
+      status: !flags.contractSigned
         ? "locked"
         : flags.discordInfoProvided && flags.discordAccessGranted
         ? "done"
         : flags.discordInfoProvided
         ? "waiting"
         : "active",
-      statusLabel: !postCall
+      statusLabel: !flags.contractSigned
         ? "Uzamčeno"
         : flags.discordInfoProvided && flags.discordAccessGranted
         ? "Dokončeno"

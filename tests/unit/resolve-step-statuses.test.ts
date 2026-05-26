@@ -99,7 +99,7 @@ describe("resolveStepStatuses", () => {
     ).toBe("done");
   });
 
-  it("kodo, training are active post-call and done once their state set", () => {
+  it("kodo is active post-call and done once KODO_CONFIRMED set", () => {
     expect(statusOf("kodo", [AssistantAdminStateV2.CALL_COMPLETED])).toBe(
       "active"
     );
@@ -109,22 +109,44 @@ describe("resolveStepStatuses", () => {
         AssistantAdminStateV2.KODO_CONFIRMED,
       ])
     ).toBe("done");
+  });
 
+  it("training is locked until contract is signed, then active, then done", () => {
     expect(statusOf("training", [AssistantAdminStateV2.CALL_COMPLETED])).toBe(
-      "active"
+      "locked"
     );
     expect(
       statusOf("training", [
         AssistantAdminStateV2.CALL_COMPLETED,
+        AssistantAdminStateV2.CONTRACT_INFO_PROVIDED,
+        AssistantAdminStateV2.CONTRACT_CREATED,
+        AssistantAdminStateV2.CONTRACT_SIGNED,
+      ])
+    ).toBe("active");
+    expect(
+      statusOf("training", [
+        AssistantAdminStateV2.CALL_COMPLETED,
+        AssistantAdminStateV2.CONTRACT_INFO_PROVIDED,
+        AssistantAdminStateV2.CONTRACT_CREATED,
+        AssistantAdminStateV2.CONTRACT_SIGNED,
         AssistantAdminStateV2.TRAINING_CONFIRMED,
       ])
     ).toBe("done");
   });
 
-  it("discord: info provided alone means waiting", () => {
+  it("discord is locked until contract is signed", () => {
+    expect(statusOf("discord", [AssistantAdminStateV2.CALL_COMPLETED])).toBe(
+      "locked"
+    );
+  });
+
+  it("discord: info provided alone means waiting (post-signature)", () => {
     expect(
       statusOf("discord", [
         AssistantAdminStateV2.CALL_COMPLETED,
+        AssistantAdminStateV2.CONTRACT_INFO_PROVIDED,
+        AssistantAdminStateV2.CONTRACT_CREATED,
+        AssistantAdminStateV2.CONTRACT_SIGNED,
         AssistantAdminStateV2.DISCORD_INFO_PROVIDED,
       ])
     ).toBe("waiting");
@@ -134,6 +156,9 @@ describe("resolveStepStatuses", () => {
     expect(
       statusOf("discord", [
         AssistantAdminStateV2.CALL_COMPLETED,
+        AssistantAdminStateV2.CONTRACT_INFO_PROVIDED,
+        AssistantAdminStateV2.CONTRACT_CREATED,
+        AssistantAdminStateV2.CONTRACT_SIGNED,
         AssistantAdminStateV2.DISCORD_INFO_PROVIDED,
         AssistantAdminStateV2.DISCORD_ACCESS_GRANTED,
       ])

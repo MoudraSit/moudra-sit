@@ -12,6 +12,7 @@ import {
 import {
   OnboardingSlot,
   OnboardingSlotsAPI,
+  STAV_OTEVRENO,
 } from "backend/onboarding-slots";
 import {
   TransitionContext,
@@ -85,7 +86,7 @@ export async function reserveOnboardingSlot(
 
     const slot = await OnboardingSlotsAPI.getById(terminId);
     if (!slot) throw new TransitionDeniedError("Termín nebyl nalezen.");
-    if (slot.stavUdalosti !== "Plánuje se")
+    if (slot.stavUdalosti !== "Probíhá přihlašování")
       throw new TransitionDeniedError("Termín již není dostupný.");
     if (slot.obsazenost === "Plně obsazeno")
       throw new TransitionDeniedError("Termín je plně obsazen.");
@@ -126,6 +127,10 @@ export async function cancelOnboardingReservation(): Promise<ActionResult> {
       throw new TransitionDeniedError("Žádná aktivní rezervace.");
     }
     await OnboardingReservationAPI.cancel(existing.id);
+    await AssistantAdminAPI.removeState(
+      userId,
+      AssistantAdminStateV2.CALL_SLOT_RESERVED
+    );
     revalidatePath(REVALIDATE_PATH);
     return undefined;
   });

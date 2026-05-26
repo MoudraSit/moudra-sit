@@ -1,7 +1,8 @@
 "use client";
 
-import { Alert, Box, Button, Stack, Typography } from "@mui/material";
-import { ChangeEvent, useState, useTransition } from "react";
+import { Alert, Box, Stack, Typography } from "@mui/material";
+import { ChangeEvent, useRef, useState, useTransition } from "react";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { uploadCriminalRecord } from "../actions";
 import { AdminFlagsV2 } from "types/assistant";
 import PrimaryButton from "../primary-button";
@@ -29,9 +30,10 @@ function fileToBase64(file: File): Promise<string> {
 }
 
 export default function CriminalRecordStepBody({ flags, currentFileName }: Props) {
-  const [file, setFile] = useState<File | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [uploadingName, setUploadingName] = useState<string | null>(null);
 
   if (flags.criminalRecordApproved) {
     return <Alert severity="success">Výpis z rejstříku trestů byl schválen.</Alert>;
@@ -51,11 +53,8 @@ export default function CriminalRecordStepBody({ flags, currentFileName }: Props
     );
   }
 
-  const submit = () => {
-    if (!file) {
-      setError("Vyberte soubor.");
-      return;
-    }
+  const handleFile = (file: File) => {
+    setUploadingName(file.name);
     startTransition(async () => {
       setError(null);
       try {
@@ -65,9 +64,13 @@ export default function CriminalRecordStepBody({ flags, currentFileName }: Props
           mimetype: file.type || "application/octet-stream",
           fileBase64: b64,
         });
-        if (!res.ok) setError(res.message);
+        if (!res.ok) {
+          setError(res.message);
+          setUploadingName(null);
+        }
       } catch (e) {
         setError(e instanceof Error ? e.message : "Nahrání selhalo.");
+        setUploadingName(null);
       }
     });
   };
@@ -78,27 +81,26 @@ export default function CriminalRecordStepBody({ flags, currentFileName }: Props
         Nahraj prosím soubor s výpisem z rejstříku trestů (PDF nebo obrázek).
       </Typography>
       <Box>
-        <Button variant="outlined" component="label" disabled={pending}>
-          {file ? file.name : "Vybrat soubor"}
+        <PrimaryButton
+          component="label"
+          disabled={pending}
+          startIcon={<CloudUploadIcon />}
+        >
+          {pending && uploadingName ? `Nahrávám ${uploadingName}…` : "Nahrát výpis"}
           <input
+            ref={inputRef}
             hidden
             type="file"
             accept="application/pdf,image/*"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setFile(e.target.files?.[0] ?? null)
-            }
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              const f = e.target.files?.[0];
+              if (f) handleFile(f);
+              e.target.value = "";
+            }}
           />
-        </Button>
-      </Box>
-      {error && <Alert severity="error">{error}</Alert>}
-      <Box>
-        <PrimaryButton
-          onClick={submit}
-          disabled={pending || !file}
-        >
-          Nahrát výpis
         </PrimaryButton>
       </Box>
+      {error && <Alert severity="error">{error}</Alert>}
     </Stack>
   );
 }
