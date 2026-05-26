@@ -47,4 +47,22 @@ export class AssistantAdminAPI {
       body: { fields },
     });
   }
+
+  public static async removeState(
+    userId: string,
+    target: AssistantAdminStateV2
+  ): Promise<void> {
+    const record = await callTabidoo<Assistant>(
+      `/tables/uzivatel/data/${userId}`,
+      { method: "GET" }
+    );
+    const current = (record.fields.administrativniNalezitosti ?? []) as
+      AssistantAdminStateV2[];
+    const next = current.filter((s) => s !== target);
+    if (next.length === current.length) return;
+    await callTabidoo(`/tables/uzivatel/data/${userId}`, {
+      method: "PATCH",
+      body: { fields: { administrativniNalezitosti: next } },
+    });
+  }
 }

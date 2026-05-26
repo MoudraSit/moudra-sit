@@ -12,10 +12,9 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import LockIcon from "@mui/icons-material/Lock";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { ReactNode, useState, useMemo } from "react";
+import { THEME_COLORS } from "../theme/colors";
 import { StepDescriptor, StepStatus } from "./types";
 
 interface OnboardingAccordionProps {
@@ -37,17 +36,31 @@ function statusColor(s: StepStatus): "default" | "success" | "warning" | "info" 
   }
 }
 
-function statusIcon(s: StepStatus) {
+function iconBgColor(s: StepStatus): string {
   switch (s) {
     case "done":
-      return <CheckCircleIcon fontSize="small" color="success" />;
+      return "#E8F5E9";
     case "waiting":
-      return <HourglassEmptyIcon fontSize="small" color="warning" />;
+      return "#FFF4E5";
     case "active":
-      return <RadioButtonUncheckedIcon fontSize="small" color="info" />;
+      return "#FCE4EC";
     case "locked":
     default:
-      return <LockIcon fontSize="small" color="disabled" />;
+      return "#F5F5F5";
+  }
+}
+
+function iconFgColor(s: StepStatus): string {
+  switch (s) {
+    case "done":
+      return "#2E7D32";
+    case "waiting":
+      return "#ED6C02";
+    case "active":
+      return THEME_COLORS.primary;
+    case "locked":
+    default:
+      return "#9E9E9E";
   }
 }
 
@@ -77,6 +90,7 @@ export default function OnboardingAccordion({
       )}
       {steps.map((step) => {
         const isLocked = step.status === "locked";
+        const Icon = step.Icon;
         return (
           <Accordion
             key={step.id}
@@ -111,7 +125,48 @@ export default function OnboardingAccordion({
                   spacing={2}
                   sx={{ flex: 1, minWidth: 0, width: "100%" }}
                 >
-                  <Box>{statusIcon(step.status)}</Box>
+                  <Box
+                    sx={{
+                      position: "relative",
+                      width: 40,
+                      height: 40,
+                      borderRadius: "50%",
+                      bgcolor: iconBgColor(step.status),
+                      color: iconFgColor(step.status),
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Icon fontSize="small" />
+                    {step.status === "done" && (
+                      <CheckCircleIcon
+                        sx={{
+                          position: "absolute",
+                          bottom: -2,
+                          right: -2,
+                          fontSize: 16,
+                          color: "#2E7D32",
+                          bgcolor: "white",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    )}
+                    {isLocked && (
+                      <LockIcon
+                        sx={{
+                          position: "absolute",
+                          bottom: -2,
+                          right: -2,
+                          fontSize: 16,
+                          color: "#9E9E9E",
+                          bgcolor: "white",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    )}
+                  </Box>
                   <Box sx={{ flex: 1, minWidth: 0 }}>
                     <Typography
                       variant="h6"
@@ -134,7 +189,7 @@ export default function OnboardingAccordion({
                   label={step.statusLabel}
                   color={statusColor(step.status)}
                   variant={step.status === "locked" ? "outlined" : "filled"}
-                  sx={{ alignSelf: { xs: "flex-start", sm: "center" }, ml: { xs: 4, sm: 0 } }}
+                  sx={{ alignSelf: { xs: "flex-start", sm: "center" }, ml: { xs: 7, sm: 0 } }}
                 />
               </Stack>
             </AccordionSummary>

@@ -29,7 +29,6 @@ export function computeAssistantAuthStatus(
 export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, trigger }) {
-      // Initial login only
       if (user) {
         token.id = user.id;
         token.role = user.role;
@@ -37,22 +36,30 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
 
-      // If explicitly triggered refresh
-      if (trigger === "update") {
-        const refreshed = await callTabidoo<Assistant[]>(
-          "/tables/uzivatel/data/filter",
-          {
-            method: "POST",
-            body: {
-              filter: [{ field: "id", operator: "eq", value: token.id }],
-            },
-            urlParams: { limit: "1" },
-          }
-        );
+      const shouldRefreshPendingDa =
+        token.role === Role.DA && token.status === AssistantAuthStatus.PENDING;
 
-        const dbUser = refreshed[0];
-        token.role = Role.DA;
-        token.status = computeAssistantAuthStatus(dbUser);
+      if (trigger === "update" || shouldRefreshPendingDa) {
+        try {
+          const refreshed = await callTabidoo<Assistant[]>(
+            "/tables/uzivatel/data/filter",
+            {
+              method: "POST",
+              body: {
+                filter: [{ field: "id", operator: "eq", value: token.id }],
+              },
+              urlParams: { limit: "1" },
+            }
+          );
+
+          const dbUser = refreshed[0];
+          if (dbUser) {
+            token.role = Role.DA;
+            token.status = computeAssistantAuthStatus(dbUser);
+          }
+        } catch (err) {
+          console.error("JWT refresh against Tabidoo failed", err);
+        }
       }
 
       return token;

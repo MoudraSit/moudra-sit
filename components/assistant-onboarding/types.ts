@@ -1,3 +1,6 @@
+import { ComponentType } from "react";
+import { SvgIconProps } from "@mui/material";
+
 export type StepStatus = "locked" | "active" | "waiting" | "done";
 
 export type StepId =
@@ -15,4 +18,5 @@ export interface StepDescriptor {
   description: string;
   status: StepStatus;
   statusLabel: string;
+  Icon: ComponentType<SvgIconProps>;
 }

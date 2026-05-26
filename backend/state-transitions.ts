@@ -47,11 +47,11 @@ const RULES: Record<AssistantAdminStateV2, Rule> = {
   },
   [AssistantAdminStateV2.TRAINING_CONFIRMED]: {
     writer: "DA",
-    requires: [AssistantAdminStateV2.CALL_COMPLETED],
+    requires: [AssistantAdminStateV2.CONTRACT_SIGNED],
   },
   [AssistantAdminStateV2.DISCORD_INFO_PROVIDED]: {
     writer: "DA",
-    requires: [AssistantAdminStateV2.CALL_COMPLETED],
+    requires: [AssistantAdminStateV2.CONTRACT_SIGNED],
   },
   [AssistantAdminStateV2.DISCORD_ACCESS_GRANTED]: {
     writer: "COORDINATOR",

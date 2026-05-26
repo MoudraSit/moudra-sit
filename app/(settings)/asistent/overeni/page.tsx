@@ -3,6 +3,7 @@ import { Card, CardContent } from "@mui/material";
 import { redirect } from "next/navigation";
 
 import { AssistantAuthStatus, AssistantPagePaths } from "helper/consts";
+import { normalizeExternalUrl } from "helper/url";
 import { auth } from "app/lib/auth";
 import { AssistantAPI } from "backend/assistant";
 import { OnboardingSlotsAPI } from "backend/onboarding-slots";
@@ -64,7 +65,8 @@ async function Page() {
     jsemClenemDofE: assistant.fields.jsemClenemDofE ?? false,
   };
 
-  const signatureLink = assistant.fields.onlinePodpisSmlouvyLink ?? null;
+  const signatureLink =
+    normalizeExternalUrl(assistant.fields.onlinePodpisSmlouvyLink) ?? null;
   const criminalRecordFileName =
     assistant.fields.vypisZRejstrikuTrestu?.[0]?.fileName ?? null;
 

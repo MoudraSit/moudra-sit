@@ -27,6 +27,55 @@ export let appTheme = createTheme({
     fontWeightBold: 700,
     fontWeightMedium: 700,
   },
+  components: {
+    MuiAlert: {
+      styleOverrides: {
+        standardInfo: {
+          backgroundColor: "#E3F2FD",
+          color: "#0D3C61",
+          "& .MuiAlert-icon": { color: "#1976D2" },
+        },
+        standardSuccess: {
+          backgroundColor: "#E8F5E9",
+          color: "#1B5E20",
+          "& .MuiAlert-icon": { color: "#2E7D32" },
+        },
+        standardWarning: {
+          backgroundColor: "#FFF4E5",
+          color: "#663C00",
+          "& .MuiAlert-icon": { color: "#ED6C02" },
+        },
+        standardError: {
+          backgroundColor: "#FDECEA",
+          color: "#611A15",
+          "& .MuiAlert-icon": { color: "#D32F2F" },
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          color: "rgba(0, 0, 0, 0.54)",
+          "&.Mui-checked": {
+            color: THEME_COLORS.primary,
+          },
+          "&.MuiCheckbox-indeterminate": {
+            color: THEME_COLORS.primary,
+          },
+        },
+      },
+    },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          color: "rgba(0, 0, 0, 0.54)",
+          "&.Mui-checked": {
+            color: THEME_COLORS.primary,
+          },
+        },
+      },
+    },
+  },
 });
 
 appTheme = createTheme(appTheme, {

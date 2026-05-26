@@ -1,4 +1,5 @@
 import { callTabidoo } from "./tabidoo";
+import { normalizeExternalUrl } from "helper/url";
 
 export interface OnboardingSlot {
   id: string;
@@ -35,7 +36,7 @@ interface TermínRecord {
 }
 
 const TYP_UDALOSTI = "Úvodní představení projektu";
-const STAV_OTEVRENO = "Probíhá přihlašování";
+export const STAV_OTEVRENO = "Probíhá přihlašování";
 
 export class OnboardingSlotsAPI {
   public static async listAvailable(): Promise<OnboardingSlot[]> {
@@ -86,6 +87,6 @@ function mapSlot(r: TermínRecord): OnboardingSlot {
     pocetPrihlasenychUcastniku: r.fields.pocetPrihlasenychUcastniku,
     stavUdalosti: r.fields.stavUdalosti ?? "",
     typUdalosti: r.fields.typUdalosti ?? "",
-    googleMeetLink: r.fields.googleMeetLink?.href,
+    googleMeetLink: normalizeExternalUrl(r.fields.googleMeetLink),
   };
 }
