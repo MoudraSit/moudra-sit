@@ -115,30 +115,6 @@ export interface Assistant {
   };
 }
 
-export type AdminFlags = {
-  firstCallCompleted: boolean;
-  contractInfoProvided: boolean;
-  contractSent: boolean;
-  contractDone: boolean;
-  criminalRegisterDone: boolean;
-  kodoDone: boolean;
-  tabidooAccess: boolean;
-  discordAccess: boolean;
-  trainingDone: boolean;
-};
-
-export enum AssistantAdministrationStates {
-  FIRST_CALL_COMPLETED = "Prošel 1. callem",
-  CONTRACT_INFO_PROVIDED = "Dodal info ke smlouvě",
-  CONTRACT_SENT = "Smlouva odeslána",
-  CONTRACT_DONE = "Smlouva - hotovo",
-  CRIMINAL_REGISTER_DONE = "Rejstřík",
-  KODO_DONE = "KoDo",
-  TABIDOO_ACCESS = "Přístup Tabidoo",
-  DISCORD_ACCESS = "Discord hotovo",
-  TRAINING_DONE = "Praktické školení",
-}
-
 export enum AssistantAdminStateV2 {
   CALL_SLOT_RESERVED = "Rezervován termín úvodního callu",
   CALL_COMPLETED = "Úvodní call proběhl",
