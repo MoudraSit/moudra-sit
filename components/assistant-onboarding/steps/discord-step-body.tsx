@@ -3,7 +3,6 @@
 import {
   Alert,
   Box,
-  Button,
   Checkbox,
   FormControlLabel,
   Stack,
@@ -12,6 +11,7 @@ import {
 import { useState, useTransition } from "react";
 import { submitDiscordInfo } from "../actions";
 import { AdminFlagsV2 } from "types/assistant";
+import PrimaryButton from "../primary-button";
 
 interface Props {
   flags: AdminFlagsV2;
@@ -73,9 +73,9 @@ export default function DiscordStepBody({ flags }: Props) {
       />
       {error && <Alert severity="error">{error}</Alert>}
       <Box>
-        <Button variant="contained" onClick={submit} disabled={pending}>
+        <PrimaryButton onClick={submit} disabled={pending}>
           Odeslat
-        </Button>
+        </PrimaryButton>
       </Box>
     </Stack>
   );

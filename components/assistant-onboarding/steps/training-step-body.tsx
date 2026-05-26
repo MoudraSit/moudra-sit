@@ -1,10 +1,11 @@
 "use client";
 
-import { Alert, Box, Button, Stack } from "@mui/material";
+import { Alert, Box, Stack } from "@mui/material";
 import { useState, useTransition } from "react";
 import { confirmTraining } from "../actions";
 import { AdminFlagsV2 } from "types/assistant";
 import AssistantTrainingLinks from "components/assistant/assistant-training-links";
+import PrimaryButton from "../primary-button";
 
 interface Props {
   flags: AdminFlagsV2;
@@ -27,8 +28,7 @@ export default function TrainingStepBody({ flags }: Props) {
       <AssistantTrainingLinks />
       {error && <Alert severity="error">{error}</Alert>}
       <Box>
-        <Button
-          variant="contained"
+        <PrimaryButton
           disabled={pending}
           onClick={() =>
             startTransition(async () => {
@@ -39,7 +39,7 @@ export default function TrainingStepBody({ flags }: Props) {
           }
         >
           Potvrzuji, že jsem prostudoval/a školicí materiály
-        </Button>
+        </PrimaryButton>
       </Box>
     </Stack>
   );

@@ -4,6 +4,7 @@ import { Alert, Box, Button, Stack, Typography } from "@mui/material";
 import { ChangeEvent, useState, useTransition } from "react";
 import { uploadCriminalRecord } from "../actions";
 import { AdminFlagsV2 } from "types/assistant";
+import PrimaryButton from "../primary-button";
 
 interface Props {
   flags: AdminFlagsV2;
@@ -91,13 +92,12 @@ export default function CriminalRecordStepBody({ flags, currentFileName }: Props
       </Box>
       {error && <Alert severity="error">{error}</Alert>}
       <Box>
-        <Button
-          variant="contained"
+        <PrimaryButton
           onClick={submit}
           disabled={pending || !file}
         >
           Nahrát výpis
-        </Button>
+        </PrimaryButton>
       </Box>
     </Stack>
   );
