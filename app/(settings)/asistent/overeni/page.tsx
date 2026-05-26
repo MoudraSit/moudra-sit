@@ -60,9 +60,7 @@ async function Page() {
   const initialContractValues = {
     ulice: assistant.fields.ulice ?? "",
     PSC: assistant.fields.PSC ?? "",
-    mestoLabel:
-      assistant.fields.hlavniMistoPusobeni?.fields?.mestoObec ?? "",
-    mestoId: assistant.fields.hlavniMistoPusobeni?.id ?? "",
+    initialCity: assistant.fields.hlavniMistoPusobeni ?? null,
     jsemClenemDofE: assistant.fields.jsemClenemDofE ?? false,
   };
 

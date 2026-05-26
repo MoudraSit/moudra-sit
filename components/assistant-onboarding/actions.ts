@@ -278,3 +278,7 @@ export async function loadAdminFlags() {
   const a = await AssistantAPI.getAssistantDetails(userId);
   return mapAdminStatesToFlagsV2(a.fields.administrativniNalezitosti);
 }
+
+export async function fetchCityOptions(query: string) {
+  return AssistantAPI.getCitiesByNameOrPostalCode(query);
+}
