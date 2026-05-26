@@ -35,6 +35,7 @@ interface TermínRecord {
 }
 
 const TYP_UDALOSTI = "Úvodní představení projektu";
+const STAV_OTEVRENO = "Probíhá přihlašování";
 
 export class OnboardingSlotsAPI {
   public static async listAvailable(): Promise<OnboardingSlot[]> {
@@ -45,7 +46,7 @@ export class OnboardingSlotsAPI {
         filter: [
           { field: "typUdalosti", operator: "eq", value: TYP_UDALOSTI },
           { field: "datumKonani", operator: "gte", value: now },
-          { field: "stavUdalosti", operator: "eq", value: "Plánuje se" },
+          { field: "stavUdalosti", operator: "eq", value: STAV_OTEVRENO },
         ],
       },
     });

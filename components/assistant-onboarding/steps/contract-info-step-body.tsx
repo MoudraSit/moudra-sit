@@ -4,7 +4,6 @@ import {
   Alert,
   Autocomplete,
   Box,
-  Button,
   Checkbox,
   CircularProgress,
   FormControlLabel,
@@ -15,6 +14,7 @@ import { useState, useTransition, useMemo, useEffect } from "react";
 import { debounce } from "@mui/material/utils";
 import { fetchCityOptions, submitContractInfo } from "../actions";
 import { AdminFlagsV2, City } from "types/assistant";
+import PrimaryButton from "../primary-button";
 
 interface Props {
   flags: AdminFlagsV2;
@@ -229,9 +229,9 @@ export default function ContractInfoStepBody({
       {error && <Alert severity="error">{error}</Alert>}
 
       <Box>
-        <Button variant="contained" onClick={submit} disabled={pending}>
+        <PrimaryButton onClick={submit} disabled={pending}>
           Odeslat informace ke smlouvě
-        </Button>
+        </PrimaryButton>
       </Box>
     </Stack>
   );

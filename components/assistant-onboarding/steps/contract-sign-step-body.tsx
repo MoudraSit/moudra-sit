@@ -1,7 +1,8 @@
 "use client";
 
-import { Alert, Box, Button, Stack } from "@mui/material";
+import { Alert, Box, Stack } from "@mui/material";
 import { AdminFlagsV2 } from "types/assistant";
+import PrimaryButton from "../primary-button";
 
 interface Props {
   flags: AdminFlagsV2;
@@ -30,14 +31,14 @@ export default function ContractSignStepBody({ flags, signatureLink }: Props) {
       </Alert>
       {signatureLink ? (
         <Box>
-          <Button
-            variant="contained"
+          <PrimaryButton
+            component="a"
             href={signatureLink}
             target="_blank"
             rel="noopener noreferrer"
           >
             Otevřít podpis smlouvy
-          </Button>
+          </PrimaryButton>
         </Box>
       ) : (
         <Alert severity="error">
