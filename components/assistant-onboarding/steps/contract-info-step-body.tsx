@@ -2,16 +2,19 @@
 
 import {
   Alert,
+  Autocomplete,
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   Stack,
   TextField,
 } from "@mui/material";
-import { useState, useTransition } from "react";
-import { submitContractInfo } from "../actions";
-import { AdminFlagsV2 } from "types/assistant";
+import { useState, useTransition, useMemo, useEffect } from "react";
+import { debounce } from "@mui/material/utils";
+import { fetchCityOptions, submitContractInfo } from "../actions";
+import { AdminFlagsV2, City } from "types/assistant";
 
 interface Props {
   flags: AdminFlagsV2;
@@ -19,10 +22,15 @@ interface Props {
   initialValues: {
     ulice: string;
     PSC: string;
-    mestoLabel: string;
-    mestoId: string;
+    initialCity: City | null;
     jsemClenemDofE: boolean;
   };
+}
+
+function cityLabel(c: City | null) {
+  if (!c) return "";
+  const psc = c.fields.PSC ?? c.fields.okres ?? "";
+  return `${c.fields.mestoObec} (${psc})`;
 }
 
 export default function ContractInfoStepBody({
@@ -32,8 +40,13 @@ export default function ContractInfoStepBody({
 }: Props) {
   const [ulice, setUlice] = useState(initialValues.ulice);
   const [psc, setPsc] = useState(initialValues.PSC);
-  const [mestoLabel, setMestoLabel] = useState(initialValues.mestoLabel);
-  const [mestoId, setMestoId] = useState(initialValues.mestoId);
+  const [city, setCity] = useState<City | null>(initialValues.initialCity);
+  const [cityInput, setCityInput] = useState(cityLabel(initialValues.initialCity));
+  const [cityOptions, setCityOptions] = useState<City[]>(
+    initialValues.initialCity ? [initialValues.initialCity] : []
+  );
+  const [cityLoading, setCityLoading] = useState(false);
+
   const [jsemClenemDofE, setJsemClenemDofE] = useState(
     initialValues.jsemClenemDofE
   );
@@ -45,6 +58,32 @@ export default function ContractInfoStepBody({
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
+  const fetchCities = useMemo(
+    () =>
+      debounce(async (q: string) => {
+        if (!q.trim()) {
+          setCityOptions(city ? [city] : []);
+          setCityLoading(false);
+          return;
+        }
+        try {
+          const results = (await fetchCityOptions(q)) as City[];
+          setCityOptions(
+            city ? [city, ...results.filter((r) => r.id !== city.id)] : results
+          );
+        } finally {
+          setCityLoading(false);
+        }
+      }, 400),
+    [city]
+  );
+
+  useEffect(() => {
+    if (flags.contractInfoProvided) return;
+    setCityLoading(true);
+    fetchCities(cityInput);
+  }, [cityInput, fetchCities, flags.contractInfoProvided]);
+
   if (flags.contractInfoProvided) {
     return (
       <Alert severity="success">
@@ -54,12 +93,17 @@ export default function ContractInfoStepBody({
   }
 
   const submit = () => {
-    if (!ulice.trim() || !psc.trim() || !mestoId.trim()) {
+    if (!ulice.trim() || !psc.trim() || !city?.id) {
       setError("Doplňte ulici, PSČ a město.");
       return;
     }
     if (isUnder18) {
-      if (!jmenoZZ.trim() || !prijmeniZZ.trim() || !telefonZZ.trim() || !emailZZ.trim()) {
+      if (
+        !jmenoZZ.trim() ||
+        !prijmeniZZ.trim() ||
+        !telefonZZ.trim() ||
+        !emailZZ.trim()
+      ) {
         setError("Vyplňte údaje zákonného zástupce.");
         return;
       }
@@ -69,7 +113,7 @@ export default function ContractInfoStepBody({
       const res = await submitContractInfo({
         ulice,
         PSC: psc,
-        mestoId,
+        mestoId: city.id,
         isUnder18,
         jmenoZakonnyZastupce: isUnder18 ? jmenoZZ : undefined,
         prijmeniZakonnyZastupce: isUnder18 ? prijmeniZZ : undefined,
@@ -98,16 +142,34 @@ export default function ContractInfoStepBody({
           required
           sx={{ maxWidth: { sm: 160 } }}
         />
-        <TextField
-          label="Město / obec"
-          value={mestoLabel}
-          onChange={(e) => {
-            setMestoLabel(e.target.value);
-            setMestoId(e.target.value);
-          }}
-          fullWidth
-          required
-          helperText="Zatím prosím zadejte přesné ID města z Tabidoo."
+        <Autocomplete<City>
+          sx={{ flex: 1 }}
+          value={city}
+          inputValue={cityInput}
+          onChange={(_, newValue) => setCity(newValue)}
+          onInputChange={(_, newInput) => setCityInput(newInput)}
+          options={cityOptions}
+          loading={cityLoading}
+          filterOptions={(x) => x}
+          getOptionLabel={cityLabel}
+          isOptionEqualToValue={(o, v) => o.id === v.id}
+          noOptionsText="Začněte psát název obce"
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Město / obec"
+              required
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {cityLoading ? <CircularProgress size={16} /> : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              }}
+            />
+          )}
         />
       </Stack>
 
