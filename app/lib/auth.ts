@@ -7,7 +7,7 @@ import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import { AssistantAuthStatus, Role } from "helper/consts";
 import { callTabidoo } from "backend/tabidoo";
-import { Assistant } from "types/assistant";
+import { Assistant, mapAdminStatesToFlagsV2 } from "types/assistant";
 import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -15,6 +15,16 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const AUTH_ERROR_MESSAGE = "Špatně zadaný e-mail nebo heslo";
 export const MORE_USERS_ERROR_MESSAGE =
   "Nalezeno více uživatelů se stejným e-mailem";
+
+export function computeAssistantAuthStatus(
+  user: Assistant
+): AssistantAuthStatus {
+  const flags = mapAdminStatesToFlagsV2(
+    user.fields.administrativniNalezitosti
+  );
+  const allDone = Object.values(flags).every(Boolean);
+  return allDone ? AssistantAuthStatus.ACTIVE : AssistantAuthStatus.PENDING;
+}
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -42,10 +52,7 @@ export const authOptions: NextAuthOptions = {
 
         const dbUser = refreshed[0];
         token.role = Role.DA;
-        token.status =
-          dbUser.fields.administrativniStav === "🟢DONE"
-            ? AssistantAuthStatus.ACTIVE
-            : AssistantAuthStatus.PENDING;
+        token.status = computeAssistantAuthStatus(dbUser);
       }
 
       return token;
@@ -115,12 +122,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const role = Role.DA;
-        let status = undefined;
-        if (role == Role.DA) {
-          if ((user as Assistant).fields.administrativniStav === "🟢DONE")
-            status = AssistantAuthStatus.ACTIVE;
-          else status = AssistantAuthStatus.PENDING;
-        }
+        const status = computeAssistantAuthStatus(user as Assistant);
 
         return {
           id: user.id,
