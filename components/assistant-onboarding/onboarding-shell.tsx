@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { Alert, Box, Stack, Typography } from "@mui/material";
 import OnboardingAccordion from "./onboarding-accordion";
 import { StepDescriptor } from "./types";
-import { AdminFlagsV2 } from "types/assistant";
+import { AdminFlagsV2, AssistantAdminStateV2 } from "types/assistant";
 import { ActiveReservation } from "./actions";
 import { OnboardingSlot } from "backend/onboarding-slots";
 import { City } from "types/assistant";
@@ -15,6 +15,7 @@ import CriminalRecordStepBody from "./steps/criminal-record-step-body";
 import KodoStepBody from "./steps/kodo-step-body";
 import TrainingStepBody from "./steps/training-step-body";
 import DiscordStepBody from "./steps/discord-step-body";
+import DevStatePanel from "./dev/dev-state-panel";
 
 export interface OnboardingShellProps {
   steps: StepDescriptor[];
@@ -30,6 +31,10 @@ export interface OnboardingShellProps {
   };
   signatureLink: string | null;
   criminalRecordFileName: string | null;
+  devPanel: {
+    enabled: boolean;
+    currentStates: AssistantAdminStateV2[];
+  };
 }
 
 export default function OnboardingShell(props: OnboardingShellProps) {
@@ -103,6 +108,10 @@ export default function OnboardingShell(props: OnboardingShellProps) {
       )}
 
       <OnboardingAccordion steps={props.steps} renderBody={renderBody} />
+
+      {props.devPanel.enabled && (
+        <DevStatePanel initialStates={props.devPanel.currentStates} />
+      )}
     </Stack>
   );
 }

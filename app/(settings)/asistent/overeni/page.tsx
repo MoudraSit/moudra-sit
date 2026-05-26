@@ -7,7 +7,7 @@ import { auth } from "app/lib/auth";
 import { AssistantAPI } from "backend/assistant";
 import { OnboardingSlotsAPI } from "backend/onboarding-slots";
 import { OnboardingReservationAPI } from "backend/onboarding-reservation";
-import { mapAdminStatesToFlagsV2 } from "types/assistant";
+import { AssistantAdminStateV2, mapAdminStatesToFlagsV2 } from "types/assistant";
 import { resolveStepStatuses } from "components/assistant-onboarding/resolve-step-statuses";
 import OnboardingShell from "components/assistant-onboarding/onboarding-shell";
 
@@ -80,6 +80,11 @@ async function Page() {
           initialContractValues={initialContractValues}
           signatureLink={signatureLink}
           criminalRecordFileName={criminalRecordFileName}
+          devPanel={{
+            enabled: process.env.NODE_ENV !== "production",
+            currentStates: (assistant.fields.administrativniNalezitosti ??
+              []) as AssistantAdminStateV2[],
+          }}
         />
       </CardContent>
     </Card>

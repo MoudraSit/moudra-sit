@@ -282,3 +282,19 @@ export async function loadAdminFlags() {
 export async function fetchCityOptions(query: string) {
   return AssistantAPI.getCitiesByNameOrPostalCode(query);
 }
+
+export async function devSetAdminStates(
+  states: AssistantAdminStateV2[]
+): Promise<ActionResult> {
+  if (process.env.NODE_ENV === "production") {
+    return { ok: false, message: "Not available in production." };
+  }
+  const userId = await requireAssistantId();
+  const allowed = new Set(Object.values(AssistantAdminStateV2) as string[]);
+  const filtered = Array.from(new Set(states.filter((s) => allowed.has(s))));
+  await AssistantAdminAPI.patchFields(userId, {
+    administrativniNalezitosti: filtered,
+  });
+  revalidatePath(REVALIDATE_PATH);
+  return { ok: true };
+}
