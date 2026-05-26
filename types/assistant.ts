@@ -99,10 +99,22 @@ export interface Assistant {
     emailZakonnyZastupce?: string;
     administrativniStav?: string;
     administrativa?: Array<string>;
+    administrativniNalezitosti?: Array<string>;
+    onlinePodpisSmlouvyLink?: string;
+    datumPodpisuSmlouvy?: string;
+    vypisZRejstrikuTrestu?: Array<{
+      fileId: string;
+      fileName: string;
+      fileUrl: string;
+      thumbnailUrl?: string;
+    }>;
+    discordUzivatelskeJmeno?: string;
+    jsemClenemDofE?: boolean;
     hodinCelkem: number;
     posledniOtevreniAplikace: string;
   };
 }
+
 export type AdminFlags = {
   firstCallCompleted: boolean;
   contractInfoProvided: boolean;
@@ -125,4 +137,56 @@ export enum AssistantAdministrationStates {
   TABIDOO_ACCESS = "Přístup Tabidoo",
   DISCORD_ACCESS = "Discord hotovo",
   TRAINING_DONE = "Praktické školení",
+}
+
+export enum AssistantAdminStateV2 {
+  CALL_SLOT_RESERVED = "Rezervován termín úvodního callu",
+  CALL_COMPLETED = "Úvodní call proběhl",
+  CONTRACT_INFO_PROVIDED = "Dodány informace ke smlouvě",
+  CONTRACT_CREATED = "Smlouva vytvořena",
+  CONTRACT_SIGNED = "Smlouva podepsána",
+  CRIMINAL_RECORD_UPLOADED = "Nahrán výpis z rejstříku trestů",
+  CRIMINAL_RECORD_APPROVED = "Výpis z rejstříku trestů schválen",
+  KODO_CONFIRMED = "Registrace KoDo potvrzena",
+  TRAINING_CONFIRMED = "Proškolení potvrzeno",
+  DISCORD_INFO_PROVIDED = "Discord údaje dodány",
+  DISCORD_ACCESS_GRANTED = "Discord přístup přidělen",
+}
+
+export interface AdminFlagsV2 {
+  callSlotReserved: boolean;
+  callCompleted: boolean;
+  contractInfoProvided: boolean;
+  contractCreated: boolean;
+  contractSigned: boolean;
+  criminalRecordUploaded: boolean;
+  criminalRecordApproved: boolean;
+  kodoConfirmed: boolean;
+  trainingConfirmed: boolean;
+  discordInfoProvided: boolean;
+  discordAccessGranted: boolean;
+}
+
+export function mapAdminStatesToFlagsV2(
+  states: string[] | undefined
+): AdminFlagsV2 {
+  const set = new Set(states ?? []);
+  const has = (v: AssistantAdminStateV2) => set.has(v);
+  return {
+    callSlotReserved: has(AssistantAdminStateV2.CALL_SLOT_RESERVED),
+    callCompleted: has(AssistantAdminStateV2.CALL_COMPLETED),
+    contractInfoProvided: has(AssistantAdminStateV2.CONTRACT_INFO_PROVIDED),
+    contractCreated: has(AssistantAdminStateV2.CONTRACT_CREATED),
+    contractSigned: has(AssistantAdminStateV2.CONTRACT_SIGNED),
+    criminalRecordUploaded: has(
+      AssistantAdminStateV2.CRIMINAL_RECORD_UPLOADED
+    ),
+    criminalRecordApproved: has(
+      AssistantAdminStateV2.CRIMINAL_RECORD_APPROVED
+    ),
+    kodoConfirmed: has(AssistantAdminStateV2.KODO_CONFIRMED),
+    trainingConfirmed: has(AssistantAdminStateV2.TRAINING_CONFIRMED),
+    discordInfoProvided: has(AssistantAdminStateV2.DISCORD_INFO_PROVIDED),
+    discordAccessGranted: has(AssistantAdminStateV2.DISCORD_ACCESS_GRANTED),
+  };
 }
