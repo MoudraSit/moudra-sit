@@ -9,6 +9,7 @@ import {
 import { OnboardingSlot } from "backend/onboarding-slots";
 import { ActiveReservation } from "../actions";
 import { AdminFlagsV2 } from "types/assistant";
+import PrimaryButton from "../primary-button";
 
 interface Props {
   slots: OnboardingSlot[];
@@ -45,36 +46,44 @@ export default function CallStepBody({ slots, reservation, flags }: Props) {
     );
   }
 
-  if (reservation && reservation.slot) {
+  if (reservation) {
     const slot = reservation.slot;
     return (
       <Stack spacing={2}>
         <Alert severity="info">
           Máš rezervovaný termín. Před callem dorazí potvrzovací e-mail s odkazem.
         </Alert>
-        <Card variant="outlined">
-          <CardContent>
-            <Typography variant="subtitle1">{formatSlot(slot.datumKonani)}</Typography>
-            {slot.lektorJmeno && (
-              <Typography variant="body2" color="text.secondary">
-                Lektor: {slot.lektorJmeno}
+        {slot ? (
+          <Card variant="outlined">
+            <CardContent>
+              <Typography variant="subtitle1">
+                {formatSlot(slot.datumKonani)}
               </Typography>
-            )}
-            {slot.googleMeetLink && (
-              <Box sx={{ mt: 1 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  href={slot.googleMeetLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Připojit se přes Google Meet
-                </Button>
-              </Box>
-            )}
-          </CardContent>
-        </Card>
+              {slot.lektorJmeno && (
+                <Typography variant="body2" color="text.secondary">
+                  Lektor: {slot.lektorJmeno}
+                </Typography>
+              )}
+              {slot.googleMeetLink && (
+                <Box sx={{ mt: 1 }}>
+                  <PrimaryButton
+                    component="a"
+                    href={slot.googleMeetLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Připojit se přes Google Meet
+                  </PrimaryButton>
+                </Box>
+              )}
+            </CardContent>
+          </Card>
+        ) : (
+          <Alert severity="warning">
+            Detail termínu se nepodařilo načíst. Pokud chceš, můžeš rezervaci
+            zrušit a vybrat jiný termín.
+          </Alert>
+        )}
         <Box>
           <Button
             variant="outlined"
@@ -93,6 +102,15 @@ export default function CallStepBody({ slots, reservation, flags }: Props) {
         </Box>
         {error && <Alert severity="error">{error}</Alert>}
       </Stack>
+    );
+  }
+
+  if (flags.callSlotReserved) {
+    return (
+      <Alert severity="info">
+        Rezervace je zaznamenaná, ale detail termínu se nepodařilo načíst.
+        Zkus stránku obnovit, případně kontaktuj koordinátora.
+      </Alert>
     );
   }
 
@@ -134,8 +152,7 @@ export default function CallStepBody({ slots, reservation, flags }: Props) {
                     </Typography>
                   )}
                 </Box>
-                <Button
-                  variant="contained"
+                <PrimaryButton
                   disabled={pending}
                   onClick={() =>
                     startTransition(async () => {
@@ -146,7 +163,7 @@ export default function CallStepBody({ slots, reservation, flags }: Props) {
                   }
                 >
                   Vybrat termín
-                </Button>
+                </PrimaryButton>
               </Stack>
             </CardContent>
           </Card>

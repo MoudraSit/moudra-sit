@@ -1,7 +1,8 @@
 "use client";
 
-import { Alert, Box, Button, Stack, Typography } from "@mui/material";
+import { Alert, Box, Stack, Typography } from "@mui/material";
 import { AdminFlagsV2 } from "types/assistant";
+import PrimaryButton from "../primary-button";
 
 interface Props {
   flags: AdminFlagsV2;
@@ -20,14 +21,14 @@ export default function KodoStepBody({ flags }: Props) {
         koordinátor potvrdí váš stav.
       </Typography>
       <Box>
-        <Button
-          variant="contained"
+        <PrimaryButton
+          component="a"
           href={KODO_URL}
           target="_blank"
           rel="noopener noreferrer"
         >
           Otevřít registraci v KoDo
-        </Button>
+        </PrimaryButton>
       </Box>
       <Alert severity="info">
         Po vyplnění externího formuláře vyčkejte na potvrzení od koordinátora.
