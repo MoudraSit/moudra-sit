@@ -7,6 +7,7 @@ import { StepDescriptor } from "./types";
 import { AdminFlagsV2 } from "types/assistant";
 import { ActiveReservation } from "./actions";
 import { OnboardingSlot } from "backend/onboarding-slots";
+import { City } from "types/assistant";
 import CallStepBody from "./steps/call-step-body";
 import ContractInfoStepBody from "./steps/contract-info-step-body";
 import ContractSignStepBody from "./steps/contract-sign-step-body";
@@ -24,8 +25,7 @@ export interface OnboardingShellProps {
   initialContractValues: {
     ulice: string;
     PSC: string;
-    mestoLabel: string;
-    mestoId: string;
+    initialCity: City | null;
     jsemClenemDofE: boolean;
   };
   signatureLink: string | null;
