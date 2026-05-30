@@ -25,24 +25,27 @@ export default function ContractSignStepBody({ flags, signatureLink }: Props) {
 
   return (
     <Stack spacing={2}>
-      <Alert severity="warning">
-        Smlouva je připravena. Podepiš ji prosím přes odkaz níže. Po podpisu se
-        stav automaticky aktualizuje.
-      </Alert>
       {signatureLink ? (
-        <Box>
-          <PrimaryButton
-            component="a"
-            href={signatureLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Otevřít podpis smlouvy
-          </PrimaryButton>
-        </Box>
+        <>
+          <Alert severity="warning">
+            Smlouva je připravena. Podepiš ji prosím přes odkaz níže. Po podpisu
+            se stav automaticky aktualizuje.
+          </Alert>
+          <Box>
+            <PrimaryButton
+              component="a"
+              href={signatureLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Otevřít podpis smlouvy
+            </PrimaryButton>
+          </Box>
+        </>
       ) : (
-        <Alert severity="error">
-          Odkaz na podpis ještě není k dispozici, kontaktuj prosím koordinátora.
+        <Alert severity="info">
+          Pro podpis smlouvy zkontroluj svoji e-mailovou schránku. Podpisový
+          odkaz ti koordinátor zašle e-mailem.
         </Alert>
       )}
     </Stack>

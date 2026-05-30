@@ -29,8 +29,6 @@ const ALL_STATES: { value: AssistantAdminStateV2; group: "DA" | "Coordinator" }[
   { value: AssistantAdminStateV2.CRIMINAL_RECORD_APPROVED, group: "Coordinator" },
   { value: AssistantAdminStateV2.KODO_CONFIRMED, group: "Coordinator" },
   { value: AssistantAdminStateV2.TRAINING_CONFIRMED, group: "DA" },
-  { value: AssistantAdminStateV2.DISCORD_INFO_PROVIDED, group: "DA" },
-  { value: AssistantAdminStateV2.DISCORD_ACCESS_GRANTED, group: "Coordinator" },
 ];
 
 export default function DevStatePanel({ initialStates }: Props) {

@@ -125,8 +125,6 @@ export enum AssistantAdminStateV2 {
   CRIMINAL_RECORD_APPROVED = "Výpis z rejstříku trestů schválen",
   KODO_CONFIRMED = "Registrace KoDo potvrzena",
   TRAINING_CONFIRMED = "Proškolení potvrzeno",
-  DISCORD_INFO_PROVIDED = "Discord údaje dodány",
-  DISCORD_ACCESS_GRANTED = "Discord přístup přidělen",
 }
 
 export interface AdminFlagsV2 {
@@ -139,8 +137,6 @@ export interface AdminFlagsV2 {
   criminalRecordApproved: boolean;
   kodoConfirmed: boolean;
   trainingConfirmed: boolean;
-  discordInfoProvided: boolean;
-  discordAccessGranted: boolean;
 }
 
 export function mapAdminStatesToFlagsV2(
@@ -162,7 +158,5 @@ export function mapAdminStatesToFlagsV2(
     ),
     kodoConfirmed: has(AssistantAdminStateV2.KODO_CONFIRMED),
     trainingConfirmed: has(AssistantAdminStateV2.TRAINING_CONFIRMED),
-    discordInfoProvided: has(AssistantAdminStateV2.DISCORD_INFO_PROVIDED),
-    discordAccessGranted: has(AssistantAdminStateV2.DISCORD_ACCESS_GRANTED),
   };
 }

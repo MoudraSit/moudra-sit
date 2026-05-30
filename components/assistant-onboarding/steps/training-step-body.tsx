@@ -16,7 +16,13 @@ export default function TrainingStepBody({ flags }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   if (flags.trainingConfirmed) {
-    return <Alert severity="success">Proškolení je potvrzeno.</Alert>;
+    return (
+      <Alert severity="success">
+        Skvělá práce! Jdeme ti povolit přístupy do aplikace a pošleme ti info
+        e-mail. Pak můžeš rozjet svoje první dotazy. Kdybys něco potřeboval/a,
+        napiš na Discord nebo na podporu.
+      </Alert>
+    );
   }
 
   return (

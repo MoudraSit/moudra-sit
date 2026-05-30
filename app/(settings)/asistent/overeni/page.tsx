@@ -59,6 +59,11 @@ async function Page() {
   }
 
   const initialContractValues = {
+    titul: assistant.fields.titul ?? "",
+    jmeno: assistant.fields.jmeno ?? "",
+    prijmeni: assistant.fields.prijmeni ?? "",
+    denNarozeni: assistant.fields.denNarozeni ?? "",
+    telefon: assistant.fields.telefon ?? "",
     ulice: assistant.fields.ulice ?? "",
     PSC: assistant.fields.PSC ?? "",
     initialCity: assistant.fields.hlavniMistoPusobeni ?? null,
