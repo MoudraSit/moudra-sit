@@ -4,8 +4,7 @@ import {
   TransitionDeniedError,
 } from "backend/state-transitions";
 
-const ctxOptIn = { discordOptOut: false };
-const ctxOptOut = { discordOptOut: true };
+const ctxOptIn = {};
 
 describe("assertCanWriteState", () => {
   describe("writer authority", () => {
@@ -117,58 +116,6 @@ describe("assertCanWriteState", () => {
           ctxOptIn
         )
       ).toThrow(/již nastaven/);
-    });
-  });
-
-  describe("discord opt-out override", () => {
-    it("normally DA cannot write DISCORD_ACCESS_GRANTED (coordinator-owned)", () => {
-      expect(() =>
-        assertCanWriteState(
-          AssistantAdminStateV2.DISCORD_ACCESS_GRANTED,
-          [
-            AssistantAdminStateV2.CALL_COMPLETED,
-            AssistantAdminStateV2.DISCORD_INFO_PROVIDED,
-          ],
-          "DA",
-          ctxOptIn
-        )
-      ).toThrow(TransitionDeniedError);
-    });
-
-    it("DA CAN write DISCORD_ACCESS_GRANTED when opting out", () => {
-      expect(() =>
-        assertCanWriteState(
-          AssistantAdminStateV2.DISCORD_ACCESS_GRANTED,
-          [
-            AssistantAdminStateV2.CALL_COMPLETED,
-            AssistantAdminStateV2.DISCORD_INFO_PROVIDED,
-          ],
-          "DA",
-          ctxOptOut
-        )
-      ).not.toThrow();
-    });
-
-    it("DA opt-out override still requires DISCORD_INFO_PROVIDED prerequisite", () => {
-      expect(() =>
-        assertCanWriteState(
-          AssistantAdminStateV2.DISCORD_ACCESS_GRANTED,
-          [AssistantAdminStateV2.CALL_COMPLETED],
-          "DA",
-          ctxOptOut
-        )
-      ).toThrow(/vyžaduje předchozí stav/);
-    });
-
-    it("the override does not apply to other coordinator-owned states", () => {
-      expect(() =>
-        assertCanWriteState(
-          AssistantAdminStateV2.CALL_COMPLETED,
-          [AssistantAdminStateV2.CALL_SLOT_RESERVED],
-          "DA",
-          ctxOptOut
-        )
-      ).toThrow(TransitionDeniedError);
     });
   });
 });

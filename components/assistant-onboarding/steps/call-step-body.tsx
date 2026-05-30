@@ -34,6 +34,10 @@ function formatSlot(iso: string) {
   }
 }
 
+function stripHtml(s: string): string {
+  return s.replace(/<[^>]*>/g, "").trim();
+}
+
 export default function CallStepBody({ slots, reservation, flags }: Props) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -146,9 +150,9 @@ export default function CallStepBody({ slots, reservation, flags }: Props) {
                       Lektor: {slot.lektorJmeno}
                     </Typography>
                   )}
-                  {slot.popis && (
+                  {slot.popis && stripHtml(slot.popis) && (
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                      {slot.popis}
+                      {stripHtml(slot.popis)}
                     </Typography>
                   )}
                 </Box>

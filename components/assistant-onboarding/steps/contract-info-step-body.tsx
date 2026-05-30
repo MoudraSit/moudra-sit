@@ -8,6 +8,7 @@ import * as yup from "yup";
 
 import { submitContractInfo } from "../actions";
 import { AdminFlagsV2, City } from "types/assistant";
+import { phoneRegexWithCountryCode } from "helper/consts";
 import PrimaryButton from "../primary-button";
 import { FormInputText } from "components/app-forms/inputs/FormInputText";
 import { FormInputCity } from "components/app-forms/inputs/FormInputCity";
@@ -16,6 +17,11 @@ interface Props {
   flags: AdminFlagsV2;
   isUnder18: boolean;
   initialValues: {
+    titul: string;
+    jmeno: string;
+    prijmeni: string;
+    denNarozeni: string;
+    telefon: string;
     ulice: string;
     PSC: string;
     initialCity: City | null;
@@ -24,6 +30,11 @@ interface Props {
 }
 
 type ContractInfoFormValues = {
+  titul: string;
+  jmeno: string;
+  prijmeni: string;
+  denNarozeni: string;
+  telefon: string;
   ulice: string;
   PSC: string;
   city: City | null;
@@ -36,6 +47,15 @@ type ContractInfoFormValues = {
 
 function buildSchema(isUnder18: boolean) {
   const base = {
+    titul: yup.string().trim().optional(),
+    jmeno: yup.string().trim().required("Doplňte jméno."),
+    prijmeni: yup.string().trim().required("Doplňte příjmení."),
+    denNarozeni: yup.string().trim().required("Doplňte datum narození."),
+    telefon: yup
+      .string()
+      .trim()
+      .matches(phoneRegexWithCountryCode, "Napište správný tvar telefonního čísla")
+      .required("Doplňte telefonní číslo."),
     ulice: yup.string().trim().required("Doplňte ulici a číslo popisné."),
     PSC: yup.string().trim().required("Doplňte PSČ."),
     city: yup
@@ -75,6 +95,12 @@ function buildSchema(isUnder18: boolean) {
   });
 }
 
+function toDateInputValue(iso: string): string {
+  if (!iso) return "";
+  const m = /^(\d{4}-\d{2}-\d{2})/.exec(iso);
+  return m ? m[1] : "";
+}
+
 export default function ContractInfoStepBody({
   flags,
   isUnder18,
@@ -87,6 +113,11 @@ export default function ContractInfoStepBody({
     useForm<ContractInfoFormValues>({
       resolver: yupResolver(buildSchema(isUnder18)) as never,
       defaultValues: {
+        titul: initialValues.titul ?? "",
+        jmeno: initialValues.jmeno ?? "",
+        prijmeni: initialValues.prijmeni ?? "",
+        denNarozeni: toDateInputValue(initialValues.denNarozeni ?? ""),
+        telefon: initialValues.telefon ?? "",
         ulice: initialValues.ulice ?? "",
         PSC: initialValues.PSC ?? "",
         city: initialValues.initialCity,
@@ -111,7 +142,15 @@ export default function ContractInfoStepBody({
   const submit = (values: ContractInfoFormValues) => {
     startTransition(async () => {
       setError(null);
+      const denNarozeniIso = values.denNarozeni
+        ? new Date(values.denNarozeni + "T00:00:00.000Z").toISOString()
+        : "";
       const res = await submitContractInfo({
+        titul: values.titul,
+        jmeno: values.jmeno,
+        prijmeni: values.prijmeni,
+        denNarozeni: denNarozeniIso,
+        telefon: values.telefon,
         ulice: values.ulice,
         PSC: values.PSC,
         mestoId: values.city!.id,
@@ -136,6 +175,49 @@ export default function ContractInfoStepBody({
 
   return (
     <Stack spacing={2} component="form" onSubmit={handleSubmit(submit)}>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+        <Box sx={{ maxWidth: { sm: 140 }, width: "100%" }}>
+          <FormInputText name="titul" control={control} label="Titul" />
+        </Box>
+        <Box sx={{ flex: 1 }}>
+          <FormInputText
+            name="jmeno"
+            control={control}
+            label="Jméno"
+            required
+          />
+        </Box>
+        <Box sx={{ flex: 1 }}>
+          <FormInputText
+            name="prijmeni"
+            control={control}
+            label="Příjmení"
+            required
+          />
+        </Box>
+      </Stack>
+
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+        <Box sx={{ flex: 1 }}>
+          <FormInputText
+            name="denNarozeni"
+            control={control}
+            label="Datum narození"
+            type="date"
+            required
+            InputLabelProps={{ shrink: true }}
+          />
+        </Box>
+        <Box sx={{ flex: 1 }}>
+          <FormInputText
+            name="telefon"
+            control={control}
+            label="Telefon"
+            required
+          />
+        </Box>
+      </Stack>
+
       <FormInputText
         name="ulice"
         control={control}

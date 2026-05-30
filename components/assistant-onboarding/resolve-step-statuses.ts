@@ -6,7 +6,6 @@ import DrawIcon from "@mui/icons-material/Draw";
 import GavelIcon from "@mui/icons-material/Gavel";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SchoolIcon from "@mui/icons-material/School";
-import ForumIcon from "@mui/icons-material/Forum";
 
 export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
   const postCall = flags.callCompleted;
@@ -112,27 +111,6 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
         : flags.trainingConfirmed
         ? "Dokončeno"
         : "K potvrzení",
-    },
-    {
-      id: "discord",
-      title: "Discord",
-      description:
-        "Zadejte své Discord uživatelské jméno nebo zvolte, že Discord nepoužíváte.",
-      Icon: ForumIcon,
-      status: !flags.contractSigned
-        ? "locked"
-        : flags.discordInfoProvided && flags.discordAccessGranted
-        ? "done"
-        : flags.discordInfoProvided
-        ? "waiting"
-        : "active",
-      statusLabel: !flags.contractSigned
-        ? "Uzamčeno"
-        : flags.discordInfoProvided && flags.discordAccessGranted
-        ? "Dokončeno"
-        : flags.discordInfoProvided
-        ? "Čeká na přidělení přístupu"
-        : "Zadejte údaje",
     },
   ];
 }

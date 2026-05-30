@@ -19,8 +19,6 @@ const ALL_STATES: string[] = [
   AssistantAdminStateV2.CRIMINAL_RECORD_APPROVED,
   AssistantAdminStateV2.KODO_CONFIRMED,
   AssistantAdminStateV2.TRAINING_CONFIRMED,
-  AssistantAdminStateV2.DISCORD_INFO_PROVIDED,
-  AssistantAdminStateV2.DISCORD_ACCESS_GRANTED,
 ];
 
 describe("computeAssistantAuthStatus", () => {
@@ -38,7 +36,7 @@ describe("computeAssistantAuthStatus", () => {
 
   it("is PENDING when one state is missing", () => {
     const states = ALL_STATES.filter(
-      (s) => s !== AssistantAdminStateV2.DISCORD_ACCESS_GRANTED
+      (s) => s !== AssistantAdminStateV2.TRAINING_CONFIRMED
     );
     expect(computeAssistantAuthStatus(makeAssistant(states))).toBe(
       AssistantAuthStatus.PENDING

@@ -14,7 +14,6 @@ import ContractSignStepBody from "./steps/contract-sign-step-body";
 import CriminalRecordStepBody from "./steps/criminal-record-step-body";
 import KodoStepBody from "./steps/kodo-step-body";
 import TrainingStepBody from "./steps/training-step-body";
-import DiscordStepBody from "./steps/discord-step-body";
 import DevStatePanel from "./dev/dev-state-panel";
 
 export interface OnboardingShellProps {
@@ -24,6 +23,11 @@ export interface OnboardingShellProps {
   slots: OnboardingSlot[];
   isUnder18: boolean;
   initialContractValues: {
+    titul: string;
+    jmeno: string;
+    prijmeni: string;
+    denNarozeni: string;
+    telefon: string;
     ulice: string;
     PSC: string;
     initialCity: City | null;
@@ -74,8 +78,6 @@ export default function OnboardingShell(props: OnboardingShellProps) {
         return <KodoStepBody flags={props.flags} />;
       case "training":
         return <TrainingStepBody flags={props.flags} />;
-      case "discord":
-        return <DiscordStepBody flags={props.flags} />;
       default:
         return null;
     }

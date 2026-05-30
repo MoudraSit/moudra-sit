@@ -2,9 +2,7 @@ import { AssistantAdminStateV2 } from "types/assistant";
 
 export type Writer = "DA" | "COORDINATOR";
 
-export interface TransitionContext {
-  discordOptOut: boolean;
-}
+export interface TransitionContext {}
 
 interface Rule {
   writer: Writer;
@@ -49,20 +47,7 @@ const RULES: Record<AssistantAdminStateV2, Rule> = {
     writer: "DA",
     requires: [AssistantAdminStateV2.CONTRACT_SIGNED],
   },
-  [AssistantAdminStateV2.DISCORD_INFO_PROVIDED]: {
-    writer: "DA",
-    requires: [AssistantAdminStateV2.CONTRACT_SIGNED],
-  },
-  [AssistantAdminStateV2.DISCORD_ACCESS_GRANTED]: {
-    writer: "COORDINATOR",
-    requires: [AssistantAdminStateV2.DISCORD_INFO_PROVIDED],
-    conditional: (ctx) => !ctx.discordOptOut,
-  },
 };
-
-const DA_OVERRIDE_WHEN_OPT_OUT: AssistantAdminStateV2[] = [
-  AssistantAdminStateV2.DISCORD_ACCESS_GRANTED,
-];
 
 export class TransitionDeniedError extends Error {
   constructor(message: string) {
@@ -83,18 +68,13 @@ export function assertCanWriteState(
     throw new TransitionDeniedError(`Neznámý cílový stav: ${target}`);
   }
 
-  const isDaOverride =
-    actor === "DA" &&
-    ctx.discordOptOut &&
-    DA_OVERRIDE_WHEN_OPT_OUT.includes(target);
-
-  if (rule.writer !== actor && !isDaOverride) {
+  if (rule.writer !== actor) {
     throw new TransitionDeniedError(
       `Stav "${target}" může nastavit jen ${rule.writer}.`
     );
   }
 
-  if (rule.conditional && !rule.conditional(ctx) && !isDaOverride) {
+  if (rule.conditional && !rule.conditional(ctx)) {
     throw new TransitionDeniedError(
       `Stav "${target}" není v této konfiguraci povolen.`
     );

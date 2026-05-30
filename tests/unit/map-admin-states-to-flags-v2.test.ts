@@ -12,7 +12,7 @@ describe("mapAdminStatesToFlagsV2", () => {
   it("returns all-false flags for empty array", () => {
     const flags = mapAdminStatesToFlagsV2([]);
     expect(flags.callSlotReserved).toBe(false);
-    expect(flags.discordAccessGranted).toBe(false);
+    expect(flags.trainingConfirmed).toBe(false);
   });
 
   it("flips the correct flag for a single state", () => {
@@ -44,7 +44,7 @@ describe("mapAdminStatesToFlagsV2", () => {
     expect(flags.callCompleted).toBe(false);
   });
 
-  it("recognizes all 11 states", () => {
+  it("recognizes all V2 states", () => {
     const all = Object.values(AssistantAdminStateV2);
     const flags = mapAdminStatesToFlagsV2(all);
     expect(Object.values(flags).every((v) => v === true)).toBe(true);

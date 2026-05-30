@@ -134,38 +134,7 @@ describe("resolveStepStatuses", () => {
     ).toBe("done");
   });
 
-  it("discord is locked until contract is signed", () => {
-    expect(statusOf("discord", [AssistantAdminStateV2.CALL_COMPLETED])).toBe(
-      "locked"
-    );
-  });
-
-  it("discord: info provided alone means waiting (post-signature)", () => {
-    expect(
-      statusOf("discord", [
-        AssistantAdminStateV2.CALL_COMPLETED,
-        AssistantAdminStateV2.CONTRACT_INFO_PROVIDED,
-        AssistantAdminStateV2.CONTRACT_CREATED,
-        AssistantAdminStateV2.CONTRACT_SIGNED,
-        AssistantAdminStateV2.DISCORD_INFO_PROVIDED,
-      ])
-    ).toBe("waiting");
-  });
-
-  it("discord: info + access => done", () => {
-    expect(
-      statusOf("discord", [
-        AssistantAdminStateV2.CALL_COMPLETED,
-        AssistantAdminStateV2.CONTRACT_INFO_PROVIDED,
-        AssistantAdminStateV2.CONTRACT_CREATED,
-        AssistantAdminStateV2.CONTRACT_SIGNED,
-        AssistantAdminStateV2.DISCORD_INFO_PROVIDED,
-        AssistantAdminStateV2.DISCORD_ACCESS_GRANTED,
-      ])
-    ).toBe("done");
-  });
-
-  it("all 7 steps render in the documented order", () => {
+  it("all 6 steps render in the documented order", () => {
     const ids = resolveStepStatuses(mapAdminStatesToFlagsV2([])).map((s) => s.id);
     expect(ids).toEqual([
       "call",
@@ -174,7 +143,6 @@ describe("resolveStepStatuses", () => {
       "criminalRecord",
       "kodo",
       "training",
-      "discord",
     ]);
   });
 });
