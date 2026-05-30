@@ -55,7 +55,7 @@ async function loadCtx(userId: string): Promise<{
     AssistantAdminStateV2[];
   return {
     currentStates,
-    ctx: { discordOptOut: false },
+    ctx: {},
     email: a.fields.email,
     jmeno: a.fields.jmeno,
     prijmeni: a.fields.prijmeni,
@@ -109,7 +109,7 @@ export async function reserveOnboardingSlot(
       userId,
       target: AssistantAdminStateV2.CALL_SLOT_RESERVED,
       actor: "DA",
-      ctx: { discordOptOut: false },
+      ctx: {},
     });
 
     revalidatePath(REVALIDATE_PATH);
@@ -137,6 +137,11 @@ export async function cancelOnboardingReservation(): Promise<ActionResult> {
 }
 
 export interface ContractInfoInput {
+  titul?: string;
+  jmeno: string;
+  prijmeni: string;
+  denNarozeni: string;
+  telefon: string;
   ulice: string;
   PSC: string;
   mestoId: string;
@@ -154,6 +159,11 @@ export async function submitContractInfo(
   return wrap(async () => {
     const userId = await requireAssistantId();
     const companion: Record<string, unknown> = {
+      titul: input.titul?.trim() ? input.titul.trim() : null,
+      jmeno: input.jmeno.trim(),
+      prijmeni: input.prijmeni.trim(),
+      denNarozeni: input.denNarozeni,
+      telefon: input.telefon.trim(),
       ulice: input.ulice,
       PSC: input.PSC,
       hlavniMistoPusobeni: { id: input.mestoId },
@@ -169,7 +179,7 @@ export async function submitContractInfo(
       userId,
       target: AssistantAdminStateV2.CONTRACT_INFO_PROVIDED,
       actor: "DA",
-      ctx: { discordOptOut: false },
+      ctx: {},
       companionFields: companion,
     });
     revalidatePath(REVALIDATE_PATH);
@@ -201,7 +211,7 @@ export async function uploadCriminalRecord(
       userId,
       target: AssistantAdminStateV2.CRIMINAL_RECORD_UPLOADED,
       actor: "DA",
-      ctx: { discordOptOut: false },
+      ctx: {},
     });
     revalidatePath(REVALIDATE_PATH);
     return undefined;
@@ -215,48 +225,8 @@ export async function confirmTraining(): Promise<ActionResult> {
       userId,
       target: AssistantAdminStateV2.TRAINING_CONFIRMED,
       actor: "DA",
-      ctx: { discordOptOut: false },
+      ctx: {},
     });
-    revalidatePath(REVALIDATE_PATH);
-    return undefined;
-  });
-}
-
-export interface DiscordSubmissionInput {
-  optOut: boolean;
-  discordUzivatelskeJmeno?: string;
-}
-
-export async function submitDiscordInfo(
-  input: DiscordSubmissionInput
-): Promise<ActionResult> {
-  return wrap(async () => {
-    const userId = await requireAssistantId();
-    const ctx: TransitionContext = { discordOptOut: input.optOut };
-
-    if (!input.optOut && !input.discordUzivatelskeJmeno?.trim()) {
-      throw new TransitionDeniedError("Zadejte Discord uživatelské jméno.");
-    }
-
-    await AssistantAdminAPI.addState({
-      userId,
-      target: AssistantAdminStateV2.DISCORD_INFO_PROVIDED,
-      actor: "DA",
-      ctx,
-      companionFields: input.optOut
-        ? { discordUzivatelskeJmeno: null }
-        : { discordUzivatelskeJmeno: input.discordUzivatelskeJmeno?.trim() },
-    });
-
-    if (input.optOut) {
-      await AssistantAdminAPI.addState({
-        userId,
-        target: AssistantAdminStateV2.DISCORD_ACCESS_GRANTED,
-        actor: "DA",
-        ctx,
-      });
-    }
-
     revalidatePath(REVALIDATE_PATH);
     return undefined;
   });
