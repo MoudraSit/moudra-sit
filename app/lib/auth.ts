@@ -7,7 +7,7 @@ import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import { AssistantAuthStatus, Role } from "helper/consts";
 import { callTabidoo } from "backend/tabidoo";
-import { Assistant, mapAdminStatesToFlagsV2 } from "types/assistant";
+import { Assistant } from "types/assistant";
 import { getFullName } from "backend/utils/getFullName";
 import { verifyPassword } from "helper/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -19,11 +19,9 @@ export const MORE_USERS_ERROR_MESSAGE =
 export function computeAssistantAuthStatus(
   user: Assistant
 ): AssistantAuthStatus {
-  const flags = mapAdminStatesToFlagsV2(
-    user.fields.administrativniNalezitosti
-  );
-  const allDone = Object.values(flags).every(Boolean);
-  return allDone ? AssistantAuthStatus.ACTIVE : AssistantAuthStatus.PENDING;
+  return user.fields.administrativaDokonceno
+    ? AssistantAuthStatus.ACTIVE
+    : AssistantAuthStatus.PENDING;
 }
 
 export const authOptions: NextAuthOptions = {
