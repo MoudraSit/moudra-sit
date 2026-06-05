@@ -14,7 +14,7 @@ import * as React from "react";
 
 import GoogleBodyScript from "components/scripts/google-body";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Logout, Person } from "@mui/icons-material";
+import { HelpOutline, Logout, Person } from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import logo from "public/images/logo/logo.png";
@@ -22,6 +22,7 @@ import InformationLine from "./information-line";
 import { isUserAssistant, isUserSenior } from "helper/auth";
 import {
   AssistantPagePaths,
+  CommonPagePaths,
   SeniorPagePaths,
   TOO_SMALL_HEIGHT,
 } from "helper/consts";
@@ -213,6 +214,16 @@ function AppHeader() {
                         <Person fontSize="small" />
                       </ListItemIcon>
                       {data.user?.name}
+                    </MenuItem>
+                    <MenuItem
+                      component={Link}
+                      href={`${CommonPagePaths.HELP}?email=${encodeURIComponent(data?.user?.email ?? "")}`}
+                      onClick={handleClose}
+                    >
+                      <ListItemIcon>
+                        <HelpOutline fontSize="small" />
+                      </ListItemIcon>
+                      Potřebuji pomoc
                     </MenuItem>
                     <MenuItem onClick={logoutHandler}>
                       <ListItemIcon>

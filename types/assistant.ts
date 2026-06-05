@@ -110,6 +110,7 @@ export interface Assistant {
     }>;
     discordUzivatelskeJmeno?: string;
     jsemClenemDofE?: boolean;
+    administrativaDokonceno?: boolean;
     hodinCelkem: number;
     posledniOtevreniAplikace: string;
   };
