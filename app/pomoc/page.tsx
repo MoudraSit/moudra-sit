@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { HelpForm } from "components/pomoc/help-form";
+import { auth } from "app/lib/auth";
 
 export const metadata: Metadata = {
   title: "Potřebuji pomoc",
@@ -9,10 +10,14 @@ type Props = {
   searchParams?: { email?: string; category?: string };
 };
 
-function Page({ searchParams }: Props) {
+async function Page({ searchParams }: Props) {
+  const session = await auth();
+  const email =
+    searchParams?.email ?? session?.user?.email ?? "";
+
   return (
     <HelpForm
-      initialEmail={searchParams?.email ?? ""}
+      initialEmail={email}
       initialCategory={searchParams?.category ?? ""}
     />
   );
