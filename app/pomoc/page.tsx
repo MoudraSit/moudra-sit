@@ -19,6 +19,7 @@ async function Page({ searchParams }: Props) {
     <HelpForm
       initialEmail={email}
       initialCategory={searchParams?.category ?? ""}
+      userId={session?.user?.id}
     />
   );
 }
