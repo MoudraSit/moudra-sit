@@ -12,6 +12,8 @@ import { submitHelpForm } from "./actions";
 import { useState } from "react";
 import Image from "next/image";
 import logo from "public/images/logo/logo.png";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import ApiRecaptcha from "components/form/api/recaptcha";
 
 const schema = yup.object({
   vlozilEmail: yup
@@ -39,6 +41,7 @@ type Props = {
 export function HelpForm({ initialEmail = "", initialCategory = "", userId }: Props) {
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const validInitialCategory = HELP_CATEGORIES.find(
     (c) => c.value === initialCategory
@@ -56,6 +59,8 @@ export function HelpForm({ initialEmail = "", initialCategory = "", userId }: Pr
   async function onSubmit(values: FormValues) {
     setServerError(null);
     try {
+      const token = await executeRecaptcha!("helpFormSubmit");
+      await ApiRecaptcha(token);
       await submitHelpForm({ ...values, vlozilLinkDA: userId });
       setSubmitted(true);
     } catch {
