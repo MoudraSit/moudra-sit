@@ -6,6 +6,7 @@ export type HelpFormData = {
   typ: string;
   dotazText: string;
   vlozilEmail: string;
+  vlozilLinkDA?: string;
 };
 
 export async function submitHelpForm(data: HelpFormData): Promise<void> {
@@ -17,6 +18,7 @@ export async function submitHelpForm(data: HelpFormData): Promise<void> {
         typ: data.typ,
         dotazText: data.dotazText,
         vlozilEmail: data.vlozilEmail,
+        ...(data.vlozilLinkDA && { vlozilLinkDA: { id: data.vlozilLinkDA } }),
       },
     },
   });

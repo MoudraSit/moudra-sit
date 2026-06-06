@@ -33,9 +33,10 @@ type FormValues = yup.InferType<typeof schema>;
 type Props = {
   initialEmail?: string;
   initialCategory?: string;
+  userId?: string;
 };
 
-export function HelpForm({ initialEmail = "", initialCategory = "" }: Props) {
+export function HelpForm({ initialEmail = "", initialCategory = "", userId }: Props) {
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -55,7 +56,7 @@ export function HelpForm({ initialEmail = "", initialCategory = "" }: Props) {
   async function onSubmit(values: FormValues) {
     setServerError(null);
     try {
-      await submitHelpForm(values);
+      await submitHelpForm({ ...values, vlozilLinkDA: userId });
       setSubmitted(true);
     } catch {
       setServerError("Nepodařilo se odeslat dotaz. Zkuste to prosím znovu.");
