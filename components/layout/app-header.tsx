@@ -223,7 +223,7 @@ function AppHeader() {
                       <ListItemIcon>
                         <HelpOutline fontSize="small" />
                       </ListItemIcon>
-                      Potřebuji pomoc
+                      Technická podpora
                     </MenuItem>
                     <MenuItem onClick={logoutHandler}>
                       <ListItemIcon>

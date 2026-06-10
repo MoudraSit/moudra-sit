@@ -88,7 +88,7 @@ export function HelpForm({ initialEmail = "", initialCategory = "", userId }: Pr
             </Box>
 
             <Typography variant="h5" fontWeight="bold" textAlign="center">
-              Potřebuji pomoc
+              Technická podpora
             </Typography>
 
             {submitted ? (
