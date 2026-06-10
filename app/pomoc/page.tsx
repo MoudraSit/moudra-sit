@@ -3,7 +3,7 @@ import { HelpForm } from "components/pomoc/help-form";
 import { auth } from "app/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Potřebuji pomoc",
+  title: "Technická podpora",
 };
 
 type Props = {
