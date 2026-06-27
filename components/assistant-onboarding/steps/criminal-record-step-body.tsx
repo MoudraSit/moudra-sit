@@ -53,7 +53,13 @@ export default function CriminalRecordStepBody({ flags, currentFileName }: Props
     );
   }
 
+  const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB — base64 overhead keeps it under the 20 MB server action limit
+
   const handleFile = (file: File) => {
+    if (file.size > MAX_FILE_BYTES) {
+      setError(`Soubor je příliš velký (${(file.size / 1024 / 1024).toFixed(1)} MB). Maximální velikost je 10 MB.`);
+      return;
+    }
     setUploadingName(file.name);
     startTransition(async () => {
       setError(null);
@@ -64,8 +70,8 @@ export default function CriminalRecordStepBody({ flags, currentFileName }: Props
           mimetype: file.type || "application/octet-stream",
           fileBase64: b64,
         });
-        if (!res.ok) {
-          setError(res.message);
+        if (!res || !res.ok) {
+          setError(res?.message ?? "Nahrání selhalo.");
           setUploadingName(null);
         }
       } catch (e) {
