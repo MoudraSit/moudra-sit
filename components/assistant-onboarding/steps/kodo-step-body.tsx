@@ -8,7 +8,7 @@ interface Props {
   flags: AdminFlagsV2;
 }
 
-const KODO_URL = "https://www.totem-koda.cz/prezentace-prihlaseni";
+const KODO_URL = "https://www.totem-koda.cz/prezentace-registrace";
 
 export default function KodoStepBody({ flags }: Props) {
   if (flags.kodoConfirmed) {
