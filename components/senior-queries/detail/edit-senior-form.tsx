@@ -28,7 +28,7 @@ type Props = {
   onEditCancel: Function;
 };
 
-export async function EditSeniorForm({
+export function EditSeniorForm({
   seniorQuery,
   seniorCity,
   onEditCancel,
