@@ -13,7 +13,7 @@ type Props = {
   seniorCity?: City;
 };
 
-export async function QueryDetailSeniorSection({
+export function QueryDetailSeniorSection({
   seniorQuery,
   seniorCity,
 }: Props) {
