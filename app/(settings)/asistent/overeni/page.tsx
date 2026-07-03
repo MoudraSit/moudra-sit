@@ -74,6 +74,7 @@ async function Page() {
     normalizeExternalUrl(assistant.fields.onlinePodpisSmlouvyLink) ?? null;
   const criminalRecordFileName =
     assistant.fields.vypisZRejstrikuTrestu?.[0]?.fileName ?? null;
+  const initialDiscordUsername = assistant.fields.discordUzivatelskeJmeno ?? "";
 
   return (
     <Card>
@@ -87,6 +88,7 @@ async function Page() {
           initialContractValues={initialContractValues}
           signatureLink={signatureLink}
           criminalRecordFileName={criminalRecordFileName}
+          initialDiscordUsername={initialDiscordUsername}
           devPanel={{
             enabled: process.env.NODE_ENV !== "production",
             currentStates: (assistant.fields.administrativniNalezitosti ??
