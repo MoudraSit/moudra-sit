@@ -191,12 +191,12 @@ export default function DiscordSection({ initialUsername }: Props) {
             </a>
             {"\n\n2) pokud nemáš DC účet, tak si ho vytvoř\n\n" +
               "3) přihlas se na server Moudrá Síť\n\n" +
-              "4) projdi si úvodní kroky, které ti ukážou náš sever:\n\n" +
+              "4) projdi si úvodní kroky, které ti ukážou náš server:\n\n" +
               "a) změň si přezdívku u nás na svoje jméno a příjmení (ať víme, kdo jsi a můžeme ti kdyžtak psát)\n\n" +
               "b) do Lobby napiš město, kde budeš působit, ať tě můžeme na discordu správně zařadit a dát ti plný přístup\n\n" +
               "pokud tvoje město má víc částí -> napiš i tu část (např. Praha 10, Brno - komín apod)\n\n" +
-              "b) mrkni do kanálu Technická podpora\n\n" +
-              "c) mrkni do kanálu Klábosení\n\n" +
+              "c) mrkni do kanálu Technická podpora\n\n" +
+              "d) mrkni do kanálu Klábosení\n\n" +
               "e) projděte si pravidla"}
           </Typography>
         </DialogContent>
