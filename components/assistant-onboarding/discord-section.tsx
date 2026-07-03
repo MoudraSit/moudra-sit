@@ -20,7 +20,6 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CloseIcon from "@mui/icons-material/Close";
 import ArticleIcon from "@mui/icons-material/Article";
-import SaveIcon from "@mui/icons-material/Save";
 import DiscordIcon from "./discord-icon";
 import PrimaryButton from "./primary-button";
 import { submitDiscordUsername } from "./actions";
@@ -120,7 +119,6 @@ export default function DiscordSection({ initialUsername }: Props) {
               }}
             />
             <PrimaryButton
-              startIcon={<SaveIcon />}
               disabled={pending || trimmedEmpty}
               onClick={() =>
                 startTransition(async () => {
