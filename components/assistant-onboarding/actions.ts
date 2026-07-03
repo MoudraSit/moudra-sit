@@ -232,6 +232,19 @@ export async function confirmTraining(): Promise<ActionResult> {
   });
 }
 
+export async function submitDiscordUsername(
+  username: string
+): Promise<ActionResult> {
+  return wrap(async () => {
+    const userId = await requireAssistantId();
+    await AssistantAdminAPI.patchFields(userId, {
+      discordUzivatelskeJmeno: username.trim(),
+    });
+    revalidatePath(REVALIDATE_PATH);
+    return undefined;
+  });
+}
+
 export async function loadOnboardingSlots() {
   return OnboardingSlotsAPI.listAvailable();
 }
