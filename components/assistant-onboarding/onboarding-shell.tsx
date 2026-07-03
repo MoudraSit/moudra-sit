@@ -15,6 +15,7 @@ import CriminalRecordStepBody from "./steps/criminal-record-step-body";
 import KodoStepBody from "./steps/kodo-step-body";
 import TrainingStepBody from "./steps/training-step-body";
 import DevStatePanel from "./dev/dev-state-panel";
+import DiscordSection from "./discord-section";
 
 export interface OnboardingShellProps {
   steps: StepDescriptor[];
@@ -35,6 +36,7 @@ export interface OnboardingShellProps {
   };
   signatureLink: string | null;
   criminalRecordFileName: string | null;
+  initialDiscordUsername: string;
   devPanel: {
     enabled: boolean;
     currentStates: AssistantAdminStateV2[];
@@ -110,6 +112,8 @@ export default function OnboardingShell(props: OnboardingShellProps) {
       )}
 
       <OnboardingAccordion steps={props.steps} renderBody={renderBody} />
+
+      <DiscordSection initialUsername={props.initialDiscordUsername} />
 
       {props.devPanel.enabled && (
         <DevStatePanel initialStates={props.devPanel.currentStates} />
