@@ -113,7 +113,7 @@ export default function OnboardingShell(props: OnboardingShellProps) {
 
       <OnboardingAccordion steps={props.steps} renderBody={renderBody} />
 
-      <DiscordSection initialUsername={props.initialDiscordUsername} />
+      <DiscordSection />
 
       {props.devPanel.enabled && (
         <DevStatePanel initialStates={props.devPanel.currentStates} />
