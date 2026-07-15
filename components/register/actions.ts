@@ -36,6 +36,7 @@ async function registerAssistant(request: JSObject) {
     jmeno: capitalizeFirstLetter(values.name),
     prijmeni: capitalizeFirstLetter(values.surname),
     trvaleBydliste: { id: values.city?.id },
+    hlavniMistoPusobeni: { id: values.hlavniMistoPusobeni?.id },
     denNarozeni: values.birthDate.toISOString(),
     stat: "Česko",
     telefon: phoneValue,
