@@ -59,6 +59,7 @@ function RegisterAssistantForm() {
       birthDate: undefined,
 
       isDofE: false,
+      hlavniMistoPusobeni: null,
     },
   });
 
@@ -147,6 +148,15 @@ function RegisterAssistantForm() {
                   getValues={getValues}
                   isPending={isPending}
                   label="Obec/město"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormInputCity
+                  name="hlavniMistoPusobeni"
+                  control={control}
+                  getValues={getValues}
+                  isPending={isPending}
+                  label="Hlavní místo působení"
                 />
               </Grid>
 
