@@ -2,6 +2,7 @@
 
 import { Alert, Box, Stack, Typography } from "@mui/material";
 import { ChangeEvent, useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { uploadCriminalRecord } from "../actions";
 import { AdminFlagsV2 } from "types/assistant";
@@ -30,6 +31,7 @@ function fileToBase64(file: File): Promise<string> {
 }
 
 export default function CriminalRecordStepBody({ flags, currentFileName }: Props) {
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -73,6 +75,8 @@ export default function CriminalRecordStepBody({ flags, currentFileName }: Props
         if (!res || !res.ok) {
           setError(res?.message ?? "Nahrání selhalo.");
           setUploadingName(null);
+        } else {
+          router.refresh();
         }
       } catch (e) {
         setError(e instanceof Error ? e.message : "Nahrání selhalo.");
