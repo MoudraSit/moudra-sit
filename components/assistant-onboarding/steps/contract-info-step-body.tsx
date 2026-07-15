@@ -45,55 +45,57 @@ type ContractInfoFormValues = {
   emailZakonnyZastupce: string;
 };
 
-function buildSchema(isUnder18: boolean) {
-  const base = {
-    titul: yup.string().trim().optional(),
-    jmeno: yup.string().trim().required("Doplňte jméno."),
-    prijmeni: yup.string().trim().required("Doplňte příjmení."),
-    denNarozeni: yup.string().trim().required("Doplňte datum narození."),
-    telefon: yup
-      .string()
-      .trim()
-      .matches(phoneRegexWithCountryCode, "Napište správný tvar telefonního čísla")
-      .required("Doplňte telefonní číslo."),
-    ulice: yup.string().trim().required("Doplňte ulici a číslo popisné."),
-    PSC: yup.string().trim().required("Doplňte PSČ."),
-    city: yup
-      .object({ id: yup.string().required() })
-      .nullable()
-      .required("Vyberte město nebo obec."),
-    jsemClenemDofE: yup.boolean().required(),
-  };
-  if (!isUnder18) {
-    return yup.object({
-      ...base,
-      jmenoZakonnyZastupce: yup.string().optional(),
-      prijmeniZakonnyZastupce: yup.string().optional(),
-      telefonZakonnyZastupce: yup.string().optional(),
-      emailZakonnyZastupce: yup.string().optional(),
-    });
-  }
-  return yup.object({
-    ...base,
-    jmenoZakonnyZastupce: yup
-      .string()
-      .trim()
-      .required("Doplňte jméno zákonného zástupce."),
-    prijmeniZakonnyZastupce: yup
-      .string()
-      .trim()
-      .required("Doplňte příjmení zákonného zástupce."),
-    telefonZakonnyZastupce: yup
-      .string()
-      .trim()
-      .required("Doplňte telefon zákonného zástupce."),
-    emailZakonnyZastupce: yup
-      .string()
-      .trim()
-      .email("Neplatný e-mail.")
-      .required("Doplňte e-mail zákonného zástupce."),
-  });
+function isUnder18FromDob(dob: string): boolean {
+  if (!dob) return false;
+  const birth = new Date(dob + "T00:00:00");
+  const today = new Date();
+  const age = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+  const dayDiff = today.getDate() - birth.getDate();
+  return age - (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0) ? 1 : 0) < 18;
 }
+
+const schema = yup.object({
+  titul: yup.string().trim().optional(),
+  jmeno: yup.string().trim().required("Doplňte jméno."),
+  prijmeni: yup.string().trim().required("Doplňte příjmení."),
+  denNarozeni: yup.string().trim().required("Doplňte datum narození."),
+  telefon: yup
+    .string()
+    .trim()
+    .matches(phoneRegexWithCountryCode, "Napište správný tvar telefonního čísla")
+    .required("Doplňte telefonní číslo."),
+  ulice: yup.string().trim().required("Doplňte ulici a číslo popisné."),
+  PSC: yup.string().trim().required("Doplňte PSČ."),
+  city: yup
+    .object({ id: yup.string().required() })
+    .nullable()
+    .required("Vyberte město nebo obec."),
+  jsemClenemDofE: yup.boolean().required(),
+  jmenoZakonnyZastupce: yup.string().trim().when("denNarozeni", {
+    is: isUnder18FromDob,
+    then: (s) => s.required("Doplňte jméno zákonného zástupce."),
+    otherwise: (s) => s.optional(),
+  }),
+  prijmeniZakonnyZastupce: yup.string().trim().when("denNarozeni", {
+    is: isUnder18FromDob,
+    then: (s) => s.required("Doplňte příjmení zákonného zástupce."),
+    otherwise: (s) => s.optional(),
+  }),
+  telefonZakonnyZastupce: yup.string().trim().when("denNarozeni", {
+    is: isUnder18FromDob,
+    then: (s) =>
+      s
+        .matches(phoneRegexWithCountryCode, "Napište správný tvar telefonního čísla")
+        .required("Doplňte telefon zákonného zástupce."),
+    otherwise: (s) => s.optional(),
+  }),
+  emailZakonnyZastupce: yup.string().trim().when("denNarozeni", {
+    is: isUnder18FromDob,
+    then: (s) => s.email("Neplatný e-mail.").required("Doplňte e-mail zákonného zástupce."),
+    otherwise: (s) => s.optional(),
+  }),
+});
 
 function toDateInputValue(iso: string): string {
   if (!iso) return "";
@@ -103,7 +105,7 @@ function toDateInputValue(iso: string): string {
 
 export default function ContractInfoStepBody({
   flags,
-  isUnder18,
+  isUnder18: _isUnder18,
   initialValues,
 }: Props) {
   const [pending, startTransition] = useTransition();
@@ -111,7 +113,7 @@ export default function ContractInfoStepBody({
 
   const { control, handleSubmit, getValues, watch, setValue } =
     useForm<ContractInfoFormValues>({
-      resolver: yupResolver(buildSchema(isUnder18)) as never,
+      resolver: yupResolver(schema) as never,
       defaultValues: {
         titul: initialValues.titul ?? "",
         jmeno: initialValues.jmeno ?? "",
@@ -130,6 +132,8 @@ export default function ContractInfoStepBody({
     });
 
   const jsemClenemDofE = watch("jsemClenemDofE");
+  const denNarozeniWatch = watch("denNarozeni");
+  const computedIsUnder18 = isUnder18FromDob(denNarozeniWatch);
 
   if (flags.contractInfoProvided) {
     return (
@@ -145,6 +149,7 @@ export default function ContractInfoStepBody({
       const denNarozeniIso = values.denNarozeni
         ? new Date(values.denNarozeni + "T00:00:00.000Z").toISOString()
         : "";
+      const under18AtSubmit = isUnder18FromDob(values.denNarozeni);
       const res = await submitContractInfo({
         titul: values.titul,
         jmeno: values.jmeno,
@@ -154,17 +159,17 @@ export default function ContractInfoStepBody({
         ulice: values.ulice,
         PSC: values.PSC,
         mestoId: values.city!.id,
-        isUnder18,
-        jmenoZakonnyZastupce: isUnder18
+        isUnder18: under18AtSubmit,
+        jmenoZakonnyZastupce: under18AtSubmit
           ? values.jmenoZakonnyZastupce
           : undefined,
-        prijmeniZakonnyZastupce: isUnder18
+        prijmeniZakonnyZastupce: under18AtSubmit
           ? values.prijmeniZakonnyZastupce
           : undefined,
-        telefonZakonnyZastupce: isUnder18
+        telefonZakonnyZastupce: under18AtSubmit
           ? values.telefonZakonnyZastupce
           : undefined,
-        emailZakonnyZastupce: isUnder18
+        emailZakonnyZastupce: under18AtSubmit
           ? values.emailZakonnyZastupce
           : undefined,
         jsemClenemDofE: values.jsemClenemDofE,
@@ -249,7 +254,7 @@ export default function ContractInfoStepBody({
         label="Jsem účastníkem programu DofE"
       />
 
-      {isUnder18 && (
+      {computedIsUnder18 && (
         <Box>
           <Alert severity="info" sx={{ mb: 2 }}>
             Je ti méně než 18 let. Doplň prosím údaje zákonného zástupce.
