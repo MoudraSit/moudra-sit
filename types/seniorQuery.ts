@@ -34,12 +34,13 @@ export interface SeniorQuery {
       url: string;
     };
     kategorieMultichoice?: Array<string>;
-    // Legacy
-    kategorie: {
-      id: string;
-      fields: {
-        nazev: {
-          _$$list?: Array<string>;
+    // Legacy. Tabidoo only sends `fields` when the link is expanded, and sends
+    // `_$$list: 0` instead of an empty array when the linked list is empty.
+    kategorie?: {
+      id?: string;
+      fields?: {
+        nazev?: {
+          _$$list?: Array<string> | number;
         };
       };
     };
