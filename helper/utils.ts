@@ -72,6 +72,28 @@ export function labelVisitLocationTypes(locations: any) {
     : locations;
 }
 
+/*
+ * Device categories live in two shapes: the current `kategorieMultichoice` multi-choice
+ * field, and the legacy `kategorie` link whose expanded name list Tabidoo returns as
+ * `{ _$$list: [...] }`. Tabidoo sends `_$$list: 0` for an empty list, and optional
+ * chaining does not short-circuit on 0, so anything calling `.join()` on it blindly
+ * crashes the whole query list. Normalise both shapes into a display string here.
+ */
+export function labelDeviceCategories(query: SeniorQuery) {
+  const multichoice = query.fields?.kategorieMultichoice;
+  if (Array.isArray(multichoice)) {
+    if (multichoice.length) return multichoice.join(", ");
+  } else if (typeof multichoice === "string" && multichoice) {
+    // Defensive: the field was a plain string before it became a multi-choice
+    return multichoice;
+  }
+
+  const legacyCategories = query.fields?.kategorie?.fields?.nazev?._$$list;
+  if (Array.isArray(legacyCategories)) return legacyCategories.join(", ");
+
+  return "";
+}
+
 export function checkIfQueryTooOld(query: SeniorQuery) {
   const queryCreatedDate = dayjs(query.fields.datumVytvoreni);
   const now = dayjs();

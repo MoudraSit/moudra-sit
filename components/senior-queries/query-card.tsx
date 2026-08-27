@@ -10,6 +10,7 @@ import {
   checkIfVisitInThePast,
   formatDate,
   formatDateTime,
+  labelDeviceCategories,
   labelVisitLocationTypes,
   removeHTMLTags,
 } from "helper/utils";
@@ -132,11 +133,7 @@ function QueryCard({
               />
               <CardCaptionValue
                 caption="Zařízení"
-                value={
-                  item.fields?.kategorieMultichoice
-                    ? item.fields?.kategorieMultichoice?.join(", ")
-                    : item.fields?.kategorie?.fields.nazev?._$$list?.join(", ")
-                }
+                value={labelDeviceCategories(item)}
               />
 
               {/* pozadovaneMistoPomoci used to be a string historically */}
