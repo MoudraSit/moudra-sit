@@ -39,10 +39,6 @@ const RULES: Record<AssistantAdminStateV2, Rule> = {
     writer: "COORDINATOR",
     requires: [AssistantAdminStateV2.CRIMINAL_RECORD_UPLOADED],
   },
-  [AssistantAdminStateV2.KODO_CONFIRMED]: {
-    writer: "COORDINATOR",
-    requires: [AssistantAdminStateV2.CALL_COMPLETED],
-  },
   [AssistantAdminStateV2.TRAINING_CONFIRMED]: {
     writer: "DA",
     requires: [AssistantAdminStateV2.CONTRACT_SIGNED],

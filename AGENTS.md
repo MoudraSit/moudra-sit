@@ -63,7 +63,7 @@ When adding a field, you must update **all three**: the Tabidoo schema upstream,
 
 Flow gates (all driven server-side by the Tabidoo admin flipping flags):
 1. `firstCallCompleted` -> first-call info form
-2. `contractInfoProvided` + `kodoDone` + `criminalRegisterDone` -> parallel checklist
+2. `contractInfoProvided` + `criminalRegisterDone` -> parallel checklist
 3. `contractSent`, `contractDone` -> waiting states
 4. `trainingDone` -> training materials confirmation
 5. `tabidooAccess`, `discordAccess` -> waiting + Discord join instructions

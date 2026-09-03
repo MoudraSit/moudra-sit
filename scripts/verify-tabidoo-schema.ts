@@ -108,7 +108,7 @@ const REQUIRED_FIELDS_REZERVACE = [
 
 const REQUIRED_FIELDS_MESTAAOBCECR = ["zkratka"];
 
-// The 11 spec values the new field must accept.
+// The 10 spec values the new field must accept.
 const REQUIRED_ADMIN_STATE_VALUES = [
   "Rezervován termín úvodního callu",
   "Úvodní call proběhl",
@@ -117,7 +117,6 @@ const REQUIRED_ADMIN_STATE_VALUES = [
   "Smlouva podepsána",
   "Nahrán výpis z rejstříku trestů",
   "Výpis z rejstříku trestů schválen",
-  "Registrace KoDo potvrzena",
   "Proškolení potvrzeno",
   "Discord údaje dodány",
   "Discord přístup přidělen",

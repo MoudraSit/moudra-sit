@@ -38,9 +38,11 @@ describe("mapAdminStatesToFlagsV2", () => {
   it("ignores unknown states without crashing", () => {
     const flags = mapAdminStatesToFlagsV2([
       "Nějaký neznámý stav",
-      AssistantAdminStateV2.KODO_CONFIRMED,
+      // Retired state still present on historical Tabidoo records.
+      "Registrace KoDo potvrzena",
+      AssistantAdminStateV2.CALL_SLOT_RESERVED,
     ]);
-    expect(flags.kodoConfirmed).toBe(true);
+    expect(flags.callSlotReserved).toBe(true);
     expect(flags.callCompleted).toBe(false);
   });
 

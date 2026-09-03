@@ -99,18 +99,6 @@ describe("resolveStepStatuses", () => {
     ).toBe("done");
   });
 
-  it("kodo is active post-call and done once KODO_CONFIRMED set", () => {
-    expect(statusOf("kodo", [AssistantAdminStateV2.CALL_COMPLETED])).toBe(
-      "active"
-    );
-    expect(
-      statusOf("kodo", [
-        AssistantAdminStateV2.CALL_COMPLETED,
-        AssistantAdminStateV2.KODO_CONFIRMED,
-      ])
-    ).toBe("done");
-  });
-
   it("training is locked until contract is signed, then active, then done", () => {
     expect(statusOf("training", [AssistantAdminStateV2.CALL_COMPLETED])).toBe(
       "locked"
@@ -134,14 +122,13 @@ describe("resolveStepStatuses", () => {
     ).toBe("done");
   });
 
-  it("all 6 steps render in the documented order", () => {
+  it("all 5 steps render in the documented order", () => {
     const ids = resolveStepStatuses(mapAdminStatesToFlagsV2([])).map((s) => s.id);
     expect(ids).toEqual([
       "call",
       "contractInfo",
       "contractSign",
       "criminalRecord",
-      "kodo",
       "training",
     ]);
   });

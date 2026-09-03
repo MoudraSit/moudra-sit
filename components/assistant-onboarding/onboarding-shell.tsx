@@ -12,7 +12,6 @@ import CallStepBody from "./steps/call-step-body";
 import ContractInfoStepBody from "./steps/contract-info-step-body";
 import ContractSignStepBody from "./steps/contract-sign-step-body";
 import CriminalRecordStepBody from "./steps/criminal-record-step-body";
-import KodoStepBody from "./steps/kodo-step-body";
 import TrainingStepBody from "./steps/training-step-body";
 import DevStatePanel from "./dev/dev-state-panel";
 import DiscordSection from "./discord-section";
@@ -76,8 +75,6 @@ export default function OnboardingShell(props: OnboardingShellProps) {
             currentFileName={props.criminalRecordFileName}
           />
         );
-      case "kodo":
-        return <KodoStepBody flags={props.flags} />;
       case "training":
         return <TrainingStepBody flags={props.flags} />;
       default:

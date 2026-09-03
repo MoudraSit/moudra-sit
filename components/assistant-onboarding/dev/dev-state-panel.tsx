@@ -27,7 +27,6 @@ const ALL_STATES: { value: AssistantAdminStateV2; group: "DA" | "Coordinator" }[
   { value: AssistantAdminStateV2.CONTRACT_SIGNED, group: "Coordinator" },
   { value: AssistantAdminStateV2.CRIMINAL_RECORD_UPLOADED, group: "DA" },
   { value: AssistantAdminStateV2.CRIMINAL_RECORD_APPROVED, group: "Coordinator" },
-  { value: AssistantAdminStateV2.KODO_CONFIRMED, group: "Coordinator" },
   { value: AssistantAdminStateV2.TRAINING_CONFIRMED, group: "DA" },
 ];
 
