@@ -37,6 +37,7 @@ export async function createQuery(formData: JSObject) {
     pozadovaneMistoPomoci: values.preferredMeetLocations,
     zpusobZadaniDotazu: WEB_APP_NAME,
     stavDotazu: QueryStatus.NEW,
+    isFromApp: true,
   };
 
   const newQuery = await callTabidoo<SeniorQuery>(`/tables/dotaz/data`, {

@@ -64,16 +64,26 @@ export enum CommonPagePaths {
   REGISTER_SENIOR = "/registrace/senior",
   PASSWORD_RECOVERY_REQUEST = "/obnova-hesla/poslat-email",
   PASSWORD_RECOVERY_FORM = "/obnova-hesla/nove-heslo",
+  HELP = "/pomoc",
 }
+
+export const HELP_CATEGORIES = [
+  { label: "Discord", value: "Discord" },
+  { label: "Registrace", value: "Registrace" },
+  { label: "Tabidoo", value: "Tabidoo" },
+  { label: "Appka", value: "Aplikace" },
+] as const;
 // Include subpaths for easy referencing in the app
 // Query and dynamic path parameters (e.g., .../id/...) should not be here
 export enum AssistantPagePaths {
   ASSISTANT_PROFILE = "/asistent",
+  ASSISTANT_PROFILE_PENDING = "/asistent/overeni",
   ASSISTANT_PROFILE_PERSONAL_INFORMATION = "/asistent/osobni-udaje",
   ASSISTANT_PROFILE_FILTERS = "/asistent/ulozene-filtry",
   ASSISTANT_PROFILE_MY_SCORE = "/asistent/moje-hodnoceni",
   ASSISTANT_PROFILE_ATTENDANCE = "/asistent/dochazka",
   ASSISTANT_PROFILE_SETTINGS = "/asistent/nastaveni",
+  ASSISTANT_PROFILE_TRAINING_GUIDES = "/asistent/navody",
   DASHBOARD = "/prehled",
   SENIOR_QUERIES = "/dotazy",
   NEW_SENIOR_QUERY = "/dotazy/novy",

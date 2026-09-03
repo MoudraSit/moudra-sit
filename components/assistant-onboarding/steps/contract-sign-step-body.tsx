@@ -1,0 +1,53 @@
+"use client";
+
+import { Alert, Box, Stack } from "@mui/material";
+import { AdminFlagsV2 } from "types/assistant";
+import PrimaryButton from "../primary-button";
+
+interface Props {
+  flags: AdminFlagsV2;
+  signatureLink: string | null;
+}
+
+export default function ContractSignStepBody({ flags, signatureLink }: Props) {
+  if (flags.contractSigned) {
+    return <Alert severity="success">Smlouva je podepsaná.</Alert>;
+  }
+
+  if (!flags.contractCreated) {
+    return (
+      <Alert severity="info">
+        Koordinátor připravuje smlouvu. Až bude hotová, objeví se tu odkaz na
+        elektronický podpis.
+      </Alert>
+    );
+  }
+
+  return (
+    <Stack spacing={2}>
+      {signatureLink ? (
+        <>
+          <Alert severity="warning">
+            Smlouva je připravena. Podepiš ji prosím přes odkaz níže. Po podpisu
+            se stav automaticky aktualizuje.
+          </Alert>
+          <Box>
+            <PrimaryButton
+              component="a"
+              href={signatureLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Otevřít podpis smlouvy
+            </PrimaryButton>
+          </Box>
+        </>
+      ) : (
+        <Alert severity="info">
+          Pro podpis smlouvy zkontroluj svoji e-mailovou schránku. Podpisový
+          odkaz ti koordinátor zašle e-mailem.
+        </Alert>
+      )}
+    </Stack>
+  );
+}

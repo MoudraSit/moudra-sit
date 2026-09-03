@@ -79,6 +79,7 @@ export interface Assistant {
       url: string;
       count: number;
     };
+    novyDotazVeVybranychLokalitachEmail: boolean;
     noveHodnoceniOdSenioraEmail: boolean;
     trvaleBydliste: City;
     // Should not be used, not sure why it exists in Tabidoo
@@ -92,8 +93,68 @@ export interface Assistant {
     kraj?: string;
     pozvan?: boolean;
     skolainstituce?: string;
+    jmenoZakonnyZastupce?: string;
+    prijmeniZakonnyZastupce?: string;
+    telefonZakonnyZastupce?: string;
+    emailZakonnyZastupce?: string;
     administrativniStav?: string;
+    administrativa?: Array<string>;
+    administrativniNalezitosti?: Array<string>;
+    onlinePodpisSmlouvyLink?: string;
+    datumPodpisuSmlouvy?: string;
+    vypisZRejstrikuTrestu?: Array<{
+      fileId: string;
+      fileName: string;
+      fileUrl: string;
+      thumbnailUrl?: string;
+    }>;
+    discordUzivatelskeJmeno?: string;
+    jsemClenemDofE?: boolean;
+    administrativaDokonceno?: boolean;
     hodinCelkem: number;
     posledniOtevreniAplikace: string;
+  };
+}
+
+export enum AssistantAdminStateV2 {
+  CALL_SLOT_RESERVED = "Rezervován termín úvodního callu",
+  CALL_COMPLETED = "Úvodní call proběhl",
+  CONTRACT_INFO_PROVIDED = "Dodány informace ke smlouvě",
+  CONTRACT_CREATED = "Smlouva vytvořena",
+  CONTRACT_SIGNED = "Smlouva podepsána",
+  CRIMINAL_RECORD_UPLOADED = "Nahrán výpis z rejstříku trestů",
+  CRIMINAL_RECORD_APPROVED = "Výpis z rejstříku trestů schválen",
+  TRAINING_CONFIRMED = "Proškolení potvrzeno",
+}
+
+export interface AdminFlagsV2 {
+  callSlotReserved: boolean;
+  callCompleted: boolean;
+  contractInfoProvided: boolean;
+  contractCreated: boolean;
+  contractSigned: boolean;
+  criminalRecordUploaded: boolean;
+  criminalRecordApproved: boolean;
+  trainingConfirmed: boolean;
+}
+
+export function mapAdminStatesToFlagsV2(
+  states: string[] | undefined
+): AdminFlagsV2 {
+  const set = new Set(states ?? []);
+  const has = (v: AssistantAdminStateV2) => set.has(v);
+  return {
+    callSlotReserved: has(AssistantAdminStateV2.CALL_SLOT_RESERVED),
+    callCompleted: has(AssistantAdminStateV2.CALL_COMPLETED),
+    contractInfoProvided: has(AssistantAdminStateV2.CONTRACT_INFO_PROVIDED),
+    contractCreated: has(AssistantAdminStateV2.CONTRACT_CREATED),
+    contractSigned: has(AssistantAdminStateV2.CONTRACT_SIGNED),
+    criminalRecordUploaded: has(
+      AssistantAdminStateV2.CRIMINAL_RECORD_UPLOADED
+    ),
+    criminalRecordApproved: has(
+      AssistantAdminStateV2.CRIMINAL_RECORD_APPROVED
+    ),
+    trainingConfirmed: has(AssistantAdminStateV2.TRAINING_CONFIRMED),
   };
 }
