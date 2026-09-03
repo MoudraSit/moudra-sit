@@ -4,7 +4,6 @@ import VideoCallIcon from "@mui/icons-material/VideoCall";
 import DescriptionIcon from "@mui/icons-material/Description";
 import DrawIcon from "@mui/icons-material/Draw";
 import GavelIcon from "@mui/icons-material/Gavel";
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SchoolIcon from "@mui/icons-material/School";
 
 export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
@@ -78,22 +77,6 @@ export function resolveStepStatuses(flags: AdminFlagsV2): StepDescriptor[] {
         : flags.criminalRecordUploaded
         ? "Čeká na kontrolu"
         : "Nahrajte výpis",
-    },
-    {
-      id: "kodo",
-      title: "Registrace v KoDo",
-      description: "Dokončete registraci v externím formuláři KoDo.",
-      Icon: AppRegistrationIcon,
-      status: !postCall
-        ? "locked"
-        : flags.kodoConfirmed
-        ? "done"
-        : "active",
-      statusLabel: !postCall
-        ? "Uzamčeno"
-        : flags.kodoConfirmed
-        ? "Dokončeno"
-        : "Vyplňte registraci",
     },
     {
       id: "training",

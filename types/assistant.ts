@@ -124,7 +124,6 @@ export enum AssistantAdminStateV2 {
   CONTRACT_SIGNED = "Smlouva podepsána",
   CRIMINAL_RECORD_UPLOADED = "Nahrán výpis z rejstříku trestů",
   CRIMINAL_RECORD_APPROVED = "Výpis z rejstříku trestů schválen",
-  KODO_CONFIRMED = "Registrace KoDo potvrzena",
   TRAINING_CONFIRMED = "Proškolení potvrzeno",
 }
 
@@ -136,7 +135,6 @@ export interface AdminFlagsV2 {
   contractSigned: boolean;
   criminalRecordUploaded: boolean;
   criminalRecordApproved: boolean;
-  kodoConfirmed: boolean;
   trainingConfirmed: boolean;
 }
 
@@ -157,7 +155,6 @@ export function mapAdminStatesToFlagsV2(
     criminalRecordApproved: has(
       AssistantAdminStateV2.CRIMINAL_RECORD_APPROVED
     ),
-    kodoConfirmed: has(AssistantAdminStateV2.KODO_CONFIRMED),
     trainingConfirmed: has(AssistantAdminStateV2.TRAINING_CONFIRMED),
   };
 }

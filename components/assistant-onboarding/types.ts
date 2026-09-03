@@ -8,7 +8,6 @@ export type StepId =
   | "contractInfo"
   | "contractSign"
   | "criminalRecord"
-  | "kodo"
   | "training";
 
 export interface StepDescriptor {
