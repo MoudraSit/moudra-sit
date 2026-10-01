@@ -124,7 +124,7 @@ const REQUIRED_ADMIN_STATE_VALUES = [
 
 // Optional: a "cancelled" enum value we'd prefer to use on rezervace.ucast.
 // If absent, the plan falls back to hard-deleting the row on reschedule.
-const PREFERRED_REZERVACE_UCAST_CANCELLED = "Zrušeno";
+const PREFERRED_REZERVACE_UCAST_CANCELLED = "Stornováno";
 
 // ---------- HTTP helper ----------
 

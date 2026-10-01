@@ -1,5 +1,8 @@
 import { callTabidoo } from "./tabidoo";
 
+// Tabidoo `rezervace.ucast` dropdown value for a cancelled reservation.
+const CANCELLED_UCAST = "Stornováno";
+
 export interface ReservationRecord {
   id: string;
   fields: {
@@ -29,6 +32,8 @@ export class OnboardingReservationAPI {
         body: {
           filter: [
             { field: "email", operator: "eq", value: email },
+            { field: "ucast", operator: "neq", value: CANCELLED_UCAST },
+            // Legacy value written before the switch to "Stornováno".
             { field: "ucast", operator: "neq", value: "Zrušeno" },
           ],
         },
@@ -57,7 +62,7 @@ export class OnboardingReservationAPI {
     await callTabidoo(`/tables/rezervace/data/${reservationId}`, {
       method: "PATCH",
       body: {
-        fields: { ucast: "Zrušeno" },
+        fields: { ucast: CANCELLED_UCAST },
       },
     });
   }
