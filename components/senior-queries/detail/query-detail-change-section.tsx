@@ -4,7 +4,7 @@ import {
   RemoteHelpTypes,
 } from "helper/consts";
 import { ReadOnlyBox } from "./helper-components";
-import { formatDateTime } from "helper/utils";
+import { formatDateTime, parseQueryChangeLocation } from "helper/utils";
 import { QueryChange } from "types/queryChange";
 import { Box, Typography } from "@mui/material";
 import RemoteHelpSection from "./remote-help-section";
@@ -31,7 +31,8 @@ async function QueryDetailChangeSection({ queryId, lastChange }: Props) {
         )}
       </ReadOnlyBox>
 
-      {lastChange.fields.osobnevzdalene === MeetingLocationType.REMOTE &&
+      {parseQueryChangeLocation(lastChange.fields.osobnevzdalene) ===
+        MeetingLocationType.REMOTE &&
       lastChange.fields.typPomociNaDalku !== RemoteHelpTypes.PHONE ? (
         <Box>
           <Typography

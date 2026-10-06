@@ -10,6 +10,7 @@ import {
   checkIfVisitInThePast,
   formatDate,
   formatDateTime,
+  parseQueryChangeLocation,
   labelDeviceCategories,
   labelVisitLocationTypes,
   removeHTMLTags,
@@ -145,8 +146,9 @@ function QueryCard({
                     : item.fields?.pozadovaneMistoPomoci
                 )}
                     ${
-                      item.fields.posledniZmenaLink?.fields.osobnevzdalene !==
-                        MeetingLocationType.REMOTE &&
+                      parseQueryChangeLocation(
+                        item.fields.posledniZmenaLink?.fields.osobnevzdalene
+                      ) !== MeetingLocationType.REMOTE &&
                       !!item.fields.posledniZmenaLink?.fields.mistoNavstevy
                         ? " " +
                           item.fields.posledniZmenaLink?.fields.mistoNavstevy

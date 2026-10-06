@@ -21,7 +21,10 @@ export const newQueryChangeSchema = yup.object({}).shape({
     then: (schema) => schema.required("Zadejte e/mail seniora"),
   }),
   queryStatus: yup.string().required("Zadejete stav dotazu"),
-  meetLocationType: yup.string().required("Zadejete místo setkání"),
+  meetLocationType: yup
+    .string()
+    .oneOf(Object.values(MeetingLocationType), "Zadejete místo setkání")
+    .required("Zadejete místo setkání"),
   organization: new yup.ObjectSchema<Organization>()
     .when("meetLocationType", {
       is: (val: string) => val === MeetingLocationType.LIBRARY,
