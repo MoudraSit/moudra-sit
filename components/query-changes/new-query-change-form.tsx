@@ -18,6 +18,7 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { parseQueryChangeLocation } from "helper/utils";
 
 import { FormInputText } from "components/app-forms/inputs/FormInputText";
 import {
@@ -69,6 +70,10 @@ type Props = {
 function NewQueryChangeForm({ query, lastChange, organization }: Props) {
   const router = useRouter();
 
+  const lastMeetLocationType = parseQueryChangeLocation(
+    lastChange?.fields?.osobnevzdalene
+  );
+
   const {
     handleSubmit,
     control,
@@ -90,8 +95,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
         query.fields.stavDotazu === QueryStatus.IN_PROGRESS
           ? QueryStatus.SOLVED
           : QueryStatus.IN_PROGRESS,
-      meetLocationType:
-        lastChange?.fields?.osobnevzdalene ?? MeetingLocationType.AT_SENIOR,
+      meetLocationType: lastMeetLocationType ?? MeetingLocationType.AT_SENIOR,
       address: lastChange?.fields?.mistoNavstevy ?? "",
       organization: organization,
       //@ts-ignore
@@ -128,8 +132,7 @@ function NewQueryChangeForm({ query, lastChange, organization }: Props) {
 
   React.useEffect(() => {
     // Skip the initial render
-    if (getValues("meetLocationType") === lastChange?.fields.osobnevzdalene)
-      return;
+    if (getValues("meetLocationType") === lastMeetLocationType) return;
     // Reset the address, it will not be the same when the input changes
     setValue("address", "");
     // Reset the org input if other type of visit was selected

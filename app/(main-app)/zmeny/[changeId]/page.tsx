@@ -4,7 +4,11 @@ import { getQueryChangeById as getQueryChangeById } from "backend/query-changes"
 import { redirect } from "next/navigation";
 import { NotFoundError } from "helper/exceptions";
 import { ReadOnlyBox } from "components/senior-queries/detail/helper-components";
-import { formatDateTime, removeHTMLTags } from "helper/utils";
+import {
+  formatDateTime,
+  parseQueryChangeLocation,
+  removeHTMLTags,
+} from "helper/utils";
 import QueryStatusChip from "components/senior-queries/query-status-chip";
 import BasePaper from "components/layout/base-paper";
 import { Stack } from "@mui/material";
@@ -45,7 +49,8 @@ async function Page({ params }: Props) {
   );
 
   const isMeetInOrganization =
-    queryChange.fields.osobnevzdalene === MeetingLocationType.LIBRARY;
+    parseQueryChangeLocation(queryChange.fields.osobnevzdalene) ===
+    MeetingLocationType.LIBRARY;
 
   return (
     <>

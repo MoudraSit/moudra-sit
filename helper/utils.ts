@@ -10,6 +10,7 @@ import {
   QueryStatus,
   MeetingLocationType,
   MeetingLocationTypeLabels,
+  QueryChangeLocationKeys,
 } from "./consts";
 import { SeniorQuery } from "types/seniorQuery";
 
@@ -70,6 +71,27 @@ export function labelVisitLocationTypes(locations: any) {
     : locations in MeetingLocationTypeLabels
     ? MeetingLocationTypeLabels[locations as MeetingLocationType]
     : locations;
+}
+
+export function toQueryChangeLocationKey(type: MeetingLocationType) {
+  return QueryChangeLocationKeys[type];
+}
+
+/*
+ * Query changes (navsteva) store the meeting location under two key sets: changes saved
+ * before the Tabidoo options were renamed keep the MeetingLocationType values, newer ones
+ * use QueryChangeLocationKeys. Normalise both so comparisons against the enum hold.
+ */
+export function parseQueryChangeLocation(
+  stored?: string | null
+): MeetingLocationType | undefined {
+  if (!stored) return undefined;
+
+  const types = Object.values(MeetingLocationType) as MeetingLocationType[];
+  if (types.includes(stored as MeetingLocationType))
+    return stored as MeetingLocationType;
+
+  return types.find((type) => QueryChangeLocationKeys[type] === stored);
 }
 
 /*
