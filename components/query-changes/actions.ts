@@ -10,7 +10,11 @@ import {
   RemoteHelpTypes,
 } from "helper/consts";
 import { newQueryChangeSchema } from "helper/schemas/new-query-change-schema";
-import { createTabidooDateTimeString, formatDateTime } from "helper/utils";
+import {
+  createTabidooDateTimeString,
+  formatDateTime,
+  toQueryChangeLocationKey,
+} from "helper/utils";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { google } from "googleapis";
@@ -47,7 +51,9 @@ export async function createQueryChange(
     iDUzivatele: { id: session?.user?.id },
     stav: changeValues.queryStatus,
     poznamkaAsistentem: changeValues.summary,
-    osobnevzdalene: changeValues.meetLocationType,
+    osobnevzdalene: toQueryChangeLocationKey(
+      changeValues.meetLocationType as MeetingLocationType
+    ),
     spolupraceSOrganizaci: changeValues.organization?.id
       ? { id: changeValues.organization.id }
       : undefined,

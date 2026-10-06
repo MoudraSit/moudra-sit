@@ -129,6 +129,16 @@ export const MeetingLocationTypeLabels = {
   [MeetingLocationType.OTHER]: "Jiné místo",
 };
 
+// navsteva.osobnevzdalene has its own option keys in Tabidoo and rejects the
+// MeetingLocationType values with HTTP 400. dotaz.pozadovaneMistoPomoci still
+// uses MeetingLocationType values, so the enum itself must stay unchanged.
+export const QueryChangeLocationKeys: Record<MeetingLocationType, string> = {
+  [MeetingLocationType.AT_SENIOR]: "U seniora",
+  [MeetingLocationType.REMOTE]: "Vzdáleně (online/telefonicky)",
+  [MeetingLocationType.LIBRARY]: "Knihovna / klub",
+  [MeetingLocationType.OTHER]: "Jiné místo",
+};
+
 export enum RemoteHelpTypes {
   PHONE = "phone",
   GOOGLE_MEET = "googleMeet",
