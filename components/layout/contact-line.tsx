@@ -5,7 +5,7 @@ function ContactLine() {
     <Box sx={{ bgcolor: "#000000" }}>
       <Typography variant="h4" align="center" color="white">
         Nevíte si rady? Volejte bezplatnou linku +420 800 220 044 (pondělí až
-        pátek 8:00-16:00)
+        pátek 9:00-17:00)
       </Typography>
     </Box>
   );
