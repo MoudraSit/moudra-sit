@@ -72,7 +72,7 @@ export default function FormBuilder() {
       <ThemeProvider theme={appTheme}>
         <Box
           sx={{
-            bgcolor: "#037f87",
+            bgcolor: "#12A9B0",
             pt: 4,
             pb: 6,
           }}
